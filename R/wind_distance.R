@@ -13,7 +13,6 @@
 #' @param PSPH A numeric vector estimated from '.estimate_spore_discharge()'
 #' @return numerical vector, which returns distance conidia dispersed by wind from the source of infection
 #' @examples
-#' @examples
 #' wind_distance(10) # returns a single estimate
 #' wind_distance(10, PSPH = 10) # returns 10 estimates
 #' wind_distance(15, PSPH = c(5, 5)) # returns 10 estimates
