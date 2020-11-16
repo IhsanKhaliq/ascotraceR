@@ -1,5 +1,8 @@
 context("trace_asco is the main function that runs the ascochyta model")
 
+weather_dat <- read.csv(file =
+                          system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer"))
+
 test_that("trace_asco runs without error"){
   ta1 <- trace_asco(weather = weather_dat,
                     paddock_length = 100,
