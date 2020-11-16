@@ -16,7 +16,12 @@
 #' @export
 #'
 #' @examples
-#'
+#' ta1 <- trace_asco(
+#'   weather = weather_dat,
+#'   paddock_length = 100,
+#'   paddock_width = 100,
+#'   sowing_date = "1998-03-09"
+#'   )
 trace_asco <- function(weather,
                        paddock_length,
                        paddock_width,
