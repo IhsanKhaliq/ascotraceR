@@ -74,10 +74,16 @@ trace_asco <- function(weather,
     day = 0  # day of the year
     )
 
-  for(i in )
+  time_increments <- seq(sowing_date,
+                         harvest_date,
+                         by = "days")
+
+  for(i in time_increments){
+
+  }
 
 
 
 
-  return(eppidemic_foci)
+  return(time_increments)
 }
