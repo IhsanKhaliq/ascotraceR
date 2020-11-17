@@ -51,8 +51,8 @@ trace_asco <- function(weather,
                          y = 1:paddock_length)
 
   # sample a paddock location randomly if a starting foci is not given
-  if(eppidemic_foci == "random") {
-    eppidemic_foci <-
+  if(epidemic_foci == "random") {
+    epidemic_foci <-
       unlist(paddock[sample(seq_len(nrow(paddock)),
                                size = 1),
                         c("x", "y")])
