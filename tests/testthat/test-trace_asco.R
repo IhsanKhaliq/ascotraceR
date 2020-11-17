@@ -6,12 +6,15 @@ weather_dat <- read.csv(file =
 
 test_that("trace_asco runs without error" , {
   expect_silent(
+
     ta1 <- trace_asco(
       weather = weather_dat,
       paddock_length = 100,
       paddock_width = 100,
-      sowing_date = "1998-03-09"
+      sowing_date = as.POSIXct("1998-03-09"),
+      harvest_date = as.POSIXct("1998-03-12")
     )
+
   )
 })
 
