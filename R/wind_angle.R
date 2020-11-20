@@ -1,6 +1,6 @@
 #' Estimates Bearing Conidia Dispersed by Wind
 #'
-#' '(wind_angle)' samples from a Gaussian distribution
+#' '(wind_angle)' samples from normal distribution
 #' to estimate the bearing of of Ascochyta rabiei conidia dispersed by wind
 #'
 #' @param mean_wind_direction A numeric vector representing mean wind direction at a particular time interval
