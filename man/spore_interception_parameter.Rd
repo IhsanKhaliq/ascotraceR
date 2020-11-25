@@ -8,9 +8,9 @@ and probability of a spore causing an infection}
 spore_interception_parameter()
 }
 \arguments{
-\item{max_growing_points_limit}{are the maximum number of growoing points chickpea can achieve}
+\item{max_growing_points_limit}{Are the maximum number of growing points chickpea can achieve}
 
-\item{max_new_growing_points_limit}{maximum number of new growing points per day
+\item{max_new_growing_points_limit}{A \emph{numeric} number giving number of new growing points
 @keywords internal
 @noRd}
 }
