@@ -42,13 +42,14 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
                 DD = "Local.Time.DD",
                 hh = "Local.Time.HH24",
                 mm = "Local.Time.MI",
-                temp = "Temperature.C"
+                temp = "Temperature.C",
                 rain = "Precipitation.since.last.observation.in.mm",
                 ws = "Wind.speed.in.km.h",
                 wd = "Wind.direction.in.degrees.true",
                 station = "Station.Number",
                 lonlat_file = file.path(tempdir(), "stat_coord.csv"),
-                r = eyre
+                time_zone = "Australia/Perth"
+
              )
 
              expect_is(weather_dt, "blackspot.weather")
