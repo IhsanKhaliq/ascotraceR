@@ -1,8 +1,8 @@
-#' Format weather data into a blackspot.weather object for use in the blackspot
+#' Format weather data into a ascotracer.weather object for use in the blackspot
 #'  model
 #'
 #' Formats raw weather data into an object suitable for use in
-#'  \code{\link{run_blackspot}}, ensuring that the supplied weather data meet
+#'  \code{\link{trace_asco}}, ensuring that the supplied weather data meet
 #'  the requirements of the model to run.
 #'  Internal support for multithreaded operations is provided through
 #'   \CRANpkg{future}.  If more than one station is present, the process
@@ -47,7 +47,7 @@
 #'
 #' @details `time_zone`
 #' All weather stations must fall within the same time zone.  If the required
-#'  stations are located in differing time zones, separate `blackspot.weather`
+#'  stations are located in differing time zones, separate `ascotracer.weather`
 #'  objects must be created for each time zone.  If a raster object of
 #'  previous crops is provided that spans time zones, an error will be emitted.
 #'
@@ -62,9 +62,9 @@
 #'  may be specified in the `lon` and `lat` columns.  If these data are not
 #'  included, a separate file may be provided that contains the longitude,
 #'  latitude and matching station name to provide station locations in the
-#'  final `blackspot.weather` object that is created by specifying the
+#'  final `ascotracer.weather` object that is created by specifying the
 #'  file path to a \acronym{CSV file} using `lonlat_file`.
-#' @return A \code{blackspot.weather} object (an extension of
+#' @return A \code{ascotracer.weather} object (an extension of
 #'  \CRANpkg{data.table}) containing the supplied weather aggregated to each
 #'  hour in a suitable format for use with \code{\link{run_blackspot}}
 #'  containing the following columns:
@@ -86,13 +86,13 @@
 #'
 #' @examples
 #' # Fake weather data files for testing and examples have been included in
-#' # \pkg{blackspot}.  The weather data files both are of the same format, so
+#' # \pkg{ascotracer}.  The weather data files both are of the same format, so
 #' # they will be combined for formatting here.
 #'
 #' scaddan <-
-#'    system.file("extdata", "scaddan_weather.csv", package = "blackspot")
+#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer")
 #' naddacs <-
-#'    system.file("extdata", "naddacs_weather.csv", package = "blackspot")
+#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer")
 #'
 #' weather_file_list <- list(scaddan, naddacs)
 #' weather_station_data <-
@@ -123,6 +123,7 @@ format_weather <- function(x,
                            mm = NULL,
                            POSIXct_time = NULL,
                            time_zone = NULL,
+                           temp,
                            rain,
                            ws,
                            wd,
@@ -249,6 +250,11 @@ format_weather <- function(x,
    }
 
    data.table::setnames(x,
+                        old = temp,
+                        new = "temp",
+                        skip_absent = TRUE)
+
+   data.table::setnames(x,
                         old = rain,
                         new = "rain",
                         skip_absent = TRUE)
@@ -337,6 +343,7 @@ format_weather <- function(x,
                           DD = DD,
                           hh = hh,
                           mm = mm,
+                          temp = temp,
                           rain = rain,
                           ws = ws,
                           wd = wd,
@@ -362,6 +369,7 @@ format_weather <- function(x,
          w_dt_agg <- x_dt[, list(
             times = unique(lubridate::floor_date(times,
                                                  unit = "hours")),
+            temp = mean(temp, na.rm = TRUE),
             rain = sum(rain, na.rm = TRUE),
             ws = mean(ws, na.rm = TRUE),
             wd = as.numeric(
@@ -416,6 +424,7 @@ format_weather <- function(x,
          DD = DD,
          hh = hh,
          mm = mm,
+         temp = temp,
          rain = rain,
          ws = ws,
          wd = wd,
@@ -436,6 +445,7 @@ format_weather <- function(x,
          DD = DD,
          hh = hh,
          mm = mm,
+         temp = temp,
          rain = rain,
          ws = ws,
          wd = wd,
@@ -453,6 +463,7 @@ format_weather <- function(x,
       x_out,
       c(
          "times",
+         "temp",
          "rain",
          "ws",
          "wd",
@@ -467,6 +478,6 @@ format_weather <- function(x,
          "mm"
       )
    )
-   class(x_out) <- union("blackspot.weather", class(x_out))
+   class(x_out) <- union("asco.weather", class(x_out))
    return(x_out)
 }
