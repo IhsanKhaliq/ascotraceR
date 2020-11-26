@@ -1,6 +1,6 @@
 context(
    "`format_weather()` wrangles weather station data to be suitable for input'
-   into `spore_disposal()`"
+   into `trace_asco`"
 )
 # identify lon lat from file ---------------------------------------------------
 test_that("`format_weather()` is able to identify the correct lat and lon values
@@ -9,9 +9,9 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
              set.seed(27)
              # create data.frame of station coordinates
              write.csv(data.frame(
-                station = c("69061", "16096"),
-                lon = c(134.2734, 135.7243),
-                lat = c(-33.52662, -33.26625)
+                station = c("69061"),
+                lon = c(114.8627),
+                lat = c(-28.5990)
              ),
              file = file.path(tempdir(), "stat_coord.csv"))
 
@@ -26,6 +26,7 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
                 Precipitation.since.last.observation.in.mm = round(abs(rnorm(
                    dat_minutes, mean = 0, sd = 0.2
                 )), 1),
+                Temperature.C = (sin(seq(0,(6.285)*7, length.out = dat_minutes)+4)+1) * 20,
                 Wind.speed.in.km.h = abs(rnorm(
                    dat_minutes, mean = 5, sd = 10
                 )),
@@ -41,6 +42,7 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
                 DD = "Local.Time.DD",
                 hh = "Local.Time.HH24",
                 mm = "Local.Time.MI",
+                temp = "Temperature.C"
                 rain = "Precipitation.since.last.observation.in.mm",
                 ws = "Wind.speed.in.km.h",
                 wd = "Wind.direction.in.degrees.true",
