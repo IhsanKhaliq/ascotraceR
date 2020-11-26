@@ -8,6 +8,8 @@
 #' will ever achieve. It depends on chickpa cultivar
 #' @param min_growing_points are the minimum number of growing points
 #' @return a *numeric* vector
+#' @keywords internal
+#' @noRd
 
 
 
