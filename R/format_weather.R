@@ -218,7 +218,7 @@ format_weather <- function(x,
       mm <- "mm"
    }
    if (missing(wd_sd)) {
-      x[, wd_sd := rep(NA, .N)]
+      x[,wd_sd := rep(NA, .N)]
       wd_sd <- "wd_sd"
    }
 
@@ -229,6 +229,13 @@ format_weather <- function(x,
          stop(
             "The csv file of weather station coordinates should contain ",
             "column names 'station','lat' and 'lon'."
+         )
+      }
+
+      if (any(unique(x[,get(station)]) %notin% ll_file[,station])) {
+         stop(
+            "The csv file of weather station coordinates should contain ",
+            "station coordinates for each weather station identifier."
          )
       }
 
