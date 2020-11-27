@@ -9,9 +9,9 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
              set.seed(27)
              # create data.frame of station coordinates
              write.csv(data.frame(
-                station = c("69061"),
-                lon = c(114.8627),
-                lat = c(-28.5990)
+                station = c("69061","16095"),
+                lon = c(114.8627,114.2627),
+                lat = c(-28.5990, -28.1)
              ),
              file = file.path(tempdir(), "stat_coord.csv"))
 
@@ -32,7 +32,7 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
                 )),
                 Wind.direction.in.degrees.true = runif(n = dat_minutes,
                                                        min = 0, max = 359),
-                Station.Number = "16096"
+                Station.Number = "69061"
              )
 
              weather_dt <- format_weather(
@@ -52,11 +52,12 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
 
              )
 
-             expect_is(weather_dt, "blackspot.weather")
+             expect_is(weather_dt, "asco.weather")
              expect_equal(
                 names(weather_dt),
                 c(
                    "times",
+                   "temp",
                    "rain",
                    "ws",
                    "wd",
@@ -71,18 +72,18 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
                    "mm"
                 )
              )
-             expect_equal(dim(weather_dt), c(168, 13))
+             expect_equal(dim(weather_dt), c(168, 14))
              expect_true(anyNA(weather_dt$lon) == FALSE)
              expect_true(anyNA(weather_dt$lat) == FALSE)
-             expect_equal(unique(weather_dt$lon), 135.7243)
-             expect_equal(unique(weather_dt$lat), -33.26625)
+             expect_equal(unique(weather_dt$lon), 114.8627)
+             expect_equal(unique(weather_dt$lat), -28.5990)
              expect_is(weather_dt$times, "POSIXct")
              expect_equal(as.character(min(weather_dt$times)),
                           "2020-06-10 01:00:00")
              expect_equal(as.character(max(weather_dt$times)), "2020-06-17")
              expect_equal(round(min(weather_dt$rain), 0), 7)
              expect_equal(round(max(weather_dt$rain), 1), 12.4)
-             expect_equal(round(min(weather_dt$ws), 1), 6.50)
+             expect_equal(round(min(weather_dt$ws), 1), 6.5)
              expect_equal(round(max(weather_dt$ws), 2), 10.99)
              expect_equal(round(min(weather_dt$wd), 0), 1)
              expect_equal(round(max(weather_dt$wd), 1), 358.3)
