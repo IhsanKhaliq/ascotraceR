@@ -5,7 +5,7 @@
 #' @param paddock_length is the length of the paddock in metres
 #' @param summary_unit_width is the width of the observation quadrat in metres
 #' @param summary_unit_length is the length of the observation quadrat in metres
-#' @return the dimesion of a paddock in metres
+#' @return the dimension of a paddock in metres
 #' @keywords internal
 #' @noRd
 paddock_dimentions <- function() {
