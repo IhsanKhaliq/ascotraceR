@@ -1,7 +1,4 @@
 context("Returns an rnorm wind angle from a mean windangle and sd(wind angle)")
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
-})
 
 w_a <- wind_angle(1, 30, 1)
 w_a10 <- wind_angle(1, 30, 10)
@@ -13,7 +10,7 @@ test_that("wind_angle returns a number between 0 and 360", {
 
   # test that function returns a number above 0
   expect_true(w_a >= 0)
-  # add extra comment
+ 
 
 })
 

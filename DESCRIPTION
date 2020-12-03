@@ -34,5 +34,3 @@ Imports:
   lubridate,
   dplyr,
   raster
-
-
