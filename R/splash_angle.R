@@ -7,7 +7,7 @@
 #' @keywords internal
 #' @noRd
 
-splash_angle <- function(min, max) {
+splash_angle <- function() {
   runif(n = 1,
         min =  1,
         max = 360)
