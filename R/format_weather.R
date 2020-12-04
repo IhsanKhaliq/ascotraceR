@@ -223,6 +223,10 @@ format_weather <- function(x,
       x[,wd_sd := rep(NA, .N)]
       wd_sd <- "wd_sd"
    }
+   if (missing(temp)) {
+      x[,temp := rep(NA, .N)]
+      temp <- "temp"
+   }
 
    # import and assign longitude and latitude from a file if provided
    if (!is.null(lonlat_file)) {
@@ -351,7 +355,6 @@ format_weather <- function(x,
          "Check time inputs"
       )
    }
-
 
    # workhorse of this function that does the reformatting
    .do_format <- function(x_dt,
