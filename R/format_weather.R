@@ -59,11 +59,13 @@
 #'
 #' @details `lon`, `lat` and `lonlat_file`
 #' If `x` provides longitude and latitude values for station locations, these
-#'  may be specified in the `lon` and `lat` columns.  If these data are not
-#'  included, a separate file may be provided that contains the longitude,
-#'  latitude and matching station name to provide station locations in the
-#'  final `ascotracer.weather` object that is created by specifying the
-#'  file path to a \acronym{CSV file} using `lonlat_file`.
+#'  may be specified in the `lon` and `lat` columns.  If gps coordinates are
+#'  not relevant to the study location `NA` can be specified and the function
+#'  will drop these column variables.  If these data are not included, (`NULL`)
+#'  a separate file may be provided that contains the longitude, latitude and
+#'  matching station name to provide station locations in the final
+#'  `ascotracer.weather` object that is created by specifying the file path to
+#'  a \acronym{CSV file} using `lonlat_file`.
 #' @return A \code{ascotracer.weather} object (an extension of
 #'  \CRANpkg{data.table}) containing the supplied weather aggregated to each
 #'  hour in a suitable format for use with \code{\link{run_blackspot}}
@@ -244,6 +246,14 @@ format_weather <- function(x,
                   as.character(unique(x[, get(station)])))
       x[, lat := rep(ll_file[r_num, lat], nrow(x))]
       x[, lon := rep(ll_file[r_num, lon], nrow(x))]
+   }
+
+   # If lat and long are specified as NA
+   if (is.na(lat) & is.na(lon)) {
+      x[, lat := rep(NA, nrow(x))]
+      x[, lon := rep(NA, nrow(x))]
+      lat <- "lat"
+      lon <- "lon"
    }
 
    # rename the columns if needed
@@ -485,6 +495,16 @@ format_weather <- function(x,
          "mm"
       )
    )
+
+   # remove lat lon columns if they are NA
+   if(all(is.na(unique(x_out[, lat])))) {
+      x_out[, lat := NULL]
+   }
+
+   if(all(is.na(unique(x_out[, lon])))) {
+      x_out[, lon := NULL]
+   }
+
    class(x_out) <- union("asco.weather", class(x_out))
    return(x_out)
 }
