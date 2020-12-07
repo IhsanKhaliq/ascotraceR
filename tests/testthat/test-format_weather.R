@@ -107,7 +107,7 @@ newmarra_raw <-
    fread(system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer"))
 
 test_that("format_weather() can format Newmarracarra weather data",{
-
+expect_silent(
    newM <- format_weather(
       x = newmarra_raw,
       POSIXct_time = "Local.Time",
@@ -121,6 +121,7 @@ test_that("format_weather() can format Newmarracarra weather data",{
       lat = NA,
       lon = NA
    )
+)
 })
 
 dat_no_location <- format_weather(
@@ -256,35 +257,37 @@ test_that("`format_weather()` works when lat lon are in data", {
       lat = "lat",
       time_zone = "UTC"
    )
+
+
+ expect_is(weather_dt, "asco.weather")
+ expect_is(weather_dt, "data.table")
+
+   expect_named(
+      weather_dt,
+      c(
+         "times",
+         "temp",
+         "rain",
+         "ws",
+         "wd",
+         "wd_sd",
+         "lon",
+         "lat",
+         "station",
+         "YYYY",
+         "MM",
+         "DD",
+         "hh",
+         "mm"
+      )
+   )
+   expect_equal(dim(weather_dt), c(168, 14))
+   expect_is(weather_dt$times, "POSIXct")
+   expect_true(anyNA(weather_dt$times) == FALSE)
+   expect_true(max(weather_dt$wd, na.rm = TRUE) < 360)
+   expect_true(min(weather_dt$wd, na.rm = TRUE) > 0)
+   expect_true(lubridate::tz(weather_dt$times) == "UTC")
 })
-
-   # expect_is(weather_dt, "blackspot.weather")
-
-#    expect_named(
-#       weather_dt,
-#       c(
-#          "times",
-#          "rain",
-#          "ws",
-#          "wd",
-#          "wd_sd",
-#          "lon",
-#          "lat",
-#          "station",
-#          "YYYY",
-#          "MM",
-#          "DD",
-#          "hh",
-#          "mm"
-#       )
-#    )
-#    expect_equal(dim(weather_dt), c(168, 13))
-#    expect_is(weather_dt$times, "POSIXct")
-#    expect_true(anyNA(weather_dt$times) == FALSE)
-#    expect_true(max(weather_dt$wd, na.rm = TRUE) < 360)
-#    expect_true(min(weather_dt$wd, na.rm = TRUE) > 0)
-#    expect_true(lubridate::tz(weather_dt$times) == "UTC")
-# })
 
 # stop if `x` is not a data.frame object ---------------------------------------
 test_that("`format_weather()` stops if `x` is not a data.frame object", {
