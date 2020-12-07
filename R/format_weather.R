@@ -253,7 +253,8 @@ format_weather <- function(x,
    }
 
    # If lat and long are specified as NA
-   if (is.na(lat) & is.na(lon)) {
+   if (!is.null(lat) & !is.null(lon) &
+      is.na(lat) & is.na(lon)) {
       x[, lat := rep(NA, nrow(x))]
       x[, lon := rep(NA, nrow(x))]
       lat <- "lat"
