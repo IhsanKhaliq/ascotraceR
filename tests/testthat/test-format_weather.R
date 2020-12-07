@@ -256,6 +256,7 @@ test_that("`format_weather()` works when lat lon are in data", {
       lat = "lat",
       time_zone = "UTC"
    )
+})
 
    # expect_is(weather_dt, "blackspot.weather")
 
