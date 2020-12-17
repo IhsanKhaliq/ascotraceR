@@ -71,7 +71,7 @@ trace_asco <- function(weather,
   #
   # refUninfectiveGPs <- minGrowingPoints <- seedling_rate
 
-  daily_vals <- data.table::data.table(
+  daily_vals_dt <- data.table::data.table(
     cdd = 0, # cumulative degree days
     cwh = 0, # cumulative wet hours
     cr = 0,  # cumulative rainfall
@@ -91,6 +91,10 @@ trace_asco <- function(weather,
     # This function or line of code is redundant given this model works
     #  on a 1x1m grid and we do not want to wrap address
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
+
+    # currently working on oneday
+    oneDay(day = i,
+           daily_vals = daily_vals_dt)
 
   }
 
