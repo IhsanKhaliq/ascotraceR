@@ -42,11 +42,16 @@ trace_asco <- function(weather,
                        paddock_width,
                        sowing_date,
                        harvest_date,
+                       epidemic_start,
                        seedling_rate = 40,
                        gp_rr = 0.0065,
                        epidemic_foci = "random",
                        latent_period_cdd = 200){
 
+  # Time and date checks
+
+
+  # makePaddock equivalent
   paddock <- expand.grid(x = 1:paddock_width,
                          y = 1:paddock_length)
 
@@ -79,6 +84,13 @@ trace_asco <- function(weather,
                          by = "days")
 
   for(i in time_increments){
+
+    # skip time increment if epidemic_start is after the sowing date
+    if(i < epidemic_start) next
+
+    # This function or line of code is redundant given this model works
+    #  on a 1x1m grid and we do not want to wrap address
+    # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
   }
 
