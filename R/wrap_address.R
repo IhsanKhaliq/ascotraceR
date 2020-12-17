@@ -21,7 +21,7 @@ wrap_addresses <- function(packet_list) {
     if (wrap_width_rows) {
       width_row <- packet_list[[index, 1, 1]] %% paddock_dimentions[[1]]
       if (width_row == 0) {
-        widthRow <- paddock_dimentions[[1]]
+        width_row <- paddock_dimentions[[1]]
       }
     } else{
       width_row <- packet_list[[index, 1, 1]]
