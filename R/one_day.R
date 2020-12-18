@@ -22,7 +22,7 @@ one_day <- function(i_date,
     rbindlist(list(
       daily_vals,
       list(
-        daily_vals[.N, ccd] +
+        daily_vals[.N, cdd] +
           mean(weather_day[, temp]),
         daily_vals[.N, cwh] +
           weather_day[1, wet_hours],
