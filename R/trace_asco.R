@@ -46,9 +46,43 @@ trace_asco <- function(weather,
                        seedling_rate = 40,
                        gp_rr = 0.0065,
                        epidemic_foci = "random",
-                       latent_period_cdd = 200){
+                       latent_period_cdd = 200,
+                       time_zone = "UTC"){
 
-  # Time and date checks
+  # check date inputs for validity -----------------------------------------
+  .vali_date <- function(x) {
+    tryCatch(
+      # try to parse the date format using lubridate
+      x <- lubridate::parse_date_time(x,
+                                      c(
+                                        "Ymd",
+                                        "dmY",
+                                        "mdY",
+                                        "BdY",
+                                        "Bdy",
+                                        "bdY",
+                                        "bdy"
+                                      )),
+      warning = function(c) {
+        stop(call. = FALSE,
+             "\n",
+             x,
+             " is not a valid entry for date. Enter as YYYY-MM-DD.\n")
+      }
+    )
+  }
+
+  # convert times to POSIXct -----------------------------------------------
+  epidemic_start <-
+    lubridate::ymd(.vali_date(epidemic_start), tz = time_zone) + lubridate::dhours(0)
+
+  sowing_date <-
+    lubridate::ymd(.vali_date(sowing_date), tz = time_zone) + lubridate::dhours(0)
+
+  harvest_date <-
+    lubridate::ymd(.vali_date(harvest_date), tz = time_zone) + lubridate::dhours(23)
+
+  # check epidemic start is after sowing date
   if(epidemic_start <= sowing_date){
     stop("eppidemic_start occurs prior to sowing_date\n
          please submit an epidemic_start date which occurs after crop_sowing")
@@ -96,15 +130,18 @@ trace_asco <- function(weather,
     #  on a 1x1m grid and we do not want to wrap address
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
-    # currently working on oneday
-    one_day(i_date = i,
-           daily_vals = daily_vals_dt,
-           weather_dat = weather)
+    # currently working on one_day
+    day_out <- one_day(i_date = i,
+                       daily_vals = daily_vals_dt,
+                       weather_dat = weather)
+
+    # temporary line of code to test building of daily_vals in loop
+    daily_vals_dt <- day_out
 
   }
 
 
 
 
-  return(time_increments)
+  return(daily_vals_dt)
 }
