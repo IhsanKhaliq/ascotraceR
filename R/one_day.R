@@ -18,6 +18,7 @@ one_day <- function(i_date,
   weather_day <-
     weather_dat[times %in% i_time, ]
 
+  # update daily_vals with the values from the current day
   daily_vals <-
     rbindlist(list(
       daily_vals,
@@ -28,8 +29,8 @@ one_day <- function(i_date,
           weather_day[1, wet_hours],
         daily_vals[.N, cr] +
           sum(weather_day[, rain], na.rm = TRUE),
-        i_date,
-        yday(i_date)
+        as.POSIXct(i_date),
+        lubridate::yday(i_date)
       )
     ))
 
