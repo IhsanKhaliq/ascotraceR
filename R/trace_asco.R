@@ -93,7 +93,7 @@ trace_asco <- function(weather,
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
     # currently working on oneday
-    oneDay(day = i,
+    one_day(day = i,
            daily_vals = daily_vals_dt)
 
   }
