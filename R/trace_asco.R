@@ -131,7 +131,6 @@ trace_asco <- function(weather,
     #  on a 1x1m grid and we do not want to wrap address
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
-    cat(time_increments[i])
 
     # currently working on one_day
     day_out <- one_day(i_date = time_increments[i],
