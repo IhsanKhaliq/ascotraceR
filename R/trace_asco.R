@@ -49,6 +49,10 @@ trace_asco <- function(weather,
                        latent_period_cdd = 200){
 
   # Time and date checks
+  if(epidemic_start <= sowing_date){
+    stop("eppidemic_start occurs prior to sowing_date\n
+         please submit an epidemic_start date which occurs after crop_sowing")
+  }
 
 
   # makePaddock equivalent
@@ -75,7 +79,7 @@ trace_asco <- function(weather,
     cdd = 0, # cumulative degree days
     cwh = 0, # cumulative wet hours
     cr = 0,  # cumulative rainfall
-    i = 0,   # day of the simulation (iterator)
+    i = sowing_date,   # day of the simulation (iterator)
     day = 0  # day of the year
     )
 
