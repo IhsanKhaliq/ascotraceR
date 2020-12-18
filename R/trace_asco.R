@@ -70,7 +70,8 @@ trace_asco <- function(weather,
              " is not a valid entry for date. Enter as YYYY-MM-DD.\n")
       }
     )
-  }
+  return(x)
+    }
 
   # convert times to POSIXct -----------------------------------------------
   epidemic_start <-
@@ -114,24 +115,26 @@ trace_asco <- function(weather,
     cwh = 0, # cumulative wet hours
     cr = 0,  # cumulative rainfall
     i = sowing_date,   # day of the simulation (iterator)
-    day = 0  # day of the year
+    day = lubridate::yday(sowing_date)  # day of the year
     )
 
   time_increments <- seq(sowing_date,
                          harvest_date,
                          by = "days")
 
-  for(i in time_increments){
+  for(i in seq_along(time_increments)){
 
     # skip time increment if epidemic_start is after the sowing date
-    if(i < epidemic_start) next
+    if(time_increments[i] < epidemic_start) next
 
     # This function or line of code is redundant given this model works
     #  on a 1x1m grid and we do not want to wrap address
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
+    cat(time_increments[i])
+
     # currently working on one_day
-    day_out <- one_day(i_date = i,
+    day_out <- one_day(i_date = time_increments[i],
                        daily_vals = daily_vals_dt,
                        weather_dat = weather)
 
