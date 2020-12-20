@@ -58,6 +58,27 @@ ta1 <- trace_asco(
 #   expect_equal(ncol(ta1), 2)
 # })
 
+
+test_that("trace_asco daily_vals returns an daily vals data.frame", {
+  expect_is(ta1, "data.frame")
+  expect_true(all(c("cdd", "cwh", "cr", "i", "day") %in% colnames(ta1)))
+})
+
+test_that("trace_asco daily_vals returns the correct data.frame dimensions", {
+  expect_equal(nrow(ta1), 4)
+  expect_equal(ncol(ta1), 5)
+})
+
+test_that("trace_asco daily_vals the following contents", {
+  expect_equal(ta1$cdd, c(0,28,53,71))
+  expect_equal(ta1$cwh, c(0,0,0,5))
+  expect_equal(ta1$cr, c(0,0,0,5.33))
+  expect_equal(ta1$i[1], as.POSIXct("1998-03-09", tz = "Australia/Perth"))
+  expect_equal(ta1$day, c(68,69,70,71))
+  expect_equal(ncol(ta1), 5)
+})
+
+
 # Test for stop error is triggered
 test_that("trace_asco stops if epidemic_start is earlier than sowing_start",{
   expect_error(
