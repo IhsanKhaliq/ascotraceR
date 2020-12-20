@@ -10,10 +10,12 @@ trace_asco(
   paddock_width,
   sowing_date,
   harvest_date,
+  epidemic_start,
   seedling_rate = 40,
   gp_rr = 0.0065,
   epidemic_foci = "random",
-  latent_period_cdd = 200
+  latent_period_cdd = 200,
+  time_zone = "UTC"
 )
 }
 \arguments{

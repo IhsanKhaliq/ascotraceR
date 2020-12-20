@@ -124,11 +124,13 @@ returned automatically.
 
 \code{lon}, \code{lat} and \code{lonlat_file}
 If \code{x} provides longitude and latitude values for station locations, these
-may be specified in the \code{lon} and \code{lat} columns.  If these data are not
-included, a separate file may be provided that contains the longitude,
-latitude and matching station name to provide station locations in the
-final \code{ascotracer.weather} object that is created by specifying the
-file path to a \acronym{CSV file} using \code{lonlat_file}.
+may be specified in the \code{lon} and \code{lat} columns.  If gps coordinates are
+not relevant to the study location \code{NA} can be specified and the function
+will drop these column variables.  If these data are not included, (\code{NULL})
+a separate file may be provided that contains the longitude, latitude and
+matching station name to provide station locations in the final
+\code{ascotracer.weather} object that is created by specifying the file path to
+a \acronym{CSV file} using \code{lonlat_file}.
 }
 \examples{
 # Fake weather data files for testing and examples have been included in

@@ -2,5 +2,5 @@
 
 export(format_weather)
 export(new_growing_points)
+export(one_day)
 export(trace_asco)
-import(data.table)
