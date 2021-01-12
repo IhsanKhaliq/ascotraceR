@@ -17,7 +17,14 @@
 #'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #' @param seedling_rate Chickpea plants per square meter. Defaults to \code{40}
 #' @param gp_rr Chickpea growing points (meristems) replication rate as a
-#'  proportion of one per degree day. Defaults to \code{0.0065}
+#'  proportion of one per degree day. Defaults to \code{0.0065}.
+#' @param max_gp Maximum number of chickpea growing points (meristems) allowed
+#'  per square meter. Defaults to \code{15000}.
+#' @param max_new_gp Maximum number of new chickpea growing points (meristems)
+#'  which develop per day, per square meter. Defaults to \code{350}.
+#' @param min_new_gp_for_half_limit NEEDS TO BE CLARIFIED Maximum number of new
+#'  chickpea growing points (meristems) which develop per day, per square meter.
+#'  Defaults to \code{5}.
 #' @param epidemic_foci vector of two integers ("x" and "y") indicating the
 #'  paddock coordinates which will serve as the initial infection site, and
 #'  from which the epidemic will spread. Defaults to \code{"random"}, which
@@ -45,6 +52,9 @@ trace_asco <- function(weather,
                        epidemic_start,
                        seedling_rate = 40,
                        gp_rr = 0.0065,
+                       max_gp = 15000,
+                       max_new_gp = 350,
+                       min_gp_for_half_limit = 5, # needs a new name
                        epidemic_foci = "random",
                        latent_period_cdd = 200,
                        time_zone = "UTC"){
@@ -135,7 +145,8 @@ trace_asco <- function(weather,
     # currently working on one_day
     day_out <- one_day(i_date = time_increments[i],
                        daily_vals = daily_vals_dt,
-                       weather_dat = weather)
+                       weather_dat = weather,
+                       gp_rr = gp_rr)
 
     # temporary line of code to test building of daily_vals in loop
     daily_vals_dt <- day_out
