@@ -1,16 +1,17 @@
 #' Simulates ascochyta spore dispersal for a single day increment
 #'
-#' @param i_date
-#' @param daily_vals
-#' @param weather_dat
+#' @param i_date Date (YYYY-MM-DD) for which the dispersal function will iterate for each hour of the day
+#' @param daily_vals `data.table` of model variable which have been calculated for days prior to the `i_date`
+#' @param weather_dat `data.table` of weather observations which includes the query date `i_date`
 #'
-#' @return
-#' @export
+#' @return a `data.table` of values generated for the day `i_date`
+#'
 #'
 #' @examples
 one_day <- function(i_date,
                     daily_vals,
                     weather_dat) {
+
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
 
