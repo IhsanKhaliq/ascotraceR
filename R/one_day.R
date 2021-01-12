@@ -38,5 +38,9 @@ one_day <- function(i_date,
       )
     ))
 
+  # Write code to iterate over each hour and the function `growth`
+  # `growth` function should return a vector of length 24 rows for each hour.
+  # each value should give the number of growing points at that hour in time
+
   return(daily_vals)
 }
