@@ -8,8 +8,14 @@
 #' @param ref_new_growing_points are reference new growing points
 #' @keywords internal
 #' @noRd
-update_ref_uninfective_growing_points <- function (mean_air_temp) {
+update_ref_uninfective_growing_points <-
+  function(current_growing_points,
+           growing_points_replication_rate,
+           max_growing_points,
+           mean_air_temp) {
+
   ref_new_growing_points <-
     new_growing_points(ref_uninfective_growing_points, mean_air_temp)
+
   return(ref_uninfective_growing_points + ref_new_growing_points)
 }
