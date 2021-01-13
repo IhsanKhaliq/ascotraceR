@@ -148,7 +148,8 @@ trace_asco <- function(weather,
     day_out <- one_day(i_date = time_increments[i],
                        daily_vals = daily_vals_dt,
                        weather_dat = weather,
-                       gp_rr = gp_rr)
+                       gp_rr = gp_rr,
+                       max_gp = max_gp)
 
     # temporary line of code to test building of daily_vals in loop
     daily_vals_dt <- day_out
