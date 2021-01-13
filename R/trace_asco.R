@@ -57,7 +57,9 @@ trace_asco <- function(weather,
                        min_gp_for_half_limit = 5, # needs a new name
                        epidemic_foci = "random",
                        latent_period_cdd = 200,
-                       time_zone = "UTC"){
+                       time_zone = "UTC",
+                       spore_interception_multiplier = 0.00006
+                       ){
 
   # check date inputs for validity -----------------------------------------
   .vali_date <- function(x) {
@@ -151,7 +153,8 @@ trace_asco <- function(weather,
                        weather_dat = weather,
                        gp_rr = gp_rr,
                        max_gp = max_gp,
-                       paddock = paddock)
+                       paddock = paddock,
+                       spore_interception_multiplier = spore_interception_multiplier)
 
     # temporary line of code to test building of daily_vals in loop
     daily_vals_list <- day_out
