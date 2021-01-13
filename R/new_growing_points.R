@@ -9,10 +9,15 @@
 #' @return numeric vector giving the number of new growing points formed that day
 #' @example
 #' new_growing_points(current_growing_points = 500, mean_air_temp = 20)
-#' @export
+#'
 new_growing_points <-
-  function(current_growing_points, mean_air_temp)
-    {
-    current_growing_points * growing_points_replication_rate * mean_air_temp * (1 - current_growing_points /
-                                                                                  max_growing_points)
+  function(current_growing_points,
+           growing_points_replication_rate,
+           max_growing_points,
+           mean_air_temp) {
+
+    current_growing_points *
+      growing_points_replication_rate *
+      mean_air_temp *
+      (1 - current_growing_points / max_growing_points)
   }
