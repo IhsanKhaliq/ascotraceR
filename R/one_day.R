@@ -13,7 +13,8 @@
 #' @examples
 one_day <- function(i_date,
                     daily_vals,
-                    weather_dat) {
+                    weather_dat,
+                    gp_rr) {
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
@@ -22,25 +23,31 @@ one_day <- function(i_date,
   weather_day <-
     weather_dat[times %in% i_time, ]
 
+
+  day_i_vals <-
+    list(
+      daily_vals[.N, cdd] +
+        mean(weather_day[, temp]),
+      daily_vals[.N, cwh] +
+        weather_day[1, wet_hours],
+      daily_vals[.N, cr] +
+        sum(weather_day[, rain], na.rm = TRUE),
+      as.POSIXct(i_date),
+      lubridate::yday(i_date)
+    )
+
   # update daily_vals with the values from the current day
   daily_vals <-
     rbindlist(list(
       daily_vals,
-      list(
-        daily_vals[.N, cdd] +
-          mean(weather_day[, temp]),
-        daily_vals[.N, cwh] +
-          weather_day[1, wet_hours],
-        daily_vals[.N, cr] +
-          sum(weather_day[, rain], na.rm = TRUE),
-        as.POSIXct(i_date),
-        lubridate::yday(i_date)
-      )
+      day_i_vals
     ))
 
   # Write code to iterate over each hour and the function `growth`
   # `growth` function should return a vector of length 24 rows for each hour.
   # each value should give the number of growing points at that hour in time
+  crop_gps <-
+
 
   return(daily_vals)
 }
