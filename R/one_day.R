@@ -44,13 +44,13 @@ one_day <- function(i_date,
 
   # Update Growing points for this i
   i_new_gp <-
-    calc_new_gp(current_growing_points = daily_vals[.N, gp],
+    calc_new_gp(current_growing_points = daily_vals[.N, gp_standard],
                        gp_rr = gp_rr,
                        max_gp = max_gp,
                        mean_air_temp = i_mean_air_temp)
 
-  day_i_vals[["gp"]] <-
-    daily_vals[.N, gp] + i_new_gp
+  day_i_vals[["gp_standard"]] <-
+    daily_vals[.N, gp_standard] + i_new_gp
 
   day_i_vals[["new_gp"]] <- i_new_gp
 
