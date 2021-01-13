@@ -21,7 +21,7 @@ calc_new_gp <-
            mean_air_temp) {
 
     current_growing_points *
-      growing_points_replication_rate *
+      gp_rr *
       mean_air_temp *
       (1 - current_growing_points / max_gp)
   }
