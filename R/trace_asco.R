@@ -107,9 +107,9 @@ trace_asco <- function(weather,
   # sample a paddock location randomly if a starting foci is not given
   if(epidemic_foci == "random") {
     epidemic_foci <-
-      unlist(paddock[sample(seq_len(nrow(paddock)),
+      paddock[sample(seq_len(nrow(paddock)),
                                size = 1),
-                        c("x", "y")])
+                        c("x", "y")]
 
   }
 
@@ -120,14 +120,15 @@ trace_asco <- function(weather,
   #
   # refUninfectiveGPs <- minGrowingPoints <- seedling_rate
 
-  daily_vals_dt <- data.table::data.table(
+  daily_vals_list <- list(
     i = sowing_date,   # day of the simulation (iterator)
     day = lubridate::yday(sowing_date),  # day of the year
     cdd = 0, # cumulative degree days
     cwh = 0, # cumulative wet hours
     cr = 0,  # cumulative rainfall
     gp = seedling_rate, # number of growing points in the current iteration
-    noninfected_gp = seedling_rate
+    new_gp = seedling_rate,
+    infected_coords = epidemic_foci # data.frame
     )
 
   time_increments <- seq(sowing_date,
@@ -146,18 +147,19 @@ trace_asco <- function(weather,
 
     # currently working on one_day
     day_out <- one_day(i_date = time_increments[i],
-                       daily_vals = daily_vals_dt,
+                       daily_vals = daily_vals_list,
                        weather_dat = weather,
                        gp_rr = gp_rr,
-                       max_gp = max_gp)
+                       max_gp = max_gp,
+                       paddock)
 
     # temporary line of code to test building of daily_vals in loop
-    daily_vals_dt <- day_out
+    daily_vals_list <- day_out
 
   }
 
 
 
 
-  return(daily_vals_dt)
+  return(daily_vals_list)
 }
