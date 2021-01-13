@@ -8,7 +8,8 @@
 #' @param update_growing_points_all_infective_elements updated infected growing points?
 #' @keywords internal
 #' @noRd
-growth <- function(mean_air_temp) {
-  update_ref_uninfective_growing_points[mean_air_temp]
-  update_growing_points_all_infective_elements[mean_air_temp]
+growth <- function(mean_air_temp
+                   ) {
+  update_ref_uninfective_growing_points(mean_air_temp)
+  update_growing_points_all_infective_elements(mean_air_temp)
 }
