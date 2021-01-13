@@ -5,6 +5,10 @@
 #'that is a function of temperature and is limited by proximity to a maximum growing point density.
 #'
 #' @param current_growing_points Are the current number of growing points at an iteration period
+#' @param gp_rr Chickpea growing points (meristems) replication rate as a
+#'  proportion of one per degree day.
+#' @param max_gp Maximum number of chickpea growing points (meristems) allowed
+#'  per square meter.
 #' @param mean_air_temp Is average daily temperature in Celcius
 #' @return numeric vector giving the number of new growing points formed that day
 #' @example
@@ -12,12 +16,12 @@
 #'
 new_growing_points <-
   function(current_growing_points,
-           growing_points_replication_rate,
-           max_growing_points,
+           gp_rr,
+           max_gp,
            mean_air_temp) {
 
     current_growing_points *
       growing_points_replication_rate *
       mean_air_temp *
-      (1 - current_growing_points / max_growing_points)
+      (1 - current_growing_points / max_gp)
   }
