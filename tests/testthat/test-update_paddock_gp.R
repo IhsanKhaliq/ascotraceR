@@ -15,3 +15,8 @@ GPs <- update_paddock_gp(
 test_that("the correct length vector is returned", {
   expect_length(GPs, 40*40)
 })
+
+test_that("update gps returns the correct contents",{
+  expect_equal(sum(paddock$noninfected_gp == -1), sum(GPs == -1))
+  expect_equal(sum(paddock$noninfected_gp == 0), sum(GPs == 0))
+})
