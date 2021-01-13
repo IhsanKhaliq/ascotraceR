@@ -121,11 +121,13 @@ trace_asco <- function(weather,
   # refUninfectiveGPs <- minGrowingPoints <- seedling_rate
 
   daily_vals_dt <- data.table::data.table(
+    i = sowing_date,   # day of the simulation (iterator)
+    day = lubridate::yday(sowing_date),  # day of the year
     cdd = 0, # cumulative degree days
     cwh = 0, # cumulative wet hours
     cr = 0,  # cumulative rainfall
-    i = sowing_date,   # day of the simulation (iterator)
-    day = lubridate::yday(sowing_date)  # day of the year
+    gp = seedling_rate, # number of growing points in the current iteration
+    noninfected_gp = seedling_rate
     )
 
   time_increments <- seq(sowing_date,
