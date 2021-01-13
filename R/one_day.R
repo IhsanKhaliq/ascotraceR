@@ -23,18 +23,30 @@ one_day <- function(i_date,
   weather_day <-
     weather_dat[times %in% i_time, ]
 
+  # obatin summary weather for i_day
+  i_mean_air_temp <- mean(weather_day[, temp])
+  i_wet_hours <- weather_day[1, wet_hours]
+  i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
+
 
   day_i_vals <-
     list(
-      daily_vals[.N, cdd] +
-        mean(weather_day[, temp]),
-      daily_vals[.N, cwh] +
-        weather_day[1, wet_hours],
-      daily_vals[.N, cr] +
-        sum(weather_day[, rain], na.rm = TRUE),
-      as.POSIXct(i_date),
-      lubridate::yday(i_date)
+      i = as.POSIXct(i_date),
+      day = lubridate::yday(i_date),
+      cdd = daily_vals[.N, cdd] +
+        i_mean_air_temp,
+      cwh = daily_vals[.N, cwh] +
+        i_wet_hours,
+      cr = daily_vals[.N, cr] +
+        i_rainfall
     )
+
+  day_i_vals[["gp"]] <-
+    new_growing_points(current_growing_points = daily_vals[.N, gp],
+                       growing_points_replication_rate,
+                       max_growing_points,
+                       mean_air_temp)
+
 
   # update daily_vals with the values from the current day
   daily_vals <-
