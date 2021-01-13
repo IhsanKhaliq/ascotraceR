@@ -126,8 +126,8 @@ trace_asco <- function(weather,
     cdd = 0, # cumulative degree days
     cwh = 0, # cumulative wet hours
     cr = 0,  # cumulative rainfall
-    gp = seedling_rate, # number of growing points in the current iteration
-    new_gp = seedling_rate,
+    gp_standard = seedling_rate, # standard number of growing points for 1m^2 if not inhibited by infection
+    new_gp = seedling_rate, # new nunmber of growing points for current iteration
     infected_coords = epidemic_foci # data.frame
     )
 
@@ -151,7 +151,7 @@ trace_asco <- function(weather,
                        weather_dat = weather,
                        gp_rr = gp_rr,
                        max_gp = max_gp,
-                       paddock)
+                       paddock = paddock)
 
     # temporary line of code to test building of daily_vals in loop
     daily_vals_list <- day_out
