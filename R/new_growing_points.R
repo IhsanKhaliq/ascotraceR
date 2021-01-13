@@ -10,9 +10,9 @@
 #' @param max_gp Maximum number of chickpea growing points (meristems) allowed
 #'  per square meter.
 #' @param mean_air_temp Is average daily temperature in Celcius
-#' @return numeric vector giving the number of new growing points formed that day
+#' @return Integer giving the number of new growing points formed that day
 #' @example
-#' new_growing_points(current_growing_points = 500, mean_air_temp = 20)
+#' new_growing_points(current_growing_points = 500, mean_air_temp = 20, gp_rr = 0.0065, max_gp = 15000)
 #'
 new_growing_points <-
   function(current_growing_points,
