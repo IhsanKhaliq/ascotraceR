@@ -6,16 +6,22 @@
 #' @param mean_air_temp is average air temperature in celcius
 #' @param new_growing_points are the number of new growing points formed per day
 #' @param ref_new_growing_points are reference new growing points
+#'
 #' @keywords internal
 #' @noRd
-update_ref_uninfective_growing_points <-
+calc_new_noninfectived_gp <-
   function(current_growing_points,
-           growing_points_replication_rate,
+           gp_rr,
            max_growing_points,
-           mean_air_temp) {
+           mean_air_temp,
+           new_gp) {
 
-  ref_new_growing_points <-
-    new_growing_points(ref_uninfective_growing_points, mean_air_temp)
+  new_gp <-
+    current_growing_points *
+    gp_rr *
+    mean_air_temp *
+    (1 - current_growing_points / max_growing_points)
 
-  return(ref_uninfective_growing_points + ref_new_growing_points)
+  return(ref_uninfective_growing_points + new_gp)
 }
+#Probably remove this function replaced by new_growing_points
