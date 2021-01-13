@@ -24,7 +24,7 @@ one_day <- function(i_date,
   weather_day <-
     weather_dat[times %in% i_time, ]
 
-  # obatin summary weather for i_day
+  # obtain summary weather for i_day
   i_mean_air_temp <- mean(weather_day[, temp])
   i_wet_hours <- weather_day[1, wet_hours]
   i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
@@ -54,7 +54,10 @@ one_day <- function(i_date,
 
   day_i_vals[["new_gp"]] <- i_new_gp
 
-  # Update growing points for infected coordinates
+
+  # Update growing points for paddock coordinates
+
+
 
 
   # update daily_vals with the values from the current day
