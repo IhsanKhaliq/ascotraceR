@@ -340,7 +340,7 @@ format_weather <- function(x,
    } else {
       # if POSIX formatted times were not supplied, create a POSIXct
       # formatted column named 'times'
-      x[, "times" :=
+      x$times <-
            lubridate::ymd_hm(paste(x[, YYYY],
                                    "-",
                                    x[, MM],
@@ -349,7 +349,7 @@ format_weather <- function(x,
                                    x[, hh],
                                    ":",
                                    x[, mm]),
-                             tz = time_zone)]
+                             tz = time_zone)
    }
 
    if(any(is.na(x[, times]))) {
