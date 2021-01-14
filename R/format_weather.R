@@ -220,11 +220,11 @@ format_weather <- function(x,
       mm <- "mm"
    }
    if (missing(wd_sd)) {
-      x[,wd_sd := rep(NA, .N)]
+      x$wd_sd <- NA
       wd_sd <- "wd_sd"
    }
    if (missing(temp)) {
-      x[,temp := rep(NA, .N)]
+      x[, temp := rep(NA, .N)]
       temp <- "temp"
    }
 
