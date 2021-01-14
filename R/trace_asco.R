@@ -103,12 +103,12 @@ trace_asco <- function(weather,
 
 
   # makePaddock equivalent
-  paddock <- expand.grid(x = 1:paddock_width,
-                         y = 1:paddock_length)
+  paddock <- as.data.table(expand.grid(x = 1:paddock_width,
+                                       y = 1:paddock_length))
 
-  paddock$new_gp <- seedling_rate
-  paddock$noninfected_gp <- seedling_rate
-  paddock$infected_gp <- NA # Needs to be updated!!!!
+  paddock[,new_gp := seedling_rate]
+  paddock[,noninfected_gp := seedling_rate]
+  paddock[,infected_gp := NA] # Needs to be updated!!!!
 
   # sample a paddock location randomly if a starting foci is not given
   if(epidemic_foci == "random") {
