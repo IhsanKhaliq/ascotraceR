@@ -15,7 +15,8 @@ one_day <- function(i_date,
                     daily_vals,
                     weather_dat,
                     gp_rr,
-                    max_gp) {
+                    max_gp,
+                    paddock) {
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
@@ -42,7 +43,7 @@ one_day <- function(i_date,
         i_rainfall
     )
 
-  # Update Growing points for this i
+  # Update Growing points for non-infected coords for time i
   i_new_gp <-
     calc_new_gp(current_growing_points = daily_vals[.N, gp_standard],
                        gp_rr = gp_rr,
@@ -56,6 +57,11 @@ one_day <- function(i_date,
 
 
   # Update growing points for paddock coordinates
+  if(i_wet_hours > 0){
+    spread_spores(wet_hours = wet_hours,
+                  weather_hourly = weather_day)
+    interception_probability()
+  }
 
 
 
