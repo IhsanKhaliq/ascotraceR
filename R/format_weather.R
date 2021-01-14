@@ -341,14 +341,14 @@ format_weather <- function(x,
       # if POSIX formatted times were not supplied, create a POSIXct
       # formatted column named 'times'
       x$times <-
-           lubridate::ymd_hm(paste(x[, YYYY],
+           lubridate::ymd_hm(paste(x[, "YYYY"],
                                    "-",
-                                   x[, MM],
+                                   x[, "MM"],
                                    "-",
-                                   x[, DD],
-                                   x[, hh],
+                                   x[, "DD"],
+                                   x[, "hh"],
                                    ":",
-                                   x[, mm]),
+                                   x[, "mm"]),
                              tz = time_zone)
    }
 
