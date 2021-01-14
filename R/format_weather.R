@@ -436,7 +436,7 @@ format_weather <- function(x,
       }
    }
 
-   if (length(unique(x[, station])) > 1) {
+   if (length(unique(x[, "station"])) > 1) {
       # split data by weather station
       x <- split(x, by = "station")
 
