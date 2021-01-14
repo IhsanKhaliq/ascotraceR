@@ -116,7 +116,7 @@
 #' )
 #'
 #' @export
-#'
+#' @import data.table
 format_weather <- function(x,
                            YYYY = NULL,
                            MM = NULL,
@@ -383,18 +383,21 @@ format_weather <- function(x,
 
 
       # calculate the approximate logging frequency of the weather data
+
       log_freq <-
-         lubridate::int_length(lubridate::as.interval(x_dt[1, times],
-                                                      x_dt[.N, times])) /
+         lubridate::int_length(lubridate::as.interval(x_dt[1, "times"],
+                                                      last(x_dt[, "times"]))) /
          (nrow(x_dt) * 60)
 
       # if the logging frequency is less than 50 minutes aggregate to hourly
       if (log_freq < 50) {
+         return(x_dt)
+
          w_dt_agg <- x_dt[, list(
             times = unique(lubridate::floor_date(times,
                                                  unit = "hours")),
             temp = mean(temp, na.rm = TRUE),
-            rain = sum(rain, na.rm = TRUE),
+            rain = sum(as.numeric(rain), na.rm = TRUE),
             ws = mean(ws, na.rm = TRUE),
             wd = as.numeric(
                circular::mean.circular(
@@ -505,11 +508,11 @@ format_weather <- function(x,
 
    # remove lat lon columns if they are NA
    if(all(is.na(unique(x_out[, lat])))) {
-      x_out[, lat := NULL]
+      x_out$lat <- NULL
    }
 
    if(all(is.na(unique(x_out[, lon])))) {
-      x_out[, lon := NULL]
+      x_out$lon <- NULL
    }
 
    class(x_out) <- union("asco.weather", class(x_out))
