@@ -230,7 +230,8 @@ format_weather <- function(x,
 
    # import and assign longitude and latitude from a file if provided
    if (!is.null(lonlat_file)) {
-      ll_file <- fread(lonlat_file)
+      ll_file <- data.table(fread(lonlat_file))
+
       if (any(c("station", "lon", "lat") %notin% colnames(ll_file))) {
          stop(
             "The csv file of weather station coordinates should contain ",
@@ -246,10 +247,11 @@ format_weather <- function(x,
       }
 
       r_num <-
-         which(as.character(ll_file[, station]) ==
-                  as.character(unique(x[, get(station)])))
-      x[, lat := rep(ll_file[r_num, lat], nrow(x))]
-      x[, lon := rep(ll_file[r_num, lon], nrow(x))]
+         which(as.character(ll_file[, "station"]) ==
+                  as.character(unique(x[, station])))
+
+      x$lat <- rep(ll_file[r_num, "lat"], nrow(x))
+      x$lon <- rep(ll_file[r_num, "lon"], nrow(x))
    }
 
    # If lat and long are specified as NA
