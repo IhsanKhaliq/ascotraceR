@@ -3,25 +3,26 @@
 #' 'spores_each_wet_hour()' calcutates number of conidia dispersed during each
 #' wet hour when rainfall threshold is reached
 #'
-#'  @param data_line??
-#'  @param newly_infected_list??
-#'  @param average_wind_speed_in_hour Numeric value in m/s
-#'  @param wind_direction_in_hour Numeric value in degrees
-#' @param spores_from_1_element ??
+#' @param h hour in the day which the spores for each wet hour are calculated
+#' @param weather_hourly hourly weather for only the day for which the spores are being estimated
 #' @param infective_elements_list ??
 #' @keywords internal
 #' @noRd
 
-spores_each_wet_hour <- function(data_line, hour) {
+
+spores_each_wet_hour <- function(h,
+                                 weather_hourly,
+                                 infective_elements_list) {
+
   newly_infected_list <- vector(mode = "list")
 
-  rain_column <- hour + 4
-  rain_in_hour <-
-    weather_data[data_line, "rainColumn"]
-  average_wind_speed_in_hour = weather_data[data_line, "rain_column"] # [[2]]
-  wind_direction_in_hour = weather_data[data_line, "rain_column"] #[[4]]
-  stdev_wind_direction_in_hour = weather_data[data_line, "rain_column"] #[[5]]
-  for (walrus in 1:length(infective_elements_list)) {
+  # obtain weather data for hour_i
+  rain_in_hour <- weather_hourly[h, "rain"]
+  average_wind_speed_in_hour <- weather_hourly[h, "ws"]
+  wind_direction_in_hour = weather_hourly[h, "wd"]
+  stdev_wind_direction_in_hour = weather_hourly[h, "wd_sd"]
+
+  for (i_source in 1:length(infective_elements_list)) {
     newly_infected_list <- c(
       newly_infected_list,
       spores_from_1_element(
