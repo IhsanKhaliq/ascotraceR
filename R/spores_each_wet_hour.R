@@ -42,7 +42,6 @@ spores_each_wet_hour <- function(h,
 
   newly_infected_list <-
     apply(paddock_infected, 1, spores_from_1_element,
-          source_address = c(paddock_infected[["x"]],paddock_infected[["y"]]),
           max_interception_probability = max_interception_probability,
           rain_in_hour = rain_in_hour,
           wind_direction_in_hour = wind_direction_in_hour,
