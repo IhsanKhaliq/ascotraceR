@@ -8,8 +8,7 @@
 #' @return a double providing the potentially infective spores at the input coordinates
 #'
 #' @examples
-potentially_effective_spores <- function(infected_source_address,
-                                         sporesPerInfectiveGPPerWetHour,
+potentially_effective_spores <- function(sporesPerInfectiveGPPerWetHour,
                                          max_interception_probability,
                                          paddock_infected_gp) {
   if (paddock_infected_gp <= 0) {
