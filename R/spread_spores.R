@@ -16,9 +16,11 @@ spread_spores <-
         )
       )
 
-    for(hour in 1:wet_hours){
+    for(hour in which(weather_hourly[["rain"]] >= 0.2)){
       newlyInfectedList <- c(newlyInfectedList,
-                             spores_each_wet_hour())
+                             spores_each_wet_hour(h = hour,
+                                                  weather_hourly = weather_hourly,
+                                                  max_interception_probability = max_interception_probability))
     }
 
   }
