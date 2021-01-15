@@ -1,5 +1,8 @@
-#' Determines??
+#' Infective spores per unit area
 #'
+#' Returns the number of `spore_packets` as a proportion of the spore aggregation limit (spores_per_packet).
+#' A `spore_packets` being the number of spores dispersed per growing point which is capable of causing
+#' infection on a uninfected growing point.
 #' 'spores_from_1_element()' calculates conidia dispersed from??
 #' @param source_address where conidia dispersal originates
 #' @param potentially_effective_spores conidia with the ability to cause infection
@@ -11,28 +14,50 @@
 #' @param target_address where conidia land
 #' @param new_infections new lesions
 #' @param adjus_for_interception ??
+#' @param spore_aggregation_limit When spores/summary unit (n) is <= this value n spores
+#'  are produced as individuals.  When greater they are produced in sporeAggregationLimit
+#'  groups of sporeAggregationLimit spores  default: \code{1000}
+#' @param rain_cauchy_parameter parameter used in the cauchy distribution used in
+#'  determining the spread of spores due to rain splashes. default: \code{0.5}
 #' @keywords internal
 #' @noRd
 spores_from_1_element <-
-  function(source_address,
+  function(paddock_source,
+           sporesPerInfectiveGPPerWetHour = 0.15,
+           max_interception_probability,
            rain_in_hour,
            wind_direction_in_hour,
            average_wind_speed_in_hour,
-           stdev_wind_direction_in_hour) {
-    spore_packets <- potentially_effective_spores[source_address]
+           stdev_wind_direction_in_hour,
+           spore_aggregation_limit = 1000,
+           rain_cauchy_parameter = 0.5,
+           new_infections) {
+
+    # this might be able to be calculated at the spread_spores level, and If statement should come first
+    # given that it is if == 0
+    spore_packets <- potentially_effective_spores(sporesPerInfectiveGPPerWetHour = sporesPerInfectiveGPPerWetHour,
+                                                  max_interception_probability = max_interception_probability,
+                                                  paddock_source["infected_gp"])
+
+    degree <- round(pi,6)/180
+
+
     if (spore_packets > spore_aggregation_limit) {
       spores_per_packet <- spore_packets / spore_aggregation_limit
       spore_packets <- spore_aggregation_limit
     } else{
       spores_per_packet = 1
     }
-    for (n in spore_packets) {
+
+    # this for loop needs improvement so it is not growing a data.table
+    for (n in 1:spore_packets) {
       wind_d <- wind_distance(average_wind_speed_in_hour)
       wind_a <-
         wind_angle(wind_direction_in_hour, stdev_wind_direction_in_hour)
       splash_d <- splash_distance(rain_cauchy_parameter)
-      splash_a <- splash_angle
+      splash_a <- splash_angle()
 
+      # Check this is correct use of cos and sin from blackspot package
       width_distance <-
         wind_d * cos(wind_a * degree) +
         splash_d * cos(splash_a * degree)
@@ -43,12 +68,11 @@ spores_from_1_element <-
 
       target_address <-
         address_from_centre_distance(c(width_distance, length_distance),
-                                     source_address)
+                                     paddock_source[,c("x","y")])
 
       data.table::rbindlist(new_infections, c(target_address, spores_per_packet)) # needs double checking
     }
 
-    new_infections <- wrap_addresses(new_infections)
     return(adjust_for_interception(new_infections))
 
   }
