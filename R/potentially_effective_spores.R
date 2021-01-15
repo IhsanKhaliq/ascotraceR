@@ -1,3 +1,13 @@
+#' Estimate the potentially effective spore
+#'
+#' @param infected_source_address vector of length two giving the paddock coordinates with ascochyta infection
+#' @param sporesPerInfectiveGPPerWetHour estimated number of spores produced in one hour from a single chickpea growing point
+#' @param max_interception_probability maximum interception probability
+#' @param paddock_infected_gp
+#'
+#' @return a double providing the potentially infective spores at the input coordinates
+#'
+#' @examples
 potentially_effective_spores <- function(infected_source_address,
                                          sporesPerInfectiveGPPerWetHour,
                                          max_interception_probability,
