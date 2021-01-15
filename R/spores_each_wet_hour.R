@@ -12,9 +12,8 @@
 
 spores_each_wet_hour <- function(h,
                                  weather_hourly,
-                                 paddock) {
-
-  newly_infected_list <- vector(mode = "list")
+                                 paddock,
+                                 max_interception_probability) {
 
   # obtain weather data for hour_i
   rain_in_hour <- weather_hourly[h, "rain"]
@@ -22,6 +21,7 @@ spores_each_wet_hour <- function(h,
   wind_direction_in_hour = weather_hourly[h, "wd"]
   stdev_wind_direction_in_hour = weather_hourly[h, "wd_sd"]
 
+  # set a new vector of infected coordinates
   newly_infected_list <- vector(length = sum(paddock$infected))
 
   # this could be changed to an apply function
@@ -29,13 +29,26 @@ spores_each_wet_hour <- function(h,
     newly_infected_list <- c(
       newly_infected_list,
       spores_from_1_element(
-        paddock[i_source, c("x", "y")],
-        rain_in_hour,
-        wind_direction_in_hour,
-        average_wind_speed_in_hour,
-        stdev_wind_direction_in_hour
+        source_address = paddock[i_source, c("x", "y")],
+        rain_in_hour = rain_in_hour,
+        wind_direction_in_hour = wind_direction_in_hour,
+        average_wind_speed_in_hour = average_wind_speed_in_hour,
+        stdev_wind_direction_in_hour = stdev_wind_direction_in_hour
       )
     )
   }
+
+  paddock_infected <- paddock[which(paddock$infected),]
+
+  newly_infected_list <-
+    apply(paddock_infected, 1, spores_from_1_element,
+          source_address = c(paddock_infected[["x"]],paddock_infected[["y"]]),
+          max_interception_probability = max_interception_probability,
+          rain_in_hour = rain_in_hour,
+          wind_direction_in_hour = wind_direction_in_hour,
+          average_wind_speed_in_hour = average_wind_speed_in_hour,
+          stdev_wind_direction_in_hour = stdev_wind_direction_in_hour)
+
+
   return(newly_infected_list)
 }
