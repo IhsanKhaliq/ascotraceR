@@ -1,7 +1,7 @@
 #' Simulates the spread of Ascochyta blight in a chickpea field
 #'
-#' `trace_asco` estimates the spatial spread through a chickpea crop
-#'   during the growing season.
+#' `trace_asco` simulates the spatiotemporal development of Ascochyta blight in a chickpea field
+#' over a growing season
 #'
 #' @param weather weather data to inform the disease dynamics and crop
 #'  maturity through the chickpea growing season.
