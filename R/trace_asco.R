@@ -1,4 +1,4 @@
-#' Estimate the spread of ascochyta blight on chickpea
+#' Simulates the spread of Ascochyta blight in a chickpea field
 #'
 #' `trace_asco` estimates the spatial spread through a chickpea crop
 #'   during the growing season.
