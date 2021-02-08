@@ -4,8 +4,8 @@
 #' over a growing season
 #'
 #' @param weather weather data, recorded by a local weather station, over a growing season for the model operation
-#' @param paddock_length length of paddock in meters (y)
-#' @param paddock_width width of paddock in meters (x)
+#' @param paddock_length length of a paddock in metres (y)
+#' @param paddock_width width of a paddock in metres (x)
 #' @param sowing_date a character string of a date value indicating sowing
 #'  date of chickpea seed and the start of the Ascochyta tracer model. Preferably
 #'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
