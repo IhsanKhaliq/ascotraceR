@@ -3,15 +3,17 @@
 #' `trace_asco` simulates the spatiotemporal development of Ascochyta blight in a chickpea field
 #' over a growing season
 #'
-#' @param weather weather data, recorded by a local weather station, over a growing season for the model operation
+#' @param weather weather data, recorded by a local weather station, over a chickpea
+#' growing season for the model operation
 #' @param paddock_length length of a paddock in metres (y)
 #' @param paddock_width width of a paddock in metres (x)
 #' @param sowing_date indicates the date at which chickpea crop is sown, which is also the
-#' the starting date of the Ascotracer model. Date value should preferably be
+#' the start date of the Ascotracer model operation. Date value should preferably be
 #'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-06-27}.
-#' @param harvest_date a character string of a date value indicating crop maturity
-#'  and the last day to run the Ascochyta tracer model. Preferably in
-#'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
+#' @param harvest_date indicates the date at which chickpea crop is harvested,
+#'  which is also the last day of the Ascotracer model operation. Date values should
+#'  preferably be in
+#'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-10-27}.
 #' @param seedling_rate Chickpea plants per square meter. Defaults to \code{40}
 #' @param gp_rr Chickpea growing points (meristems) replication rate as a
 #'  proportion of one per degree day. Defaults to \code{0.0065}
