@@ -6,11 +6,9 @@
 #' @param weather weather data, recorded by a local weather station, over a growing season for the model operation
 #' @param paddock_length length of a paddock in metres (y)
 #' @param paddock_width width of a paddock in metres (x)
-#' @param sowing_date a character string of a date value indicating sowing
-#'  date of chickpea seed and the start of the Ascochyta tracer model. Preferably
-#'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
-#'  Assumes there is sufficient soil moisture to induce germination and start the
-#'  crop growing season.
+#' @param sowing_date indicates the date at which chickpea crop is sown, which is also the
+#' the starting date of the Ascotracer model. Date value should preferably be
+#'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-06-27}.
 #' @param harvest_date a character string of a date value indicating crop maturity
 #'  and the last day to run the Ascochyta tracer model. Preferably in
 #'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
