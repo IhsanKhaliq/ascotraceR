@@ -18,16 +18,15 @@
 #' square metre. Defaults to \code{40}
 #' @param gp_rr refers to rate of increase in chickpea growing points
 #' per degree Celsius per day. Defaults to \code{0.0065}
-#' @param epidemic_foci vector of two integers ("x" and "y") indicating the
-#'  paddock coordinates which will serve as the initial infection site, and
-#'  from which the epidemic will spread. Defaults to \code{"random"}, which
-#'  chooses coordinates at random.
-#' @param latent_period_cdd Latent period in cumulative degree days (sum of
-#'  daily temperature means) between infection and production of lesions on a
-#'  susceptible growing. Defaults to \code{200}
+#' @param primary_infection_foci it refers to the inoculated quadrat
+#' located at the centre of the paddock from where disease spreads
+#' Defaults to \code{"centre"}
+#' @param latent_period_cdd latent period in cumulative degree days (sum of
+#'  daily temperature means) is the period between infection and production of
+#'  lesions on susceptible growing points. Defaults to \code{200}
 #'
-#' @return a x y `data.frame` providing the paddock coordinates and estimated
-#'  severity of ascochyta at the respectic location
+#' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
+#' chickpea paddock
 #' @export
 #'
 #' @examples
@@ -45,7 +44,7 @@ trace_asco <- function(weather,
                        epidemic_start,
                        seeding_rate = 40,
                        gp_rr = 0.0065,
-                       epidemic_foci = "random",
+                       primary_infection_foci = "centre",
                        latent_period_cdd = 200){
 
   # Time and date checks
@@ -55,9 +54,9 @@ trace_asco <- function(weather,
   paddock <- expand.grid(x = 1:paddock_width,
                          y = 1:paddock_length)
 
-  # sample a paddock location randomly if a starting foci is not given
-  if(epidemic_foci == "random") {
-    epidemic_foci <-
+
+  if(primary_infection_foci == "centre") {
+    primary_infection_foci <-
       unlist(paddock[sample(seq_len(nrow(paddock)),
                                size = 1),
                         c("x", "y")])
