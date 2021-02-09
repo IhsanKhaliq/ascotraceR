@@ -41,7 +41,7 @@ trace_asco <- function(weather,
                        paddock_width,
                        sowing_date,
                        harvest_date,
-                       epidemic_start,
+                       initial_infection,
                        seeding_rate = 40,
                        gp_rr = 0.0065,
                        primary_infection_foci = "centre",
@@ -85,7 +85,7 @@ trace_asco <- function(weather,
   for(i in time_increments){
 
     # skip time increment if epidemic_start is after the sowing date
-    if(i < epidemic_start) next
+    if(i < initial_infection) next
 
     # This function or line of code is redundant given this model works
     #  on a 1x1m grid and we do not want to wrap address
