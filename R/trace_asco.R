@@ -23,8 +23,8 @@
 #'  from which the epidemic will spread. Defaults to \code{"random"}, which
 #'  chooses coordinates at random.
 #' @param latent_period_cdd Latent period in cumulative degree days (sum of
-#'  daily temperature means) between spores landing on a susceptible growing
-#'  point and symptoms being observed. Defaults to \code{200}
+#'  daily temperature means) between infection and production of lesions on a
+#'  susceptible growing. Defaults to \code{200}
 #'
 #' @return a x y `data.frame` providing the paddock coordinates and estimated
 #'  severity of ascochyta at the respectic location
@@ -43,7 +43,7 @@ trace_asco <- function(weather,
                        sowing_date,
                        harvest_date,
                        epidemic_start,
-                       seedling_rate = 40,
+                       seeding_rate = 40,
                        gp_rr = 0.0065,
                        epidemic_foci = "random",
                        latent_period_cdd = 200){
