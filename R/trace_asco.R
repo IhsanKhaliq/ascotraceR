@@ -84,7 +84,7 @@ trace_asco <- function(weather,
 
   for(i in time_increments){
 
-    # skip time increment if epidemic_start is after the sowing date
+    # skip time increment if initial_infection is after the sowing date
     if(i < initial_infection) next
 
     # This function or line of code is redundant given this model works
