@@ -14,7 +14,8 @@
 #'  which is also the last day of the Ascotracer model operation. Date values should
 #'  preferably be in
 #'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-10-27}.
-#' @param seedling_rate Chickpea plants per square meter. Defaults to \code{40}
+#' @param seeding_rate indicate the rate at which chickpea seed is sown per
+#' square metre. Defaults to \code{40}
 #' @param gp_rr Chickpea growing points (meristems) replication rate as a
 #'  proportion of one per degree day. Defaults to \code{0.0065}
 #' @param epidemic_foci vector of two integers ("x" and "y") indicating the
