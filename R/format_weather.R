@@ -2,7 +2,7 @@
 #'  model
 #'
 #' Formats raw weather data into an object suitable for use in
-#'  \code{\link{trace_asco}}, ensuring that the supplied weather data meet
+#'  \code{\link{trace_asco}} function ensuring that the supplied weather data meet
 #'  the requirements of the model to run.
 #'  Internal support for multithreaded operations is provided through
 #'   \CRANpkg{future}.  If more than one station is present, the process
@@ -21,22 +21,22 @@
 #' @param mm column name or index in `x` that refers to the minute when the
 #'  weather was logged.
 #' @param POSIXct_time column name or index in `x` which contains a `POSIXct`
-#'  formatted time, this can be used instead of arguments `YYYY`, `MM`, `DD`,
+#'  formatted time. This can be used instead of arguments `YYYY`, `MM`, `DD`,
 #'  `hh`, `mm.`
 #' @param time_zone time zone (Olsen time zone format) where the weather station
 #'  is located. May be in a column or supplied as a character string.
 #'  Optional, see also `r`. See details.
-#' @param rain column name or index in `x` that refers rainfall in millimetres.
-#' @param ws column name or index in `x` that refers wind speed in km / h.
-#' @param wd column name or index in `x` that refers wind direction in degrees.
-#' @param wd_sd column name or index in `x` that refers wind speed in km / h,
+#' @param rain column name or index in `x` that refers to rainfall in mm.
+#' @param ws column name or index in `x` that refers to wind speed in km / h.
+#' @param wd column name or index in `x` that refers to wind direction in degrees.
+#' @param wd_sd column name or index in `x` that refers to wind speed in km / h
 #'  character.  This is only applicable if weather data is already summarised to
 #'  hourly increments. See details.
 #' @param station column name or index in `x` that refers to the weather station
 #'  name or identifier. See details.
-#' @param lon column name or index in `x` that refers to weather station
+#' @param lon column name or index in `x` that refers to weather station's
 #'  longitude.  See details.
-#' @param lat column name or index in `x` that refers to weather station
+#' @param lat column name or index in `x` that refers to weather station's
 #'  latitude.  See details.
 #' @param r Spatial raster which is intended to be used with this weather data
 #'  in \code{\link{run_blackspot}}. Used to fetch time_zone if it is not
