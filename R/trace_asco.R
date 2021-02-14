@@ -1,12 +1,12 @@
-#' Estimate the spread of ascochyta blight on chickpea
+#' Simulates the spread of Ascochyta blight in a chickpea field
 #'
-#' `trace_asco` estimates the spatial spread through a chickpea crop
-#'   during the growing season.
+#' `trace_asco` simulates the spatiotemporal development of Ascochyta blight in a chickpea field
+#' over a growing season
 #'
-#' @param weather weather data to inform the disease dynamics and crop
-#'  maturity through the chickpea growing season.
-#' @param paddock_length length of paddock in meters (y)
-#' @param paddock_width width of paddock in meters (x)
+#' @param weather weather data, recorded by a local weather station, over a chickpea
+#' growing season for the model operation
+#' @param paddock_length length of a paddock in metres (y)
+#' @param paddock_width width of a paddock in metres (x)
 #' @param sowing_date a character string of a date value indicating sowing
 #'  date of chickpea seed and the start of the Ascochyta tracer model. Preferably
 #'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
@@ -15,26 +15,23 @@
 #' @param harvest_date a character string of a date value indicating crop maturity
 #'  and the last day to run the Ascochyta tracer model. Preferably in
 #'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
-#' @param seedling_rate Chickpea plants per square meter. Defaults to \code{40}
-#' @param gp_rr Chickpea growing points (meristems) replication rate as a
-#'  proportion of one per degree day. Defaults to \code{0.0065}.
+#' @param seeding_rate indicate the rate at which chickpea seed is sown per
+#' square metre. Defaults to \code{40}
+#' @param gp_rr refers to rate of increase in chickpea growing points
+#' per degree Celsius per day. Defaults to \code{0.0065}
 #' @param max_gp Maximum number of chickpea growing points (meristems) allowed
 #'  per square meter. Defaults to \code{15000}.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems)
 #'  which develop per day, per square meter. Defaults to \code{350}.
-#' @param min_new_gp_for_half_limit NEEDS TO BE CLARIFIED Maximum number of new
-#'  chickpea growing points (meristems) which develop per day, per square meter.
-#'  Defaults to \code{5}.
-#' @param epidemic_foci vector of two integers ("x" and "y") indicating the
-#'  paddock coordinates which will serve as the initial infection site, and
-#'  from which the epidemic will spread. Defaults to \code{"random"}, which
-#'  chooses coordinates at random.
-#' @param latent_period_cdd Latent period in cumulative degree days (sum of
-#'  daily temperature means) between spores landing on a susceptible growing
-#'  point and symptoms being observed. Defaults to \code{200}
+#' @param primary_infection_foci it refers to the inoculated quadrat
+#' located at the centre of the paddock from where disease spreads
+#' Defaults to \code{"centre"}
+#' @param latent_period_cdd latent period in cumulative degree days (sum of
+#'  daily temperature means) is the period between infection and production of
+#'  lesions on susceptible growing points. Defaults to \code{200}
 #'
-#' @return a x y `data.frame` providing the paddock coordinates and estimated
-#'  severity of ascochyta at the respectic location
+#' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
+#' chickpea paddock
 #' @export
 #'
 #' @examples
@@ -49,17 +46,17 @@ trace_asco <- function(weather,
                        paddock_width,
                        sowing_date,
                        harvest_date,
-                       epidemic_start,
-                       seedling_rate = 40,
+                       initial_infection,
+                       seeding_rate = 40,
                        gp_rr = 0.0065,
                        max_gp = 15000,
                        max_new_gp = 350,
                        min_gp_for_half_limit = 5, # needs a new name
-                       epidemic_foci = "random",
                        latent_period_cdd = 200,
                        time_zone = "UTC",
                        spore_interception_multiplier = 0.00006
                        ){
+                       primary_infection_foci = "centre",
 
   # check date inputs for validity -----------------------------------------
   .vali_date <- function(x) {
