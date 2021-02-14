@@ -25,7 +25,7 @@ test_that("trace_asco runs without error" , {
       weather = weather_dat,
       paddock_length = 100,
       paddock_width = 100,
-      epidemic_start = "1998-03-10",
+      initial_infection = "1998-03-10",
       sowing_date = as.POSIXct("1998-03-09"),
       harvest_date = as.POSIXct("1998-03-12"),
       time_zone = "Australia/Perth"
@@ -41,7 +41,7 @@ ta1 <- trace_asco(
   weather = weather_dat,
   paddock_length = 100,
   paddock_width = 100,
-  epidemic_start = "1998-03-10",
+  initial_infection = "1998-03-10",
   sowing_date = as.POSIXct("1998-03-09"),
   harvest_date = as.POSIXct("1998-03-12"),
   time_zone = "Australia/Perth"
@@ -80,13 +80,13 @@ test_that("trace_asco daily_vals the following contents", {
 
 
 # Test for stop error is triggered
-test_that("trace_asco stops if epidemic_start is earlier than sowing_start",{
+test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
   expect_error(
   ta1 <- trace_asco(
     weather = weather_dat,
     paddock_length = 100,
     paddock_width = 100,
-    epidemic_start = "1998-03-09",
+    initial_infection = "1998-03-09",
     sowing_date = as.POSIXct("1998-03-09"),
     harvest_date = as.POSIXct("1998-03-12"),
     time_zone = "Australia/Perth"

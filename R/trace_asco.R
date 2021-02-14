@@ -83,8 +83,8 @@ trace_asco <- function(weather,
     }
 
   # convert times to POSIXct -----------------------------------------------
-  epidemic_start <-
-    lubridate::ymd(.vali_date(epidemic_start), tz = time_zone) + lubridate::dhours(0)
+  initial_infection <-
+    lubridate::ymd(.vali_date(initial_infection), tz = time_zone) + lubridate::dhours(0)
 
   sowing_date <-
     lubridate::ymd(.vali_date(sowing_date), tz = time_zone) + lubridate::dhours(0)
@@ -93,9 +93,9 @@ trace_asco <- function(weather,
     lubridate::ymd(.vali_date(harvest_date), tz = time_zone) + lubridate::dhours(23)
 
   # check epidemic start is after sowing date
-  if(epidemic_start <= sowing_date){
-    stop("eppidemic_start occurs prior to sowing_date\n
-         please submit an epidemic_start date which occurs after crop_sowing")
+  if(initial_infection <= sowing_date){
+    stop("initial_infection occurs prior to sowing_date\n
+         please submit an initial_infection date which occurs after crop_sowing")
   }
 
 
@@ -140,8 +140,8 @@ trace_asco <- function(weather,
 
   for(i in seq_along(time_increments)){
 
-    # skip time increment if epidemic_start is after the sowing date
-    if(time_increments[i] < epidemic_start) next
+    # skip time increment if initial_infection is after the sowing date
+    if(time_increments[i] < initial_infection) next
 
     # This function or line of code is redundant given this model works
     #  on a 1x1m grid and we do not want to wrap address
