@@ -112,15 +112,20 @@ trace_asco <- function(weather,
   if(primary_infection_foci == "random") {
     primary_infection_foci <-
       paddock[sample(seq_len(nrow(paddock)),
-                               size = 1),
-                        c("x", "y")]
+                     size = 1),
+              c("x", "y")]
 
   }
-  if(primary_infection_foci == "center") {
+  if (primary_infection_foci == "center") {
     primary_infection_foci <-
-      paddock[as.integer(round(paddock_width/2)),
-              as.integer(round(paddock_length/2))]
+      paddock[as.integer(round(paddock_width / 2)),
+              as.integer(round(paddock_length / 2))]
 
+  } else{
+    if (length(primary_infection_foci) != 2 |
+        is.numeric(primary_infection_foci) == FALSE) {
+      stop("primary_infection_foci should be supplied as a numberic vector of length two")
+    }
   }
 
 
