@@ -54,9 +54,10 @@ trace_asco <- function(weather,
                        min_gp_for_half_limit = 5, # needs a new name
                        latent_period_cdd = 200,
                        time_zone = "UTC",
-                       spore_interception_multiplier = 0.00006
+                       spore_interception_multiplier = 0.00006,
+                       primary_infection_foci = "centre"
                        ){
-                       primary_infection_foci = "centre",
+
 
   # check date inputs for validity -----------------------------------------
   .vali_date <- function(x) {
@@ -108,13 +109,20 @@ trace_asco <- function(weather,
   paddock[,infected_gp := NA] # Needs to be updated!!!!
 
   # sample a paddock location randomly if a starting foci is not given
-  if(epidemic_foci == "random") {
-    epidemic_foci <-
+  if(primary_infection_foci == "random") {
+    primary_infection_foci <-
       paddock[sample(seq_len(nrow(paddock)),
                                size = 1),
                         c("x", "y")]
 
   }
+  if(primary_infection_foci == "center") {
+    primary_infection_foci <-
+      paddock[as.integer(round(paddock_width/2)),
+              as.integer(round(paddock_length/2))]
+
+  }
+
 
   # Notes: as area is 1m x 1m many computation in the mathematica
   #  code are redundant because they are being multiplied by 1.
