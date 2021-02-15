@@ -14,4 +14,10 @@ test1 <-
 
 test_that("function returns the correct probabilities", {
   expect_equal(test1, 1)
+
+})
+
+test_that("correct 'type' and length is returned", {
+  expect_type(test1, "double")
+  expect_length(test1, 1)
 })
