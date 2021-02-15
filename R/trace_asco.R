@@ -12,8 +12,8 @@
 #'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #'  Assumes there is sufficient soil moisture to induce germination and start the
 #'  crop growing season.
-#' @param harvest_date a character string of a date value indicating crop maturity
-#'  and the last day to run the Ascochyta tracer model. Preferably in
+#' @param harvest_date a character string of a date value indicating harvest date of
+#' chickpea crop, which is also the last day to run the Ascotracer model. Preferably in
 #'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #' @param seeding_rate indicate the rate at which chickpea seed is sown per
 #' square metre. Defaults to \code{40}
