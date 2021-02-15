@@ -130,7 +130,7 @@ trace_asco <- function(weather,
   }
 
   # calculate additional parameters
-  spore_interception_multiplier <-
+  spore_interception_parameter <-
     0.00006 * (max_gp_lim/max_new_gp)
 
   # define max_gp
@@ -177,7 +177,7 @@ trace_asco <- function(weather,
                        max_gp = max_gp,
                        max_new_gp = max_new_gp,
                        paddock = paddock,
-                       spore_interception_multiplier = spore_interception_multiplier)
+                       spore_interception_parameter = spore_interception_parameter)
 
     # temporary line of code to test building of daily_vals in loop
     daily_vals_list <- day_out
