@@ -16,8 +16,9 @@ one_day <- function(i_date,
                     weather_dat,
                     gp_rr,
                     max_gp,
+                    max_new_gp,
                     paddock,
-                    spore_interception_multiplier) {
+                    spore_interception_parameter) {
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
@@ -60,7 +61,11 @@ one_day <- function(i_date,
   # Update growing points for paddock coordinates
   if(i_wet_hours > 0){
     spread_spores(wet_hours = wet_hours,
-                  weather_hourly = weather_day)
+                  weather_hourly = weather_day,
+                  paddock = paddock,
+                  max_gp =  max_gp,
+                  max_new_gp = max_new_gp,
+                  spore_interception_parameter = spore_interception_parameter)
     interception_probability()
   }
 
