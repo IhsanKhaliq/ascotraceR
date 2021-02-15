@@ -4,19 +4,51 @@
 \alias{trace_asco}
 \title{Estimate the spread of ascochyta blight on chickpea}
 \usage{
-trace_asco(weather, paddock_length, paddock_width, sowing_date)
+trace_asco(
+  weather,
+  paddock_length,
+  paddock_width,
+  sowing_date,
+  harvest_date,
+  epidemic_start,
+  seedling_rate = 40,
+  gp_rr = 0.0065,
+  epidemic_foci = "random",
+  latent_period_cdd = 200,
+  time_zone = "UTC"
+)
 }
 \arguments{
 \item{weather}{weather data to inform the disease dynamics and crop
 maturity through the chickpea growing season.}
 
-\item{paddock_length}{length of paddock in meters (x)}
+\item{paddock_length}{length of paddock in meters (y)}
 
-\item{paddock_width}{width of paddock in meters (y)}
+\item{paddock_width}{width of paddock in meters (x)}
 
-\item{sowing_date}{sowing date of chickpea seed and the start of the
-Ascochyta tracer model. Assumes there is sufficient soil moisture to
-induce germination}
+\item{sowing_date}{a character string of a date value indicating sowing
+date of chickpea seed and the start of the Ascotracer model. Preferably
+in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
+Assumes there is sufficient soil moisture to induce germination and start the
+crop growing season.}
+
+\item{harvest_date}{a character string of a date value indicating crop maturity
+and the last day to run the Ascotracer model. Preferably in
+\acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.}
+
+\item{seedling_rate}{Chickpea plants per square meter. Defaults to \code{40}}
+
+\item{gp_rr}{Chickpea growing points (meristems) replication rate as a
+proportion of one per degree day. Defaults to \code{0.0065}}
+
+\item{epidemic_foci}{vector of two integers ("x" and "y") indicating the
+paddock coordinates which will serve as the initial infection site, and
+from which the epidemic will spread. Defaults to \code{"random"}, which
+chooses coordinates at random.}
+
+\item{latent_period_cdd}{Latent period in cumulative degree days (sum of
+daily temperature means) between spores landing on a susceptible growing
+point and symptoms being observed. Defaults to \code{200}}
 }
 \value{
 a x y \code{data.frame} providing the paddock coordinates and estimated

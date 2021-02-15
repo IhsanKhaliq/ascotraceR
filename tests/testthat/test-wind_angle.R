@@ -10,7 +10,7 @@ test_that("wind_angle returns a number between 0 and 360", {
 
   # test that function returns a number above 0
   expect_true(w_a >= 0)
-  # add extra comment
+ 
 
 })
 

@@ -19,13 +19,20 @@ Authors@R:
          comment = c(ORCID = "0000-0002-0061-8359")),
     person("GRDC Project USQ1903-003RTX", role = c("fnd", "ctb")),
     person("University of Southern Queensland", role = "cph"))
-Description: A spatiotemporal model that simulates the spread of Ascochyta blight
-             in chickpea fields based on location specific weather condition.
+Description: A spatiotemporal model that simulates the spread of Ascochyta blight in chickpea fields based on location specific weather condition.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
-    testthat
-
+    testthat,
+    knitr
+Imports:
+  data.table,
+  lubridate,
+  dplyr,
+  raster
+VignetteBuilder: knitr
+Depends: 
+    R (>= 3.5.0)
