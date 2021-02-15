@@ -104,8 +104,8 @@ trace_asco <- function(weather,
   paddock <- as.data.table(expand.grid(x = 1:paddock_width,
                                        y = 1:paddock_length))
 
-  paddock[,new_gp := seedling_rate]
-  paddock[,noninfected_gp := seedling_rate]
+  paddock[,new_gp := seeding_rate]
+  paddock[,noninfected_gp := seeding_rate]
   paddock[,infected_gp := NA] # Needs to be updated!!!!
 
   # sample a paddock location randomly if a starting foci is not given
@@ -129,7 +129,7 @@ trace_asco <- function(weather,
   #  I will reduce the number of objects containing the same value,
   #  Below is a list of Mathematica values consolidated into 1
   #
-  # refUninfectiveGPs <- minGrowingPoints <- seedling_rate
+  # refUninfectiveGPs <- minGrowingPoints <- seeding_rate
 
   daily_vals_list <- list(
     i = sowing_date,   # day of the simulation (iterator)
@@ -137,8 +137,8 @@ trace_asco <- function(weather,
     cdd = 0, # cumulative degree days
     cwh = 0, # cumulative wet hours
     cr = 0,  # cumulative rainfall
-    gp_standard = seedling_rate, # standard number of growing points for 1m^2 if not inhibited by infection
-    new_gp = seedling_rate, # new nunmber of growing points for current iteration
+    gp_standard = seeding_rate, # standard number of growing points for 1m^2 if not inhibited by infection
+    new_gp = seeding_rate, # new nunmber of growing points for current iteration
     infected_coords = epidemic_foci # data.frame
     )
 
