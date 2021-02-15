@@ -27,13 +27,13 @@ maturity through the chickpea growing season.}
 \item{paddock_width}{width of paddock in meters (x)}
 
 \item{sowing_date}{a character string of a date value indicating sowing
-date of chickpea seed and the start of the Ascochyta tracer model. Preferably
+date of chickpea seed and the start of the Ascotracer model. Preferably
 in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 Assumes there is sufficient soil moisture to induce germination and start the
 crop growing season.}
 
 \item{harvest_date}{a character string of a date value indicating crop maturity
-and the last day to run the Ascochyta tracer model. Preferably in
+and the last day to run the Ascotracer model. Preferably in
 \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.}
 
 \item{seedling_rate}{Chickpea plants per square meter. Defaults to \code{40}}
