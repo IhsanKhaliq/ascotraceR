@@ -124,7 +124,7 @@ trace_asco <- function(weather,
   } else{
     if (length(primary_infection_foci) != 2 |
         is.numeric(primary_infection_foci) == FALSE) {
-      stop("primary_infection_foci should be supplied as a numberic vector of length two")
+      stop("primary_infection_foci should be supplied as a numeric vector of length two")
     }
   }
 
@@ -143,7 +143,7 @@ trace_asco <- function(weather,
     cwh = 0, # cumulative wet hours
     cr = 0,  # cumulative rainfall
     gp_standard = seeding_rate, # standard number of growing points for 1m^2 if not inhibited by infection
-    new_gp = seeding_rate, # new nunmber of growing points for current iteration
+    new_gp = seeding_rate, # new number of growing points for current iteration
     infected_coords = epidemic_foci # data.frame
     )
 
