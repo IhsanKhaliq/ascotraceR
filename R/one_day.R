@@ -16,7 +16,8 @@ one_day <- function(i_date,
                     weather_dat,
                     gp_rr,
                     max_gp,
-                    paddock) {
+                    paddock,
+                    spore_interception_multiplier) {
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
