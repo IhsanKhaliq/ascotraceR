@@ -19,7 +19,7 @@
 #' square metre. Defaults to \code{40}
 #' @param gp_rr refers to rate of increase in chickpea growing points
 #' per degree Celsius per day. Defaults to \code{0.0065}
-#' @param max_gp Maximum number of chickpea growing points (meristems) allowed
+#' @param max_gp_lim Maximum number of chickpea growing points (meristems) allowed
 #'  per square meter. Defaults to \code{15000}.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems)
 #'  which develop per day, per square meter. Defaults to \code{350}.
@@ -52,11 +52,10 @@ trace_asco <- function(weather,
                        initial_infection,
                        seeding_rate = 40,
                        gp_rr = 0.0065,
-                       max_gp = 15000,
+                       max_gp_lim = 15000,
                        max_new_gp = 350,
                        latent_period_cdd = 200,
                        time_zone = "UTC",
-                       spore_interception_multiplier = 0.00006,
                        primary_infection_foci = "random"
                        ){
 
@@ -130,6 +129,13 @@ trace_asco <- function(weather,
     }
   }
 
+  # calculate additional parameters
+  spore_interception_multiplier <-
+    0.00006 * (max_gp_lim/max_new_gp)
+
+  # define max_gp
+  max_gp <- max_gp_lim * (1 - exp(-0.138629 * seeding_rate))
+
 
   # Notes: as area is 1m x 1m many computation in the mathematica
   #  code are redundant because they are being multiplied by 1.
@@ -169,6 +175,7 @@ trace_asco <- function(weather,
                        weather_dat = weather,
                        gp_rr = gp_rr,
                        max_gp = max_gp,
+                       max_new_gp = max_new_gp,
                        paddock = paddock,
                        spore_interception_multiplier = spore_interception_multiplier)
 
