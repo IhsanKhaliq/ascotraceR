@@ -55,7 +55,7 @@ trace_asco <- function(weather,
                        latent_period_cdd = 200,
                        time_zone = "UTC",
                        spore_interception_multiplier = 0.00006,
-                       primary_infection_foci = "centre"
+                       primary_infection_foci = "random"
                        ){
 
 
