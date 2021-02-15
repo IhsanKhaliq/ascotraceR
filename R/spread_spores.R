@@ -1,8 +1,8 @@
 spread_spores <-
   function(wet_hours,
            paddock,
-           max_gp = 15000,
-           max_new_gp = 350,
+           max_gp,
+           max_new_gp,
            spore_interception_multiplier = 6e-05,
            weather_hourly) {
 
