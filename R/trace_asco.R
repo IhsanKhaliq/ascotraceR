@@ -8,12 +8,12 @@
 #' @param paddock_length length of a paddock in metres (y)
 #' @param paddock_width width of a paddock in metres (x)
 #' @param sowing_date a character string of a date value indicating sowing
-#'  date of chickpea seed and the start of the Ascochyta tracer model. Preferably
+#'  date of chickpea seed and the start of the Ascotracer model. Preferably
 #'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #'  Assumes there is sufficient soil moisture to induce germination and start the
 #'  crop growing season.
-#' @param harvest_date a character string of a date value indicating crop maturity
-#'  and the last day to run the Ascochyta tracer model. Preferably in
+#' @param harvest_date a character string of a date value indicating harvest date of
+#' chickpea crop, which is also the last day to run the Ascotracer model. Preferably in
 #'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #' @param seeding_rate indicate the rate at which chickpea seed is sown per
 #' square metre. Defaults to \code{40}
@@ -51,7 +51,6 @@ trace_asco <- function(weather,
                        gp_rr = 0.0065,
                        max_gp = 15000,
                        max_new_gp = 350,
-                       min_gp_for_half_limit = 5, # needs a new name
                        latent_period_cdd = 200,
                        time_zone = "UTC",
                        spore_interception_multiplier = 0.00006,
