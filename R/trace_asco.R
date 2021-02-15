@@ -29,6 +29,9 @@
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'  daily temperature means) is the period between infection and production of
 #'  lesions on susceptible growing points. Defaults to \code{200}
+#'  @param initial_infection refers to initial or primary infection on seedlings,
+#'  resulting in the production of infected growing points
+#'
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock
