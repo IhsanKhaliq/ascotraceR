@@ -51,7 +51,6 @@ trace_asco <- function(weather,
                        gp_rr = 0.0065,
                        max_gp = 15000,
                        max_new_gp = 350,
-                       min_gp_for_half_limit = 5, # needs a new name
                        latent_period_cdd = 200,
                        time_zone = "UTC",
                        spore_interception_multiplier = 0.00006,
