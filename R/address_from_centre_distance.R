@@ -1,4 +1,6 @@
-#' To be deleted after discussion
+#' Destination address from source address
+#'
+#' Utilises a source coordinate, a distance vector and angle, then returns the destination coordinate
 #'
 #' @keywords internal
 #' @noRd
