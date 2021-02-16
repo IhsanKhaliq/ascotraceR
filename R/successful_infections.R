@@ -1,9 +1,9 @@
 #' Indicates infections leading to disease or lesions development
 #'
-#' 'successful_infectoins()' determines successful infections. That is, infections
+#' 'successful_infections()' determines successful infections. That is, infections
 #'  that have developed into visible lesions
 #'
-#' @param spore_packet indicates??
+#' @param spore_packet a data.table with variables x, y and spores_per_packet
 #' @param spores_in_packet indictes??
 #' @param susceptible_growing_points are growing points suceptible to disease
 #' @param paddock_new_growing_points indicate??
@@ -12,9 +12,13 @@
 #' @keywords internal
 #' @noRd
 successful_infections <- function (spore_packet) {
-  address <- spore_packet[1] %>%
-    spores_in_packet <-  spore_packet[2] %>%
-      susceptible_growing_points <-
+
+  address <- c(spore_packet["x"],
+               spore_packet["y"])
+
+  spores_in_packet <-  spore_packet["spores_per_packet"]
+
+  susceptible_growing_points <-
         paddock_new_growing_points[address[1] %% address[2]]
       if (susceptible_growing_points < -0.5) {
         susceptible_growing_points <- ref_new_growing_points
