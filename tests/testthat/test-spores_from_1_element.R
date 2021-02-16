@@ -3,12 +3,7 @@ context("spores produced from a spatial unit with at least one infected growing 
 library(data.table)
 
 # import weather and filter to a single day with rain
-# load formatted weather data `newM_weather`
-load("R/sysdata.rda")
-
-#filter to day
-w_dat <- newM_weather[times == as.POSIXct("1998-09-02 02:00:00", tz = "Australia/Perth"),]
-
+w_dat <- read.csv(file = "tests/testthat/formatted_weather_one_day.csv", stringsAsFactors = FALSE)
 
 # makePaddock equivalent
 paddock <- as.data.table(expand.grid(x = 1:100,
