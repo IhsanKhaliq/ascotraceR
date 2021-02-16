@@ -28,12 +28,15 @@ paddock[, infected_gp := fifelse(x == primary_infection_foci[1,x] &
 
 paddock_infected <- paddock[infected_gp > 0,]
 
-apply(paddock_infected, 1, spores_from_1_element,
-                      sporesPerInfectiveGPPerWetHour = 0.15, # default parameter for the function
-                      max_interception_probability = 1, # parameter in potentially_effective_spores defined in spread_spores
-                      wind_direction_in_hour = w_dat[1,wd],
-                      average_wind_speed_in_hour = w_dat[1,ws],
-                      stdev_wind_direction_in_hour = w_dat[1,wd_sd],
-                      spore_aggregation_limit = 1000,
-                      rain_cauchy_parameter = 0.5
-                      )
+test1 <- apply(
+  X = paddock_infected,
+  MARGIN = 1,
+  FUN = spores_from_1_element,
+  sporesPerInfectiveGPPerWetHour = 0.15, # default parameter for the function
+  max_interception_probability = 1, # parameter in potentially_effective_spores defined in spread_spores
+  wind_direction_in_hour = w_dat[1, wd],
+  average_wind_speed_in_hour = w_dat[1, ws],
+  stdev_wind_direction_in_hour = w_dat[1, wd_sd],
+  spore_aggregation_limit = 1000,
+  rain_cauchy_parameter = 0.5
+)
