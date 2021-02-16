@@ -16,29 +16,30 @@ spores_each_wet_hour <- function(h,
                                  max_interception_probability) {
 
   # obtain weather data for hour_i
+
   rain_in_hour <- weather_hourly[h, "rain"]
   average_wind_speed_in_hour <- weather_hourly[h, "ws"]
   wind_direction_in_hour = weather_hourly[h, "wd"]
   stdev_wind_direction_in_hour = weather_hourly[h, "wd_sd"]
 
   # set a new vector of infected coordinates
-  newly_infected_list <- vector(length = sum(paddock$infected))
+  newly_infected_list <- vector(length = sum(paddock$infected_gp))
 
   # this could be changed to an apply function
-  for (i_source in which(paddock$infected)) {
-    newly_infected_list <- c(
-      newly_infected_list,
-      spores_from_1_element(
-        source_address = paddock[i_source, c("x", "y")],
-        rain_in_hour = rain_in_hour,
-        wind_direction_in_hour = wind_direction_in_hour,
-        average_wind_speed_in_hour = average_wind_speed_in_hour,
-        stdev_wind_direction_in_hour = stdev_wind_direction_in_hour
-      )
-    )
-  }
+  # for (i_source in which(paddock$infected)) {
+  #   newly_infected_list <- c(
+  #     newly_infected_list,
+  #     spores_from_1_element(
+  #       source_address = paddock[i_source, c("x", "y")],
+  #       rain_in_hour = rain_in_hour,
+  #       wind_direction_in_hour = wind_direction_in_hour,
+  #       average_wind_speed_in_hour = average_wind_speed_in_hour,
+  #       stdev_wind_direction_in_hour = stdev_wind_direction_in_hour
+  #     )
+  #   )
+  # }
 
-  paddock_infected <- paddock[which(paddock$infected),]
+  paddock_infected <- paddock[infected_gp > 0,]
 
   newly_infected_list <-
     apply(paddock_infected, 1, spores_from_1_element,
@@ -47,6 +48,11 @@ spores_each_wet_hour <- function(h,
           wind_direction_in_hour = wind_direction_in_hour,
           average_wind_speed_in_hour = average_wind_speed_in_hour,
           stdev_wind_direction_in_hour = stdev_wind_direction_in_hour)
+
+  newly_infected_list <- data.table::rbindlist(newly_infected_list)
+
+  # function brought out of spores_from_1_element
+  adjust_for_interception(new_infections)
 
 
   return(newly_infected_list)
