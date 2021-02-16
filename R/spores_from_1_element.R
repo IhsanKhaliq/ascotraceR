@@ -29,7 +29,7 @@ spores_from_1_element <-
            average_wind_speed_in_hour,
            stdev_wind_direction_in_hour,
            spore_aggregation_limit = 1000,
-           rain_cauchy_parameter = 0.5,
+           rain_cauchy_parameter = 0.5
            #new_infections
            ) {
 
@@ -49,9 +49,11 @@ spores_from_1_element <-
       spores_per_packet = 1
     }
 
+    if(spores_per_packet == 0){return(NULL)}
+
     # this for loop needs improvement so it is not growing a data.table
     target_coordinates <-
-      lapply(1:spore_packets, function() {
+      lapply(seq_len(spore_packets), function(x) {
         wind_d <- wind_distance(average_wind_speed_in_hour)
         wind_a <-
           wind_angle(wind_direction_in_hour, stdev_wind_direction_in_hour)
@@ -69,14 +71,14 @@ spores_from_1_element <-
 
         target_address <-
           address_from_centre_distance(c(width_distance, length_distance),
-                                       paddock_source[, c("x", "y")])
+                                       paddock_source[c("x", "y")])
         return(target_address)
 
         #data.table::rbindlist(new_infections, c(target_address, spores_per_packet)) # needs double checking
       })
 
     new_infections <- data.table::rbindlist(target_coordinates)
-    new_infections[,spores_per_packet := spores_per_packet]
+    new_infections$spores_per_packet <- spores_per_packet
 
     return(new_infections)
 # I think adjust_for_interception should be moved up to the
