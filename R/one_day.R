@@ -60,7 +60,7 @@ one_day <- function(i_date,
 
   # Update growing points for paddock coordinates
   if(i_wet_hours > 0){
-    spread_spores(wet_hours = wet_hours,
+    spread_spores(wet_hours = i_wet_hours,
                   weather_hourly = weather_day,
                   paddock = paddock,
                   max_gp =  max_gp,
