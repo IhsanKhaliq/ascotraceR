@@ -21,5 +21,9 @@ address_from_centre_distance <-
         "; start_address: ", start_address[1], ", ",  start_address[2]
       )
     }
+
+    # make destination a data table
+    data.table::data.table(x = destination[1],
+                           y = destination[2])
     return(destination)
   }
