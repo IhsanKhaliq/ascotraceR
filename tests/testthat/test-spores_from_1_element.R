@@ -3,7 +3,7 @@ context("spores produced from a spatial unit with at least one infected growing 
 library(data.table)
 
 # import weather and filter to a single day with rain
-w_dat <- read.csv(file = "tests/testthat/formatted_weather_one_day.csv", stringsAsFactors = FALSE)
+w_dat <- fread(file = "formatted_weather_one_day.csv")
 
 # makePaddock equivalent
 paddock <- as.data.table(expand.grid(x = 1:100,
