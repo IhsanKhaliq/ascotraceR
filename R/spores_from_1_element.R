@@ -49,7 +49,7 @@ spores_from_1_element <-
       spores_per_packet = 1
     }
 
-    if(spores_per_packet == 0){return(NULL)}
+    if(spore_packets == 0){return(NULL)}
 
     # this for loop needs improvement so it is not growing a data.table
     target_coordinates <-
@@ -76,6 +76,7 @@ spores_from_1_element <-
 
         #data.table::rbindlist(new_infections, c(target_address, spores_per_packet)) # needs double checking
       })
+
 
     new_infections <- data.table::rbindlist(target_coordinates)
     new_infections$spores_per_packet <- spores_per_packet
