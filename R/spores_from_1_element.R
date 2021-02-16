@@ -25,13 +25,13 @@ spores_from_1_element <-
   function(paddock_source,
            sporesPerInfectiveGPPerWetHour = 0.15,
            max_interception_probability,
-           rain_in_hour,
            wind_direction_in_hour,
            average_wind_speed_in_hour,
            stdev_wind_direction_in_hour,
            spore_aggregation_limit = 1000,
            rain_cauchy_parameter = 0.5,
-           new_infections) {
+           #new_infections
+           ) {
 
     # this might be able to be calculated at the spread_spores level, and If statement should come first
     # given that it is if == 0
