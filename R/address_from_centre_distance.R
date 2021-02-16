@@ -23,7 +23,7 @@ address_from_centre_distance <-
     }
 
     # make destination a data table
-    data.table::data.table(x = destination[1],
-                           y = destination[2])
+    destination <- data.table::data.table(x = destination[1],
+                                          y = destination[2])
     return(destination)
   }
