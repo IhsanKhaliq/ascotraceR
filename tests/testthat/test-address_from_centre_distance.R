@@ -16,7 +16,7 @@ test_that("test1 returns correct coordinates", {
 test2 <- address_from_centre_distance(offset_distance = c(-13, 20),
                                       start_address = c(50, 50))
 
-test_that("test1 returns correct coordinates with negatives", {
+test_that("test4 returns correct coordinates with negatives", {
   expect_equal(test2, c(37, 70))
   expect_length(test2, 2)
   expect_true(any(is.na(test2)) == FALSE)
@@ -24,13 +24,22 @@ test_that("test1 returns correct coordinates with negatives", {
 })
 
 test3 <-
-  address_from_centre_distance(offset_distance = c(-45.93146, -4.90950),
+  address_from_centre_distance(offset_distance = c(-45.93146,-4.90950),
                                start_address = c(50, 50))
 
-test_that("test1 returns correct coordinates with negatives and floating points",
+test_that("test3 returns correct coordinates with negatives and floating points",
           {
             expect_equal(test3, c(round(50 - 45.93146), round(50 - 4.90950)))
             expect_length(test3, 2)
             expect_true(any(is.na(test3)) == FALSE)
             expect_type(test3, "integer")
           })
+
+test_that("test4 returns an error", {
+  expect_error(address_from_centre_distance(
+    offset_distance = c(NA, 5),
+    start_address = c(50, 50)
+  ))
+})
+address_from_centre_distance(offset_distance = c(NA, 5),
+                             start_address = c(50, 50))
