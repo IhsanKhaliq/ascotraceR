@@ -5,6 +5,7 @@
 #' @keywords internal
 #' @noRd
 
+
 address_from_centre_distance <-
   function(offset_distance, start_address) {
     destination <- as.integer(c(
@@ -13,9 +14,12 @@ address_from_centre_distance <-
       start_address[2] +
         floor(0.5 + offset_distance[2])
     ))
-    if(any(is.na(destination))){
-      stop("address_from_centre_distance is returning NAs; check input coordinates\n
-           offset_distance: ",start_address, "start_address: ",start_address)
+    if (any(is.na(destination))) {
+      stop(
+        "address_from_centre_distance is returning NAs; check input coordinates\n
+           offset_distance: ", offset_distance[1], ", ", offset_distance[2],
+        "; start_address: ", start_address[1], ", ",  start_address[2]
+      )
     }
     return(destination)
   }
