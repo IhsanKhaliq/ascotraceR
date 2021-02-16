@@ -105,9 +105,7 @@ trace_asco <- function(weather,
   paddock <- as.data.table(expand.grid(x = 1:paddock_width,
                                        y = 1:paddock_length))
 
-  paddock[,new_gp := seeding_rate]
-  paddock[,noninfected_gp := seeding_rate]
-  paddock[,infected_gp := NA] # Needs to be updated!!!!
+
 
   # sample a paddock location randomly if a starting foci is not given
   if(primary_infection_foci == "random") {
@@ -128,6 +126,13 @@ trace_asco <- function(weather,
       stop("primary_infection_foci should be supplied as a numeric vector of length two")
     }
   }
+
+  # define paddock variables at time 1
+  paddock[, new_gp := seeding_rate] # Change in the number of growing points since last iteration
+  paddock[, noninfected_gp := seeding_rate] #
+  paddock[, infected_gp := fifelse(x == primary_infection_foci[1] &
+                                     y == primary_infection_foci[2], 1,
+                                   0)] # Initialise column of infected growing points
 
   # calculate additional parameters
   spore_interception_parameter <-
