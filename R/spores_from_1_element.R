@@ -50,29 +50,37 @@ spores_from_1_element <-
     }
 
     # this for loop needs improvement so it is not growing a data.table
-    for (n in 1:spore_packets) {
-      wind_d <- wind_distance(average_wind_speed_in_hour)
-      wind_a <-
-        wind_angle(wind_direction_in_hour, stdev_wind_direction_in_hour)
-      splash_d <- splash_distance(rain_cauchy_parameter)
-      splash_a <- splash_angle()
+    target_coordinates <-
+      lapply(1:spore_packets, function() {
+        wind_d <- wind_distance(average_wind_speed_in_hour)
+        wind_a <-
+          wind_angle(wind_direction_in_hour, stdev_wind_direction_in_hour)
+        splash_d <- splash_distance(rain_cauchy_parameter)
+        splash_a <- splash_angle()
 
-      # Check this is correct use of cos and sin from blackspot package
-      width_distance <-
-        wind_d * cos(wind_a * degree) +
-        splash_d * cos(splash_a * degree)
+        # Check this is correct use of cos and sin from blackspot package
+        width_distance <-
+          wind_d * cos(wind_a * degree) +
+          splash_d * cos(splash_a * degree)
 
-      length_distance <-
-        wind_d * sin(wind_a * degree) +
-        splash_d * sin(splash_a * degree)
+        length_distance <-
+          wind_d * sin(wind_a * degree) +
+          splash_d * sin(splash_a * degree)
 
-      target_address <-
-        address_from_centre_distance(c(width_distance, length_distance),
-                                     paddock_source[,c("x","y")])
+        target_address <-
+          address_from_centre_distance(c(width_distance, length_distance),
+                                       paddock_source[, c("x", "y")])
+        return(target_address)
 
-      data.table::rbindlist(new_infections, c(target_address, spores_per_packet)) # needs double checking
-    }
+        #data.table::rbindlist(new_infections, c(target_address, spores_per_packet)) # needs double checking
+      })
 
-    return(adjust_for_interception(new_infections))
+    new_infections <- data.table::rbindlist(target_coordinates)
+    new_infections[,spores_per_packet := spores_per_packet]
+
+    return(new_infections)
+# I think adjust_for_interception should be moved up to the
+# spread_spores function as it depends on other paddock parameters
+    #return(adjust_for_interception(new_infections))
 
   }
