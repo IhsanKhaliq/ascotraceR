@@ -1,11 +1,8 @@
 context("spores spread each day triggered by each wet hour")
 
-load_all()
-
-# load formatted weather data `newM_weather`
-weather_day <- fread("tests/testthat/formatted_weather_one_day.csv")
-
-#weather_day <- fread("formatted_weather_one_day.csv")
+# load formatted weather data
+# weather_day <- fread("tests/testthat/formatted_weather_one_day.csv")
+weather_day <- fread("formatted_weather_one_day.csv")
 
 # makePaddock equivalent
 paddock <- as.data.table(expand.grid(x = 1:100,
