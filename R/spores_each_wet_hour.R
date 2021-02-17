@@ -59,14 +59,6 @@ spores_each_wet_hour <- function(h,
       max_interception_probability = max_interception_probability
     )
 
-  #newly_infected_list <- data.table::rbindlist(newly_infected_list)
 
-  # function brought out of spores_from_1_element
-  adjust_for_interception(new_infections,
-                          spore_interception_parameter)
-
-
-
-
-  return(newly_infected_list)
+  return(newly_infected_dt)
 }
