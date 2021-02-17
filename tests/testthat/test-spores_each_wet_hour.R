@@ -1,41 +1,31 @@
+context("spores spread each day triggered by each wet hour")
 
 # load formatted weather data `newM_weather`
-load("R/sysdata.rda")
-
-# randomly choose a day to get weather
-day <- sample(unique(newM_weather[newM_weather$wet_hours > 0,times]), size =1)
+day <- fread("tests/testthat/formatted_weather_one_day.csv")
+#day <- fread("formatted_weather_one_day.csv")
 
 # makePaddock equivalent
-paddock <- as.data.table(expand.grid(x = 1:paddock_width,
-                                     y = 1:paddock_length))
+paddock <- as.data.table(expand.grid(x = 1:100,
+                                     y = 1:100))
 
 primary_infection_foci <-
-    paddock[as.integer(round(paddock_width / 2)),
-            as.integer(round(paddock_length / 2))]
+    c(50,50)
 
 # define paddock variables at time 1
-paddock[, new_gp := seeding_rate] # Change in the number of growing points since last iteration
-paddock[, noninfected_gp := seeding_rate] #
+paddock[, new_gp := 40] # Change in the number of growing points since last iteration
+paddock[, noninfected_gp := 40] #
 paddock[, infected_gp := fifelse(x == primary_infection_foci[1] &
                                    y == primary_infection_foci[2], 1,
                                  0)] # Initialise column of infected growing points
 
-w_dat <- newM_weather[times %in% seq(as.POSIXct("1998-09-02 00:00:00", tz = "Australia/Perth"),
-                                     as.POSIXct("1998-09-02 23:00:00", tz = "Australia/Perth"),
-                                     by ="hours"),]
-
-
-paddock <- as.data.table(expand.grid(x = 1:100,
-                                     y = 1:100))
-
-paddock[,new_gp := 40]
-paddock[,noninfected_gp := 40]
-paddock[,infected_gp := NA] # Needs to be updated!!!!
+spore_interception_parameter <-
+  0.00006 * (15000 / 350)
 
 
 spores_each_wet_hour(
   h = 1,
-  weather_hourly = w_dat,
+  weather_hourly = day,
   paddock = paddock,
-  max_interception_probability = 1
+  max_interception_probability = 1,
+  spore_interception_parameter = spore_interception_parameter
 )
