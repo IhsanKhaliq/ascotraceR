@@ -35,7 +35,8 @@ test1 <- apply(
   average_wind_speed_in_hour = w_dat[1, ws],
   stdev_wind_direction_in_hour = w_dat[1, wd_sd],
   spore_aggregation_limit = 1000,
-  rain_cauchy_parameter = 0.5
+  rain_cauchy_parameter = 0.5,
+  paddock = paddock
 )
 
 test_that("test1 returns NULL",{
@@ -54,7 +55,8 @@ test2 <- apply(
   average_wind_speed_in_hour = w_dat[1, ws],
   stdev_wind_direction_in_hour = w_dat[1, wd_sd],
   spore_aggregation_limit = 1000,
-  rain_cauchy_parameter = 0.5
+  rain_cauchy_parameter = 0.5,
+  paddock = paddock
 )
 
 test_that("test2 is data.table of 1 row",{
@@ -80,7 +82,8 @@ test3 <- apply(
   average_wind_speed_in_hour = w_dat[1, ws],
   stdev_wind_direction_in_hour = w_dat[1, wd_sd],
   spore_aggregation_limit = 1000,
-  rain_cauchy_parameter = 0.5
+  rain_cauchy_parameter = 0.5,
+  paddock = paddock
 )
 
 test_that("test3 is data.table of 1 row",{
@@ -116,7 +119,8 @@ test4 <- apply(
   average_wind_speed_in_hour = w_dat[1, ws],
   stdev_wind_direction_in_hour = w_dat[1, wd_sd],
   spore_aggregation_limit = 1000,
-  rain_cauchy_parameter = 0.5
+  rain_cauchy_parameter = 0.5,
+  paddock = paddock
 )
 
 test_that("test4 is a list of data.tables",{
