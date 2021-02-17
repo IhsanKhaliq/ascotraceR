@@ -37,6 +37,6 @@ successful_infections <- function (spore_targets,
       return(spores_in_packet)
     })
 
-  return(c(suc_inf))
+  return(unlist(suc_inf))
 
 }
