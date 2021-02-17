@@ -1,10 +1,10 @@
 context("successfully intercepted dispersed spores")
 
 # for manual testing
-spore_dat <- fread("tests/testthat/test-data_successful_infections.csv")
+#spore_dat <- fread("tests/testthat/test-data_successful_infections.csv")
 
 # for manual automatic check() testing
-# spore_dat <- fread("test-data_successful_infections.csv")
+spore_dat <- fread("test-data_successful_infections.csv")
 
 
 # makePaddock equivalent
