@@ -48,7 +48,6 @@ spores_each_wet_hour <- function(h,
     rbindlist(
     apply(paddock_infected, 1, spores_from_1_element,
           max_interception_probability = max_interception_probability,
-          rain_in_hour = rain_in_hour,
           wind_direction_in_hour = wind_direction_in_hour,
           average_wind_speed_in_hour = average_wind_speed_in_hour,
           stdev_wind_direction_in_hour = stdev_wind_direction_in_hour)
@@ -57,9 +56,13 @@ spores_each_wet_hour <- function(h,
   newly_infected_dt$spores_per_packet <-
     successful_infections(
       spore_targets = newly_infected_dt,
+      paddock = paddock,
       spore_interception_parameter = spore_interception_parameter,
       max_interception_probability = max_interception_probability
     )
+
+  # filter only successful interceptions
+  newly_infected_dt[spores_per_packet > 0,]
 
 
   return(newly_infected_dt)
