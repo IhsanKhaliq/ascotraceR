@@ -67,7 +67,7 @@ spores_each_wet_hour <- function(h,
                         x >= min(paddock[, x]) &
                         x <= max(paddock[, x]) &
                         y >= min(paddock[, y]) &
-                        y >= max(paddock[, y]) , ]
+                        y <= max(paddock[, y]) , ]
 
 
   return(newly_infected_dt)
