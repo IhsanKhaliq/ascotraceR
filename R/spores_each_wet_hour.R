@@ -13,7 +13,8 @@
 spores_each_wet_hour <- function(h,
                                  weather_hourly,
                                  paddock,
-                                 max_interception_probability) {
+                                 max_interception_probability,
+                                 spore_interception_parameter) {
 
   # obtain weather data for hour_i
 
@@ -41,18 +42,30 @@ spores_each_wet_hour <- function(h,
 
   paddock_infected <- paddock[infected_gp > 0,]
 
-  newly_infected_list <-
+  newly_infected_dt <-
+    rbindlist(
     apply(paddock_infected, 1, spores_from_1_element,
           max_interception_probability = max_interception_probability,
           rain_in_hour = rain_in_hour,
           wind_direction_in_hour = wind_direction_in_hour,
           average_wind_speed_in_hour = average_wind_speed_in_hour,
           stdev_wind_direction_in_hour = stdev_wind_direction_in_hour)
+    )
 
-  newly_infected_list <- data.table::rbindlist(newly_infected_list)
+  newly_infected_dt$spores_per_packet <-
+    successful_infections(
+      spore_targets = newly_infected_dt,
+      spore_interception_parameter = spore_interception_parameter,
+      max_interception_probability = max_interception_probability
+    )
+
+  #newly_infected_list <- data.table::rbindlist(newly_infected_list)
 
   # function brought out of spores_from_1_element
-  adjust_for_interception(new_infections)
+  adjust_for_interception(new_infections,
+                          spore_interception_parameter)
+
+
 
 
   return(newly_infected_list)
