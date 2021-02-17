@@ -20,15 +20,15 @@ spores_each_wet_hour <- function(h,
 
   # obtain weather data for hour_i
 
-  rain_in_hour <- weather_hourly[h, "rain"]
-  average_wind_speed_in_hour <- weather_hourly[h, "ws"]
-  wind_direction_in_hour = weather_hourly[h, "wd"]
-  stdev_wind_direction_in_hour = weather_hourly[h, "wd_sd"]
+  rain_in_hour <- weather_hourly[h, rain]
+  average_wind_speed_in_hour <- weather_hourly[h, ws]
+  wind_direction_in_hour = weather_hourly[h, wd]
+  stdev_wind_direction_in_hour = weather_hourly[h, wd_sd]
 
   # set a new vector of infected coordinates
   newly_infected_list <- vector(length = sum(paddock$infected_gp))
 
-  # this could be changed to an apply function
+  # this could be changed to an apply functions
   # for (i_source in which(paddock$infected)) {
   #   newly_infected_list <- c(
   #     newly_infected_list,
