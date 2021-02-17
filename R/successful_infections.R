@@ -24,11 +24,7 @@ successful_infections <- function (spore_targets) {
                   y == spore_targets["y"], new_gp]
 
 
-  if (susceptible_growing_points < -0.5) {
-    susceptible_growing_points <- ref_new_growing_points
-  } else{
-    NULL
-  }
+
 
   spores_in_packet <-
     random_integer_from_real(
