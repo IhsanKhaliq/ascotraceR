@@ -5,11 +5,9 @@
 
 random_integer_from_real <- function (r) {
   fraction <- r %% 1
-  integer(ifelse(
-    fraction == 0,
-    return(r),
-    ifelse(runif(1) < fraction,
-           ceiling[r],
-           floor(r))
-  ))
+  r_stand <- runif(1)
+  fcase(fraction == 0, return(as.integer(r)),
+        r_stand < fraction, return(as.integer(ceiling[r])),
+        r_stand >= fraction, return(as.integer(floor(r)))
+  )
 }
