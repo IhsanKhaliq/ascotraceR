@@ -6,8 +6,8 @@
 random_integer_from_real <- function (r) {
   fraction <- r %% 1
   r_stand <- runif(1)
-  fcase(fraction == 0, return(as.integer(r)),
-        r_stand < fraction, return(as.integer(ceiling(r))),
-        r_stand >= fraction, return(as.integer(floor(r)))
+  fcase(fraction == 0, as.integer(r),
+        r_stand < fraction, as.integer(ceiling(r)),
+        r_stand >= fraction, as.integer(floor(r))
   )
 }
