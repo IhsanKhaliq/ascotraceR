@@ -62,11 +62,12 @@ spores_each_wet_hour <- function(h,
     )
 
   # filter only successful interceptions inside the paddock
-  newly_infected_dt[spores_per_packet > 0 &
-                      x >= min(paddock[,x]) &
-                      x <= max(paddock[,x]) &
-                      y >= min(paddock[,y]) &
-                      y >= max(paddock[,y]) ,]
+  newly_infected_dt <-
+    newly_infected_dt[spores_per_packet > 0 &
+                        x >= min(paddock[, x]) &
+                        x <= max(paddock[, x]) &
+                        y >= min(paddock[, y]) &
+                        y >= max(paddock[, y]) , ]
 
 
   return(newly_infected_dt)
