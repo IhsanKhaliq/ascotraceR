@@ -4,8 +4,10 @@
 #' wet hour when rainfall threshold is reached
 #'
 #' @param h hour in the day which the spores for each wet hour are calculated
-#' @param weather_hourly hourly weather for only the day for which the spores are being estimated
+#' @param weather_hourly data.table of hourly weather for only the day for which the spores are being estimated
 #' @param paddock data.table of paddock coordinates detailing the growing points and infections at each location
+#' @param max_interception_probability double with length of one
+#' @param spore_interception_parameter double with length of one
 #' @keywords internal
 #' @noRd
 
