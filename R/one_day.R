@@ -38,19 +38,9 @@ one_day <- function(i_date,
   daily_vals[["cr"]] <- daily_vals[["cr"]] + i_rainfall
 
 
-  # Update Growing points for non-infected coords for time i
-  i_new_gp <-
-    calc_new_gp(current_growing_points = daily_vals[["gp_standard"]],
-                       gp_rr = gp_rr,
-                       max_gp = max_gp,
-                       mean_air_temp = i_mean_air_temp)
-
-  day_i_vals[["gp_standard"]] <-
-    daily_vals[.N, gp_standard] + i_new_gp
-
-  day_i_vals[["new_gp"]] <- i_new_gp
 
 
+# Spread spores and infect plants
   # Update growing points for paddock coordinates
   if(i_wet_hours > 2){
     # spread_spores(wet_hours = i_wet_hours,
@@ -77,6 +67,21 @@ one_day <- function(i_date,
       )
 
   }
+
+# Grow Plants
+  # this code represents mathematica function `growth`; `updateRefUninfectiveGrowingPoints`
+  # `updateGrowingPointsAllInfectiveElements`
+  # Update Growing points for non-infected coords for time i
+  daily_vals[["new_gp"]] <-
+    calc_new_gp(current_growing_points = daily_vals[["gp_standard"]],
+                gp_rr = gp_rr,
+                max_gp = max_gp,
+                mean_air_temp = i_mean_air_temp)
+
+  daily_vals[["gp_standard"]] <-
+    daily_vals[["gp_standard"]] + daily_vals[["new_gp"]]
+
+
 
 
 
