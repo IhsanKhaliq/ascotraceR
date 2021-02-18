@@ -129,11 +129,18 @@ trace_asco <- function(weather,
   }
 
   # define paddock variables at time 1
-  paddock[, new_gp := seeding_rate] # Change in the number of growing points since last iteration
-  paddock[, noninfected_gp := seeding_rate] #
-  paddock[, infected_gp := fifelse(x == primary_infection_foci[1] &
-                                     y == primary_infection_foci[2], 1,
-                                   0)] # Initialise column of infected growing points
+  paddock[, c(
+    "new_gp", # Change in the number of growing points since last iteration
+    "noninfected_gp",
+    "infected_gp"
+  ) :=
+    list(
+      seeding_rate,
+      seeding_rate,
+      fifelse(x == primary_infection_foci[1] &
+                y == primary_infection_foci[2], 1,
+              0)
+    )]
 
   # calculate additional parameters
   spore_interception_parameter <-
@@ -151,21 +158,28 @@ trace_asco <- function(weather,
   # refUninfectiveGPs <- minGrowingPoints <- seeding_rate
 
   daily_vals_list <- list(
-    i = sowing_date,   # day of the simulation (iterator)
-    day = lubridate::yday(sowing_date),  # day of the year
-    cdd = 0, # cumulative degree days
-    cwh = 0, # cumulative wet hours
-    cr = 0,  # cumulative rainfall
-    gp_standard = seeding_rate, # standard number of growing points for 1m^2 if not inhibited by infection
-    new_gp = seeding_rate, # new number of growing points for current iteration
-    infected_coords = primary_infection_foci  # data.frame
+    list(
+      paddock = paddock,
+      i_date = sowing_date,  # day of the simulation (iterator)
+      i_day = 1,
+      day = lubridate::yday(sowing_date),    # day of the year
+      cdd = 0,    # cumulative degree days
+      cwh = 0,    # cumulative wet hours
+      cr = 0,     # cumulative rainfall
+      gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection
+      new_gp = seeding_rate,    # new number of growing points for current iteration
+      infected_coords = primary_infection_foci  # data.frame
     )
+  )
 
   time_increments <- seq(sowing_date,
                          harvest_date,
                          by = "days")
 
-  for(i in seq_along(time_increments)){
+  daily_vals_list <- rep(daily_vals_list,
+                         seq_along(time_increments))
+
+  for(i in seq_len(length(time_increments)+1)){
 
     # skip time increment if initial_infection is after the sowing date
     if(time_increments[i] < initial_infection) next
@@ -174,15 +188,21 @@ trace_asco <- function(weather,
     #  on a 1x1m grid and we do not want to wrap address
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
+    # update time values for iteration of loop
+    daily_vals_list[[i]][["i_date"]] <- time_increments[i]
+    daily_vals_list[[i]][["i_day"]] <- i
+    daily_vals_list[[i]][["day"]] <- lubridate::yday(time_increments[i])
+
+
 
     # currently working on one_day
-    day_out <- one_day(i_date = time_increments[i],
-                       daily_vals = daily_vals_list,
+    daily_vals_list[[i + 1]] <- one_day(i_date = time_increments[i],
+                       day = i,
+                       daily_vals = daily_vals_list[[i]],
                        weather_dat = weather,
                        gp_rr = gp_rr,
                        max_gp = max_gp,
                        max_new_gp = max_new_gp,
-                       paddock = paddock,
                        spore_interception_parameter = spore_interception_parameter)
 
     # temporary line of code to test building of daily_vals in loop
