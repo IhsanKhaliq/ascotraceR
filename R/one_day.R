@@ -12,12 +12,12 @@
 #'
 #' @examples
 one_day <- function(i_date,
+                    day,
                     daily_vals,
                     weather_dat,
                     gp_rr,
                     max_gp,
                     max_new_gp,
-                    paddock,
                     spore_interception_parameter) {
 
   # expand time to be hourly
@@ -33,21 +33,14 @@ one_day <- function(i_date,
   i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
 
   # Start building a list of values for 'i'
-  day_i_vals <-
-    list(
-      i = as.POSIXct(i_date),
-      day = lubridate::yday(i_date),
-      cdd = daily_vals[.N, cdd] +
-        i_mean_air_temp,
-      cwh = daily_vals[.N, cwh] +
-        i_wet_hours,
-      cr = daily_vals[.N, cr] +
-        i_rainfall
-    )
+  daily_vals[["cdd"]] <- daily_vals[["cdd"]] + i_mean_air_temp
+  daily_vals[["cwh"]] <- daily_vals[["cwh"]] + i_wet_hours
+  daily_vals[["cr"]] <- daily_vals[["cr"]] + i_rainfall
+
 
   # Update Growing points for non-infected coords for time i
   i_new_gp <-
-    calc_new_gp(current_growing_points = daily_vals[.N, gp_standard],
+    calc_new_gp(current_growing_points = daily_vals[["gp_standard"]],
                        gp_rr = gp_rr,
                        max_gp = max_gp,
                        mean_air_temp = i_mean_air_temp)
@@ -59,14 +52,30 @@ one_day <- function(i_date,
 
 
   # Update growing points for paddock coordinates
-  if(i_wet_hours > 0){
-    spread_spores(wet_hours = i_wet_hours,
-                  weather_hourly = weather_day,
-                  paddock = paddock,
-                  max_gp =  max_gp,
-                  max_new_gp = max_new_gp,
-                  spore_interception_parameter = spore_interception_parameter)
-    interception_probability()
+  if(i_wet_hours > 2){
+    # spread_spores(wet_hours = i_wet_hours,
+    #               weather_hourly = weather_day,
+    #               paddock = paddock,
+    #               max_gp =  max_gp,
+    #               max_new_gp = max_new_gp,
+    #               spore_interception_parameter = spore_interception_parameter)
+    #
+
+    max_interception_probability <-
+      interception_probability(target_density = 5 * max(paddock$new_gp),
+                               k = spore_interception_parameter)
+
+
+    newly_infected_list <-
+      lapply(
+        seq_len(nrow(weather_day[rain >= 0.1,])),
+        FUN = spores_each_wet_hour,
+        weather_hourly = weather_day[rain >= 0.2,],
+        paddock = daily_vals[["paddock"]],
+        max_interception_probability = max_interception_probability,
+        spore_interception_parameter = spore_interception_parameter
+      )
+
   }
 
 
