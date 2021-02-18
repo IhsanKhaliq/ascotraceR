@@ -1,34 +1,42 @@
 #' Indicates infections leading to disease or lesions development
 #'
-#' 'successful_infectoins()' determines successful infections. That is, infections
+#' 'successful_infections()' determines successful infections. That is, infections
 #'  that have developed into visible lesions
 #'
-#' @param spore_packet indicates??
-#' @param spores_in_packet indictes??
-#' @param susceptible_growing_points are growing points suceptible to disease
-#' @param paddock_new_growing_points indicate??
-#' @param ref_new_growing_points are the number of new growing points
-#' @return successful infections
+#' @param spore_targets a data.table with variables x, y and spores_per_packet
+#'  (formally name spore_packet)
+#' @param paddock data.table containing all parameters for each 1 x 1 coordinate in the paddock
+#' @param spore_interception_parameter
+#' @param max_interception_probability are the number of new growing points
+#' @return a vector of spores_per_packet each referring to a row in spore_targets
 #' @keywords internal
 #' @noRd
-successful_infections <- function (spore_packet) {
-  address <- spore_packet[1] %>%
-    spores_in_packet <-  spore_packet[2] %>%
+successful_infections <- function (spore_targets,
+                                   paddock,
+                                   spore_interception_parameter,
+                                   max_interception_probability) {
+  suc_inf <-
+    apply(spore_targets,1,function(sp_tar){
+
+      address <- c(sp_tar["x"],
+                   sp_tar["y"])
+
+      spores_in_packet <-  sp_tar["spores_per_packet"]
+
       susceptible_growing_points <-
-        paddock_new_growing_points[address[1] %% address[2]]
-      if (susceptible_growing_points < -0.5) {
-        susceptible_growing_points <- ref_new_growing_points
-      } else{
-        NULL
-      }
+        paddock[x == sp_tar["x"] &
+                  y == sp_tar["y"], new_gp]
 
       spores_in_packet <-
         random_integer_from_real(
-          spores_in_packet * interception_probability(
-            5 * susceptible_growing_points,
-            spore_interception_parameter
-          ) /
+          spores_in_packet *
+            interception_probability(5 * susceptible_growing_points,
+                                     spore_interception_parameter) /
             max_interception_probability
         )
-      return(list(address, spores_in_packet))
+      return(spores_in_packet)
+    })
+
+  return(unlist(suc_inf))
+
 }
