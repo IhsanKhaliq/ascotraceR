@@ -19,6 +19,8 @@
 #'  groups of sporeAggregationLimit spores  default: \code{1000}
 #' @param rain_cauchy_parameter parameter used in the cauchy distribution used in
 #'  determining the spread of spores due to rain splashes. default: \code{0.5}
+#' @param paddock data.table of x and y coordinates; provides the dimensions of the poaddock
+#'  so function only returns target_coordinates in the paddock area.
 #' @keywords internal
 #' @noRd
 spores_from_1_element <-
@@ -29,8 +31,8 @@ spores_from_1_element <-
            average_wind_speed_in_hour,
            stdev_wind_direction_in_hour,
            spore_aggregation_limit = 1000,
-           rain_cauchy_parameter = 0.5
-           #new_infections
+           rain_cauchy_parameter = 0.5,
+           paddock
            ) {
 
     # this might be able to be calculated at the spread_spores level, and If statement should come first
@@ -80,6 +82,11 @@ spores_from_1_element <-
 
     new_infections <- data.table::rbindlist(target_coordinates)
     new_infections$spores_per_packet <- spores_per_packet
+
+    new_infections <- new_infections[x >= min(paddock[, x]) &
+                                       x <= max(paddock[, x]) &
+                                       y >= min(paddock[, y]) &
+                                       y <= max(paddock[, y]) , ]
 
     return(new_infections)
 # I think adjust_for_interception should be moved up to the
