@@ -1,6 +1,6 @@
-#' Simulates ascochyta spore dispersal for a single day increment
+#' Simulates Ascochyta spore dispersal for a single day increment
 #'
-#' @param i_date a character string or \class{Date} formated string indicating the
+#' @param i_date a character string or \class{Date} formatted string indicating an
 #'  iteration date of the model. Preferably in \acronym{ISO8601} format (YYYY-MM-DD),
 #'  \emph{e.g.} \dQuote{2020-04-26}.
 #'
