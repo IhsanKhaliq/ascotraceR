@@ -52,7 +52,7 @@ one_day <- function(i_date,
     #
 
     max_interception_probability <-
-      interception_probability(target_density = 5 * max(paddock$new_gp),
+      interception_probability(target_density = 5 * max(daily_vals[["paddock"]][,new_gp]),
                                k = spore_interception_parameter)
 
 
@@ -65,6 +65,14 @@ one_day <- function(i_date,
         max_interception_probability = max_interception_probability,
         spore_interception_parameter = spore_interception_parameter
       )
+
+    newly_infected_list <- rbindlist(newly_infected_list)
+
+    # daily_vals[["paddock"]][x == spore_packet["x"] &
+    #   y == spore_packet["y"], infective_element := 1]
+
+    # newlyInfectedListList is list(ccd = ccd, newlyInfectedList)
+    # additionalNewlyInfectedList - seems to be only the coordinates give at the start of the model ie (primary_infection_foci)
 
   }
 
@@ -80,6 +88,8 @@ one_day <- function(i_date,
 
   daily_vals[["gp_standard"]] <-
     daily_vals[["gp_standard"]] + daily_vals[["new_gp"]]
+
+
 
 
 
