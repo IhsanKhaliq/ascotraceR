@@ -133,14 +133,18 @@ trace_asco <- function(weather,
   paddock[, c(
     "new_gp", # Change in the number of growing points since last iteration
     "noninfected_gp",
-    "infected_gp"
+    "infected_gp",
+    "sporilating_gp", # replacing InfectiveElementList
+    "ccd_at_infection"
   ) :=
     list(
       seeding_rate,
       seeding_rate,
       fifelse(x == primary_infection_foci[1] &
                 y == primary_infection_foci[2], 1,
-              0)
+              0),
+      0,
+      NA
     )]
 
   # calculate additional parameters
