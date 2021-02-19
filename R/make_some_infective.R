@@ -3,14 +3,12 @@
 #' @param spore_packet atomic vector input through apply function containing
 #'  xy coordinates and a column of spore_packets. example input is the
 #'  newly_infected data.table
-#' @param paddock
 #' @param daily_vals list of the current day's values and paddock data.table
 #'
 #' @return updated daily_vals list
 #'
 #' @examples
 function(spore_packet,
-         paddock,
          daily_vals) {
   # save on time data filtering
   row_index <- daily_vals[["paddock"]][x == spore_packet["x"] &
