@@ -24,6 +24,7 @@ make_some_infective <- function(spore_packet,
   if (paddock_vals[, sporilating_gp] == 0 &
       is.na(paddock_vals[, ccd_at_infection])) {
     daily_vals[["paddock"]][row_index, sporilating_gp := 1]
+    return(daily_vals)
   }
 
 
