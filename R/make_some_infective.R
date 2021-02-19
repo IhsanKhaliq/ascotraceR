@@ -8,13 +8,17 @@
 #' @return updated daily_vals list
 #'
 #' @examples
-function(spore_packet,
-         daily_vals) {
+#' new_daily_vals <-
+#'    make_some_infective(
+#'       spore_packet = newly_infective,
+#'       daily_vals = daily_vals_list)
+make_some_infective <- function(spore_packet,
+                                daily_vals) {
   # save on time data filtering
   row_index <- daily_vals[["paddock"]][x == spore_packet["x"] &
                                          y == spore_packet["y"],
                                        which = TRUE]
-  paddock_vals <- daily_vals[["paddock"]][row_index,]
+  paddock_vals <- daily_vals[["paddock"]][row_index, ]
 
   # This code should only occur on the first day of the model
   if (paddock_vals[, sporilating_gp] == 0 &
