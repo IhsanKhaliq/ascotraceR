@@ -14,6 +14,15 @@
 #'       daily_vals = daily_vals_list)
 make_some_infective <- function(spore_packet,
                                 daily_vals) {
+
+  if(is.vector(spore_packet)){
+    spore_packet <- setDT(lapply(spore_packet,c))
+  }
+  if(is.data.table(spore_packet) == FALSE){
+    setDT(spore_packet)
+  }
+
+  paddock <- apply(spore_packet, 1, function(sp){
   # save on time data filtering
   row_index <- daily_vals[["paddock"]][x == spore_packet["x"] &
                                          y == spore_packet["y"],
@@ -28,7 +37,7 @@ make_some_infective <- function(spore_packet,
     daily_vals[["paddock"]][row_index, noninfected_gp :=
                               paddock_vals[, noninfected_gp] - 1]
 
-    return(daily_vals)
+    return(daily_vals[["paddock"]])
   }
 
 
@@ -46,6 +55,9 @@ make_some_infective <- function(spore_packet,
                             daily_vals[["paddock"]][row_index, sporilating_gp] +
                             infections_new]
 
-  return(daily_vals)
+  return(daily_vals[["paddock"]])
+  })
 
+  daily_vals[["paddock"]] <- paddock
+  return(daily_vals)
 }
