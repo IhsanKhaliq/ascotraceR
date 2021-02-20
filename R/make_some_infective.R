@@ -22,8 +22,12 @@ make_some_infective <- function(spore_packet,
 
   # This code should only occur on the first day of the model
   if (paddock_vals[, sporilating_gp] == 0 &
-      is.na(paddock_vals[, ccd_at_infection])) {
+      paddock_vals[, is.na(ccd_at_infection)]) {
     daily_vals[["paddock"]][row_index, sporilating_gp := 1]
+
+    daily_vals[["paddock"]][row_index, noninfected_gp :=
+                              paddock_vals[, noninfected_gp] - 1]
+
     return(daily_vals)
   }
 
