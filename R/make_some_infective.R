@@ -22,10 +22,17 @@ make_some_infective <- function(spore_packet,
     setDT(spore_packet)
   }
 
-  paddock <- apply(spore_packet, 1, function(sp){
+
+
+  for(i_row in seq_len(spore_packet[,.N])){
+
   # save on time data filtering
-  row_index <- daily_vals[["paddock"]][x == spore_packet["x"] &
-                                         y == spore_packet["y"],
+    x_i <- spore_packet[i_row,x]
+    y_i <- spore_packet[i_row,y]
+
+
+  row_index <- daily_vals[["paddock"]][x == x_i &
+                                         y == y_i,
                                        which = TRUE]
   paddock_vals <- daily_vals[["paddock"]][row_index, ]
 
@@ -37,16 +44,15 @@ make_some_infective <- function(spore_packet,
     daily_vals[["paddock"]][row_index, noninfected_gp :=
                               paddock_vals[, noninfected_gp] - 1]
 
-    return(daily_vals[["paddock"]])
-  }
 
+  }else{
 
-  if (paddock_vals[, noninfected_gp] < spore_packet["spores_per_packet"]) {
+  if (paddock_vals[, noninfected_gp] < spore_packet[i_row,"spores_per_packet"]) {
     infections_new <-
       random_integer_from_real(paddock_vals[, noninfected_gp])
     daily_vals[["paddock"]][row_index, noninfected_gp := 0]
   } else{
-    infections_new <- spore_packet["spores_per_packet"]
+    infections_new <- spore_packet[i_row,"spores_per_packet"]
     daily_vals[["paddock"]][row_index, noninfected_gp :=
                               paddock_vals[, noninfected_gp] - infections_new]
   }
@@ -55,9 +61,7 @@ make_some_infective <- function(spore_packet,
                             daily_vals[["paddock"]][row_index, sporilating_gp] +
                             infections_new]
 
-  return(daily_vals[["paddock"]])
-  })
+  }}
 
-  daily_vals[["paddock"]] <- paddock
   return(daily_vals)
 }
