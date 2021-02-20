@@ -13,7 +13,8 @@
 #'       spore_packet = newly_infective,
 #'       daily_vals = daily_vals_list)
 make_some_infective <- function(spore_packet,
-                                daily_vals) {
+                                daily_vals,
+                                latent_period) {
   if (is.vector(spore_packet)) {
     spore_packet <- setDT(lapply(spore_packet, c))
   }
@@ -44,6 +45,8 @@ make_some_infective <- function(spore_packet,
 
 
     } else{
+      if(paddock_vals[,ccd_at_infection + latent_period <= paddock_vals[["cdd"]]]){
+
       if (paddock_vals[, noninfected_gp] < spore_packet[i_row, "spores_per_packet"]) {
         infections_new <-
           random_integer_from_real(paddock_vals[, noninfected_gp])
@@ -58,7 +61,7 @@ make_some_infective <- function(spore_packet,
                                 daily_vals[["paddock"]][row_index, sporilating_gp] +
                                 infections_new]
 
-    }
+    }}
   }
 
   return(daily_vals)
