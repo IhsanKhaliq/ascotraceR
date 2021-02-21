@@ -139,12 +139,14 @@ trace_asco <- function(weather,
   ) :=
     list(
       seeding_rate,
-      seeding_rate,
+      fifelse(x == primary_infection_foci[1] &
+                y == primary_infection_foci[2], seeding_rate - 1,
+              seeding_rate),
+      0,
       fifelse(x == primary_infection_foci[1] &
                 y == primary_infection_foci[2], 1,
               0),
-      0,
-      NA
+      0
     )]
 
   # calculate additional parameters
