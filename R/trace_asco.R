@@ -135,7 +135,7 @@ trace_asco <- function(weather,
     "noninfected_gp",
     "infected_gp",
     "sporilating_gp", # replacing InfectiveElementList
-    "ccd_at_infection"
+    "cdd_at_infection"
   ) :=
     list(
       seeding_rate,
