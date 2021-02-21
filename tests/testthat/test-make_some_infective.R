@@ -1,6 +1,7 @@
 #context("makes some infected growing points infective or a source of innoculum")
 load_all()
-newly_infected_list <- fread(file = "tests/testthat/data-newly_infected_list.csv")
+# newly_infected_list <- fread(file = "tests/testthat/data-newly_infected_list.csv")
+newly_infected_list <- fread(file = "data-newly_infected_list.csv")
 
 # create data and parameters
 seeding_rate <- 40
@@ -10,7 +11,6 @@ paddock[, c("new_gp",
             "noninfected_gp",
             "infected_gp",
             "sporilating_gp",
-            # replacing InfectiveElementList
             "cdd_at_infection") :=
           list(
             seeding_rate,
@@ -24,7 +24,8 @@ paddock[, c("new_gp",
                       x <= 57 &
                       y >= 53 &
                       y <= 57, 5,
-                    0)
+                    0),
+            0
           )]
 
 daily_values <- list(
@@ -43,13 +44,13 @@ daily_values <- list(
 sp1 <- c(30, 10, 1)
 names(sp1) <- c("x", "y", "spores_per_packet")
 
+set.seed(666)
 
 test1 <- make_some_infective(spore_packet = sp1,
                              daily_vals = daily_values,
                              latent_period = 200)
 
-test1[["paddock"]][,cdd_at_infection  > 0,]
-test_that("test1 returns a list with changes to paddock", {
+test_that("test1 returns a list with no changes to paddock", {
   expect_is(test1, "list")
   expect_length(test1, 7)
   expect_is(test1[["paddock"]], "data.table")
@@ -64,37 +65,21 @@ test_that("test1 returns a list with changes to paddock", {
                  "new_gp"
                ))
   expect_equal(test1[["paddock"]][x == sp1["x"] &
-                                    y == sp1["y"], sporilating_gp], 1)
+                                    y == sp1["y"], sporilating_gp], 0)
   expect_equal(test1[["paddock"]][x == sp1["x"] &
-                                    y == sp1["y"], noninfected_gp], 39)
+                                    y == sp1["y"], noninfected_gp], 40)
   expect_silent(test1 <- make_some_infective(spore_packet = sp1,
                                              daily_vals = daily_values))
-  expect_equal(test1[["paddock"]][x == sp1["x"] &
-                                    y == sp1["y"], sporilating_gp], 2)
-  expect_equal(test1[["paddock"]][x == sp1["x"] &
-                                    y == sp1["y"], noninfected_gp], 38)
-  test1[["paddock"]][x == sp1["x"] &
-                       y == sp1["y"], cdd_at_infection := 10]
-
-
-  expect_silent(test1 <- make_some_infective(spore_packet = sp1,
-                                             daily_vals = daily_values))
-  expect_equal(test1[["paddock"]][x == sp1["x"] &
-                                    y == sp1["y"], sporilating_gp], 3)
-  expect_equal(test1[["paddock"]][x == sp1["x"] &
-                                    y == sp1["y"], noninfected_gp], 37)
-  expect_is(test1[["paddock"]][, noninfected_gp], "numeric")
-  expect_is(test1[["paddock"]][, sporilating_gp], "numeric")
-  expect_false(any(is.na(test1[["paddock"]][, -("cdd_at_infection")])))
+  expect_false(any(is.na(test1[["paddock"]])))
 })
 
-sp2 <- fread("tests/testthat/data-newly_infected_list.csv")
+daily_values[["cdd"]] <- 201
 
-test2 <- make_some_infective(spore_packet = sp2,
-               daily_vals = daily_values)
+test2 <- make_some_infective(spore_packet = sp1,
+                             daily_vals = daily_values,
+                             latent_period = 200)
 
-#test2[["paddock"]][sporilating_gp > 0,]
-test_that("test2 long dt input returns a list with changes to paddock", {
+test_that("test2 returns changes now latent_period has elapsed",{
   expect_is(test2, "list")
   expect_length(test2, 7)
   expect_is(test2[["paddock"]], "data.table")
@@ -108,30 +93,53 @@ test_that("test2 long dt input returns a list with changes to paddock", {
                  "gp_standard",
                  "new_gp"
                ))
-  expect_equal(test2[["paddock"]][sporilating_gp > 0, .N ], 30)
-  expect_equal(test2[["paddock"]][sporilating_gp > 0, max(sporilating_gp) ], 3)
-  expect_true(all(test2[["paddock"]][, sporilating_gp + noninfected_gp] == 40))
-  # expect_silent(test2 <- make_some_infective(spore_packet = sp1,
-  #                                            daily_vals = daily_values))
-  # expect_equal(test2[["paddock"]][x == sp1["x"] &
-  #                                   y == sp1["y"], sporilating_gp], 2)
-  # expect_equal(test2[["paddock"]][x == sp1["x"] &
-  #                                   y == sp1["y"], noninfected_gp], 38)
-  # test2[["paddock"]][x == sp1["x"] &
-  #                      y == sp1["y"], cdd_at_infection := 10]
-  # expect_silent(test2 <- make_some_infective(spore_packet = sp1,
-  #                                            daily_vals = daily_values))
-  # expect_equal(test2[["paddock"]][x == sp1["x"] &
-  #                                   y == sp1["y"], sporilating_gp], 3)
-  # expect_equal(test2[["paddock"]][x == sp1["x"] &
-  #                                   y == sp1["y"], noninfected_gp], 37)
-  # expect_is(test2[["paddock"]][, noninfected_gp], "numeric")
-  # expect_is(test2[["paddock"]][, sporilating_gp], "numeric")
-  # expect_false(any(is.na(test2[["paddock"]][, -("cdd_at_infection")])))
+  expect_equal(test2[["paddock"]][x == sp1["x"] &
+                                    y == sp1["y"], sporilating_gp], 1)
+  expect_equal(test2[["paddock"]][x == sp1["x"] &
+                                    y == sp1["y"], noninfected_gp], 39)
+  expect_silent(test2 <- make_some_infective(spore_packet = sp1,
+                                             daily_vals = daily_values))
+  expect_false(any(is.na(test2[["paddock"]])))
+
+  expect_equal(test2[["paddock"]][x == sp1["x"] &
+                                    y == sp1["y"], sporilating_gp], 2)
+  expect_equal(test2[["paddock"]][x == sp1["x"] &
+                                    y == sp1["y"], noninfected_gp], 38)
+  expect_silent(test2 <- make_some_infective(spore_packet = sp1,
+                                             daily_vals = daily_values))
+  expect_equal(test2[["paddock"]][x == sp1["x"] &
+                                    y == sp1["y"], sporilating_gp], 3)
+  expect_equal(test2[["paddock"]][x == sp1["x"] &
+                                    y == sp1["y"], noninfected_gp], 37)
+  expect_is(test2[["paddock"]][, noninfected_gp], "numeric")
+  expect_is(test2[["paddock"]][, sporilating_gp], "numeric")
+
 })
 
-daily_values[["paddock"]][,cdd_at_infection := 300]
+# sp2 <- fread("tests/testthat/data-newly_infected_list.csv")
+sp2 <- fread("data-newly_infected_list.csv")
 
 test3 <- make_some_infective(spore_packet = sp2,
-                             daily_vals = daily_values)
-test3[["paddock"]][sporilating_gp > 0,]
+               daily_vals = daily_values)
+
+test_that("test3 long dt input returns a list with changes to paddock", {
+  expect_is(test3, "list")
+  expect_length(test3, 7)
+  expect_is(test3[["paddock"]], "data.table")
+  expect_equal(names(test3),
+               c(
+                 "paddock",
+                 "i_day",
+                 "cdd",
+                 "cwh",
+                 "cr",
+                 "gp_standard",
+                 "new_gp"
+               ))
+  expect_equal(test3[["paddock"]][sporilating_gp > 0, .N ], 37)
+  expect_equal(test3[["paddock"]][sporilating_gp > 0, max(sporilating_gp) ], 8)
+  expect_true(all(test3[["paddock"]][, sporilating_gp + noninfected_gp] == 40))
+  expect_is(test3[["paddock"]][, noninfected_gp], "numeric")
+  expect_is(test3[["paddock"]][, sporilating_gp], "numeric")
+  expect_false(any(is.na(test3[["paddock"]])))
+})
