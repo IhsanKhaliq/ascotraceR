@@ -26,12 +26,8 @@ make_some_infective <- function(spore_packet,
 
   for (i_row in seq_len(spore_packet[, .N])) {
     # save on time data filtering
-    x_i <- spore_packet[i_row, x]
-    y_i <- spore_packet[i_row, y]
-
-
-    row_index <- daily_vals[["paddock"]][x == x_i &
-                                           y == y_i,
+    row_index <- daily_vals[["paddock"]][x == spore_packet[i_row, x] &
+                                           y == spore_packet[i_row, y],
                                          which = TRUE]
     paddock_vals <- daily_vals[["paddock"]][row_index,]
 
