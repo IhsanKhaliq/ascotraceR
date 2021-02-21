@@ -14,7 +14,7 @@
 #'       daily_vals = daily_vals_list)
 make_some_infective <- function(spore_packet,
                                 daily_vals,
-                                latent_period) {
+                                latent_period = 200) {
   if (is.vector(spore_packet)) {
     spore_packet <- setDT(lapply(spore_packet, c))
   }
