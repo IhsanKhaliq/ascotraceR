@@ -35,18 +35,18 @@ make_some_infective <- function(spore_packet,
                                          which = TRUE]
     paddock_vals <- daily_vals[["paddock"]][row_index,]
 
-    # This code should only occur on the first day of the model
-    if (paddock_vals[, sporilating_gp] == 0 &
-        paddock_vals[, is.na(ccd_at_infection)]) {
-      daily_vals[["paddock"]][row_index, sporilating_gp := 1]
+    # # This code should only occur on the first day of the model
+    # Superseded by code defining paddock in ascochyta
+    # also need to avoid using NA at time 0 for cdd
+    # if (paddock_vals[, sporilating_gp] == 0 &
+    #     paddock_vals[, ccd_at_infection == 0]) {
+    #   daily_vals[["paddock"]][row_index, sporilating_gp := 1]
+    #
+    #   daily_vals[["paddock"]][row_index, noninfected_gp :=
+    #                             paddock_vals[, noninfected_gp] - 1]
+    #} else{
 
-      daily_vals[["paddock"]][row_index, noninfected_gp :=
-                                paddock_vals[, noninfected_gp] - 1]
-
-
-    } else{
-      if(paddock_vals[,ccd_at_infection + latent_period <= daily_vals[["cdd"]]]){
-
+    if (paddock_vals[, ccd_at_infection + latent_period <= daily_vals[["cdd"]]]) {
       if (paddock_vals[, noninfected_gp] < spore_packet[i_row, "spores_per_packet"]) {
         infections_new <-
           random_integer_from_real(paddock_vals[, noninfected_gp])
@@ -61,7 +61,8 @@ make_some_infective <- function(spore_packet,
                                 daily_vals[["paddock"]][row_index, sporilating_gp] +
                                 infections_new]
 
-    }}
+    }
+
   }
 
   return(daily_vals)
