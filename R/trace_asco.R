@@ -186,7 +186,7 @@ trace_asco <- function(weather,
 
     # This function or line of code is redundant given this model works
     #  on a 1x1m grid and we do not want to wrap address
-    # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
+    # additional_new_infections <- packets_from_locations(location_list = primary_infection_foci)
 
     # update time values for iteration of loop
     daily_vals_list[[i]][["i_date"]] <- time_increments[i]
