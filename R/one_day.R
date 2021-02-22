@@ -33,12 +33,10 @@ one_day <- function(i_date,
   i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
 
   # Start building a list of values for 'i'
+  # NOTE: I may add this to after `make_some_infective`
   daily_vals[["cdd"]] <- daily_vals[["cdd"]] + i_mean_air_temp
   daily_vals[["cwh"]] <- daily_vals[["cwh"]] + i_wet_hours
   daily_vals[["cr"]] <- daily_vals[["cr"]] + i_rainfall
-
-
-
 
 # Spread spores and infect plants
   # Update growing points for paddock coordinates
@@ -74,7 +72,18 @@ one_day <- function(i_date,
     # newlyInfectedListList is list(ccd = ccd, newlyInfectedList)
     # additionalNewlyInfectedList - seems to be only the coordinates give at the start of the model ie (primary_infection_foci)
 
+    #aggregate infections
+    newly_infected_list <- newly_infected_list[ , .N, by = .(x,y)]
+    setnames(newly_infected_list,
+             old = c("x","y","N"),
+             new = c("x","y","spores_per_packet")
+              )
+
+    daily_vals[[paddock]]
   }
+
+
+
 
 # Grow Plants
   # this code represents mathematica function `growth`; `updateRefUninfectiveGrowingPoints`
@@ -88,9 +97,6 @@ one_day <- function(i_date,
 
   daily_vals[["gp_standard"]] <-
     daily_vals[["gp_standard"]] + daily_vals[["new_gp"]]
-
-
-
 
 
 
