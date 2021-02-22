@@ -1,4 +1,4 @@
-Package: Ascotracer
+Package: ascotraceR
 Title: A Spatiotemporal Model to Simulate the Spread of Ascochyta Blight in Chickpea
 Version: 0.0.0.9000
 Authors@R: 
