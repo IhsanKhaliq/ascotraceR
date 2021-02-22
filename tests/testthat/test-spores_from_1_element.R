@@ -26,19 +26,6 @@ paddock[, c("new_gp",
             0
           )]
 
-# daily_values <- list(
-#   paddock = paddock,
-#   # i_date = sowing_date,  # day of the simulation (iterator)
-#   i_day = 1,
-#   # day = lubridate::yday(sowing_date),    # day of the year
-#   cdd = 0,    # cumulative degree days
-#   cwh = 0,    # cumulative wet hours
-#   cr = 0,     # cumulative rainfall
-#   gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
-#   new_gp = seeding_rate    # new number of growing points for current iteration (refNewGrowingPoints)
-#   #infected_coords = primary_infection_foci  # data.frame
-# )
-
 
 paddock_infected <- paddock[sporilating_gp > 0,]
 
