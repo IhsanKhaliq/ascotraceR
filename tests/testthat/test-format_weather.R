@@ -102,11 +102,11 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
              unlink(file.path(tempdir(), "stat_coord.csv"))
           })
 
-# Test that it is able to import supplied data suitable for `Ascotracer` model
+# Test that it is able to import supplied data suitable for `ascotraceR` model
 
-# read in data associated with the Ascotracer model
+# read in data associated with the ascotraceR model
 newmarra_raw <-
-   fread(system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer"))
+   fread(system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
 
 test_that("format_weather() can format Newmarracarra weather data",{
 expect_silent(
@@ -394,7 +394,7 @@ test_that("`format_weather() stops if lonlat input lacks proper names", {
       lat = -33.26625
    )
 
-   # while Ascotracer does not use rasters lets create one for testing
+   # while ascotraceR does not use rasters lets create one for testing
    eyre_temp <- raster::raster(nrows=180, ncols=360,
                                xmn=-135.7, xmx=135.9, ymn=-33.4, ymx=-33.2)
 
@@ -537,7 +537,7 @@ test_that("`format_weather() creates a YYYY MM DD... cols", {
       time_zone = c("Australia/Adelaide", "Australia/Brisbane")
    )
 
-   # while Ascotracer does not use rasters lets create one for testing
+   # while ascotraceR does not use rasters lets create one for testing
    eyre_temp <- raster::raster(nrows=180, ncols=360,
                                xmn=-135.7, xmx=135.9, ymn=-33.4, ymx=-33.2)
 

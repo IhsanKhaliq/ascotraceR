@@ -1,4 +1,4 @@
-#' Format weather data into a ascotracer.weather object for use in the blackspot
+#' Format weather data into a ascotraceR.weather object for use in the blackspot
 #'  model
 #'
 #' Formats raw weather data into an object suitable for use in
@@ -47,7 +47,7 @@
 #'
 #' @details `time_zone`
 #' All weather stations must fall within the same time zone.  If the required
-#'  stations are located in differing time zones, separate `ascotracer.weather`
+#'  stations are located in differing time zones, separate `ascotraceR.weather`
 #'  objects must be created for each time zone.  If a raster object of
 #'  previous crops is provided that spans time zones, an error will be emitted.
 #'
@@ -64,9 +64,9 @@
 #'  will drop these column variables.  If these data are not included, (`NULL`)
 #'  a separate file may be provided that contains the longitude, latitude and
 #'  matching station name to provide station locations in the final
-#'  `ascotracer.weather` object that is created by specifying the file path to
+#'  `ascotraceR.weather` object that is created by specifying the file path to
 #'  a \acronym{CSV file} using `lonlat_file`.
-#' @return A \code{ascotracer.weather} object (an extension of
+#' @return A \code{ascotraceR.weather} object (an extension of
 #'  \CRANpkg{data.table}) containing the supplied weather aggregated to each
 #'  hour in a suitable format for use with \code{\link{run_blackspot}}
 #'  containing the following columns:
@@ -88,13 +88,13 @@
 #'
 #' @examples
 #' # Fake weather data files for testing and examples have been included in
-#' # \pkg{ascotracer}.  The weather data files both are of the same format, so
+#' # \pkg{ascotraceR}.  The weather data files both are of the same format, so
 #' # they will be combined for formatting here.
 #'
 #' scaddan <-
-#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer")
+#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")
 #' naddacs <-
-#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer")
+#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")
 #'
 #' weather_file_list <- list(scaddan, naddacs)
 #' weather_station_data <-

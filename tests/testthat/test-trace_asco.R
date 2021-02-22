@@ -2,7 +2,7 @@ context("trace_asco is the main function that runs the ascochyta model")
 
 # read in example raw data
 newmarra_raw <- read.csv(file =
-                          system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer"))
+                          system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
 
 weather_dat <- format_weather(
   x = newmarra_raw,
