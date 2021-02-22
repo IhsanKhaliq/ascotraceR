@@ -42,11 +42,11 @@ spores_each_wet_hour <- function(h,
   #   )
   # }
 
-  paddock_infected <- paddock[infected_gp > 0,]
+  paddock_infective <- paddock[sporilating_gp > 0,]
 
   newly_infected_dt <-
     rbindlist(
-    apply(paddock_infected, 1, spores_from_1_element,
+    apply(paddock_infective, 1, spores_from_1_element,
           max_interception_probability = max_interception_probability,
           wind_direction_in_hour = wind_direction_in_hour,
           average_wind_speed_in_hour = average_wind_speed_in_hour,

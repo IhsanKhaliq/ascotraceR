@@ -1,27 +1,33 @@
 context("spores produced from a spatial unit with at least one infected growing point")
 
-library(data.table)
-
 # import weather and filter to a single day with rain
+# w_dat <- fread(file = "tests/testthat/formatted_weather_one_day.csv")
 w_dat <- fread(file = "formatted_weather_one_day.csv")
 
 # makePaddock equivalent
+# create data and parameters
+seeding_rate <- 40
 paddock <- as.data.table(expand.grid(x = 1:100,
                                      y = 1:100))
+paddock[, c("new_gp",
+            "noninfected_gp",
+            "infected_gp",
+            "sporilating_gp",
+            "cdd_at_infection") :=
+          list(
+            seeding_rate,
+            fifelse(x == 50 &
+                      y == 50, seeding_rate - 1,
+                    seeding_rate),
+            0,
+            fifelse(x == 50 &
+                      y == 50, 1,
+                    0),
+            0
+          )]
 
-primary_infection_foci <-
-  paddock[x == 50 &
-            y == 50,
-          c("x", "y")]
 
-# define paddock variables at time 1
-paddock[, new_gp := 40] # Change in the number of growing points since last iteration
-paddock[, noninfected_gp := 40] #
-paddock[, infected_gp := fifelse(x == primary_infection_foci[1,x] &
-                                   y == primary_infection_foci[1,y], 1,
-                                 0)] # Initialise column of infected growing points
-
-paddock_infected <- paddock[infected_gp > 0,]
+paddock_infected <- paddock[sporilating_gp > 0,]
 
 set.seed(667)
 
@@ -64,7 +70,7 @@ test_that("test2 is data.table of 1 row",{
   expect_is(test2[[1]], "data.table")
   expect_equal(nrow(test2[[1]]),1)
   expect_equal(colnames(test2[[1]]), c("x","y","spores_per_packet"))
-  expect_equal(test2[[1]][1,x], 50)
+  expect_equal(test2[[1]][1,x], 52)
   expect_equal(test2[[1]][1,y], 48)
   expect_equal(test2[[1]][1,spores_per_packet], 1)
 })
@@ -91,7 +97,7 @@ test_that("test3 is data.table of 1 row",{
   expect_is(test3[[1]], "data.table")
   expect_equal(nrow(test3[[1]]),2)
   expect_equal(colnames(test3[[1]]), c("x","y","spores_per_packet"))
-  expect_equal(test3[[1]][,x], c(50,52))
+  expect_equal(test3[[1]][,x], c(50,53))
   expect_equal(test3[[1]][,y], c(50,50))
   expect_equal(test3[[1]][,spores_per_packet], c(1,1))
 })
@@ -106,7 +112,7 @@ vec_R1 <- sample(1:nrow(paddock),size = 20, replace = FALSE)
 paddock_infected <- paddock[vec_R1,]
 
 # give infected coordinates infected_gp of between 1:20
-paddock_infected[,infected_gp := sample(1:20, size = 20, replace = FALSE)]
+paddock_infected[,sporilating_gp := sample(1:20, size = 20, replace = FALSE)]
 
 # use new infected data in model
 test4 <- apply(

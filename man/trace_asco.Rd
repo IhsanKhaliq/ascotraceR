@@ -54,7 +54,8 @@ which develop per day, per square meter. Defaults to \code{350}.}
 daily temperature means) is the period between infection and production of
 lesions on susceptible growing points. Defaults to \code{200}
 @param initial_infection refers to initial or primary infection on seedlings,
-resulting in the production of infected growing points}
+resulting in the production of infected growing points
+@param time_zone refers to time in Coordinated Universal Time (UTC)}
 
 \item{primary_infection_foci}{it refers to the inoculated quadrat
 located at the centre of the paddock from where disease spreads
