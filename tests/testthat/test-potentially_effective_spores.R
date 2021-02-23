@@ -2,7 +2,7 @@ context("Estimate the potentially effective spores")
 
 test1 <-
   potentially_effective_spores(
-    sporesPerInfectiveGPPerWetHour = 0.15,
+    spores_per_infective_gp_per_wet_hour = 0.15,
     # default parameter of the model
     max_interception_probability = 1,
     # calculated in spread_spores and almost always 1
@@ -17,7 +17,7 @@ test_that("test1 returns zero", {
 
 test2 <-
   potentially_effective_spores(
-    sporesPerInfectiveGPPerWetHour = 0.15,
+    spores_per_infective_gp_per_wet_hour = 0.15,
     # default parameter of the model
     max_interception_probability = 1,
     # calculated in spread_spores and almost always 1
@@ -33,7 +33,7 @@ test_that("test2 returns in range of 0 -2", {
 
 test3 <- sapply(rep(1, 1e5), function(x) {
   potentially_effective_spores(
-    sporesPerInfectiveGPPerWetHour = 0.15,
+    spores_per_infective_gp_per_wet_hour = 0.15,
     max_interception_probability = 1,
     paddock_infected_gp = x
   )
@@ -50,7 +50,7 @@ test_that("test3 returns in range of 100000 iterations", {
 
 test4 <- sapply(rep(100, 1e5), function(x) {
   potentially_effective_spores(
-    sporesPerInfectiveGPPerWetHour = 0.15,
+    spores_per_infective_gp_per_wet_hour = 0.15,
     max_interception_probability = 1,
     paddock_infected_gp = x
   )
@@ -67,7 +67,7 @@ test_that("test3 returns in range of 100000 iterations", {
 test_that("test5 returns an error", {
   expect_error(
     potentially_effective_spores(
-      sporesPerInfectiveGPPerWetHour = 0.15,
+      spores_per_infective_gp_per_wet_hour = 0.15,
       max_interception_probability = -1,
       paddock_infected_gp = 1
     )

@@ -25,7 +25,7 @@
 #' @noRd
 spores_from_1_element <-
   function(paddock_source,
-           sporesPerInfectiveGPPerWetHour = 0.15,
+           spores_per_infective_gp_per_wet_hour = 0.15,
            max_interception_probability,
            wind_direction_in_hour,
            average_wind_speed_in_hour,
@@ -37,7 +37,7 @@ spores_from_1_element <-
 
     # this might be able to be calculated at the spread_spores level, and If statement should come first
     # given that it is if == 0
-    spore_packets <- potentially_effective_spores(sporesPerInfectiveGPPerWetHour = sporesPerInfectiveGPPerWetHour,
+    spore_packets <- potentially_effective_spores(spores_per_infective_gp_per_wet_hour = spores_per_infective_gp_per_wet_hour,
                                                   max_interception_probability = max_interception_probability,
                                                   paddock_source["infected_gp"])
 

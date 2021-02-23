@@ -29,7 +29,7 @@ test1 <- apply(
   X = paddock_infected,
   MARGIN = 1,
   FUN = spores_from_1_element,
-  sporesPerInfectiveGPPerWetHour = 0.15, # default parameter for the function
+  spores_per_infective_gp_per_wet_hour = 0.15, # default parameter for the function
   max_interception_probability = 1, # parameter in potentially_effective_spores defined in spread_spores
   wind_direction_in_hour = w_dat[1, wd],
   average_wind_speed_in_hour = w_dat[1, ws],
@@ -49,7 +49,7 @@ test2 <- apply(
   X = paddock_infected,
   MARGIN = 1,
   FUN = spores_from_1_element,
-  sporesPerInfectiveGPPerWetHour = 0.15, # default parameter for the function
+  spores_per_infective_gp_per_wet_hour = 0.15, # default parameter for the function
   max_interception_probability = 1, # parameter in potentially_effective_spores defined in spread_spores
   wind_direction_in_hour = w_dat[1, wd],
   average_wind_speed_in_hour = w_dat[1, ws],
@@ -76,7 +76,7 @@ test3 <- apply(
   X = paddock_infected,
   MARGIN = 1,
   FUN = spores_from_1_element,
-  sporesPerInfectiveGPPerWetHour = 0.15, # default parameter for the function
+  spores_per_infective_gp_per_wet_hour = 0.15, # default parameter for the function
   max_interception_probability = 1, # parameter in potentially_effective_spores defined in spread_spores
   wind_direction_in_hour = w_dat[1, wd],
   average_wind_speed_in_hour = w_dat[1, ws],
@@ -113,7 +113,7 @@ test4 <- apply(
   X = paddock_infected,
   MARGIN = 1,
   FUN = spores_from_1_element,
-  sporesPerInfectiveGPPerWetHour = 0.15, # default parameter for the function
+  spores_per_infective_gp_per_wet_hour = 0.15, # default parameter for the function
   max_interception_probability = 1, # parameter in potentially_effective_spores defined in spread_spores
   wind_direction_in_hour = w_dat[1, wd],
   average_wind_speed_in_hour = w_dat[1, ws],
