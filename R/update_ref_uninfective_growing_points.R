@@ -1,4 +1,4 @@
-#' Updates the number of uninfective (health) growing points
+#' Updates the number of uninfective (healthy) growing points
 #'
 #' 'update_ref_uninfective_growing_points()' updates the number of
 #' growing points that are not infected by A. rabiei
