@@ -20,7 +20,7 @@ make_some_infective <- function(daily_vals,
     newly_exposed[cdd_at_infection + latent_period <= daily_vals[["cdd"]],]
 
 
-  for (i_row in seq_len(newly_infectious[, .N])) {
+  for (i_row in seq_len(NROW(newly_infectious))) {
     # save on time data filtering
     row_index <- daily_vals[["paddock"]][x == newly_infectious[i_row, x] &
                                            y == newly_infectious[i_row, y],
