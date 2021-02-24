@@ -1,8 +1,7 @@
 #' Make infected growing points sources for spore dispersal
 #'
-#' @param spore_packet atomic vector input through apply function containing
-#'  xy coordinates and a column of spore_packets. example input is the
-#'  newly_infected data.table
+#' @param spore_packet data.table with three variables, 'x', 'y' and
+#'  'spores_per_packet'
 #' @param daily_vals list of the current day's values and paddock data.table
 #'
 #' @return updated daily_vals list
