@@ -44,6 +44,7 @@ make_some_infective <- function(daily_vals,
 
   }
 
+  daily_vals[["newly_infected"]] <- newly_exposed[cdd_at_infection + latent_period > daily_vals[["cdd"]],]
 
   return(daily_vals)
 }
