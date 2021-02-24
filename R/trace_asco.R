@@ -175,7 +175,8 @@ trace_asco <- function(weather,
       cr = 0,     # cumulative rainfall
       gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
       new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
-      infected_coords = primary_infection_foci  # data.frame
+      infected_coords = primary_infection_foci,  # data.frame
+      newly_infected # data.table of infected growing points still in latent period and not sporilating
     )
   )
 
