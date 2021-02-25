@@ -93,16 +93,20 @@ one_day <- function(i_date,
   daily_vals[["gp_standard"]] <-
     daily_vals[["gp_standard"]] + daily_vals[["new_gp"]]
 
+  # this might be quicker if there was no fifelse statement
+  daily_values[["paddock"]][, new_gp := fifelse(noninfected_gp == 0, 0,
+                                                calc_new_gp(current_growing_points = noninfected_gp,
+                                                            gp_rr = gp_rr,
+                                                            max_gp = max_gp,
+                                                            mean_air_temp = i_mean_air_temp)
+                                                            )]
+
+  daily_values[["paddock"]][, noninfected_gp := noninfected_gp + new_gp]
 
 
 
 
-  # update daily_vals with the values from the current day
-  daily_vals <-
-    rbindlist(list(
-      daily_vals,
-      day_i_vals
-    ))
+
 
   # Write code to iterate over each hour and the function `growth`
   # `growth` function should return a vector of length 24 rows for each hour.
