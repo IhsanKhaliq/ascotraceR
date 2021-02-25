@@ -16,7 +16,7 @@ successful_infections <- function (spore_targets,
                                    spore_interception_parameter,
                                    max_interception_probability) {
 
-  if(is.data.table(spore_targets) | is.data.frame(spore_targets) == FALSE){
+  if((is.data.table(spore_targets) | is.data.frame(spore_targets)) == FALSE){
     stop("argument 'spore_targets' should be a data.table input not ", class(spore_targets))
   }
 
