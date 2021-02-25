@@ -15,6 +15,11 @@ successful_infections <- function (spore_targets,
                                    paddock,
                                    spore_interception_parameter,
                                    max_interception_probability) {
+
+  if(is.data.table(spore_targets) | is.data.frame(spore_targets) == FALSE){
+    stop("argument 'spore_targets' should be a data.table input not ", class(spore_targets))
+  }
+
   suc_inf <-
     apply(spore_targets,1,function(sp_tar){
 
