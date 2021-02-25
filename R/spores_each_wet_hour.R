@@ -54,13 +54,13 @@ spores_each_wet_hour <- function(h,
           paddock = paddock)
     )
 
-  newly_infected_dt$spores_per_packet <-
+  newly_infected_dt[, spores_per_packet :=
     successful_infections(
       spore_targets = newly_infected_dt,
       paddock = paddock,
       spore_interception_parameter = spore_interception_parameter,
       max_interception_probability = max_interception_probability
-    )
+  )]
 
   # filter only successful interceptions inside the paddock
   newly_infected_dt <-
