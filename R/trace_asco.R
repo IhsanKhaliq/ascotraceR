@@ -166,7 +166,7 @@ trace_asco <- function(weather,
 
   daily_vals_list <- list(
     list(
-      paddock = paddock,
+      paddock = paddock, # data.table each row is a 1 x 1m coordinate
       i_date = sowing_date,  # day of the simulation (iterator)
       i_day = 1,
       day = lubridate::yday(sowing_date),    # day of the year
@@ -176,7 +176,7 @@ trace_asco <- function(weather,
       gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
       new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
       infected_coords = primary_infection_foci,  # data.frame
-      newly_infected # data.table of infected growing points still in latent period and not sporilating
+      newly_infected # data.table of infected growing points still in latent period and not sporilating (exposed_gp)
     )
   )
 
