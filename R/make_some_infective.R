@@ -38,8 +38,8 @@ make_some_infective <- function(daily_vals,
                                 paddock_vals[, noninfected_gp] - infections_new]
     }
 
-    daily_vals[["paddock"]][row_index, sporilating_gp :=
-                              daily_vals[["paddock"]][row_index, sporilating_gp] +
+    daily_vals[["paddock"]][row_index, sporulating_gp :=
+                              daily_vals[["paddock"]][row_index, sporulating_gp] +
                               infections_new]
 
   }

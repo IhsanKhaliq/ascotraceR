@@ -42,10 +42,10 @@ spores_each_wet_hour <- function(h,
   #   )
   # }
 
-  paddock_infective <- paddock[sporilating_gp > 0,]
+  paddock_infective <- paddock[sporulating_gp > 0,]
 
   if(nrow(paddock_infective)== 0){
-    stop("Can't detect any infection, please check sum(paddock$sporilating_gp > 0) is >= 1")
+    stop("Can't detect any infection, please check sum(paddock$sporulating_gp > 0) is >= 1")
   }
 
   newly_infected_dt <-

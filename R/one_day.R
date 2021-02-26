@@ -1,6 +1,6 @@
 #' Simulates Ascochyta spore dispersal for a single day increment
 #'
-#' @param i_date a character string or \class{Date} formatted string indicating an
+#' @param i_date a character string or POSIXct formatted string indicating an
 #'  iteration date of the model. Preferably in \acronym{ISO8601} format (YYYY-MM-DD),
 #'  \emph{e.g.} \dQuote{2020-04-26}.
 #'
@@ -45,8 +45,8 @@ one_day <- function(i_date,
   # need to make a copy of the data.table otherwise it will modify all data.tables
   # in the following functions
   daily_vals[["paddock"]] <- copy(daily_vals[["paddock"]])
-if(any(is.na(daily_vals[["paddock"]][,sporilating_gp]))){
-  stop("NA values in daily_vals[['paddock']][,sporilating_gp] ")
+if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
+  stop("NA values in daily_vals[['paddock']][,sporulating_gp] ")
 }
 
 # Spread spores and infect plants
@@ -81,7 +81,8 @@ if(any(is.na(daily_vals[["paddock"]][,sporilating_gp]))){
                                       latent_period = 200)
   }
 
-
+# update infected coordinates
+  daily_vals[["infected_coords"]] <- daily_vals[["paddock"]][sporulating_gp > 0, c("x","y")]
 
 
 # Grow Plants

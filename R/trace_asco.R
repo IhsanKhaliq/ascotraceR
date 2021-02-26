@@ -57,7 +57,8 @@ trace_asco <- function(weather,
                        max_new_gp = 350,
                        latent_period_cdd = 200,
                        time_zone = "UTC",
-                       primary_infection_foci = "random"
+                       primary_infection_foci = "random",
+                       n_foci = 1
                        ){
 
 
@@ -109,25 +110,55 @@ trace_asco <- function(weather,
 
 
   # sample a paddock location randomly if a starting foci is not given
-  if (primary_infection_foci == "random") {
-    primary_infection_foci <-
-      paddock[sample(seq_len(nrow(paddock)),
-                     size = 1),
-              c("x", "y")]
-
+  if (is.data.table(primary_infection_foci) &
+      all(c("x", "y") %in% colnames(primary_infection_foci))) {
+  # Skip the rest of the tests
   } else{
-    if (primary_infection_foci == "center") {
+    if (primary_infection_foci == "random") {
       primary_infection_foci <-
-        paddock[x == as.integer(round(paddock_width / 2)) &
-                  y == as.integer(round(paddock_length / 2)),
+        paddock[sample(seq_len(nrow(paddock)),
+                       size = n_foci,
+                       replace = TRUE),
                 c("x", "y")]
 
     } else{
-      if (length(primary_infection_foci) != 2 |
-          is.numeric(primary_infection_foci) == FALSE) {
-        stop("primary_infection_foci should be supplied as a numeric vector of length two")
+      if (primary_infection_foci == "center") {
+        primary_infection_foci <-
+          paddock[x == as.integer(round(paddock_width / 2)) &
+                    y == as.integer(round(paddock_length / 2)),
+                  c("x", "y")]
+
+      } else{
+        if (is.vector(primary_infection_foci)) {
+          if (length(primary_infection_foci) != 2 |
+              is.numeric(primary_infection_foci) == FALSE) {
+            stop("primary_infection_foci should be supplied as a numeric vector of length two")
+          }
+          primary_infection_foci <-
+            as.data.table(list(primary_infection_foci))
+          setnames(
+            x = primary_infection_foci,
+            old = c("V1", "V2"),
+            new = c("x", "y")
+          )
+        }
+        if (is.data.table(primary_infection_foci) == FALSE &
+            is.data.frame(primary_infection_foci)) {
+          setDT(primary_infection_foci)
+          if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
+            stop("primary_infection_foci data.table needs colnames 'x' and 'y'")
+          }
+
+        }
+
       }
     }
+  }
+
+  infected_rows <- which_paddock_row(paddock = paddock,
+                                     query = primary_infection_foci)
+  if(ncol(primary_infection_foci) == 2){
+    primary_infection_foci[,sp_gp := 1]
   }
 
   # define paddock variables at time 1
@@ -136,20 +167,21 @@ trace_asco <- function(weather,
     "new_gp", # Change in the number of growing points since last iteration
     "noninfected_gp",
     "infected_gp",
-    "sporilating_gp", # replacing InfectiveElementList
+    "sporulating_gp", # replacing InfectiveElementList
     "cdd_at_infection"
   ) :=
     list(
       seeding_rate,
-      fifelse(x == primary_infection_foci[,x] &
-                y == primary_infection_foci[,y], seeding_rate - 1,
-              seeding_rate),
+      seeding_rate,
       0,
-      fifelse(x == primary_infection_foci[,x] &
-                y == primary_infection_foci[,y], 1,
-              0),
+      0,
       0
     )]
+
+  paddock[infected_rows, "noninfected_gp" :=
+            seeding_rate - primary_infection_foci[,3]]
+  paddock[infected_rows, "sporulating_gp" :=
+            primary_infection_foci[,3]]
 
   # calculate additional parameters
   spore_interception_parameter <-
@@ -194,17 +226,14 @@ trace_asco <- function(weather,
 
   for(i in seq_len(length(time_increments))){
 
-    # skip time increment if initial_infection is after the sowing date
-    if(time_increments[i] < initial_infection) next
-
     # This function or line of code is redundant given this model works
     #  on a 1x1m grid and we do not want to wrap address
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
     # update time values for iteration of loop
-    daily_vals_list[[i+1]][["i_date"]] <- time_increments[i]
-    daily_vals_list[[i+1]][["i_day"]] <- i
-    daily_vals_list[[i+1]][["day"]] <- lubridate::yday(time_increments[i])
+    daily_vals_list[[i]][["i_date"]] <- time_increments[i]
+    daily_vals_list[[i]][["i_day"]] <- i
+    daily_vals_list[[i]][["day"]] <- lubridate::yday(time_increments[i])
 
 
 
@@ -222,7 +251,11 @@ trace_asco <- function(weather,
 
   }
 
-
+  daily_vals_list[[length(daily_vals_list)]][["i_date"]] <-
+    daily_vals_list[[length(daily_vals_list)]][["i_date"]] + lubridate::ddays(1)
+  daily_vals_list[[length(daily_vals_list)]][["i_day"]] <- length(daily_vals_list)
+  daily_vals_list[[length(daily_vals_list)]][["day"]] <-
+    lubridate::yday(daily_vals_list[[length(daily_vals_list)]][["i_date"]])
 
 
   return(daily_vals_list)

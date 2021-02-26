@@ -6,7 +6,6 @@
 \usage{
 one_day(
   i_date,
-  day,
   daily_vals,
   weather_dat,
   gp_rr,
@@ -16,7 +15,7 @@ one_day(
 )
 }
 \arguments{
-\item{i_date}{a character string or \class{Date} formatted string indicating an
+\item{i_date}{a character string or \class{POSIXct} formatted string indicating an
 iteration date of the model. Preferably in \acronym{ISO8601} format (YYYY-MM-DD),
 \emph{e.g.} \dQuote{2020-04-26}.}
 
