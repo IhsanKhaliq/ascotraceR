@@ -45,7 +45,9 @@ one_day <- function(i_date,
   # need to make a copy of the data.table otherwise it will modify all data.tables
   # in the following functions
   daily_vals[["paddock"]] <- copy(daily_vals[["paddock"]])
-
+if(any(is.na(daily_vals[["paddock"]][,sporilating_gp]))){
+  stop("NA values in daily_vals[['paddock']][,sporilating_gp] ")
+}
 
 # Spread spores and infect plants
   # Update growing points for paddock coordinates

@@ -44,6 +44,10 @@ spores_each_wet_hour <- function(h,
 
   paddock_infective <- paddock[sporilating_gp > 0,]
 
+  if(nrow(paddock_infective)== 0){
+    stop("Can't detect any infection, please check sum(paddock$sporilating_gp > 0) is >= 1")
+  }
+
   newly_infected_dt <-
     apply(paddock_infective, 1, spores_from_1_element,
           max_interception_probability = max_interception_probability,
