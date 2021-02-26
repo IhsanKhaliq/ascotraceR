@@ -109,23 +109,24 @@ trace_asco <- function(weather,
 
 
   # sample a paddock location randomly if a starting foci is not given
-  if(primary_infection_foci == "random") {
+  if (primary_infection_foci == "random") {
     primary_infection_foci <-
       paddock[sample(seq_len(nrow(paddock)),
                      size = 1),
               c("x", "y")]
 
-  }
-  if (primary_infection_foci == "center") {
-    primary_infection_foci <-
-      paddock[x == as.integer(round(paddock_width / 2)) &
-                y == as.integer(round(paddock_length / 2)),
-              c("x", "y")]
-
   } else{
-    if (length(primary_infection_foci) != 2 |
-        is.numeric(primary_infection_foci) == FALSE) {
-      stop("primary_infection_foci should be supplied as a numeric vector of length two")
+    if (primary_infection_foci == "center") {
+      primary_infection_foci <-
+        paddock[x == as.integer(round(paddock_width / 2)) &
+                  y == as.integer(round(paddock_length / 2)),
+                c("x", "y")]
+
+    } else{
+      if (length(primary_infection_foci) != 2 |
+          is.numeric(primary_infection_foci) == FALSE) {
+        stop("primary_infection_foci should be supplied as a numeric vector of length two")
+      }
     }
   }
 
@@ -214,7 +215,7 @@ trace_asco <- function(weather,
                        spore_interception_parameter = spore_interception_parameter)
 
     # temporary line of code to test building of daily_vals in loop
-    daily_vals_list <- day_out
+    #daily_vals_list <- day_out
 
   }
 
