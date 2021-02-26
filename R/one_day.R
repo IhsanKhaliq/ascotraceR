@@ -12,7 +12,6 @@
 #'
 #' @examples
 one_day <- function(i_date,
-                    day,
                     daily_vals,
                     weather_dat,
                     gp_rr,
@@ -90,18 +89,24 @@ one_day <- function(i_date,
                 max_gp = max_gp,
                 mean_air_temp = i_mean_air_temp)
 
+
+
+  # this might be quicker if there was no fifelse statement
+  daily_vals[["paddock"]][, new_gp := fcase(
+    noninfected_gp == 0, 0,
+    noninfected_gp == daily_vals[["gp_standard"]], daily_vals[["new_gp"]],
+    noninfected_gp < daily_vals[["gp_standard"]], calc_new_gp(
+      current_growing_points = noninfected_gp,
+      gp_rr = gp_rr,
+      max_gp = max_gp,
+      mean_air_temp = i_mean_air_temp
+    )
+  )]
+
   daily_vals[["gp_standard"]] <-
     daily_vals[["gp_standard"]] + daily_vals[["new_gp"]]
 
-  # this might be quicker if there was no fifelse statement
-  daily_values[["paddock"]][, new_gp := fifelse(noninfected_gp == 0, 0,
-                                                calc_new_gp(current_growing_points = noninfected_gp,
-                                                            gp_rr = gp_rr,
-                                                            max_gp = max_gp,
-                                                            mean_air_temp = i_mean_air_temp)
-                                                            )]
-
-  daily_values[["paddock"]][, noninfected_gp := noninfected_gp + new_gp]
+  daily_vals[["paddock"]][, noninfected_gp := noninfected_gp + new_gp]
 
 
 
