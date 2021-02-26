@@ -6,7 +6,7 @@ harvest_date <- as.POSIXct("1998-03-12")
 
 # Test running for 3 days
 test1 <- trace_asco(
-  weather = Ascotracer::newM_weather,
+  weather = newM_weather,
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-03-10",
@@ -20,14 +20,14 @@ test_that("days have updated after 5 increments",{
   expect_equal(sapply(test1, function(x){as.character(x[["i_date"]])}), as.character(seq(from = sowing_date,
                                                                             to = harvest_date + lubridate::ddays(1),
                                                                             by = "days")))
-
+  expect_length(test1, 5)
+  expect_length(test1[[1]], 11)
 })
-
 
 
 # test running for 14 days
 test2 <- trace_asco(
-  weather = Ascotracer::newM_weather,
+  weather = newM_weather,
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-03-10",
@@ -40,7 +40,7 @@ test2[[16]] # look at values on the 16th day
 
 # test running for 28 days
 test3 <- trace_asco(
-  weather = Ascotracer::newM_weather,
+  weather = newM_weather,
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-03-10",
@@ -52,13 +52,43 @@ test3 <- trace_asco(
 test3[[30]] # look at values on the 30th day
 test_that("test3 returns some sporulating gps",{
   expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 1)
+  expect_length(test3, 30)
+  expect_length(test3[[1]], 11)
 
 
 })
+
+
+# test running for 28 days with multiple start locations
+pdk <- as.data.table(expand.grid(x = 1:100,
+                                 y = 1:100,
+                                 load = 3))
+qry <- pdk[sample(1:nrow(pdk),10),]
+
+test3 <- trace_asco(
+  weather = newM_weather,
+  paddock_length = 100,
+  paddock_width = 100,
+  initial_infection = "1998-03-10",
+  sowing_date = as.POSIXct("1998-03-09"),
+  harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(28),
+  time_zone = "Australia/Perth",
+  primary_infection_foci = qry
+)
+test3[[30]] # look at values on the 30th day
+tracer_plot(test3,30)
+test_that("test3 returns some sporulating gps",{
+  expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 1)
+  expect_length(test3, 30)
+  expect_length(test3[[1]], 11)
+
+
+})
+
 #
 # # test running for 100 days
 # test4 <- trace_asco(
-#   weather = Ascotracer::newM_weather,
+#   weather = newM_weather,
 #   paddock_length = 100,
 #   paddock_width = 100,
 #   initial_infection = "1998-03-10",
@@ -78,7 +108,7 @@ test_that("test3 returns some sporulating gps",{
 #
 # # test running for 100 days
 # test5 <- trace_asco(
-#   weather = Ascotracer::newM_weather,
+#   weather = newM_weather,
 #   paddock_length = 75,
 #   paddock_width = 75,
 #   initial_infection = "1998-06-10",
