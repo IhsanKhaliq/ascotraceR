@@ -35,7 +35,7 @@ tracer_plot <- function(dat, day, tiles = "sporilating_gp"){
   if(tiles == "noninfected_gp"){
     p1 <- ggplot2::ggplot(data = dat1, aes(x,y))+
       geom_tile(aes(fill = noninfected_gp))+
-      scale_fill_gradient(low = "lightgoldenrod", high = "red")
+      scale_fill_gradient(low = "lightgoldenrod", high = "palegreen4")
     print(p1)
     return(p1)}
 }
