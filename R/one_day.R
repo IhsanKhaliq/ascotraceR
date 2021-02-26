@@ -42,6 +42,10 @@ one_day <- function(i_date,
     interception_probability(target_density = 5 * max(daily_vals[["paddock"]][,new_gp]),
                              k = spore_interception_parameter)
 
+  # need to make a copy of the data.table otherwise it will modify all data.tables
+  # in the following functions
+  daily_vals[["paddock"]] <- copy(daily_vals[["paddock"]])
+
 
 # Spread spores and infect plants
   # Update growing points for paddock coordinates
@@ -116,8 +120,10 @@ one_day <- function(i_date,
   # Write code to iterate over each hour and the function `growth`
   # `growth` function should return a vector of length 24 rows for each hour.
   # each value should give the number of growing points at that hour in time
-  crop_gps <-
 
+  # This line is here due to https://github.com/Rdatatable/data.table/issues/869
+  #daily_vals[["paddock"]]
+  daily_vals
 
   return(daily_vals)
 }
