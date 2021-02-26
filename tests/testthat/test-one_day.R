@@ -247,3 +247,4 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
   expect_equal(round(test3[["paddock"]][,unique(infected_gp)],6), 0)
   expect_equal(round(test3[["paddock"]][,unique(sporilating_gp)],6), c(0,2 ,1))
 })
+
