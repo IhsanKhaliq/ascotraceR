@@ -199,9 +199,9 @@ trace_asco <- function(weather,
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
     # update time values for iteration of loop
-    daily_vals_list[[i+1]][["i_date"]] <- time_increments[i]
-    daily_vals_list[[i+1]][["i_day"]] <- i
-    daily_vals_list[[i+1]][["day"]] <- lubridate::yday(time_increments[i])
+    daily_vals_list[[i]][["i_date"]] <- time_increments[i]
+    daily_vals_list[[i]][["i_day"]] <- i
+    daily_vals_list[[i]][["day"]] <- lubridate::yday(time_increments[i])
 
 
 
@@ -219,7 +219,11 @@ trace_asco <- function(weather,
 
   }
 
-
+  daily_vals_list[[length(daily_vals_list)]][["i_date"]] <-
+    daily_vals_list[[length(daily_vals_list)]][["i_date"]] + lubridate::ddays(1)
+  daily_vals_list[[length(daily_vals_list)]][["i_day"]] <- length(daily_vals_list)
+  daily_vals_list[[length(daily_vals_list)]][["day"]] <-
+    lubridate::yday(daily_vals_list[[length(daily_vals_list)]][["i_date"]])
 
 
   return(daily_vals_list)
