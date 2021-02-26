@@ -1,6 +1,6 @@
 #' Simulates Ascochyta spore dispersal for a single day increment
 #'
-#' @param i_date a character string or \class{POSIXct} formatted string indicating an
+#' @param i_date a character string or POSIXct formatted string indicating an
 #'  iteration date of the model. Preferably in \acronym{ISO8601} format (YYYY-MM-DD),
 #'  \emph{e.g.} \dQuote{2020-04-26}.
 #'
@@ -18,7 +18,7 @@ one_day <- function(i_date,
                     max_gp,
                     max_new_gp,
                     spore_interception_parameter) {
-cat(class(i_date))
+
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
 
