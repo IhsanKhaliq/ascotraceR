@@ -81,7 +81,8 @@ if(any(is.na(daily_vals[["paddock"]][,sporilating_gp]))){
                                       latent_period = 200)
   }
 
-
+# update infected coordinates
+  daily_vals[["infected_coords"]] <- daily_vals[["paddock"]][sporilating_gp > 0, c("x","y")]
 
 
 # Grow Plants
