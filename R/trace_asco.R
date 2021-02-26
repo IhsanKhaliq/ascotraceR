@@ -131,6 +131,7 @@ trace_asco <- function(weather,
   }
 
   # define paddock variables at time 1
+  #need to update so can assign a data.table of things primary infection foci!!!!!!!!!!!!!!!
   paddock[, c(
     "new_gp", # Change in the number of growing points since last iteration
     "noninfected_gp",
@@ -140,12 +141,12 @@ trace_asco <- function(weather,
   ) :=
     list(
       seeding_rate,
-      fifelse(x == primary_infection_foci[1] &
-                y == primary_infection_foci[2], seeding_rate - 1,
+      fifelse(x == primary_infection_foci[,1] &
+                y == primary_infection_foci[,2], seeding_rate - 1,
               seeding_rate),
       0,
-      fifelse(x == primary_infection_foci[1] &
-                y == primary_infection_foci[2], 1,
+      fifelse(x == primary_infection_foci[,1] &
+                y == primary_infection_foci[,2], 1,
               0),
       0
     )]
@@ -177,7 +178,10 @@ trace_asco <- function(weather,
       gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
       new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
       infected_coords = primary_infection_foci,  # data.frame
-      newly_infected # data.table of infected growing points still in latent period and not sporilating (exposed_gp)
+      newly_infected =  data.table(x = numeric(),
+                                   y = numeric(),
+                                   spores_per_packet = numeric(),
+                                   cdd_at_infection = numeric()) # data.table of infected growing points still in latent period and not sporilating (exposed_gp)
     )
   )
 
