@@ -10,7 +10,7 @@ paddock <- as.data.table(expand.grid(x = 1:100,
 paddock[, c("new_gp",
             "noninfected_gp",
             "infected_gp",
-            "sporilating_gp",
+            "sporulating_gp",
             "cdd_at_infection") :=
           list(
             seeding_rate,
@@ -69,7 +69,7 @@ test_that("test1 returns daily_values list with no changes", {
                ))
 
   expect_equal(test1[["paddock"]][, noninfected_gp], daily_values[["paddock"]][, noninfected_gp])
-  expect_equal(test1[["paddock"]][, sporilating_gp], daily_values[["paddock"]][, sporilating_gp])
+  expect_equal(test1[["paddock"]][, sporulating_gp], daily_values[["paddock"]][, sporulating_gp])
   expect_equal(test1[["newly_infected"]], daily_values[["newly_infected"]])
   expect_false(any(is.na(test1[["paddock"]])))
 })
@@ -79,8 +79,8 @@ daily_values[["cdd"]] <- 250
 test2 <- make_some_infective(daily_vals = daily_values,
                              latent_period = 200)
 
-expect_equal(test2[["paddock"]][, sum(sporilating_gp)], # output
-             daily_values[["paddock"]][, sum(sporilating_gp)]) # input
+expect_equal(test2[["paddock"]][, sum(sporulating_gp)], # output
+             daily_values[["paddock"]][, sum(sporulating_gp)]) # input
 
 test_that("test2 returns changes now latent_period has elapsed",{
   expect_is(test2, "list")
@@ -97,8 +97,8 @@ test_that("test2 returns changes now latent_period has elapsed",{
                  "new_gp",
                  "newly_infected"
                ))
-  expect_equal(test2[["paddock"]][, sum(sporilating_gp)], # output
-               daily_values[["paddock"]][, sum(sporilating_gp)]) # input
+  expect_equal(test2[["paddock"]][, sum(sporulating_gp)], # output
+               daily_values[["paddock"]][, sum(sporulating_gp)]) # input
   expect_equal(nrow(daily_values[["newly_infected"]]) - nrow(test2[["newly_infected"]]),
                nrow(daily_values[["newly_infected"]]))
   expect_silent(test3 <- make_some_infective(daily_vals = daily_values))
@@ -128,10 +128,10 @@ test_that("test2 returns changes now latent_period has elapsed",{
 #                  "gp_standard",
 #                  "new_gp"
 #                ))
-#   expect_equal(test3[["paddock"]][sporilating_gp > 0, .N ], 37)
-#   expect_equal(test3[["paddock"]][sporilating_gp > 0, max(sporilating_gp) ], 8)
-#   expect_true(all(test3[["paddock"]][, sporilating_gp + noninfected_gp] == 40))
+#   expect_equal(test3[["paddock"]][sporulating_gp > 0, .N ], 37)
+#   expect_equal(test3[["paddock"]][sporulating_gp > 0, max(sporulating_gp) ], 8)
+#   expect_true(all(test3[["paddock"]][, sporulating_gp + noninfected_gp] == 40))
 #   expect_is(test3[["paddock"]][, noninfected_gp], "numeric")
-#   expect_is(test3[["paddock"]][, sporilating_gp], "numeric")
+#   expect_is(test3[["paddock"]][, sporulating_gp], "numeric")
 #   expect_false(any(is.na(test3[["paddock"]])))
 # })

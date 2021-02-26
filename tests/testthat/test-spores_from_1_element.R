@@ -12,7 +12,7 @@ paddock <- as.data.table(expand.grid(x = 1:100,
 paddock[, c("new_gp",
             "noninfected_gp",
             "infected_gp",
-            "sporilating_gp",
+            "sporulating_gp",
             "cdd_at_infection") :=
           list(
             seeding_rate,
@@ -27,7 +27,7 @@ paddock[, c("new_gp",
           )]
 
 
-paddock_infected <- paddock[sporilating_gp > 0,]
+paddock_infected <- paddock[sporulating_gp > 0,]
 
 set.seed(667)
 
@@ -112,7 +112,7 @@ vec_R1 <- sample(1:nrow(paddock),size = 20, replace = FALSE)
 paddock_infected <- paddock[vec_R1,]
 
 # give infected coordinates infected_gp of between 1:20
-paddock_infected[,sporilating_gp := sample(1:20, size = 20, replace = FALSE)]
+paddock_infected[,sporulating_gp := sample(1:20, size = 20, replace = FALSE)]
 
 # use new infected data in model
 test4 <- apply(

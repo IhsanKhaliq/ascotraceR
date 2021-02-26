@@ -19,7 +19,7 @@ paddock[, c(
   "new_gp", # Change in the number of growing points since last iteration
   "noninfected_gp",
   "infected_gp",
-  "sporilating_gp", # replacing InfectiveElementList
+  "sporulating_gp", # replacing InfectiveElementList
   "cdd_at_infection"
 ) :=
   list(

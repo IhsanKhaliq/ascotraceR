@@ -39,7 +39,7 @@ spores_from_1_element <-
     # given that it is if == 0
     spore_packets <- potentially_effective_spores(sporesPerInfectiveGPPerWetHour = sporesPerInfectiveGPPerWetHour,
                                                   max_interception_probability = max_interception_probability,
-                                                  paddock_source["sporilating_gp"])
+                                                  paddock_source["sporulating_gp"])
 
     degree <- round(pi,6)/180
 

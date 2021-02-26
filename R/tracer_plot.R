@@ -2,7 +2,7 @@
 #'
 #' @param dat nested list of ascotraceR class
 #' @param day integer, day of the simulation to plot
-#' @param tiles what to response for the plot to render, options: sporilating_gp, new_gp,noninfected_gp
+#' @param tiles what to response for the plot to render, options: sporulating_gp, new_gp,noninfected_gp
 #'
 #' @return ggplot
 #' @export
@@ -21,13 +21,13 @@
 #'   tracer_plot(test5,102))
 
 
-tracer_plot <- function(dat, day, tiles = "sporilating_gp"){
+tracer_plot <- function(dat, day, tiles = "sporulating_gp"){
   dat1 <- dat[[day]][["paddock"]]
 
 
-  if(tiles == "sporilating_gp"){
+  if(tiles == "sporulating_gp"){
   p1 <- ggplot2::ggplot(data = dat1, aes(x,y))+
-    geom_tile(aes(fill = sporilating_gp))+
+    geom_tile(aes(fill = sporulating_gp))+
     scale_fill_gradient(low = "lightgoldenrod", high = "red")
   print(p1)
   return(p1)}
