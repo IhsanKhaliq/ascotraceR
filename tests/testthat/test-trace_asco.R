@@ -50,80 +50,84 @@ test3 <- trace_asco(
   primary_infection_foci = "center"
 )
 test3[[30]] # look at values on the 30th day
-
-
-# test running for 100 days
-test4 <- trace_asco(
-  weather = Ascotracer::newM_weather,
-  paddock_length = 100,
-  paddock_width = 100,
-  initial_infection = "1998-03-10",
-  sowing_date = as.POSIXct("1998-03-09"),
-  harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(100),
-  time_zone = "Australia/Perth",
-  primary_infection_foci = "center"
-)
-test4[[102]] # look at values on the 102nd day
-
-test_that("test4 returns some sporulating gps",{
-  expect_equal(test4[[102]][["paddock"]][,sum(sporulating_gp)], 5)
+test_that("test3 returns some sporulating gps",{
+  expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 1)
 
 
 })
-
-
-# test running for 100 days
-test5 <- trace_asco(
-  weather = Ascotracer::newM_weather,
-  paddock_length = 75,
-  paddock_width = 75,
-  initial_infection = "1998-06-10",
-  sowing_date = as.POSIXct("1998-06-09"),
-  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(175),
-  time_zone = "Australia/Perth",
-  primary_infection_foci = "center"
-)
-test5[[102]] # look at values on the 102nd day
-
-test_that("test4 returns some sporulating gps from june",{
-  expect_equal(test4[[102]][["paddock"]][,sum(sporulating_gp)], 5)
-
-
-})
-
-
-
-test_that("trace_asco daily_vals returns an daily vals data.frame", {
-  expect_is(ta1, "data.frame")
-  expect_true(all(c("cdd", "cwh", "cr", "i", "day") %in% colnames(ta1)))
-})
-
-test_that("trace_asco daily_vals returns the correct data.frame dimensions", {
-  expect_equal(nrow(ta1), 4)
-  expect_equal(ncol(ta1), 5)
-})
-
-test_that("trace_asco daily_vals the following contents", {
-  expect_equal(ta1$cdd, c(0,28,53,71))
-  expect_equal(ta1$cwh, c(0,0,0,5))
-  expect_equal(ta1$cr, c(0,0,0,5.33))
-  expect_equal(ta1$i[1], as.POSIXct("1998-03-09", tz = "Australia/Perth"))
-  expect_equal(ta1$day, c(68,69,70,71))
-  expect_equal(ncol(ta1), 5)
-})
-
-
-# Test for stop error is triggered
-test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
-  expect_error(
-  ta1 <- trace_asco(
-    weather = weather_dat,
-    paddock_length = 100,
-    paddock_width = 100,
-    initial_infection = "1998-03-09",
-    sowing_date = as.POSIXct("1998-03-09"),
-    harvest_date = as.POSIXct("1998-03-12"),
-    time_zone = "Australia/Perth"
-  ))
-})
-
+#
+# # test running for 100 days
+# test4 <- trace_asco(
+#   weather = Ascotracer::newM_weather,
+#   paddock_length = 100,
+#   paddock_width = 100,
+#   initial_infection = "1998-03-10",
+#   sowing_date = as.POSIXct("1998-03-09"),
+#   harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(100),
+#   time_zone = "Australia/Perth",
+#   primary_infection_foci = "center"
+# )
+# test4[[102]] # look at values on the 102nd day
+#
+# test_that("test4 returns some sporulating gps",{
+#   expect_equal(test4[[102]][["paddock"]][,sum(sporulating_gp)], 5)
+#
+#
+# })
+#
+#
+# # test running for 100 days
+# test5 <- trace_asco(
+#   weather = Ascotracer::newM_weather,
+#   paddock_length = 75,
+#   paddock_width = 75,
+#   initial_infection = "1998-06-10",
+#   sowing_date = as.POSIXct("1998-06-09"),
+#   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(175),
+#   time_zone = "Australia/Perth",
+#   primary_infection_foci = "center"
+# )
+# test5[[102]] # look at values on the 102nd day
+#
+# test_that("test4 returns some sporulating gps from june",{
+#   expect_equal(test4[[102]][["paddock"]][,sum(sporulating_gp)], 5)
+#
+#
+# })
+#
+#
+#
+# test_that("trace_asco daily_vals returns an daily vals data.frame", {
+#   expect_is(ta1, "data.frame")
+#   expect_true(all(c("cdd", "cwh", "cr", "i", "day") %in% colnames(ta1)))
+# })
+#
+# test_that("trace_asco daily_vals returns the correct data.frame dimensions", {
+#   expect_equal(nrow(ta1), 4)
+#   expect_equal(ncol(ta1), 5)
+# })
+#
+# test_that("trace_asco daily_vals the following contents", {
+#   expect_equal(ta1$cdd, c(0,28,53,71))
+#   expect_equal(ta1$cwh, c(0,0,0,5))
+#   expect_equal(ta1$cr, c(0,0,0,5.33))
+#   expect_equal(ta1$i[1], as.POSIXct("1998-03-09", tz = "Australia/Perth"))
+#   expect_equal(ta1$day, c(68,69,70,71))
+#   expect_equal(ncol(ta1), 5)
+# })
+#
+#
+# # Test for stop error is triggered
+# test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
+#   expect_error(
+#   ta1 <- trace_asco(
+#     weather = weather_dat,
+#     paddock_length = 100,
+#     paddock_width = 100,
+#     initial_infection = "1998-03-09",
+#     sowing_date = as.POSIXct("1998-03-09"),
+#     harvest_date = as.POSIXct("1998-03-12"),
+#     time_zone = "Australia/Perth"
+#   ))
+# })
+#
