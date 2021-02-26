@@ -141,12 +141,12 @@ trace_asco <- function(weather,
   ) :=
     list(
       seeding_rate,
-      fifelse(x == primary_infection_foci[,1] &
-                y == primary_infection_foci[,2], seeding_rate - 1,
+      fifelse(x == primary_infection_foci[,x] &
+                y == primary_infection_foci[,y], seeding_rate - 1,
               seeding_rate),
       0,
-      fifelse(x == primary_infection_foci[,1] &
-                y == primary_infection_foci[,2], 1,
+      fifelse(x == primary_infection_foci[,x] &
+                y == primary_infection_foci[,y], 1,
               0),
       0
     )]
@@ -190,9 +190,9 @@ trace_asco <- function(weather,
                          by = "days")
 
   daily_vals_list <- rep(daily_vals_list,
-                         length(time_increments))
+                         length(time_increments)+1)
 
-  for(i in seq_len(length(time_increments)+1)){
+  for(i in seq_len(length(time_increments))){
 
     # skip time increment if initial_infection is after the sowing date
     if(time_increments[i] < initial_infection) next
@@ -202,9 +202,9 @@ trace_asco <- function(weather,
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
     # update time values for iteration of loop
-    daily_vals_list[[i]][["i_date"]] <- time_increments[i]
-    daily_vals_list[[i]][["i_day"]] <- i
-    daily_vals_list[[i]][["day"]] <- lubridate::yday(time_increments[i])
+    daily_vals_list[[i+1]][["i_date"]] <- time_increments[i]
+    daily_vals_list[[i+1]][["i_day"]] <- i
+    daily_vals_list[[i+1]][["day"]] <- lubridate::yday(time_increments[i])
 
 
 
