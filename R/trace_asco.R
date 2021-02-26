@@ -194,9 +194,6 @@ trace_asco <- function(weather,
 
   for(i in seq_len(length(time_increments))){
 
-    # skip time increment if initial_infection is after the sowing date
-    if(time_increments[i] < initial_infection) next
-
     # This function or line of code is redundant given this model works
     #  on a 1x1m grid and we do not want to wrap address
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
