@@ -17,8 +17,8 @@ test1 <- trace_asco(
 )
 test1[[5]]
 test_that("days have updated after 5 increments",{
-  expect_equal(sapply(test1, function(x){as.character(x[["i_date"]])}), as.character(c(seq(from = sowing_date,
-                                                                            to = harvest_date,
+  expect_equal(sapply(test1, function(x){as.character(x[["i_date"]])}), as.character(seq(from = sowing_date,
+                                                                            to = harvest_date + lubridate::ddays(1),
                                                                             by = "days")))
 })
 
@@ -64,6 +64,31 @@ test4 <- trace_asco(
 )
 test4[[102]] # look at values on the 102nd day
 
+test_that("test4 returns some sporulating gps",{
+  expect_equal(test4[[102]][["paddock"]][,sum(sporilating_gp)], 5)
+
+
+})
+
+
+# test running for 100 days
+test5 <- trace_asco(
+  weather = Ascotracer::newM_weather,
+  paddock_length = 75,
+  paddock_width = 75,
+  initial_infection = "1998-06-10",
+  sowing_date = as.POSIXct("1998-06-09"),
+  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(175),
+  time_zone = "Australia/Perth",
+  primary_infection_foci = "center"
+)
+test5[[102]] # look at values on the 102nd day
+
+test_that("test4 returns some sporulating gps from june",{
+  expect_equal(test4[[102]][["paddock"]][,sum(sporilating_gp)], 5)
+
+
+})
 
 
 
