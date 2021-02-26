@@ -44,15 +44,26 @@ spores_each_wet_hour <- function(h,
 
   paddock_infective <- paddock[sporilating_gp > 0,]
 
+  if(nrow(paddock_infective)== 0){
+    stop("Can't detect any infection, please check sum(paddock$sporilating_gp > 0) is >= 1")
+  }
+
   newly_infected_dt <-
-    rbindlist(
     apply(paddock_infective, 1, spores_from_1_element,
           max_interception_probability = max_interception_probability,
           wind_direction_in_hour = wind_direction_in_hour,
           average_wind_speed_in_hour = average_wind_speed_in_hour,
           stdev_wind_direction_in_hour = stdev_wind_direction_in_hour,
           paddock = paddock)
-    )
+
+  if(is.null(newly_infected_dt)){
+    return(data.table(x = numeric(),
+                      y = numeric(),
+                      spores_per_packet = numeric()))
+  }else{
+    newly_infected_dt <- rbindlist(newly_infected_dt)
+  }
+
 
   newly_infected_dt$spores_per_packet <-
     successful_infections(
@@ -60,7 +71,7 @@ spores_each_wet_hour <- function(h,
       paddock = paddock,
       spore_interception_parameter = spore_interception_parameter,
       max_interception_probability = max_interception_probability
-    )
+  )
 
   # filter only successful interceptions inside the paddock
   newly_infected_dt <-

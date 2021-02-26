@@ -5,30 +5,47 @@ context("successfully intercepted dispersed spores")
 
 # for manual automatic check() testing
 spore_dat <- fread("test-data_successful_infections.csv")
-
+seeding_rate <- 40
 
 # makePaddock equivalent
 paddock <- as.data.table(expand.grid(x = 1:100,
                                      y = 1:100))
 
 primary_infection_foci <-
-  paddock[x == 50 &
-            y == 50,
-          c("x", "y")]
+  c(50,50)
 
 # define paddock variables at time 1
-paddock[, new_gp := 40] # Change in the number of growing points since last iteration
-paddock[, noninfected_gp := 40] #
-paddock[, infected_gp := fifelse(x == primary_infection_foci[1,x] &
-                                   y == primary_infection_foci[1,y], 1,
-                                 0)] # Initialise column of infected growing points
+paddock[, c(
+  "new_gp", # Change in the number of growing points since last iteration
+  "noninfected_gp",
+  "infected_gp",
+  "sporilating_gp", # replacing InfectiveElementList
+  "cdd_at_infection"
+) :=
+  list(
+    seeding_rate,
+    fifelse(x == primary_infection_foci[1] &
+              y == primary_infection_foci[2], seeding_rate - 1,
+            seeding_rate),
+    0,
+    fifelse(x == primary_infection_foci[1] &
+              y == primary_infection_foci[2], 1,
+            0),
+    0
+  )]
+
+
 
 spore_interception_parameter <-
   0.00006 * (15000 / 350)
 
 set.seed(666)
 
-test1 <- successful_infections(spore_targets = spore_dat,
+
+
+test1 <- successful_infections(spore_targets = data.frame(x = 50,
+                                                          y = 50,
+                                                          spores_per_packet = 1),
                                paddock = paddock,
                                spore_interception_parameter = spore_interception_parameter,
                                max_interception_probability = 1)
@@ -36,9 +53,35 @@ test1 <- successful_infections(spore_targets = spore_dat,
 test_that("test1 provides correct output",{
   expect_is(test1, "integer")
   expect_true(is.vector(test1))
-  expect_length(test1, nrow(spore_dat))
-  expect_equal(sum(test1),12)
-  expect_equal(max(test1), 1)
+  expect_length(test1, 1)
+  expect_equal(sum(test1),0)
+  expect_equal(max(test1), 0)
   expect_equal(min(test1), 0)
   expect_false(any(is.na(test1)))
+})
+
+
+test2 <- successful_infections(spore_targets = spore_dat,
+                               paddock = paddock,
+                               spore_interception_parameter = spore_interception_parameter,
+                               max_interception_probability = 1)
+
+test_that("test2 provides correct output",{
+  expect_is(test2, "integer")
+  expect_true(is.vector(test2))
+  expect_length(test2, nrow(spore_dat))
+  expect_equal(sum(test2),12)
+  expect_equal(max(test2), 1)
+  expect_equal(min(test2), 0)
+  expect_false(any(is.na(test2)))
+})
+
+test_that("successful_infections returns an error with incorrect input",{
+  expect_error(
+    test3 <- successful_infections(spore_targets = as.list(spore_dat),
+                                   paddock = paddock,
+                                   spore_interception_parameter = spore_interception_parameter,
+                                   max_interception_probability = 1)
+  )
+
 })

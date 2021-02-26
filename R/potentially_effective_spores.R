@@ -11,6 +11,8 @@
 potentially_effective_spores <- function(sporesPerInfectiveGPPerWetHour,
                                          max_interception_probability,
                                          paddock_infected_gp) {
+
+
   if (paddock_infected_gp <= 0) {
     return(0)
   } else{
