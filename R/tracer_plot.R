@@ -25,17 +25,20 @@ tracer_plot <- function(dat, day, tiles = "sporulating_gp"){
   dat1 <- dat[[day]][["paddock"]]
 
 
-  if(tiles == "sporulating_gp"){
-  p1 <- ggplot2::ggplot(data = dat1, aes(x,y))+
-    geom_tile(aes(fill = sporulating_gp))+
-    scale_fill_gradient(low = "lightgoldenrod", high = "red")
-  print(p1)
-  return(p1)}
 
-  if(tiles == "noninfected_gp"){
-    p1 <- ggplot2::ggplot(data = dat1, aes(x,y))+
-      geom_tile(aes(fill = noninfected_gp))+
-      scale_fill_gradient(low = "lightgoldenrod", high = "palegreen4")
+  if (tiles == "sporulating_gp") {
+    p1 <- ggplot2::ggplot(data = dat1, ggplot2::aes(x, y)) +
+      ggplot2::geom_tile(ggplot2::aes(fill = sporulating_gp)) +
+      ggplot2::scale_fill_gradient(low = "lightgoldenrod", high = "red")
     print(p1)
-    return(p1)}
+    return(p1)
+  }
+
+  if (tiles == "noninfected_gp") {
+    p1 <- ggplot2::ggplot(data = dat1, ggplot2::aes(x, y)) +
+      ggplot2::geom_tile(ggplot2::aes(fill = noninfected_gp)) +
+      ggplot2::scale_fill_gradient(low = "lightgoldenrod", high = "palegreen4")
+    print(p1)
+    return(p1)
+  }
 }
