@@ -1,22 +1,37 @@
 context("trace_asco is the main function that runs the ascochyta model")
 
-# read in example raw data
-newmarra_raw <- read.csv(file =
-                          system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer"))
+# # read in example raw data
+# newmarra_raw <- read.csv(file =
+#                           system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer"))
+#
+# weather_dat <- format_weather(
+#   x = newmarra_raw,
+#   POSIXct_time = "Local.Time",
+#   time_zone = "Australia/Perth",
+#   temp = "mean_daily_temp",
+#   rain = "rain_mm",
+#   ws = "ws",
+#   wd = "wd",
+#   wd_sd = "wd_sd",
+#   station = "Location",
+#   lat = NA,
+#   lon = NA
+# )
 
-weather_dat <- format_weather(
-  x = newmarra_raw,
-  POSIXct_time = "Local.Time",
+
+test1 <- trace_asco(
+  weather = Ascotracer::newM_weather,
+  paddock_length = 100,
+  paddock_width = 100,
+  initial_infection = "1998-03-10",
+  sowing_date = as.POSIXct("1998-03-09"),
+  harvest_date = as.POSIXct("1998-03-12"),
   time_zone = "Australia/Perth",
-  temp = "mean_daily_temp",
-  rain = "rain_mm",
-  ws = "ws",
-  wd = "wd",
-  wd_sd = "wd_sd",
-  station = "Location",
-  lat = NA,
-  lon = NA
+  primary_infection_foci = "center"
 )
+
+
+
 
 test_that("trace_asco runs without error" , {
   expect_silent(

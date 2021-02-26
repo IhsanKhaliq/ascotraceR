@@ -2,16 +2,31 @@
 % Please edit documentation in R/one_day.R
 \name{one_day}
 \alias{one_day}
-\title{Simulates ascochyta spore dispersal for a single day increment}
+\title{Simulates Ascochyta spore dispersal for a single day increment}
 \usage{
-one_day(i_date, daily_vals, weather_dat)
+one_day(
+  i_date,
+  day,
+  daily_vals,
+  weather_dat,
+  gp_rr,
+  max_gp,
+  max_new_gp,
+  spore_interception_parameter
+)
 }
 \arguments{
-\item{weather_dat}{}
+\item{i_date}{a character string or \class{Date} formatted string indicating an
+iteration date of the model. Preferably in \acronym{ISO8601} format (YYYY-MM-DD),
+\emph{e.g.} \dQuote{2020-04-26}.}
+
+\item{daily_vals}{\code{list} of model variables which have been calculated for days prior to the \code{i_date}}
+
+\item{weather_dat}{\code{data.table} of weather observations which includes the query date \code{i_date}}
 }
 \value{
-
+a \code{data.table} of values generated for the day \code{i_date}
 }
 \description{
-Simulates ascochyta spore dispersal for a single day increment
+Simulates Ascochyta spore dispersal for a single day increment
 }
