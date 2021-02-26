@@ -57,7 +57,8 @@ trace_asco <- function(weather,
                        max_new_gp = 350,
                        latent_period_cdd = 200,
                        time_zone = "UTC",
-                       primary_infection_foci = "random"
+                       primary_infection_foci = "random",
+                       n_foci = 1
                        ){
 
 
@@ -109,25 +110,55 @@ trace_asco <- function(weather,
 
 
   # sample a paddock location randomly if a starting foci is not given
-  if (primary_infection_foci == "random") {
-    primary_infection_foci <-
-      paddock[sample(seq_len(nrow(paddock)),
-                     size = 1),
-              c("x", "y")]
-
+  if (is.data.table(primary_infection_foci) &
+      all(c("x", "y") %in% colnames(primary_infection_foci))) {
+  # Skip the rest of the tests
   } else{
-    if (primary_infection_foci == "center") {
+    if (primary_infection_foci == "random") {
       primary_infection_foci <-
-        paddock[x == as.integer(round(paddock_width / 2)) &
-                  y == as.integer(round(paddock_length / 2)),
+        paddock[sample(seq_len(nrow(paddock)),
+                       size = n_foci,
+                       replace = TRUE),
                 c("x", "y")]
 
     } else{
-      if (length(primary_infection_foci) != 2 |
-          is.numeric(primary_infection_foci) == FALSE) {
-        stop("primary_infection_foci should be supplied as a numeric vector of length two")
+      if (primary_infection_foci == "center") {
+        primary_infection_foci <-
+          paddock[x == as.integer(round(paddock_width / 2)) &
+                    y == as.integer(round(paddock_length / 2)),
+                  c("x", "y")]
+
+      } else{
+        if (is.vector(primary_infection_foci)) {
+          if (length(primary_infection_foci) != 2 |
+              is.numeric(primary_infection_foci) == FALSE) {
+            stop("primary_infection_foci should be supplied as a numeric vector of length two")
+          }
+          primary_infection_foci <-
+            as.data.table(list(primary_infection_foci))
+          setnames(
+            x = primary_infection_foci,
+            old = c("V1", "V2"),
+            new = c("x", "y")
+          )
+        }
+        if (is.data.table(primary_infection_foci) == FALSE &
+            is.data.frame(primary_infection_foci)) {
+          setDT(primary_infection_foci)
+          if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
+            stop("primary_infection_foci data.table needs colnames 'x' and 'y'")
+          }
+
+        }
+
       }
     }
+  }
+
+  infected_rows <- which_paddock_row(paddock = paddock,
+                                     query = primary_infection_foci)
+  if(ncol(primary_infection_foci) == 2){
+    primary_infection_foci[,sp_gp := 1]
   }
 
   # define paddock variables at time 1
@@ -141,15 +172,16 @@ trace_asco <- function(weather,
   ) :=
     list(
       seeding_rate,
-      fifelse(x == primary_infection_foci[,x] &
-                y == primary_infection_foci[,y], seeding_rate - 1,
-              seeding_rate),
+      seeding_rate,
       0,
-      fifelse(x == primary_infection_foci[,x] &
-                y == primary_infection_foci[,y], 1,
-              0),
+      0,
       0
     )]
+
+  paddock[infected_rows, "noninfected_gp" :=
+            seeding_rate - primary_infection_foci[,3]]
+  paddock[infected_rows, "sporulating_gp" :=
+            primary_infection_foci[,3]]
 
   # calculate additional parameters
   spore_interception_parameter <-
