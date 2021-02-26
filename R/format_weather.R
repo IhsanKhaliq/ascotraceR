@@ -116,7 +116,7 @@
 #' )
 #'
 #' @export
-#'
+#' @import data.table
 format_weather <- function(x,
                            YYYY = NULL,
                            MM = NULL,
@@ -220,17 +220,18 @@ format_weather <- function(x,
       mm <- "mm"
    }
    if (missing(wd_sd)) {
-      x[,wd_sd := rep(NA, .N)]
+      x$wd_sd <- NA
       wd_sd <- "wd_sd"
    }
    if (missing(temp)) {
-      x[,temp := rep(NA, .N)]
+      x[, temp := rep(NA, .N)]
       temp <- "temp"
    }
 
    # import and assign longitude and latitude from a file if provided
    if (!is.null(lonlat_file)) {
-      ll_file <- fread(lonlat_file)
+      ll_file <- data.table(fread(lonlat_file))
+
       if (any(c("station", "lon", "lat") %notin% colnames(ll_file))) {
          stop(
             "The csv file of weather station coordinates should contain ",
@@ -238,7 +239,7 @@ format_weather <- function(x,
          )
       }
 
-      if (any(unique(x[,get(station)]) %notin% ll_file[,station])) {
+      if (any(unique(x[,station]) %notin% ll_file[,"station"])) {
          stop(
             "The csv file of weather station coordinates should contain ",
             "station coordinates for each weather station identifier."
@@ -246,10 +247,11 @@ format_weather <- function(x,
       }
 
       r_num <-
-         which(as.character(ll_file[, station]) ==
-                  as.character(unique(x[, get(station)])))
-      x[, lat := rep(ll_file[r_num, lat], nrow(x))]
-      x[, lon := rep(ll_file[r_num, lon], nrow(x))]
+         which(as.character(ll_file[, "station"]) ==
+                  as.character(unique(x[, station])))
+
+      x$lat <- rep(ll_file[r_num, "lat"], nrow(x))
+      x$lon <- rep(ll_file[r_num, "lon"], nrow(x))
    }
 
    # If lat and long are specified as NA
@@ -338,16 +340,16 @@ format_weather <- function(x,
    } else {
       # if POSIX formatted times were not supplied, create a POSIXct
       # formatted column named 'times'
-      x[, "times" :=
-           lubridate::ymd_hm(paste(x[, YYYY],
+      x$times <-
+           lubridate::ymd_hm(paste(x[, "YYYY"],
                                    "-",
-                                   x[, MM],
+                                   x[, "MM"],
                                    "-",
-                                   x[, DD],
-                                   x[, hh],
+                                   x[, "DD"],
+                                   x[, "hh"],
                                    ":",
-                                   x[, mm]),
-                             tz = time_zone)]
+                                   x[, "mm"]),
+                             tz = time_zone)
    }
 
    if(any(is.na(x[, times]))) {
@@ -381,18 +383,21 @@ format_weather <- function(x,
 
 
       # calculate the approximate logging frequency of the weather data
+
       log_freq <-
-         lubridate::int_length(lubridate::as.interval(x_dt[1, times],
-                                                      x_dt[.N, times])) /
+         lubridate::int_length(lubridate::as.interval(x_dt[1, "times"],
+                                                      last(x_dt[, "times"]))) /
          (nrow(x_dt) * 60)
 
       # if the logging frequency is less than 50 minutes aggregate to hourly
       if (log_freq < 50) {
+         return(x_dt)
+
          w_dt_agg <- x_dt[, list(
             times = unique(lubridate::floor_date(times,
                                                  unit = "hours")),
             temp = mean(temp, na.rm = TRUE),
-            rain = sum(rain, na.rm = TRUE),
+            rain = sum(as.numeric(rain), na.rm = TRUE),
             ws = mean(ws, na.rm = TRUE),
             wd = as.numeric(
                circular::mean.circular(
@@ -434,7 +439,7 @@ format_weather <- function(x,
       }
    }
 
-   if (length(unique(x[, station])) > 1) {
+   if (length(unique(x[, "station"])) > 1) {
       # split data by weather station
       x <- split(x, by = "station")
 
@@ -503,11 +508,11 @@ format_weather <- function(x,
 
    # remove lat lon columns if they are NA
    if(all(is.na(unique(x_out[, lat])))) {
-      x_out[, lat := NULL]
+      x_out$lat <- NULL
    }
 
    if(all(is.na(unique(x_out[, lon])))) {
-      x_out[, lon := NULL]
+      x_out$lon <- NULL
    }
 
    class(x_out) <- union("asco.weather", class(x_out))

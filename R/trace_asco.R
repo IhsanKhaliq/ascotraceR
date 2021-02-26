@@ -7,23 +7,32 @@
 #' growing season for the model operation
 #' @param paddock_length length of a paddock in metres (y)
 #' @param paddock_width width of a paddock in metres (x)
-#' @param sowing_date indicates the date at which chickpea crop is sown, which is also the
-#' the start date of the Ascotracer model operation. Date value should preferably be
-#'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-06-27}.
-#' @param harvest_date indicates the date at which chickpea crop is harvested,
-#'  which is also the last day of the Ascotracer model operation. Date values should
-#'  preferably be in
-#'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-10-27}.
+#' @param sowing_date a character string of a date value indicating sowing
+#'  date of chickpea seed and the start of the Ascotracer model. Preferably
+#'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
+#'  Assumes there is sufficient soil moisture to induce germination and start the
+#'  crop growing season.
+#' @param harvest_date a character string of a date value indicating harvest date of
+#' chickpea crop, which is also the last day to run the Ascotracer model. Preferably in
+#'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #' @param seeding_rate indicate the rate at which chickpea seed is sown per
 #' square metre. Defaults to \code{40}
 #' @param gp_rr refers to rate of increase in chickpea growing points
 #' per degree Celsius per day. Defaults to \code{0.0065}
+#' @param max_gp_lim Maximum number of chickpea growing points (meristems) allowed
+#'  per square meter. Defaults to \code{15000}.
+#' @param max_new_gp Maximum number of new chickpea growing points (meristems)
+#'  which develop per day, per square meter. Defaults to \code{350}.
 #' @param primary_infection_foci it refers to the inoculated quadrat
 #' located at the centre of the paddock from where disease spreads
 #' Defaults to \code{"centre"}
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'  daily temperature means) is the period between infection and production of
 #'  lesions on susceptible growing points. Defaults to \code{200}
+#'  @param initial_infection refers to initial or primary infection on seedlings,
+#'  resulting in the production of infected growing points
+#'  @param time_zone refers to time in Coordinated Universal Time (UTC)
+#'
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock
@@ -44,61 +53,177 @@ trace_asco <- function(weather,
                        initial_infection,
                        seeding_rate = 40,
                        gp_rr = 0.0065,
-                       primary_infection_foci = "centre",
-                       latent_period_cdd = 200){
+                       max_gp_lim = 15000,
+                       max_new_gp = 350,
+                       latent_period_cdd = 200,
+                       time_zone = "UTC",
+                       primary_infection_foci = "random"
+                       ){
 
-  # Time and date checks
+
+  # check date inputs for validity -----------------------------------------
+  .vali_date <- function(x) {
+    tryCatch(
+      # try to parse the date format using lubridate
+      x <- lubridate::parse_date_time(x,
+                                      c(
+                                        "Ymd",
+                                        "dmY",
+                                        "mdY",
+                                        "BdY",
+                                        "Bdy",
+                                        "bdY",
+                                        "bdy"
+                                      )),
+      warning = function(c) {
+        stop(call. = FALSE,
+             "\n",
+             x,
+             " is not a valid entry for date. Enter as YYYY-MM-DD.\n")
+      }
+    )
+  return(x)
+    }
+
+  # convert times to POSIXct -----------------------------------------------
+  initial_infection <-
+    lubridate::ymd(.vali_date(initial_infection), tz = time_zone) + lubridate::dhours(0)
+
+  sowing_date <-
+    lubridate::ymd(.vali_date(sowing_date), tz = time_zone) + lubridate::dhours(0)
+
+  harvest_date <-
+    lubridate::ymd(.vali_date(harvest_date), tz = time_zone) + lubridate::dhours(23)
+
+  # check epidemic start is after sowing date
+  if(initial_infection <= sowing_date){
+    stop("initial_infection occurs prior to sowing_date\n
+         please submit an initial_infection date which occurs after crop_sowing")
+  }
 
 
   # makePaddock equivalent
-  paddock <- expand.grid(x = 1:paddock_width,
-                         y = 1:paddock_length)
+  paddock <- as.data.table(expand.grid(x = 1:paddock_width,
+                                       y = 1:paddock_length))
 
 
-  if(primary_infection_foci == "centre") {
+
+  # sample a paddock location randomly if a starting foci is not given
+  if (primary_infection_foci == "random") {
     primary_infection_foci <-
-      unlist(paddock[sample(seq_len(nrow(paddock)),
-                               size = 1),
-                        c("x", "y")])
+      paddock[sample(seq_len(nrow(paddock)),
+                     size = 1),
+              c("x", "y")]
 
+  } else{
+    if (primary_infection_foci == "center") {
+      primary_infection_foci <-
+        paddock[x == as.integer(round(paddock_width / 2)) &
+                  y == as.integer(round(paddock_length / 2)),
+                c("x", "y")]
+
+    } else{
+      if (length(primary_infection_foci) != 2 |
+          is.numeric(primary_infection_foci) == FALSE) {
+        stop("primary_infection_foci should be supplied as a numeric vector of length two")
+      }
+    }
   }
+
+  # define paddock variables at time 1
+  #need to update so can assign a data.table of things primary infection foci!!!!!!!!!!!!!!!
+  paddock[, c(
+    "new_gp", # Change in the number of growing points since last iteration
+    "noninfected_gp",
+    "infected_gp",
+    "sporilating_gp", # replacing InfectiveElementList
+    "cdd_at_infection"
+  ) :=
+    list(
+      seeding_rate,
+      fifelse(x == primary_infection_foci[,x] &
+                y == primary_infection_foci[,y], seeding_rate - 1,
+              seeding_rate),
+      0,
+      fifelse(x == primary_infection_foci[,x] &
+                y == primary_infection_foci[,y], 1,
+              0),
+      0
+    )]
+
+  # calculate additional parameters
+  spore_interception_parameter <-
+    0.00006 * (max_gp_lim/max_new_gp)
+
+  # define max_gp
+  max_gp <- max_gp_lim * (1 - exp(-0.138629 * seeding_rate))
+
 
   # Notes: as area is 1m x 1m many computation in the mathematica
   #  code are redundant because they are being multiplied by 1.
   #  I will reduce the number of objects containing the same value,
   #  Below is a list of Mathematica values consolidated into 1
   #
-  # refUninfectiveGPs <- minGrowingPoints <- seedling_rate
+  # refUninfectiveGPs <- minGrowingPoints <- seeding_rate
 
-  daily_vals_dt <- data.table::data.table(
-    cdd = 0, # cumulative degree days
-    cwh = 0, # cumulative wet hours
-    cr = 0,  # cumulative rainfall
-    i = 0,   # day of the simulation (iterator)
-    day = 0  # day of the year
+  daily_vals_list <- list(
+    list(
+      paddock = paddock, # data.table each row is a 1 x 1m coordinate
+      i_date = sowing_date,  # day of the simulation (iterator)
+      i_day = 1,
+      day = lubridate::yday(sowing_date),    # day of the year
+      cdd = 0,    # cumulative degree days
+      cwh = 0,    # cumulative wet hours
+      cr = 0,     # cumulative rainfall
+      gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
+      new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
+      infected_coords = primary_infection_foci,  # data.frame
+      newly_infected =  data.table(x = numeric(),
+                                   y = numeric(),
+                                   spores_per_packet = numeric(),
+                                   cdd_at_infection = numeric()) # data.table of infected growing points still in latent period and not sporilating (exposed_gp)
     )
+  )
 
   time_increments <- seq(sowing_date,
                          harvest_date,
                          by = "days")
 
-  for(i in time_increments){
+  daily_vals_list <- rep(daily_vals_list,
+                         length(time_increments)+1)
+
+  for(i in seq_len(length(time_increments))){
 
     # skip time increment if initial_infection is after the sowing date
-    if(i < initial_infection) next
+    if(time_increments[i] < initial_infection) next
 
     # This function or line of code is redundant given this model works
     #  on a 1x1m grid and we do not want to wrap address
     # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
 
-    # currently working on oneday
-    one_day(day = i,
-           daily_vals = daily_vals_dt)
+    # update time values for iteration of loop
+    daily_vals_list[[i+1]][["i_date"]] <- time_increments[i]
+    daily_vals_list[[i+1]][["i_day"]] <- i
+    daily_vals_list[[i+1]][["day"]] <- lubridate::yday(time_increments[i])
+
+
+
+    # currently working on one_day
+    daily_vals_list[[i + 1]] <- one_day(i_date = time_increments[i],
+                       daily_vals = daily_vals_list[[i]],
+                       weather_dat = weather,
+                       gp_rr = gp_rr,
+                       max_gp = max_gp,
+                       max_new_gp = max_new_gp,
+                       spore_interception_parameter = spore_interception_parameter)
+
+    # temporary line of code to test building of daily_vals in loop
+    #daily_vals_list <- day_out
 
   }
 
 
 
 
-  return(time_increments)
+  return(daily_vals_list)
 }

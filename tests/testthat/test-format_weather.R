@@ -2,6 +2,8 @@ context(
    "`format_weather()` wrangles weather station data to be suitable for input'
    into `trace_asco`"
 )
+
+library(data.table)
 # identify lon lat from file ---------------------------------------------------
 test_that("`format_weather()` is able to identify the correct lat and lon values
           from file",
