@@ -190,7 +190,7 @@ trace_asco <- function(weather,
                          by = "days")
 
   daily_vals_list <- rep(daily_vals_list,
-                         seq_along(time_increments))
+                         length(time_increments))
 
   for(i in seq_len(length(time_increments)+1)){
 
@@ -210,7 +210,6 @@ trace_asco <- function(weather,
 
     # currently working on one_day
     daily_vals_list[[i + 1]] <- one_day(i_date = time_increments[i],
-                       day = i,
                        daily_vals = daily_vals_list[[i]],
                        weather_dat = weather,
                        gp_rr = gp_rr,
