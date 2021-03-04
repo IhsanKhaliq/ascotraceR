@@ -1,18 +1,17 @@
 context("trace_asco is the main function that runs the ascochyta model")
 
-sowing_date <- as.POSIXct("1998-03-09")
-harvest_date <- as.POSIXct("1998-03-12")
-
+sowing_date <- as.POSIXct("1998-05-09",tz = "Australia/Perth")
+harvest_date <- as.POSIXct("1998-05-12",tz = "Australia/Perth")
 
 # Test running for 3 days
 test1 <- trace_asco(
   weather = newM_weather,
   paddock_length = 100,
   paddock_width = 100,
-  initial_infection = "1998-03-10",
-  sowing_date = as.POSIXct("1998-03-09"),
-  harvest_date = as.POSIXct("1998-03-12"),
-  time_zone = "Australia/Perth",
+  initial_infection = "1998-05-10",
+  sowing_date = as.POSIXct("1998-05-09"),
+  harvest_date = as.POSIXct("1998-05-12"),
+  time_zone = "Australia/Perth", # weather file is in Perth timezone
   primary_infection_foci = "center"
 )
 test1[[5]]
@@ -22,7 +21,53 @@ test_that("days have updated after 5 increments",{
                                                                             by = "days")))
   expect_length(test1, 5)
   expect_length(test1[[1]], 11)
+  expect_equal(
+    colnames(test1[[5]][["paddock"]]),
+    c("x",
+      "y",
+      "new_gp",
+      "noninfected_gp",
+      "infected_gp",
+      "sporulating_gp",
+      "cdd_at_infection")
+  )
+  expect_equal(test1[[5]][["day"]], lubridate::yday(harvest_date)+1)
+  expect_equal(test1[[5]][["i_day"]], 5)
+  expect_equal(test1[[5]][["cwh"]], newM_weather[times> sowing_date + lubridate::dminutes(1) &
+                                                   times <= harvest_date + lubridate::dhours(23) ,sum(!is.na(rain))])
+  expect_equal(test1[[5]][["cdd"]], newM_weather[times > sowing_date + lubridate::dminutes(1) &
+                                                   times <= harvest_date + lubridate::dhours(23) , mean(temp), by = day][, sum(V1)])
+
 })
+
+set.seed(666)
+# test more intenst start
+test1.1 <- trace_asco(
+  weather = newM_weather,
+  paddock_length = 100,
+  paddock_width = 100,
+  initial_infection = "1998-05-10",
+  sowing_date = as.POSIXct("1998-05-09"),
+  harvest_date = as.POSIXct("1998-05-12"),
+  time_zone = "Australia/Perth", # weather file is in Perth timezone
+  primary_infection_foci = "center",
+  primary_infection_intensity = 40
+)
+test1.1[[5]]
+test_that("intense primary_infection_foci lead to more infections",{
+  expect_equal(sapply(test1.1, function(x){as.character(x[["i_date"]])}), as.character(seq(from = sowing_date,
+                                                                                         to = harvest_date + lubridate::ddays(1),
+                                                                                         by = "days")))
+  expect_length(test1.1, 5)
+  expect_length(test1.1[[1]], 11)
+  expect_equal(test1.1[[5]][["newly_infected"]][,.N], 5)
+  expect_equal(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 40)
+  expect_length(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
+  expect_equal(test1.1[[5]][["newly_infected"]][sporulating_gp > 0,sporulating_gp], 40)
+
+})
+
+
 
 
 # test running for 14 days
@@ -87,24 +132,31 @@ test_that("test3 returns some sporulating gps",{
 
 #
 # # test running for 100 days
-# test4 <- trace_asco(
-#   weather = newM_weather,
-#   paddock_length = 100,
-#   paddock_width = 100,
-#   initial_infection = "1998-03-10",
-#   sowing_date = as.POSIXct("1998-03-09"),
-#   harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(100),
-#   time_zone = "Australia/Perth",
-#   primary_infection_foci = "center"
-# )
-# test4[[102]] # look at values on the 102nd day
+test4 <- trace_asco(
+  weather = newM_weather,
+  paddock_length = 100,
+  paddock_width = 100,
+  initial_infection = "1998-05-10",
+  sowing_date = as.POSIXct("1998-05-09"),
+  harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(80),
+  time_zone = "Australia/Perth",
+  primary_infection_foci = qry,
+  primary_infection_intensity = 40
+)
+test4[[80]] # look at values on the 102nd day
+
+test_that("test4 returns some sporulating gps",{
+  expect_equal(test4[[80]][["paddock"]][,sum(sporulating_gp)], 5)
+
+
+})
 #
-# test_that("test4 returns some sporulating gps",{
-#   expect_equal(test4[[102]][["paddock"]][,sum(sporulating_gp)], 5)
-#
-#
-# })
-#
+
+# Sowing of chick pea normally occurs between
+#   Mid May to Mid June
+
+
+
 #
 # # test running for 100 days
 # test5 <- trace_asco(
