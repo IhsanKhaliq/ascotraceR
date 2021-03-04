@@ -2,7 +2,7 @@ context("splash distance()")
 
 set.seed(25)
 
-test_that("splash_distance returns a numberic vector of length 1", {
+test_that("splash_distance returns a numeric vector of length 1", {
   s_dist <- splash_distance(5)
   expect_is(s_dist, "numeric")
   expect_length(s_dist, 1)

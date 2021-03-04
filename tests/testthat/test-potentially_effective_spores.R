@@ -42,13 +42,13 @@ test3 <- sapply(rep(1, 1e5), function(x) {
 test_that("test3 returns in range of 100000 iterations", {
   expect_type(test3, "integer")
   expect_true(all(unique(test3) %in% 0:6))
-  expect_gt(sum(test3) / length(test3), 0.14)
-  expect_lt(sum(test3) / length(test3), 0.16)
+  expect_gt(mean(test3), 0.14)
+  expect_lt(mean(test3), 0.16)
 })
 
 
 
-test4 <- sapply(rep(100, 1e5), function(x) {
+test4 <- sapply(rep(40, 1e5), function(x) {
   potentially_effective_spores(
     sporesPerInfectiveGPPerWetHour = 0.15,
     max_interception_probability = 1,
@@ -58,9 +58,9 @@ test4 <- sapply(rep(100, 1e5), function(x) {
 
 test_that("test3 returns in range of 100000 iterations", {
   expect_type(test4, "integer")
-  expect_true(all(unique(test3) %in% 0:40))
-  expect_gt(sum(test4) / length(test4), 14.5)
-  expect_lt(sum(test4) / length(test4), 16.5)
+  expect_true(all(unique(test3) %in% 0:18))
+  expect_gt(mean(test4), 5.5)
+  expect_lt(mean(test4), 6.5)
 
 })
 

@@ -1,7 +1,5 @@
 context("Simulate disease progression for a single day increment")
 
-load_all()
-
 # import and define data
 seeding_rate <- 40
 primary_infection_foci <- c(50,50)
@@ -56,14 +54,14 @@ daily_vals_list <-
   )
 
 
-newly_inf <- fread("tests/testthat/data-newly_infected_list.csv")
+#newly_inf <- fread("tests/testthat/data-newly_infected_list.csv")
 
 
 # begin testing
 set.seed(666)
 test1 <- one_day(i_date = od_t1_i_date,
                  daily_vals = daily_vals_list,
-                 weather_dat = Ascotracer::newM_weather,
+                 weather_dat = newM_weather,
                  gp_rr = 0.0065,
                  max_gp = max_gp,
                  max_new_gp = max_new_gp,
@@ -125,7 +123,7 @@ test_that("one_day single infection foci returns expected output", {
 
 test2 <- one_day(i_date = od_t1_i_date,
                  daily_vals = test1,  # add to test1 daily vals
-                 weather_dat = Ascotracer::newM_weather,
+                 weather_dat = newM_weather,
                  gp_rr = 0.0065,
                  max_gp = max_gp,
                  max_new_gp = max_new_gp,
@@ -189,7 +187,7 @@ test2[["cdd"]] <- 201
 
 test3 <- one_day(i_date = od_t1_i_date,
                     daily_vals = test2,  # add to test1 daily vals
-                    weather_dat = Ascotracer::newM_weather,
+                    weather_dat = newM_weather,
                     gp_rr = 0.0065,
                     max_gp = max_gp,
                     max_new_gp = max_new_gp,

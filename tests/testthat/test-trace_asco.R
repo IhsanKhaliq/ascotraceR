@@ -148,8 +148,25 @@ test4[[80]] # look at values on the 102nd day
 test_that("test4 returns some sporulating gps",{
   expect_equal(test4[[80]][["paddock"]][,sum(sporulating_gp)], 5)
 
-
 })
+
+tracer_plot(test4,82)
+
+
+test5 <- trace_asco(
+  weather = newM_weather,
+  paddock_length = 20,
+  paddock_width = 20,
+  initial_infection = "1998-05-10",
+  sowing_date = as.POSIXct("1998-05-09"),
+  harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(30),
+  time_zone = "Australia/Perth",
+  primary_infection_foci = "center",
+  primary_infection_intensity = 40
+)
+
+tracer_plot(test5,32)
+
 #
 
 # Sowing of chick pea normally occurs between
