@@ -17,8 +17,8 @@
 #' @param spore_aggregation_limit When spores/summary unit (n) is <= this value n spores
 #'  are produced as individuals.  When greater they are produced in sporeAggregationLimit
 #'  groups of sporeAggregationLimit spores  default: \code{1000}
-#' @param rain_cauchy_parameter parameter used in the cauchy distribution used in
-#'  determining the spread of spores due to rain splashes. default: \code{0.5}
+#' @param rain_cauchy_parameter parameter used in the cauchy distribution and describes
+#'  the median distance of spore travel due to rain splashes. default: \code{0.5}
 #' @param paddock data.table of x and y coordinates; provides the dimensions of the poaddock
 #'  so function only returns target_coordinates in the paddock area.
 #' @keywords internal
