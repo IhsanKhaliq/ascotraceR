@@ -80,9 +80,13 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
     daily_vals[["newly_infected"]] <- rbind(daily_vals[["newly_infected"]],
                                             newly_infected_dt)
 
-    daily_vals <- make_some_infective(daily_vals = daily_vals,
-                                      latent_period = 200)
+
   }
+
+  # exposed gps which have undergone latent period are moved to sporulating gps
+  daily_vals <- make_some_infective(daily_vals = daily_vals,
+                                    latent_period = 200)
+
 
 # update infected coordinates
   daily_vals[["infected_coords"]] <- daily_vals[["paddock"]][sporulating_gp > 0, c("x","y")]
