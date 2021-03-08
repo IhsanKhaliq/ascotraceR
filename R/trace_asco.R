@@ -63,7 +63,7 @@ trace_asco <- function(weather,
                        primary_infection_foci = "random",
                        primary_infection_intensity = 1,
                        n_foci = 1,
-                       spores_per_gp_per_wet_hour = 0.5){
+                       spores_per_gp_per_wet_hour = 0.22){
 
 
   # check date inputs for validity -----------------------------------------
