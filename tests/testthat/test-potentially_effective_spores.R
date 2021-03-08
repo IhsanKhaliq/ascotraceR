@@ -2,7 +2,7 @@ context("Estimate the potentially effective spores")
 
 test1 <-
   potentially_effective_spores(
-    sporesPerInfectiveGPPerWetHour = 0.15,
+    spores_per_gp_per_wet_hour = 0.22,
     # default parameter of the model
     max_interception_probability = 1,
     # calculated in spread_spores and almost always 1
@@ -17,7 +17,7 @@ test_that("test1 returns zero", {
 
 test2 <-
   potentially_effective_spores(
-    sporesPerInfectiveGPPerWetHour = 0.15,
+    spores_per_gp_per_wet_hour = 0.22,
     # default parameter of the model
     max_interception_probability = 1,
     # calculated in spread_spores and almost always 1
@@ -33,7 +33,7 @@ test_that("test2 returns in range of 0 -2", {
 
 test3 <- sapply(rep(1, 1e5), function(x) {
   potentially_effective_spores(
-    sporesPerInfectiveGPPerWetHour = 0.15,
+    spores_per_gp_per_wet_hour = 0.22,
     max_interception_probability = 1,
     paddock_infected_gp = x
   )
@@ -42,15 +42,15 @@ test3 <- sapply(rep(1, 1e5), function(x) {
 test_that("test3 returns in range of 100000 iterations", {
   expect_type(test3, "integer")
   expect_true(all(unique(test3) %in% 0:6))
-  expect_gt(sum(test3) / length(test3), 0.14)
-  expect_lt(sum(test3) / length(test3), 0.16)
+  expect_gt(mean(test3), 0.21)
+  expect_lt(mean(test3), 0.222)
 })
 
 
 
-test4 <- sapply(rep(100, 1e5), function(x) {
+test4 <- sapply(rep(40, 1e5), function(x) {
   potentially_effective_spores(
-    sporesPerInfectiveGPPerWetHour = 0.15,
+    spores_per_gp_per_wet_hour = 0.22,
     max_interception_probability = 1,
     paddock_infected_gp = x
   )
@@ -58,16 +58,16 @@ test4 <- sapply(rep(100, 1e5), function(x) {
 
 test_that("test3 returns in range of 100000 iterations", {
   expect_type(test4, "integer")
-  expect_true(all(unique(test3) %in% 0:40))
-  expect_gt(sum(test4) / length(test4), 14.5)
-  expect_lt(sum(test4) / length(test4), 16.5)
+  expect_true(all(unique(test3) %in% 0:18))
+  expect_gt(mean(test4), 8.5)
+  expect_lt(mean(test4), 9)
 
 })
 
 test_that("test5 returns an error", {
   expect_error(
     potentially_effective_spores(
-      sporesPerInfectiveGPPerWetHour = 0.15,
+      spores_per_gp_per_wet_hour = 0.22,
       max_interception_probability = -1,
       paddock_infected_gp = 1
     )

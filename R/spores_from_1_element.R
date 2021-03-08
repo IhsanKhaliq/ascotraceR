@@ -17,15 +17,15 @@
 #' @param spore_aggregation_limit When spores/summary unit (n) is <= this value n spores
 #'  are produced as individuals.  When greater they are produced in sporeAggregationLimit
 #'  groups of sporeAggregationLimit spores  default: \code{1000}
-#' @param rain_cauchy_parameter parameter used in the cauchy distribution used in
-#'  determining the spread of spores due to rain splashes. default: \code{0.5}
+#' @param rain_cauchy_parameter parameter used in the cauchy distribution and describes
+#'  the median distance of spore travel due to rain splashes. default: \code{0.5}
 #' @param paddock data.table of x and y coordinates; provides the dimensions of the poaddock
 #'  so function only returns target_coordinates in the paddock area.
 #' @keywords internal
 #' @noRd
 spores_from_1_element <-
   function(paddock_source,
-           sporesPerInfectiveGPPerWetHour = 0.15,
+           spores_per_gp_per_wet_hour = 0.15,
            max_interception_probability,
            wind_direction_in_hour,
            average_wind_speed_in_hour,
@@ -37,7 +37,7 @@ spores_from_1_element <-
 
     # this might be able to be calculated at the spread_spores level, and If statement should come first
     # given that it is if == 0
-    spore_packets <- potentially_effective_spores(sporesPerInfectiveGPPerWetHour = sporesPerInfectiveGPPerWetHour,
+    spore_packets <- potentially_effective_spores(spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
                                                   max_interception_probability = max_interception_probability,
                                                   paddock_source["sporulating_gp"])
 

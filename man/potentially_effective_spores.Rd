@@ -5,13 +5,13 @@
 \title{Estimate the potentially effective spore}
 \usage{
 potentially_effective_spores(
-  sporesPerInfectiveGPPerWetHour,
+  spores_per_gp_per_wet_hour,
   max_interception_probability,
   paddock_infected_gp
 )
 }
 \arguments{
-\item{sporesPerInfectiveGPPerWetHour}{estimated number of spores produced in one hour from a single chickpea growing point}
+\item{spores_per_gp_per_wet_hour}{estimated number of spores produced in one hour from a single chickpea growing point}
 
 \item{max_interception_probability}{maximum interception probability}
 

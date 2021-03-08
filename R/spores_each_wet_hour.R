@@ -8,6 +8,8 @@
 #' @param paddock data.table of paddock coordinates detailing the growing points and infections at each location
 #' @param max_interception_probability double with length of one
 #' @param spore_interception_parameter double with length of one
+#' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
+#'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #' @keywords internal
 #' @noRd
 
@@ -16,7 +18,8 @@ spores_each_wet_hour <- function(h,
                                  weather_hourly,
                                  paddock,
                                  max_interception_probability,
-                                 spore_interception_parameter) {
+                                 spore_interception_parameter,
+                                 spores_per_gp_per_wet_hour) {
 
   # obtain weather data for hour_i
 
@@ -50,6 +53,7 @@ spores_each_wet_hour <- function(h,
 
   newly_infected_dt <-
     apply(paddock_infective, 1, spores_from_1_element,
+          spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
           max_interception_probability = max_interception_probability,
           wind_direction_in_hour = wind_direction_in_hour,
           average_wind_speed_in_hour = average_wind_speed_in_hour,

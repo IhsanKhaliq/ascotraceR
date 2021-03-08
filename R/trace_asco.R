@@ -24,15 +24,18 @@
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems)
 #'  which develop per day, per square meter. Defaults to \code{350}.
 #' @param primary_infection_foci it refers to the inoculated quadrat
-#' located at the centre of the paddock from where disease spreads
-#' Defaults to \code{"centre"}
+#'  located at the centre of the paddock from where disease spreads
+#'  Defaults to \code{"centre"}
+#' @param primary_infection_intensity The intensity of the starting epidemic as
+#'  described by the number of number of sporulating growing points.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'  daily temperature means) is the period between infection and production of
 #'  lesions on susceptible growing points. Defaults to \code{200}
 #'  @param initial_infection refers to initial or primary infection on seedlings,
 #'  resulting in the production of infected growing points
 #'  @param time_zone refers to time in Coordinated Universal Time (UTC)
-#'
+#'  @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
+#'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock
@@ -58,8 +61,9 @@ trace_asco <- function(weather,
                        latent_period_cdd = 200,
                        time_zone = "UTC",
                        primary_infection_foci = "random",
-                       n_foci = 1
-                       ){
+                       primary_infection_intensity = 1,
+                       n_foci = 1,
+                       spores_per_gp_per_wet_hour = 0.22){
 
 
   # check date inputs for validity -----------------------------------------
@@ -84,7 +88,16 @@ trace_asco <- function(weather,
       }
     )
   return(x)
-    }
+  }
+
+
+  if (primary_infection_intensity > seeding_rate) {
+    stop(
+      primary_infection_intensity,
+      "exceeds the number of starting growing points - 'seeding_rate': ",
+      seeding_rate
+    )
+  }
 
   # convert times to POSIXct -----------------------------------------------
   initial_infection <-
@@ -158,7 +171,7 @@ trace_asco <- function(weather,
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
   if(ncol(primary_infection_foci) == 2){
-    primary_infection_foci[,sp_gp := 1]
+    primary_infection_foci[,sp_gp := primary_infection_intensity]
   }
 
   # define paddock variables at time 1
@@ -244,7 +257,8 @@ trace_asco <- function(weather,
                        gp_rr = gp_rr,
                        max_gp = max_gp,
                        max_new_gp = max_new_gp,
-                       spore_interception_parameter = spore_interception_parameter)
+                       spore_interception_parameter = spore_interception_parameter,
+                       spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour)
 
     # temporary line of code to test building of daily_vals in loop
     #daily_vals_list <- day_out
