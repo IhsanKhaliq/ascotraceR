@@ -6,6 +6,7 @@
 #'
 #' @param daily_vals `list` of model variables which have been calculated for days prior to the `i_date`
 #' @param weather_dat `data.table` of weather observations which includes the query date `i_date`
+#' @param spores_per_gp_per_wet_hour
 #'
 #' @return a `data.table` of values generated for the day `i_date`
 #'
@@ -17,7 +18,8 @@ one_day <- function(i_date,
                     gp_rr,
                     max_gp,
                     max_new_gp,
-                    spore_interception_parameter) {
+                    spore_interception_parameter,
+                    spores_per_gp_per_wet_hour) {
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
@@ -28,7 +30,7 @@ one_day <- function(i_date,
 
   # obtain summary weather for i_day
   i_mean_air_temp <- mean(weather_day[, temp])
-  i_wet_hours <- weather_day[1, wet_hours]
+  i_wet_hours <- weather_day[2, wet_hours]
   i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
 
   # Start building a list of values for 'i'
@@ -61,7 +63,8 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
           weather_hourly = weather_day[rain >= 0.2, ],
           paddock = daily_vals[["paddock"]],
           max_interception_probability = max_interception_probability,
-          spore_interception_parameter = spore_interception_parameter
+          spore_interception_parameter = spore_interception_parameter,
+          spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour
         )
       )
     newly_infected_dt[, cdd_at_infection := daily_vals[["cdd"]]]
