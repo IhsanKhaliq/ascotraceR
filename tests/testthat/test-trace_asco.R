@@ -40,7 +40,10 @@ test_that("days have updated after 5 increments",{
 
 })
 
-set.seed(666)
+
+
+
+set.seed(667)
 # test more intenst start
 test1.1 <- trace_asco(
   weather = newM_weather,
@@ -60,12 +63,17 @@ test_that("intense primary_infection_foci lead to more infections",{
                                                                                          by = "days")))
   expect_length(test1.1, 5)
   expect_length(test1.1[[1]], 11)
-  expect_equal(test1.1[[5]][["newly_infected"]][,.N], 5)
+  expect_equal(test1.1[[5]][["newly_infected"]][,.N], 8)
   expect_equal(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 40)
   expect_length(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
-  expect_equal(test1.1[[5]][["newly_infected"]][sporulating_gp > 0,sporulating_gp], 40)
+  expect_equal(test1.1[[5]][["newly_infected"]][spores_per_packet  > 0,spores_per_packet ], rep(1,8))
+  expect_equal(test1.1[[5]][["newly_infected"]][,unique(cdd_at_infection) ],87)
 
 })
+
+
+
+
 
 
 
@@ -95,6 +103,8 @@ test3 <- trace_asco(
   primary_infection_foci = "center"
 )
 test3[[30]] # look at values on the 30th day
+
+
 test_that("test3 returns some sporulating gps",{
   expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 1)
   expect_length(test3, 30)
@@ -123,9 +133,10 @@ test3 <- trace_asco(
 test3[[30]] # look at values on the 30th day
 tracer_plot(test3,30)
 test_that("test3 returns some sporulating gps",{
-  expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 1)
+  expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 30)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
+  expect_true(all(test3[[30]][["newly_infected"]][,unique(cdd_at_infection)] > test3[[30]][["cdd"]] - 200))
 
 
 })
@@ -143,10 +154,11 @@ test4 <- trace_asco(
   primary_infection_foci = qry,
   primary_infection_intensity = 40
 )
-test4[[80]] # look at values on the 102nd day
+test4[[80]] # look at values on the 80th day
 
 test_that("test4 returns some sporulating gps",{
-  expect_equal(test4[[80]][["paddock"]][,sum(sporulating_gp)], 5)
+  expect_equal(test4[[80]][["paddock"]][,sum(sporulating_gp)], 15592)
+  expect_true(all(test4[[80]][["newly_infected"]][,unique(cdd_at_infection)] > test4[[80]][["cdd"]] - 200))
 
 })
 
@@ -159,13 +171,15 @@ test5 <- trace_asco(
   paddock_width = 20,
   initial_infection = "1998-05-10",
   sowing_date = as.POSIXct("1998-05-09"),
-  harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(30),
+  harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(70),
   time_zone = "Australia/Perth",
   primary_infection_foci = "center",
-  primary_infection_intensity = 40
+  primary_infection_intensity = 40,
+  spores_per_gp_per_wet_hour = 1
+
 )
 
-tracer_plot(test5,32)
+systracer_plot(test5,32)
 
 #
 
