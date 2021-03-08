@@ -5,13 +5,13 @@
 \title{Calculate spore interception parameter}
 \usage{
 intercept_spores(
-  spore_interception_multiplier = 6e-05,
+  spore_interception_parameter = 6e-05,
   max_growing_points_limit,
   max_new_growing_points_limit
 )
 }
 \arguments{
-\item{spore_interception_multiplier}{multiplier to determine spore interception parameter.
+\item{spore_interception_parameter}{multiplier to determine spore interception parameter.
 Defaults to \code{0.00006}}
 
 \item{max_growing_points_limit}{Are the maximum number of growing points chickpea can achieve}

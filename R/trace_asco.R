@@ -8,12 +8,12 @@
 #' @param paddock_length length of a paddock in metres (y)
 #' @param paddock_width width of a paddock in metres (x)
 #' @param sowing_date a character string of a date value indicating sowing
-#'  date of chickpea seed and the start of the Ascotracer model. Preferably
+#'  date of chickpea seed and the start of the ascotraceR model. Preferably
 #'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #'  Assumes there is sufficient soil moisture to induce germination and start the
 #'  crop growing season.
 #' @param harvest_date a character string of a date value indicating harvest date of
-#' chickpea crop, which is also the last day to run the Ascotracer model. Preferably in
+#' chickpea crop, which is also the last day to run the ascotraceR model. Preferably in
 #'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #' @param seeding_rate indicate the rate at which chickpea seed is sown per
 #' square metre. Defaults to \code{40}
@@ -241,7 +241,7 @@ trace_asco <- function(weather,
 
     # This function or line of code is redundant given this model works
     #  on a 1x1m grid and we do not want to wrap address
-    # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
+    # additional_new_infections <- packets_from_locations(location_list = primary_infection_foci)
 
     # update time values for iteration of loop
     daily_vals_list[[i]][["i_date"]] <- time_increments[i]

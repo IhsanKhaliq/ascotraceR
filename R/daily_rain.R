@@ -1,8 +1,8 @@
 #' Total daily rain
 #'
-#' 'daily_rain()' calculates total daily rain in degree celcius
+#' 'daily_rain()' calculates total daily rain in millimeter
 #' @param wet_hours hours with rain
-#' @param rain_in_hour total amount of rain in an hour
+#' @param rain_in_hour total amount of rain in a wet hour
 #' @noRd
 #'
 daily_rain <- function(wet_hours, data_line) {
