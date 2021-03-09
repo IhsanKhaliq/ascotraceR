@@ -52,13 +52,18 @@ spores_each_wet_hour <- function(h,
   }
 
   newly_infected_dt <-
-    apply(paddock_infective, 1, spores_from_1_element,
-          spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
-          max_interception_probability = max_interception_probability,
-          wind_direction_in_hour = wind_direction_in_hour,
-          average_wind_speed_in_hour = average_wind_speed_in_hour,
-          stdev_wind_direction_in_hour = stdev_wind_direction_in_hour,
-          paddock = paddock)
+    future.apply::future_apply(
+      X = paddock_infective,
+      MARGIN =  1,
+      future.seed = TRUE,
+      FUN =  spores_from_1_element,
+      spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
+      max_interception_probability = max_interception_probability,
+      wind_direction_in_hour = wind_direction_in_hour,
+      average_wind_speed_in_hour = average_wind_speed_in_hour,
+      stdev_wind_direction_in_hour = stdev_wind_direction_in_hour,
+      paddock = paddock
+    )
 
   if(is.null(newly_infected_dt)){
     return(data.table(x = numeric(),
