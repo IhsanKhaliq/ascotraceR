@@ -41,4 +41,12 @@ tracer_plot <- function(dat, day, tiles = "sporulating_gp"){
     print(p1)
     return(p1)
   }
+
+if (tiles == "percent_gp_sporulating") {
+  p1 <- ggplot2::ggplot(data = dat1, ggplot2::aes(x, y)) +
+    ggplot2::geom_tile(ggplot2::aes(fill = sporulating_gp/(sporulating_gp + noninfected_gp))) +
+    ggplot2::scale_fill_gradient(low = "lightgoldenrod", high = "red")
+  print(p1)
+  return(p1)
+}
 }
