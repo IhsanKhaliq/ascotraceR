@@ -63,10 +63,10 @@ test_that("intense primary_infection_foci lead to more infections",{
                                                                                          by = "days")))
   expect_length(test1.1, 5)
   expect_length(test1.1[[1]], 11)
-  expect_equal(test1.1[[5]][["newly_infected"]][,.N], 8)
+  expect_equal(test1.1[[5]][["newly_infected"]][,.N], 7)
   expect_equal(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 40)
   expect_length(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
-  expect_equal(test1.1[[5]][["newly_infected"]][spores_per_packet  > 0,spores_per_packet ], rep(1,8))
+  expect_equal(test1.1[[5]][["newly_infected"]][spores_per_packet  > 0,spores_per_packet ], rep(1,7))
   expect_equal(test1.1[[5]][["newly_infected"]][,unique(cdd_at_infection) ],87)
 
 })
@@ -171,15 +171,21 @@ test5 <- trace_asco(
   paddock_width = 20,
   initial_infection = "1998-05-10",
   sowing_date = as.POSIXct("1998-05-09"),
-  harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(70),
+  harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(100),
   time_zone = "Australia/Perth",
   primary_infection_foci = "center",
   primary_infection_intensity = 40,
-  spores_per_gp_per_wet_hour = 1
+  spores_per_gp_per_wet_hour = 0.8
 
 )
+beepr::beep(3)
+tracer_plot(test5,72, tiles = "sporulating_gp")
+tracer_plot(test5,72, tiles = "noninfected_gp")
+tracer_plot(test5,72, tiles = "percent_gp_sporulating")
+test5[[72]]
 
-systracer_plot(test5,32)
+sapply(test5, function(x){as.character(x[["cdd"]])})
+
 
 #
 
