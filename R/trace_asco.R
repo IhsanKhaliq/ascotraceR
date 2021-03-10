@@ -93,8 +93,7 @@ trace_asco <- function(weather,
 
   if (primary_infection_intensity > seeding_rate) {
     stop(
-      primary_infection_intensity,
-      "exceeds the number of starting growing points - 'seeding_rate': ",
+      "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
       seeding_rate
     )
   }
@@ -125,48 +124,50 @@ trace_asco <- function(weather,
   # sample a paddock location randomly if a starting foci is not given
   if (is.data.table(primary_infection_foci) &
       all(c("x", "y") %in% colnames(primary_infection_foci))) {
-  # Skip the rest of the tests
+    # Skip the rest of the tests
   } else{
-    if (primary_infection_foci == "random") {
-      primary_infection_foci <-
-        paddock[sample(seq_len(nrow(paddock)),
-                       size = n_foci,
-                       replace = TRUE),
-                c("x", "y")]
-
-    } else{
-      if (primary_infection_foci == "center") {
+    if (class(primary_infection_foci) == "character") {
+      if (primary_infection_foci == "random") {
         primary_infection_foci <-
-          paddock[x == as.integer(round(paddock_width / 2)) &
-                    y == as.integer(round(paddock_length / 2)),
+          paddock[sample(seq_len(nrow(paddock)),
+                         size = n_foci,
+                         replace = TRUE),
                   c("x", "y")]
 
       } else{
-        if (is.vector(primary_infection_foci)) {
-          if (length(primary_infection_foci) != 2 |
-              is.numeric(primary_infection_foci) == FALSE) {
-            stop("primary_infection_foci should be supplied as a numeric vector of length two")
-          }
+        if (primary_infection_foci == "center") {
           primary_infection_foci <-
-            as.data.table(list(primary_infection_foci))
-          setnames(
-            x = primary_infection_foci,
-            old = c("V1", "V2"),
-            new = c("x", "y")
-          )
+            paddock[x == as.integer(round(paddock_width / 2)) &
+                      y == as.integer(round(paddock_length / 2)),
+                    c("x", "y")]
+        }else{
+          stop("primary_infection_foci input not recognised")
+      }
+      }
+    } else{
+      if (is.vector(primary_infection_foci)) {
+        if (length(primary_infection_foci) != 2 |
+            is.numeric(primary_infection_foci) == FALSE) {
+          stop("primary_infection_foci should be supplied as a numeric vector of length two")
         }
-        if (is.data.table(primary_infection_foci) == FALSE &
-            is.data.frame(primary_infection_foci)) {
-          setDT(primary_infection_foci)
-          if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
-            stop("primary_infection_foci data.table needs colnames 'x' and 'y'")
-          }
-
+        primary_infection_foci <-
+          as.data.table(as.list(primary_infection_foci))
+        setnames(x = primary_infection_foci,
+                 old = c("V1", "V2"),
+                 new = c("x", "y"))
+      }
+      if (is.data.table(primary_infection_foci) == FALSE &
+          is.data.frame(primary_infection_foci)) {
+        setDT(primary_infection_foci)
+        if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
+          stop("primary_infection_foci data.table needs colnames 'x' and 'y'")
         }
 
       }
+
     }
   }
+
 
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
