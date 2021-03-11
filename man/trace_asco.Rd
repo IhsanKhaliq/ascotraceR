@@ -17,7 +17,10 @@ trace_asco(
   max_new_gp = 350,
   latent_period_cdd = 200,
   time_zone = "UTC",
-  primary_infection_foci = "random"
+  primary_infection_foci = "random",
+  primary_infection_intensity = 1,
+  n_foci = 1,
+  spores_per_gp_per_wet_hour = 0.22
 )
 }
 \arguments{
@@ -55,11 +58,16 @@ daily temperature means) is the period between infection and production of
 lesions on susceptible growing points. Defaults to \code{200}
 @param initial_infection refers to initial or primary infection on seedlings,
 resulting in the production of infected growing points
-@param time_zone refers to time in Coordinated Universal Time (UTC)}
+@param time_zone refers to time in Coordinated Universal Time (UTC)
+@param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
+Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.}
 
 \item{primary_infection_foci}{it refers to the inoculated quadrat
 located at the centre of the paddock from where disease spreads
 Defaults to \code{"centre"}}
+
+\item{primary_infection_intensity}{The intensity of the starting epidemic as
+described by the number of number of sporulating growing points.}
 }
 \value{
 a x y \code{data.frame} simulating the spread of Ascochyta blight in a

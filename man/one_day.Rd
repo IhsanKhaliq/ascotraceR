@@ -11,17 +11,20 @@ one_day(
   gp_rr,
   max_gp,
   max_new_gp,
-  spore_interception_parameter
+  spore_interception_parameter,
+  spores_per_gp_per_wet_hour
 )
 }
 \arguments{
-\item{i_date}{a character string or \class{POSIXct} formatted string indicating an
+\item{i_date}{a character string or POSIXct formatted string indicating an
 iteration date of the model. Preferably in \acronym{ISO8601} format (YYYY-MM-DD),
 \emph{e.g.} \dQuote{2020-04-26}.}
 
 \item{daily_vals}{\code{list} of model variables which have been calculated for days prior to the \code{i_date}}
 
 \item{weather_dat}{\code{data.table} of weather observations which includes the query date \code{i_date}}
+
+\item{spores_per_gp_per_wet_hour}{}
 }
 \value{
 a \code{data.table} of values generated for the day \code{i_date}
