@@ -8,6 +8,9 @@
 #' @return a double providing the potentially infective spores at the paddock_infected_gp coordinates
 #' @noRd
 #' @examples
+#' potentially_effective_spores(spores_per_gp_per_wet_hour = 0.22,  # default parameter of the model
+#'   max_interception_probability = 1,
+#'   paddock_infected_gp = 0) # number of infected growing points at coordinates
 potentially_effective_spores <- function(spores_per_gp_per_wet_hour,
                                          max_interception_probability,
                                          paddock_infected_gp) {
