@@ -253,7 +253,6 @@ trace_asco <- function(weather,
                        weather_dat = weather,
                        gp_rr = gp_rr,
                        max_gp = max_gp,
-                       max_new_gp = max_new_gp,
                        spore_interception_parameter = spore_interception_parameter,
                        spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour)
 
