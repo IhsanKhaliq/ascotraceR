@@ -1,12 +1,14 @@
-#' Maximum number of growing points chickpea plant achieved
+#' Maximum number of growing points chickpea plant can achieve
 #'
 #' 'max_growing_points()' calculates maximum number of growing points chickpea plant
-#' achived. The growth of chickpea is described in terms of number of growing points
+#' can achieve. The growth of chickpea is described in terms of increase in the
+#' number of growing points. The number will vary depending on the cultivar resistance
 #'
-#' @param per_area is given area (observatoin quadrat or paddock) in metres
-#' @param max_growing_points_limit is the limit on number of growing points chickpea
-#' will ever achieve. It depends on chickpa cultivar
-#' @param min_growing_points are the minimum number of growing points
+#' @param per_area is given area (observatoin quadrat or a paddock) in metres
+#' @param max_growing_points_limit Maximum number of chickpea growing points allowed
+#'  per square metre. Defaults to \code{15000}.
+#' @param min_growing_points are the minimum number of growing points.
+#' Defaults to \code{40}.
 #' @return a *numeric* vector
 #' @keywords internal
 #' @noRd

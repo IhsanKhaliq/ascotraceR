@@ -1,7 +1,7 @@
 #context("makes some infected growing points infective or a source of innoculum")
-load_all()
-newly_infected_list <- fread(file = "tests/testthat/data-newly_infected_list.csv")
-#newly_infected_list <- fread(file = "data-newly_infected_list.csv")
+
+#newly_infected_list <- fread(file = "tests/testthat/data-newly_infected_list.csv")
+newly_infected_list <- fread(file = "data-newly_infected_list.csv")
 
 # create data and parameters
 seeding_rate <- 40

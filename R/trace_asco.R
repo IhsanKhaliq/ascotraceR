@@ -8,12 +8,12 @@
 #' @param paddock_length length of a paddock in metres (y)
 #' @param paddock_width width of a paddock in metres (x)
 #' @param sowing_date a character string of a date value indicating sowing
-#'  date of chickpea seed and the start of the Ascotracer model. Preferably
+#'  date of chickpea seed and the start of the ascotraceR model. Preferably
 #'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #'  Assumes there is sufficient soil moisture to induce germination and start the
 #'  crop growing season.
 #' @param harvest_date a character string of a date value indicating harvest date of
-#' chickpea crop, which is also the last day to run the Ascotracer model. Preferably in
+#' chickpea crop, which is also the last day to run the ascotraceR model. Preferably in
 #'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #' @param seeding_rate indicate the rate at which chickpea seed is sown per
 #' square metre. Defaults to \code{40}
@@ -31,23 +31,48 @@
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'  daily temperature means) is the period between infection and production of
 #'  lesions on susceptible growing points. Defaults to \code{200}
-#'  @param initial_infection refers to initial or primary infection on seedlings,
+#' @param initial_infection refers to initial or primary infection on seedlings,
 #'  resulting in the production of infected growing points
-#'  @param time_zone refers to time in Coordinated Universal Time (UTC)
-#'  @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
+#' @param time_zone refers to time in Coordinated Universal Time (UTC)
+#' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
+#' @param n_foci only relevant when primary_infection_foci = "random" and notes the number
+#'  of primary_infection_foci at initial infection.
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock
 #' @export
 #'
 #' @examples
-#' ta1 <- trace_asco(
+#' # First weather data needs to be imported and formated with `format_weather`
+#' Newmarracarra <-
+#'    read.csv(system.file("extdata",
+#'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
+#' station_data <-
+#'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#'
+#' weather_dat <- format_weather(
+#'    x = Newmarracarra,
+#'    POSIXct_time = "Local.Time",
+#'    temp = "mean_daily_temp",
+#'    ws = "ws",
+#'    wd_sd = "wd_sd",
+#'    rain = "rain_mm",
+#'    wd = "wd",
+#'    station = "Location",
+#'    time_zone = "Australia/Perth",
+#'    lonlat_file = station_data)
+#'
+#'
+#' traced <- trace_asco(
 #'   weather = weather_dat,
 #'   paddock_length = 100,
 #'   paddock_width = 100,
-#'   sowing_date = "1998-03-09"
-#'   )
+#'   initial_infection = "1998-06-10",
+#'   sowing_date = as.POSIXct("1998-06-09"),
+#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(30),
+#'   time_zone = "Australia/Perth",
+#'   primary_infection_foci = "center")
 trace_asco <- function(weather,
                        paddock_length,
                        paddock_width,
@@ -93,8 +118,7 @@ trace_asco <- function(weather,
 
   if (primary_infection_intensity > seeding_rate) {
     stop(
-      primary_infection_intensity,
-      "exceeds the number of starting growing points - 'seeding_rate': ",
+      "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
       seeding_rate
     )
   }
@@ -125,48 +149,50 @@ trace_asco <- function(weather,
   # sample a paddock location randomly if a starting foci is not given
   if (is.data.table(primary_infection_foci) &
       all(c("x", "y") %in% colnames(primary_infection_foci))) {
-  # Skip the rest of the tests
+    # Skip the rest of the tests
   } else{
-    if (primary_infection_foci == "random") {
-      primary_infection_foci <-
-        paddock[sample(seq_len(nrow(paddock)),
-                       size = n_foci,
-                       replace = TRUE),
-                c("x", "y")]
-
-    } else{
-      if (primary_infection_foci == "center") {
+    if (class(primary_infection_foci) == "character") {
+      if (primary_infection_foci == "random") {
         primary_infection_foci <-
-          paddock[x == as.integer(round(paddock_width / 2)) &
-                    y == as.integer(round(paddock_length / 2)),
+          paddock[sample(seq_len(nrow(paddock)),
+                         size = n_foci,
+                         replace = TRUE),
                   c("x", "y")]
 
       } else{
-        if (is.vector(primary_infection_foci)) {
-          if (length(primary_infection_foci) != 2 |
-              is.numeric(primary_infection_foci) == FALSE) {
-            stop("primary_infection_foci should be supplied as a numeric vector of length two")
-          }
+        if (primary_infection_foci == "center") {
           primary_infection_foci <-
-            as.data.table(list(primary_infection_foci))
-          setnames(
-            x = primary_infection_foci,
-            old = c("V1", "V2"),
-            new = c("x", "y")
-          )
+            paddock[x == as.integer(round(paddock_width / 2)) &
+                      y == as.integer(round(paddock_length / 2)),
+                    c("x", "y")]
+        }else{
+          stop("primary_infection_foci input not recognised")
+      }
+      }
+    } else{
+      if (is.vector(primary_infection_foci)) {
+        if (length(primary_infection_foci) != 2 |
+            is.numeric(primary_infection_foci) == FALSE) {
+          stop("primary_infection_foci should be supplied as a numeric vector of length two")
         }
-        if (is.data.table(primary_infection_foci) == FALSE &
-            is.data.frame(primary_infection_foci)) {
-          setDT(primary_infection_foci)
-          if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
-            stop("primary_infection_foci data.table needs colnames 'x' and 'y'")
-          }
-
+        primary_infection_foci <-
+          as.data.table(as.list(primary_infection_foci))
+        setnames(x = primary_infection_foci,
+                 old = c("V1", "V2"),
+                 new = c("x", "y"))
+      }
+      if (is.data.table(primary_infection_foci) == FALSE &
+          is.data.frame(primary_infection_foci)) {
+        setDT(primary_infection_foci)
+        if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
+          stop("primary_infection_foci data.table needs colnames 'x' and 'y'")
         }
 
       }
+
     }
   }
+
 
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
@@ -180,13 +206,11 @@ trace_asco <- function(weather,
     "new_gp", # Change in the number of growing points since last iteration
     "noninfected_gp",
     "infected_gp",
-    "sporulating_gp", # replacing InfectiveElementList
-    "cdd_at_infection"
+    "sporulating_gp" # replacing InfectiveElementList
   ) :=
     list(
       seeding_rate,
       seeding_rate,
-      0,
       0,
       0
     )]
@@ -239,10 +263,6 @@ trace_asco <- function(weather,
 
   for(i in seq_len(length(time_increments))){
 
-    # This function or line of code is redundant given this model works
-    #  on a 1x1m grid and we do not want to wrap address
-    # additional_new_infections <- packets_from_locations(location_list = epidemic_foci)
-
     # update time values for iteration of loop
     daily_vals_list[[i]][["i_date"]] <- time_increments[i]
     daily_vals_list[[i]][["i_day"]] <- i
@@ -256,7 +276,6 @@ trace_asco <- function(weather,
                        weather_dat = weather,
                        gp_rr = gp_rr,
                        max_gp = max_gp,
-                       max_new_gp = max_new_gp,
                        spore_interception_parameter = spore_interception_parameter,
                        spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour)
 

@@ -10,7 +10,7 @@ spread_spores <-
 
 
     # k = intercept_spores(
-    #   spore_interception_multiplier = spore_interception_multiplier,
+    #   spore_interception_parameter = spore_interception_parameter,
     #   max_growing_points_limit = max_gp,
     #   max_new_growing_points_limit = max_new_gp
     # ))

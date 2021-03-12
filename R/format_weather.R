@@ -1,5 +1,5 @@
-#' Format weather data into a ascotracer.weather object for use in the blackspot
-#'  model
+#' Format weather data into a ascotraceR.weather object for use in the spore
+#'  dispersal models
 #'
 #' Formats raw weather data into an object suitable for use in
 #'  \code{\link{trace_asco}} function ensuring that the supplied weather data meet
@@ -26,6 +26,8 @@
 #' @param time_zone time zone (Olsen time zone format) where the weather station
 #'  is located. May be in a column or supplied as a character string.
 #'  Optional, see also `r`. See details.
+#' @param temp column name or index in `x` that refers to temperature in degrees
+#'  celsius
 #' @param rain column name or index in `x` that refers to rainfall in mm.
 #' @param ws column name or index in `x` that refers to wind speed in km / h.
 #' @param wd column name or index in `x` that refers to wind direction in degrees.
@@ -39,7 +41,7 @@
 #' @param lat column name or index in `x` that refers to weather station's
 #'  latitude.  See details.
 #' @param r Spatial raster which is intended to be used with this weather data
-#'  in \code{\link{run_blackspot}}. Used to fetch time_zone if it is not
+#'  for use in the blackspot model. Used to fetch time_zone if it is not
 #'  supplied in data. Optional, see also `time_zone`.
 #' @param lonlat_file a file path to a csv which included station name/id and
 #'  longitude and latitude coordinates if they are not supplied in data.
@@ -47,7 +49,7 @@
 #'
 #' @details `time_zone`
 #' All weather stations must fall within the same time zone.  If the required
-#'  stations are located in differing time zones, separate `ascotracer.weather`
+#'  stations are located in differing time zones, separate `ascotraceR.weather`
 #'  objects must be created for each time zone.  If a raster object of
 #'  previous crops is provided that spans time zones, an error will be emitted.
 #'
@@ -64,11 +66,11 @@
 #'  will drop these column variables.  If these data are not included, (`NULL`)
 #'  a separate file may be provided that contains the longitude, latitude and
 #'  matching station name to provide station locations in the final
-#'  `ascotracer.weather` object that is created by specifying the file path to
+#'  `ascotraceR.weather` object that is created by specifying the file path to
 #'  a \acronym{CSV file} using `lonlat_file`.
-#' @return A \code{ascotracer.weather} object (an extension of
+#' @return A \code{ascotraceR.weather} object (an extension of
 #'  \CRANpkg{data.table}) containing the supplied weather aggregated to each
-#'  hour in a suitable format for use with \code{\link{run_blackspot}}
+#'  hour in a suitable format for use with \code{\link{trace_asco}}
 #'  containing the following columns:
 #' \tabular{rl}{
 #'    **times**: \tab Time in POSIXct format \cr
@@ -88,31 +90,25 @@
 #'
 #' @examples
 #' # Fake weather data files for testing and examples have been included in
-#' # \pkg{ascotracer}.  The weather data files both are of the same format, so
+#' # \pkg{ascotraceR}.  The weather data files both are of the same format, so
 #' # they will be combined for formatting here.
 #'
-#' scaddan <-
-#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer")
-#' naddacs <-
-#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "Ascotracer")
-#'
-#' weather_file_list <- list(scaddan, naddacs)
-#' weather_station_data <-
-#'    lapply(X = weather_file_list, FUN = read.csv)
-#'
-#' weather_station_data <- do.call("rbind", weather_station_data)
+#' Newmarracarra <-
+#'    read.csv(system.file("extdata",
+#'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
+#' station_data <-
+#'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 #'
 #' weather <- format_weather(
-#'    x = weather_station_data,
+#'    x = Newmarracarra,
 #'    POSIXct_time = "Local.Time",
-#'    ws = "meanWindSpeeds",
-#'    wd_sd = "stdDevWindDirections",
-#'    rain = "Rainfall",
-#'    wd = "meanWindDirections",
-#'    lon = "Station.Longitude",
-#'    lat = "Station.Latitude",
-#'    station = "StationID",
-#'    r = eyre
+#'    ws = "ws",
+#'    wd_sd = "wd_sd",
+#'    rain = "rain_mm",
+#'    wd = "wd",
+#'    station = "Location",
+#'    time_zone = "Australia/Perth",
+#'    lonlat_file = station_data
 #' )
 #'
 #' @export
@@ -190,6 +186,7 @@ format_weather <- function(x,
       )
    }
 
+
    # Assign a `time_zone` based on the raster centroid and check to ensure only
    # one time zone is provided
    if (is.null(time_zone)) {
@@ -205,7 +202,7 @@ format_weather <- function(x,
    if (length(time_zone) > 1) {
       stop(
          call. = FALSE,
-         "Separate weather inputs for the blackspot model are required for",
+         "Separate weather inputs for the model are required for",
          "each time zone."
       )
    }
@@ -220,12 +217,16 @@ format_weather <- function(x,
       mm <- "mm"
    }
    if (missing(wd_sd)) {
-      x$wd_sd <- NA
+      x$wd_sd <- NA########################
       wd_sd <- "wd_sd"
    }
    if (missing(temp)) {
       x[, temp := rep(NA, .N)]
       temp <- "temp"
+   }
+
+   if(all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)) == FALSE){
+      stop("Supplied column names are not found in column names of x")
    }
 
    # import and assign longitude and latitude from a file if provided
@@ -239,7 +240,7 @@ format_weather <- function(x,
          )
       }
 
-      if (any(unique(x[,station]) %notin% ll_file[,"station"])) {
+      if (any(as.character(unique(x[,..station])) %notin% as.character(ll_file[,station]))) {
          stop(
             "The csv file of weather station coordinates should contain ",
             "station coordinates for each weather station identifier."
@@ -247,11 +248,11 @@ format_weather <- function(x,
       }
 
       r_num <-
-         which(as.character(ll_file[, "station"]) ==
-                  as.character(unique(x[, station])))
+         which(as.character(ll_file[, station]) ==
+                  as.character(unique(x[, ..station])))
 
-      x$lat <- rep(ll_file[r_num, "lat"], nrow(x))
-      x$lon <- rep(ll_file[r_num, "lon"], nrow(x))
+      x[, lat := rep(ll_file[r_num, lat], nrow(x))]
+      x[, lon := rep(ll_file[r_num, lon], nrow(x))]
    }
 
    # If lat and long are specified as NA
@@ -334,22 +335,19 @@ format_weather <- function(x,
       if (lubridate::tz(x[, times]) == "" ||
           lubridate::tz(x[, times]) == "UTC") {
          x[, times := lubridate::ymd_hms(x[, times],
-                                         tz = time_zone,
+                                         tz = ..time_zone,
                                          quiet = TRUE)]
       }
    } else {
       # if POSIX formatted times were not supplied, create a POSIXct
       # formatted column named 'times'
-      x$times <-
-           lubridate::ymd_hm(paste(x[, "YYYY"],
-                                   "-",
-                                   x[, "MM"],
-                                   "-",
-                                   x[, "DD"],
-                                   x[, "hh"],
-                                   ":",
-                                   x[, "mm"]),
-                             tz = time_zone)
+
+      x[, times := paste(YYYY, "-",
+                         MM, "-",
+                         DD, " ",
+                         hh, ":",
+                         mm, sep = "")][, times := lubridate::ymd_hm(times, tz = ..time_zone)]
+
    }
 
    if(any(is.na(x[, times]))) {
@@ -385,13 +383,12 @@ format_weather <- function(x,
       # calculate the approximate logging frequency of the weather data
 
       log_freq <-
-         lubridate::int_length(lubridate::as.interval(x_dt[1, "times"],
-                                                      last(x_dt[, "times"]))) /
+         lubridate::int_length(lubridate::as.interval(x_dt[1, times],
+                                                      x_dt[.N, times])) /
          (nrow(x_dt) * 60)
 
       # if the logging frequency is less than 50 minutes aggregate to hourly
       if (log_freq < 50) {
-         return(x_dt)
 
          w_dt_agg <- x_dt[, list(
             times = unique(lubridate::floor_date(times,

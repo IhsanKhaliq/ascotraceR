@@ -1,4 +1,4 @@
-Package: Ascotracer
+Package: ascotraceR
 Title: A Spatiotemporal Model to Simulate the Spread of Ascochyta Blight in Chickpea
 Version: 0.0.0.9000
 Authors@R: 
@@ -26,13 +26,20 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
-    testthat,
+    testthat (>= 3.0.1),
     knitr
 Imports:
-  data.table,
-  lubridate,
-  dplyr,
-  raster
+  data.table (>= 1.13.0),
+  lubridate (>= 1.7.9.2),
+  dplyr (>= 1.0.3),
+  future (>= 1.21.0),
+  future.apply (>= 1.7.0),
+  ggplot2 (>= 3.3.3),
+  lutz (>= 0.3.1),
+  circular (>= 0.4-93),
+  stats (>= 4.0.3),
+  sf,
+  raster (>= 3.4-5)
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5.0)

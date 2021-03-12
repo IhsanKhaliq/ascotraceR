@@ -1,4 +1,4 @@
 library(testthat)
-library(Ascotracer)
+library(ascotraceR)
 
-test_check("Ascotracer")
+test_check("ascotraceR")

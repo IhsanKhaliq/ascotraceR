@@ -8,7 +8,7 @@
 #' @noRd
 
 splash_angle <- function() {
-  runif(n = 1,
+  stats::runif(n = 1,
         min =  1,
         max = 360)
 }
