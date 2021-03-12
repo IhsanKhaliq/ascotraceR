@@ -3,7 +3,6 @@ context(
    into `trace_asco`"
 )
 
-library(data.table)
 # identify lon lat from file ---------------------------------------------------
 test_that("`format_weather()` is able to identify the correct lat and lon values
           from file",
@@ -74,10 +73,10 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
                    "mm"
                 )
              )
-             expect_equal(dim(weather_dt), c(168, 14))
+             expect_equal(dim(weather_dt), c(dat_minutes/60, 14))
              expect_true(anyNA(weather_dt$lon) == FALSE)
              expect_true(anyNA(weather_dt$lat) == FALSE)
-             expect_equal(unique(weather_dt$lon), 114.8627)
+             expect_true(weather_dt[,unique(lon)] == 114.8627)
              expect_equal(unique(weather_dt$lat), -28.5990)
              expect_is(weather_dt$times, "POSIXct")
              expect_equal(as.character(min(weather_dt$times)),
