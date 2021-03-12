@@ -26,6 +26,8 @@
 #' @param time_zone time zone (Olsen time zone format) where the weather station
 #'  is located. May be in a column or supplied as a character string.
 #'  Optional, see also `r`. See details.
+#' @param temp column name or index in `x` that refers to temperature in degrees
+#'  celsius
 #' @param rain column name or index in `x` that refers to rainfall in mm.
 #' @param ws column name or index in `x` that refers to wind speed in km / h.
 #' @param wd column name or index in `x` that refers to wind direction in degrees.
@@ -92,7 +94,8 @@
 #' # they will be combined for formatting here.
 #'
 #' Newmarracarra <-
-#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")
+#'    read.csv(system.file("extdata",
+#'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
 #' station_data <-
 #'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 #'
@@ -183,9 +186,6 @@ format_weather <- function(x,
       )
    }
 
-   if(all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)) == FALSE){
-      stop("Supplied column names are not found in column names of x")
-   }
 
    # Assign a `time_zone` based on the raster centroid and check to ensure only
    # one time zone is provided
@@ -223,6 +223,10 @@ format_weather <- function(x,
    if (missing(temp)) {
       x[, temp := rep(NA, .N)]
       temp <- "temp"
+   }
+
+   if(all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)) == FALSE){
+      stop("Supplied column names are not found in column names of x")
    }
 
    # import and assign longitude and latitude from a file if provided
