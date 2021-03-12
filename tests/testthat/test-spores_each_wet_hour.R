@@ -17,8 +17,7 @@ paddock[, c(
   "new_gp", # Change in the number of growing points since last iteration
   "noninfected_gp",
   "infected_gp",
-  "sporulating_gp", # replacing InfectiveElementList
-  "cdd_at_infection"
+  "sporulating_gp" # replacing InfectiveElementList
 ) :=
   list(
     seeding_rate,
@@ -28,8 +27,7 @@ paddock[, c(
     0,
     fifelse(x == primary_infection_foci[1] &
               y == primary_infection_foci[2], 1,
-            0),
-    0
+            0)
   )]
 
 spore_interception_parameter <-
@@ -44,7 +42,8 @@ test1 <- spores_each_wet_hour(
   weather_hourly = weather_day,
   paddock = paddock,
   max_interception_probability = 1,
-  spore_interception_parameter = spore_interception_parameter
+  spore_interception_parameter = spore_interception_parameter,
+  spores_per_gp_per_wet_hour = 0.22
 )}
 
 test_that("test1 returns expected output",{
@@ -61,14 +60,15 @@ test_that("test1 returns expected output",{
       weather_hourly = weather_day,
       paddock = paddock,
       max_interception_probability = 1,
-      spore_interception_parameter = spore_interception_parameter
+      spore_interception_parameter = spore_interception_parameter,
+      spores_per_gp_per_wet_hour = 0.22
     )
   )
   expect_is(test1, "data.table")
   expect_equal(nrow(test1), 1)
   expect_equal(colnames(test1), c("x", "y", "spores_per_packet"))
-  expect_equal(test1[1, x], 52)
-  expect_equal(test1[1, y], 48)
+  expect_equal(test1[1, x], 55)
+  expect_equal(test1[1, y], 49)
   expect_equal(test1[1, spores_per_packet], 1)
   expect_is(test1[,x], "integer")
   expect_is(test1[,y], "integer")
@@ -76,7 +76,7 @@ test_that("test1 returns expected output",{
 })
 
 
-# add more than one sporilating growing point
+# add more than one sporulating growing point
 paddock[, sporulating_gp := fifelse(x >= 53 &
                                    x <= 57 &
                                    y >= 53 &
@@ -89,15 +89,16 @@ test2 <- spores_each_wet_hour(
   weather_hourly = weather_day,
   paddock = paddock,
   max_interception_probability = 1,
-  spore_interception_parameter = spore_interception_parameter
+  spore_interception_parameter = spore_interception_parameter,
+  spores_per_gp_per_wet_hour = 0.22
 )
 
 test_that("test2 returns expected output",{
   expect_is(test2, "data.table")
-  expect_equal(nrow(test2), 8)
+  expect_equal(nrow(test2), 15)
   expect_equal(colnames(test2), c("x", "y", "spores_per_packet"))
   expect_equal(test2[1, x], 55)
-  expect_equal(test2[1, y], 53)
+  expect_equal(test2[1, y], 52)
   expect_equal(test2[1, spores_per_packet], 1)
   expect_is(test2[,x], "integer")
   expect_is(test2[,y], "integer")
@@ -109,7 +110,8 @@ test3 <- lapply(seq_len(weather_day[1,wet_hours]),
                weather_hourly = weather_day,
                paddock = paddock,
                max_interception_probability = 1,
-               spore_interception_parameter = spore_interception_parameter)
+               spore_interception_parameter = spore_interception_parameter,
+               spores_per_gp_per_wet_hour = 0.22)
 
 
 test_that("test3 with lapply returns expected output",{
@@ -117,9 +119,9 @@ test_that("test3 with lapply returns expected output",{
   expect_length(test3, 7)
   expect_silent(test3 <- rbindlist(test3))
   expect_is(test3, "data.table")
-  expect_equal(nrow(test3), 50)
+  expect_equal(nrow(test3), 68)
   expect_equal(colnames(test3), c("x", "y", "spores_per_packet"))
-  expect_equal(test3[1, x], 55)
+  expect_equal(test3[1, x], 57)
   expect_equal(test3[1, y], 52)
   expect_equal(max(test3[, spores_per_packet]), 1)
   expect_is(test3[,x], "integer")
