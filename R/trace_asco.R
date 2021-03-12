@@ -31,10 +31,10 @@
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'  daily temperature means) is the period between infection and production of
 #'  lesions on susceptible growing points. Defaults to \code{200}
-#'  @param initial_infection refers to initial or primary infection on seedlings,
+#' @param initial_infection refers to initial or primary infection on seedlings,
 #'  resulting in the production of infected growing points
-#'  @param time_zone refers to time in Coordinated Universal Time (UTC)
-#'  @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
+#' @param time_zone refers to time in Coordinated Universal Time (UTC)
+#' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
@@ -63,7 +63,7 @@
 #'
 #'
 #' traced <- trace_asco(
-#'   weather_dat = weather,
+#'   weather = weather_dat,
 #'   paddock_length = 100,
 #'   paddock_width = 100,
 #'   initial_infection = "1998-06-10",
