@@ -38,6 +38,7 @@ Imports:
   lutz (>= 0.3.1),
   circular (>= 0.4-93),
   stats (>= 4.0.3),
+  sf,
   raster (>= 3.4-5)
 VignetteBuilder: knitr
 Depends: 
