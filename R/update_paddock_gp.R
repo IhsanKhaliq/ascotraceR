@@ -18,6 +18,8 @@
 #'                          max_gp = 15000
 #'                          )
 #' GPs
+#' @keywords internal
+#' @noRd
 update_paddock_gp <-
   function(paddock_coords,
            mean_air_temp,
