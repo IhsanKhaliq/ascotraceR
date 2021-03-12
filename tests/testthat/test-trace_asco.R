@@ -28,8 +28,7 @@ test_that("days have updated after 5 increments",{
       "new_gp",
       "noninfected_gp",
       "infected_gp",
-      "sporulating_gp",
-      "cdd_at_infection")
+      "sporulating_gp")
   )
   expect_equal(test1[[5]][["day"]], lubridate::yday(harvest_date)+1)
   expect_equal(test1[[5]][["i_day"]], 5)
@@ -230,19 +229,20 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 
 # library(future)
 # future::plan("multisession")
-qry <- data.table(x = c(15,30),
-                  y = c(4,4),
-                  load = 40)
-
-test7 <- trace_asco(
-  weather = newM_weather,
-  paddock_length = 8,
-  paddock_width = 45,
-  initial_infection = "1998-05-10",
-  sowing_date = as.POSIXct("1998-05-09"),
-  harvest_date = as.POSIXct("1998-08-04"),
-  time_zone = "Australia/Perth",
-  primary_infection_foci = qry)
+# qry <- data.table(x = c(15,30),
+#                   y = c(4,4),
+#                   load = 40)
+#
+# test7 <- trace_asco(
+#   weather = newM_weather,
+#   paddock_length = 8,
+#   paddock_width = 45,
+#   initial_infection = "1998-06-18",
+#   sowing_date = as.POSIXct("1998-05-20"),
+#   harvest_date = as.POSIXct("1998-08-04"),
+#   time_zone = "Australia/Perth",
+#   primary_infection_foci = qry)
+#
 
 
 
@@ -303,8 +303,7 @@ test7 <- trace_asco(
 #   harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(100),
 #   time_zone = "Australia/Perth",
 #   primary_infection_foci = "center",
-#   primary_infection_intensity = 40,
-#   spores_per_gp_per_wet_hour = 0.8
+#   primary_infection_intensity = 40
 #
 # )
 # beepr::beep(3)

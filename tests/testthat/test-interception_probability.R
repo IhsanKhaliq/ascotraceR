@@ -26,6 +26,6 @@ test_that("correct 'type' and length is returned", {
 
 
 test_that("test2 contains correct output",{
-  expect_equal(test2,2)
+  expect_equal(test2,1)
 
 })
