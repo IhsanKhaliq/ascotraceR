@@ -42,12 +42,35 @@
 #' @export
 #'
 #' @examples
-#' ta1 <- trace_asco(
-#'   weather = weather_dat,
+#' # First weather data needs to be imported and formated with `format_weather`
+#' Newmarracarra <-
+#'    read.csv(system.file("extdata",
+#'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
+#' station_data <-
+#'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#'
+#' weather <- format_weather(
+#'    x = Newmarracarra,
+#'    POSIXct_time = "Local.Time",
+#'    temp = "mean_daily_temp",
+#'    ws = "ws",
+#'    wd_sd = "wd_sd",
+#'    rain = "rain_mm",
+#'    wd = "wd",
+#'    station = "Location",
+#'    time_zone = "Australia/Perth",
+#'    lonlat_file = station_data)
+#'
+#'
+#' traced <- trace_asco(
+#'   weather = weather,
 #'   paddock_length = 100,
 #'   paddock_width = 100,
-#'   sowing_date = "1998-03-09"
-#'   )
+#'   initial_infection = "1998-06-10",
+#'   sowing_date = as.POSIXct("1998-06-09"),
+#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(30),
+#'   time_zone = "Australia/Perth",
+#'   primary_infection_foci = "center")
 trace_asco <- function(weather,
                        paddock_length,
                        paddock_width,
