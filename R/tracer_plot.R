@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' test5 <- trace_asco(
+#' traced <- trace_asco(
 #'   weather = ascotraceR::newM_weather,
 #'   paddock_length = 100,
 #'   paddock_width = 100,
@@ -16,9 +16,9 @@
 #'   sowing_date = as.POSIXct("1998-06-09"),
 #'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(100),
 #'   time_zone = "Australia/Perth",
-#'   primary_infection_foci = "center"
+#'   primary_infection_foci = "center")
 #'
-#'   tracer_plot(test5,102))
+#'   tracer_plot(traced,102)
 
 
 tracer_plot <- function(dat, day, tiles = "sporulating_gp"){
