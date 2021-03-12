@@ -49,7 +49,7 @@
 #' station_data <-
 #'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 #'
-#' weather <- format_weather(
+#' weather_dat <- format_weather(
 #'    x = Newmarracarra,
 #'    POSIXct_time = "Local.Time",
 #'    temp = "mean_daily_temp",
@@ -63,7 +63,7 @@
 #'
 #'
 #' traced <- trace_asco(
-#'   weather = weather,
+#'   weather_dat = weather,
 #'   paddock_length = 100,
 #'   paddock_width = 100,
 #'   initial_infection = "1998-06-10",
