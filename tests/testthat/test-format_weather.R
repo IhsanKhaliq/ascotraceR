@@ -698,6 +698,7 @@ test_that("Incorrect column names are picked up and error is given", {
          x = read.csv(Newmarracarra),
          POSIXct_time = "Local.Time",
          ws = "ws",
+         temp = "mean_daily_temp",
          wd_sd = "wd_sd",
          rain = "rain_mm",
          wd = "wdd",
