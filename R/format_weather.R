@@ -91,28 +91,21 @@
 #' # \pkg{ascotraceR}.  The weather data files both are of the same format, so
 #' # they will be combined for formatting here.
 #'
-#' scaddan <-
+#' Newmarracarra <-
 #'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")
-#' naddacs <-
-#'    system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")
-#'
-#' weather_file_list <- list(scaddan, naddacs)
-#' weather_station_data <-
-#'    lapply(X = weather_file_list, FUN = read.csv)
-#'
-#' weather_station_data <- do.call("rbind", weather_station_data)
+#' station_data <-
+#'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 #'
 #' weather <- format_weather(
-#'    x = weather_station_data,
+#'    x = Newmarracarra,
 #'    POSIXct_time = "Local.Time",
-#'    ws = "meanWindSpeeds",
-#'    wd_sd = "stdDevWindDirections",
-#'    rain = "Rainfall",
-#'    wd = "meanWindDirections",
-#'    lon = "Station.Longitude",
-#'    lat = "Station.Latitude",
-#'    station = "StationID",
-#'    r = eyre
+#'    ws = "ws",
+#'    wd_sd = "wd_sd",
+#'    rain = "rain_mm",
+#'    wd = "wd",
+#'    station = "Location",
+#'    time_zone = "Australia/Perth",
+#'    lonlat_file = station_data
 #' )
 #'
 #' @export
@@ -188,6 +181,10 @@ format_weather <- function(x,
          "Can't detect the hour time increment in supplied data (hh), Weather ",
          "data defining hour increments, must be supplied"
       )
+   }
+
+   if(all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)) == FALSE){
+      stop("Supplied column names are not found in column names of x")
    }
 
    # Assign a `time_zone` based on the raster centroid and check to ensure only
