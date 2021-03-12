@@ -36,6 +36,8 @@
 #' @param time_zone refers to time in Coordinated Universal Time (UTC)
 #' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
+#' @param n_foci only relevant when primary_infection_foci = "random" and notes the number
+#'  of primary_infection_foci at initial infection.
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock

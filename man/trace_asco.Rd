@@ -69,6 +69,9 @@ Defaults to \code{"centre"}}
 \item{primary_infection_intensity}{The intensity of the starting epidemic as
 described by the number of number of sporulating growing points.}
 
+\item{n_foci}{only relevant when primary_infection_foci = "random" and notes the number
+of primary_infection_foci at initial infection.}
+
 \item{spores_per_gp_per_wet_hour}{Number of spores produced per sporulating growing point each wet hour.
 Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.}
 }

@@ -11,6 +11,8 @@
 #'                                  y = 1:100))
 #' qry <- pdk[sample(1:nrow(pdk), 5),]
 #' which_paddock_row(pdk, qry)
+#' @keywords internal
+#' @noRd
 which_paddock_row <- function(paddock, query){
   setDT(paddock)
   rows1 <-
