@@ -41,6 +41,9 @@ crop growing season.}
 chickpea crop, which is also the last day to run the ascotraceR model. Preferably in
 \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.}
 
+\item{initial_infection}{refers to initial or primary infection on seedlings,
+resulting in the production of infected growing points}
+
 \item{seeding_rate}{indicate the rate at which chickpea seed is sown per
 square metre. Defaults to \code{40}}
 
@@ -55,12 +58,9 @@ which develop per day, per square meter. Defaults to \code{350}.}
 
 \item{latent_period_cdd}{latent period in cumulative degree days (sum of
 daily temperature means) is the period between infection and production of
-lesions on susceptible growing points. Defaults to \code{200}
-@param initial_infection refers to initial or primary infection on seedlings,
-resulting in the production of infected growing points
-@param time_zone refers to time in Coordinated Universal Time (UTC)
-@param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
-Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.}
+lesions on susceptible growing points. Defaults to \code{200}}
+
+\item{time_zone}{refers to time in Coordinated Universal Time (UTC)}
 
 \item{primary_infection_foci}{it refers to the inoculated quadrat
 located at the centre of the paddock from where disease spreads
@@ -68,6 +68,9 @@ Defaults to \code{"centre"}}
 
 \item{primary_infection_intensity}{The intensity of the starting epidemic as
 described by the number of number of sporulating growing points.}
+
+\item{spores_per_gp_per_wet_hour}{Number of spores produced per sporulating growing point each wet hour.
+Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.}
 }
 \value{
 a x y \code{data.frame} simulating the spread of Ascochyta blight in a
@@ -78,10 +81,33 @@ chickpea paddock
 over a growing season
 }
 \examples{
-ta1 <- trace_asco(
+# First weather data needs to be imported and formated with `format_weather`
+Newmarracarra <-
+   read.csv(system.file("extdata",
+            "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
+station_data <-
+   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+
+weather_dat <- format_weather(
+   x = Newmarracarra,
+   POSIXct_time = "Local.Time",
+   temp = "mean_daily_temp",
+   ws = "ws",
+   wd_sd = "wd_sd",
+   rain = "rain_mm",
+   wd = "wd",
+   station = "Location",
+   time_zone = "Australia/Perth",
+   lonlat_file = station_data)
+
+
+traced <- trace_asco(
   weather = weather_dat,
   paddock_length = 100,
   paddock_width = 100,
-  sowing_date = "1998-03-09"
-  )
+  initial_infection = "1998-06-10",
+  sowing_date = as.POSIXct("1998-06-09"),
+  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(30),
+  time_zone = "Australia/Perth",
+  primary_infection_foci = "center")
 }

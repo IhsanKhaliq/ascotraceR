@@ -2,8 +2,8 @@
 % Please edit documentation in R/format_weather.R
 \name{format_weather}
 \alias{format_weather}
-\title{Format weather data into a ascotraceR.weather object for use in the blackspot
-model}
+\title{Format weather data into a ascotraceR.weather object for use in the spore
+dispersal models}
 \usage{
 format_weather(
   x,
@@ -53,6 +53,9 @@ formatted time. This can be used instead of arguments \code{YYYY}, \code{MM}, \c
 is located. May be in a column or supplied as a character string.
 Optional, see also \code{r}. See details.}
 
+\item{temp}{column name or index in \code{x} that refers to temperature in degrees
+celsius}
+
 \item{rain}{column name or index in \code{x} that refers to rainfall in mm.}
 
 \item{ws}{column name or index in \code{x} that refers to wind speed in km / h.}
@@ -73,7 +76,7 @@ longitude.  See details.}
 latitude.  See details.}
 
 \item{r}{Spatial raster which is intended to be used with this weather data
-in \code{\link{run_blackspot}}. Used to fetch time_zone if it is not
+for use in the blackspot model. Used to fetch time_zone if it is not
 supplied in data. Optional, see also \code{time_zone}.}
 
 \item{lonlat_file}{a file path to a csv which included station name/id and
@@ -83,7 +86,7 @@ Optional, see also \code{lon} and \code{lat}.}
 \value{
 A \code{ascotraceR.weather} object (an extension of
 \CRANpkg{data.table}) containing the supplied weather aggregated to each
-hour in a suitable format for use with \code{\link{run_blackspot}}
+hour in a suitable format for use with \code{\link{trace_asco}}
 containing the following columns:
 \tabular{rl}{
 \strong{times}: \tab Time in POSIXct format \cr
@@ -137,28 +140,22 @@ a \acronym{CSV file} using \code{lonlat_file}.
 # \pkg{ascotraceR}.  The weather data files both are of the same format, so
 # they will be combined for formatting here.
 
-scaddan <-
-   system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")
-naddacs <-
-   system.file("extdata", "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")
-
-weather_file_list <- list(scaddan, naddacs)
-weather_station_data <-
-   lapply(X = weather_file_list, FUN = read.csv)
-
-weather_station_data <- do.call("rbind", weather_station_data)
+Newmarracarra <-
+   read.csv(system.file("extdata",
+            "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
+station_data <-
+   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 
 weather <- format_weather(
-   x = weather_station_data,
+   x = Newmarracarra,
    POSIXct_time = "Local.Time",
-   ws = "meanWindSpeeds",
-   wd_sd = "stdDevWindDirections",
-   rain = "Rainfall",
-   wd = "meanWindDirections",
-   lon = "Station.Longitude",
-   lat = "Station.Latitude",
-   station = "StationID",
-   r = eyre
+   ws = "ws",
+   wd_sd = "wd_sd",
+   rain = "rain_mm",
+   wd = "wd",
+   station = "Location",
+   time_zone = "Australia/Perth",
+   lonlat_file = station_data
 )
 
 }
