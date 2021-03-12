@@ -8,6 +8,16 @@
 #' @return a vector of updated growing points at each paddock location
 #'
 #' @examples
+#' paddock <- expand.grid(x = 1:40,
+#'                        y = 1:40)
+#' paddock$noninfected_gp <- sample(c(-1,0), nrow(paddock), replace = TRUE)
+#'
+#' GPs <- update_paddock_gp(paddock_coords = paddock,
+#'                          mean_air_temp = 24,
+#'                          gp_rr = 0.0065,
+#'                          max_gp = 15000
+#'                          )
+#' GPs
 update_paddock_gp <-
   function(paddock_coords,
            mean_air_temp,

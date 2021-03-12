@@ -13,7 +13,7 @@ calc_new_gp(current_growing_points, gp_rr, max_gp, mean_air_temp)
 
 \item{max_gp}{Are the maximum number of chickpea growing points for each cultivar}
 
-\item{mean_air_temp}{Is average daily temperature in Celcius}
+\item{mean_air_temp}{Is average daily temperature in Celsius}
 }
 \value{
 Integer giving the number of new growing points formed in an iteration period of one day

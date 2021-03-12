@@ -30,7 +30,7 @@ potentially_effective_spores <- function(spores_per_gp_per_wet_hour,
     }else{
 
     p_e_s <-
-      rpois(1, expected_effective_spores)
+      stats::rpois(1, expected_effective_spores)
 
     return(p_e_s)
     }

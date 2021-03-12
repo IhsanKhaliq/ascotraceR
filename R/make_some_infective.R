@@ -5,12 +5,9 @@
 #' @param daily_vals list of the current day's values and paddock data.table
 #'
 #' @return updated daily_vals list
-#'
-#' @examples
-#' new_daily_vals <-
-#'    make_some_infective(
-#'       spore_packet = newly_infective,
-#'       daily_vals = daily_vals_list)
+#' @keywords internal
+#' @noRd
+
 make_some_infective <- function(daily_vals,
                                 latent_period = 200) {
 

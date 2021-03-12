@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' test5 <- trace_asco(
-#'   weather = Ascotracer::newM_weather,
+#'   weather = ascotraceR::newM_weather,
 #'   paddock_length = 100,
 #'   paddock_width = 100,
 #'   initial_infection = "1998-06-10",
