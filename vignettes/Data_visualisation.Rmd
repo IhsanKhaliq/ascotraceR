@@ -116,8 +116,7 @@ FIGURE
 ### Observation Vs. simulation – a comparison of spatiotemporal disease development 
 
 In the field experiment, disease incidence increased with each assessment date (assessment number) approaching 100 % disease incidence by assessment 10 at Billa Billa and assessment 8 at Tosari. It took a total of 113 days to reach 100% disease incidence across all four replicated plots at Tosari compared to Billa Billa where it took 132 days to reach 100% disease incidence across all four replicated plots. 
-Disease incidence simulated by the model was compared with the observed incidence from the field experiment for a total of 10 times at Billa Billa and 8 times at Tosari. At all observation dates, the model’s prediction was very close to the observed incidence data at both locations, but the model underestimated/overestimated disease at assessment xxx at Tosari and assessment xxxx at Billa Billa. 
-Figure xx shows the model largely captured the spatial patterns of disease spread, but it tended to overestimate the level of infection towards plots edges  
+Disease incidence simulated by the model was compared with the observed incidence from the field experiment for a total of 10 times at Billa Billa and 8 times at Tosari. At all observation dates, the model’s prediction was very close to the observed incidence data at both locations, but the model underestimated/overestimated disease at assessment xxx at Tosari and assessment xxxx at Billa Billa. Overall, the model underestimated/overestimated disease incidence at beginning of the season and underestimated/overestimated disease incidence towards the end of the season. 
 
 
 ## Time course of growing points graph
