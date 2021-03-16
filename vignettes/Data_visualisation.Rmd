@@ -114,5 +114,14 @@ Scenario C: A simulation of spread that is how much disease spread newly infecte
 Please note that this is based on **SIMULATION** in a **SINGLE** subunit (could be a quadrat or a paddock - quadrat seem easy to handle). We are just demonstrating that how growing points dynamics change when there is no infection and when there is infection
 
 
+FIGURE
+
+
+## Results
+
+Dynamics of growing points
+
+The number of healthy and new growing points in a subunit increased in a continuous fashion in the absence of an infection (Figure xxA). The number of healthy growing points immediately reduced when 2000 growing points become infected on day 60 of sowing (Figure xxB). By day 90, there was a complete loss of growing points in the subunit where an infection had taken place (Figure xxC). 
+
 
 
