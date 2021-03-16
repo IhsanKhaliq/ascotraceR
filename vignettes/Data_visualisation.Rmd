@@ -1,0 +1,118 @@
+---
+title: "Visualise ascotracR output"
+author: "Paul Melloy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visualise ascotracR output}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+  %\usepackage{extrafont}
+  %\VignetteDepends{cowplot}
+  %\VignetteDepends{ggplot2}
+  %\VignetteDepends{ggpubr}
+  %\VignetteDepends{readxl}
+  %\VignetteDepends{ggpubr}
+  %\VignetteDepends{lubridate}
+  %\VignetteDepends{viridis}
+  %\VignetteDepends{showtext}
+  %\VignetteDepends{here}
+  %\VignetteDepends{patchwork}
+  %\VignetteDepends{classInt}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+knitr::opts_chunk$set(progress = TRUE, verbose = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 7,
+  fig.height = 7,
+  fig.align = "center"
+)
+```
+
+```{r fonts, include=FALSE, message=FALSE, eval=FALSE}
+# Note that GhostScript needs to be installed at the system level for the PS files to be generated.
+# MacOS users can use `brew install ghostscript`
+# 
+# Windows users can follow these directions:
+# 1.	Go to the GhostScript website (https://www.ghostscript.com/download/gsdnld.html)
+# 2.	Download the windows installer suitable for your machine
+# 3.	Run the installer file which you downloaded and follow the prompts
+# 4.	After running the installer click the windows "Start" button and type "Edit environment variables for your account" and open
+# 5.	In the tab 'Advanced' click the button at the bottom 'Environment Variables...'
+# 6.	Under 'System variables' find the variable 'Path', select 'Path' and click the 'Edit' button
+# 7. 	Select a new line and copy the Ghostscript 'bin' folder location into the field.
+# 7.1	If you installed ghostscript to the default folder location; then the folder location will likely be "C:\Program Files\gs\gs9.52\bin", the version number (9.52) may differ.
+# 8.	Save and exit the environmental variables window
+# This chunk is then run only if knitting on new computer that the files have not been generated on
+# this is necessary to embed fonts in .eps files 
+library("extrafont")
+if (.Platform$OS.type == "windows") {
+   font_import(pattern = "arial", prompt = FALSE)
+   loadfonts(device = "postscript", quiet = TRUE)
+} else {
+   font_import(pattern = "Arial", prompt = FALSE)
+   loadfonts(device = "postscript", quiet = TRUE)
+}
+```
+
+## Load libraries 
+
+```{r libraries, message=FALSE, echo=TRUE, warning=FALSE}
+library("readxl")
+library("cowplot")
+library("ggplot2")
+library("ggpubr")
+library("grDevices")
+library("dplyr")
+library("lubridate")
+library("viridis")
+library("showtext")
+library("readr")
+library("here")
+library("patchwork")
+library("classInt")
+library("extrafont")
+library("knitr")
+
+extrafont::loadfonts()
+```
+
+
+## Heat map
+
+```{r heat-map, message=FALSE, warning=FALSE, fig.cap="Heatmaps showing observed and simulated Ascochyta blight development from primary infection foci"}
+```
+
+Heatmaps should show percent plant infections (0-100 %) at the increasing distances (0-10 m) from the primary infection foci. Both X and Y axes should show 0 m distance at the middle reaching out to 10 m distance on either side. [Link to the heatmap from the experiment is shown here](https://ihsankhaliq.github.io/spatiotemporaldynamics/articles/Data_visualisation.html)  
+
+
+## Line graph (disease progress curve)
+
+```{r line-graph, message=FALSE, warning=FALSE, fig.cap="Disease progress curves showing observed and simulated incidence of Ascochyta blight over a chickpea growing season"}
+```
+
+Disease progress curve should ideally show `assessment_date` on x-axis, `distance` on y-axis on the right and percent disease incidence on y-axis on the left (dual axis). [An example to line graph from the experiment is shown here](https://ihsankhaliq.github.io/spatiotemporaldynamics/articles/Data_visualisation.html). If this is tricky to produce by simulated model, we can do what Art has done. That is, distances on the x-axis and proportion (0-1) of infected plants on y-axis, and assessment date at the top of the graph. A simple line graph showing observed and simulated curves in different colors will do.  
+
+
+## Time course of growing points graph
+
+```{r growing-points-graph, message=FALSE, warning=FALSE, fig.cap="Time course of accumulated healthy, new, and newly infective growing points for a subunit in lupin field"}
+
+```
+
+There would be three columns: column 1 representing healthy growing points, column 2 representing new growing points and column 3 representing newly infected growing points. There would be three scenarios
+
+Scenario A: No infection
+
+Scenario B: A single infection occurs e.g., 2000 growing points become newly infected at day 60 of sowing
+
+Scenario C: A simulation of spread that is how much disease spread newly infected growing points (2000) 
+
+Please note that this is based on **SIMULATION** in a **SINGLE** subunit (could be a quadrat or a paddock - quadrat seem easy to handle). We are just demonstrating that how growing points dynamics change when there is no infection and when there is infection
+
+
+
+
