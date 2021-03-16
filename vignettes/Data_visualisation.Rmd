@@ -89,6 +89,17 @@ extrafont::loadfonts()
 Heatmaps should show percent plant infections (0-100 %) at the increasing distances (0-10 m) from the primary infection foci. Both X and Y axes should show 0 m distance at the middle reaching out to 10 m distance on either side. [Link to the heatmap from the experiment is shown here](https://ihsankhaliq.github.io/spatiotemporaldynamics/articles/Data_visualisation.html)  
 
 
+FIGURE
+
+
+### Results
+
+In the field experiment, the rate of spatial and temporal disease progress was faster in quadrats located closer to the inoculated central quadrat compared to those located towards plots edges. The pattern of disease spread was largely patchy. Figure xx shows the model largely captured the spatial patterns of disease spread, but it tended to overestimate/underestimate the level of infection towards plots edges at Tosari/Billa. The model showed/did not show any patchiness in spatial patterns of disease spread.  
+
+
+
+
+
 ## Line graph (disease progress curve)
 
 ```{r line-graph, message=FALSE, warning=FALSE, fig.cap="Disease progress curves showing observed and simulated incidence of Ascochyta blight over a chickpea growing season"}
