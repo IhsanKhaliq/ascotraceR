@@ -107,9 +107,9 @@ There would be three columns: column 1 representing healthy growing points, colu
 
 Scenario A: No infection
 
-Scenario B: A single infection occurs e.g., 2000 growing points become newly infected at day 60 of sowing
+Scenario B: 2000 growing points become newly infected at day 60 of sowing
 
-Scenario C: A simulation of spread that is how much disease spread newly infected growing points (2000) 
+Scenario C: A simulation of disease spread. That is, how much disease spread from newly infected growing points (2000) 
 
 Please note that this is based on **SIMULATION** in a **SINGLE** subunit (could be a quadrat or a paddock - quadrat seem easy to handle). We are just demonstrating that how growing points dynamics change when there is no infection and when there is infection
 
