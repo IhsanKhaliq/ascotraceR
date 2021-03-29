@@ -86,7 +86,23 @@ extrafont::loadfonts()
 ```{r heat-map, message=FALSE, warning=FALSE, fig.cap="Heatmaps showing observed and simulated Ascochyta blight development from primary infection foci"}
 ```
 
-Heatmaps should show percent plant infections (0-100 %) at the increasing distances (0-10 m) from the primary infection foci. Both X and Y axes should show 0 m distance at the middle reaching out to 10 m distance on either side. [Link to the heatmap from the experiment is shown here](https://ihsankhaliq.github.io/spatiotemporaldynamics/articles/Data_visualisation.html)  
+Heatmaps showing the presence or absence of disease in each observation quadrat at the increasing distances (0–10 m) from the primary infection foci. Both X and Y axes should show 0 m distance at the middle reaching out to 10 m distance on either side. The simulated model output is disease severity (number of lesions), and we calculated disease incidence (percentage of infected plants) in the field. Both are not directly comparable; therefore, we probably need to follow binomial distribution. 
+
+### Step by step procedure 
+
+-	Data wrangling of observed data frame to fit binomial distribution 
+
+observed %>%
+mutate(incidence = incidence / 100) %>%  (optional step)    
+  mutate(observed_presence = if_else(incidence > 0, 1, 0))
+
+-	Data wrangling of predicted data frame to fit binomial distribution 
+
+predicted %>%
+ mutate(infected_gp = infected_gp / 40) %>%  # seeding rate = 40 (optional step)
+ mutate(predicted_presence = if_else(infected_gp > 0, 1, 0))
+
+-	Run the model with Billa Billa weather data and produce the heatmap (prediction), then combine it with the heatmap produced from the field experiment (observation). Repeat the same for Tosari [Link to the heatmap from the experiment is shown here](https://ihsankhaliq.github.io/spatiotemporaldynamics/articles/Data_visualisation.html)  
 
 
 FIGURE
@@ -97,15 +113,12 @@ FIGURE
 In the field experiment, the rate of spatial and temporal disease progress was faster in quadrats located closer to the inoculated central quadrat compared to those located towards plots edges. The pattern of disease spread was largely patchy. Figure xx shows the model largely captured the spatial patterns of disease spread, but it tended to overestimate/underestimate the level of infection towards plots edges at Tosari/Billa. The model showed/did not show any patchiness in spatial patterns of disease spread.  
 
 
-
-
-
 ## Line graph (disease progress curve)
 
 ```{r line-graph, message=FALSE, warning=FALSE, fig.cap="Disease progress curves showing observed and simulated incidence of Ascochyta blight over a chickpea growing season"}
 ```
 
-Disease progress curve should ideally show `assessment_date` on x-axis, `distance` on y-axis on the right and percent disease incidence on y-axis on the left (dual axis). [An example to line graph from the experiment is shown here](https://ihsankhaliq.github.io/spatiotemporaldynamics/articles/Data_visualisation.html). If this is tricky to produce by simulated model, we can do what Art has done. That is, distances on the x-axis and proportion (0-1) of infected plants on y-axis, and assessment date at the top of the graph. A simple line graph showing observed and simulated curves in different colors will do.  
+Disease progress curve should ideally show `assessment_date` on x-axis, `distance` on y-axis on the right and percent disease incidence on y-axis on the left (dual axis). [An example to line graph from the experiment is shown here](https://ihsankhaliq.github.io/spatiotemporaldynamics/articles/Data_visualisation.html). If this is tricky to produce by simulated model, we can do what Art has done. That is, distances on the x-axis and proportion (0-1) of infected quadrats on y-axis, and assessment date at the top of the graph. A simple line graph showing observed and simulated curves in different colors will do.  
 
 
 FIGURE
@@ -125,15 +138,20 @@ Disease incidence simulated by the model was compared with the observed incidenc
 
 ```
 
-There would be three columns: column 1 representing healthy growing points, column 2 representing new growing points and column 3 representing newly infected growing points. There would be three scenarios
+Growing points dynamics graph is just simulation to demonstrate how the number of healthy (column 1), new growing points per day (column 2) and newly infected growing points (column 3) dynamic change over time. It doesn’t need to be produced for two locations or compared with observations. For this, I’d choose the inoculated central quadrat (F) of replicated plot-1 at Billa Billa. Two plants were infected 29 days (assessment-2 i.e., 16 July 2020) after inoculum was introduced (two plants were infected in the central quadrat of replicated plot 1 – the heading of the column is plot in the spreadsheet). There were two lesions in total, so you could say 2 growing points were infected on day 29 after inoculation. 100 % loss of growing points in the inoculated central quadrat of plot 1 occurred by assessment-6 (10 September 2020), which is 85 days after inoculum introduction. 
 
-Scenario A: No infection
+Alternatively, you can choose the whole paddock for Billa Billa. Initial infection occurred 29 days after inoculation (16-July-2020) and 100 % disease was observed 132 days after inoculation (27-10-2020)
 
-Scenario B: 2000 growing points become newly infected at day 60 of sowing
+Scenario A: No infection. For instance, any date before inoculum was introduced into plots, say 15 June 2020 (location Billa Billa) 
 
-Scenario C: A simulation of disease spread. That is, how much disease spread from newly infected growing points (2000) 
+Scenario B: 2 growing points become newly infected 29 days (assessment-2 i.e., 16 July 2020) after inoculum was introduced. Infection location is inoculated central quadrat (F) of replicated plot 1 (the heading of the column is PLOT in the spreadsheet).
+
+Scenario C: A simulation of disease spread from 2 infected growing points. That is, how much disease spread from newly infected growing points. 100 % loss of growing points in the inoculated central quadrat of replicated plot 1 occurred by assessment-6 (10 September 2020), which is 85 days after inoculum introduction.
 
 Please note that this is based on **SIMULATION** in a **SINGLE** subunit (could be a quadrat or a paddock - quadrat seem easy to handle). We are just demonstrating that how growing points dynamics change when there is no infection and when there is infection
+
+-	The model may not simulate 100% loss in the quadrat (F) by 10 September 2020, which is fine. 
+-	We do not need to follow binomial distribution for this graph 
 
 
 FIGURE
