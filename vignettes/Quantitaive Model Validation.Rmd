@@ -1,0 +1,88 @@
+---
+title: "Quantitative model validation"
+author: "Ihsan Khaliq"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quantitative model validation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+  %\VignetteDepends{broom}
+  %\VignetteDepends{lubridate}
+  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{Metrics}
+  %\VignetteDepends{tidymodels}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+knitr::opts_chunk$set(progress = TRUE, verbose = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 7,
+  fig.height = 7,
+  fig.align = "center"
+)
+```
+## Load libraries 
+
+```{r libraries, message=FALSE, echo=TRUE, warning=FALSE}
+library("readxl")
+library("broom")
+library("ggpubr")
+library("tidyverse")
+library("lubridate")
+library("ascotraceR")
+library("Metrics")
+library("tidymodels")
+```
+
+Set seed number for reproducibility 
+
+```{r set-seed-number}
+set.seed(42)
+```
+
+## Statistical tests
+
+### Root mean squared error (RMSE)
+
+RMSE is used to measure the differences between values predicted by a model and the values observed. RMSE is scale dependent, which means comparisons across different types of data would be invalid because the measure is dependent on the scale of the numbers used. Higher RMSE value indicate higher prediction error.
+
+Here is the [link]("https://www.rdocumentation.org/packages/Metrics/versions/0.1.4/topics/rmse") to calculate RMSE via Metrics package. 
+
+```{r example}
+# Example 
+actual <- c(1.1, 1.9, 3.0, 4.4, 5.0, 5.6)
+predicted <- c(0.9, 1.8, 2.5, 4.5, 5.0, 6.2)
+rmse(actual, predicted)
+
+# In our case 
+# predicted <- df %>% select(infected_gp)
+```
+
+
+### Concordance correlation coefficient (CCC)
+
+CCC is a metric of both consistency/correlation and accuracy, while RMSE is strictly for accuracy. CCC is used to determine an agreement for a CONTINEOUS measure obtained by two methods (e.g., observation and prediction). There is no assumption about data distribution, i.e., data does not need to be normally distributed. It is better than Pearson's correlation, which ignores bias that might exist between observed and the predicted values. Pearson's correlation measures linearity, while CCC measures an agreement between prediction and an observation. It's also better than paired t test, which merely test whether the mean difference is significantly different from zero, but doesn't provide an evidence that there is an agreement between means.
+
+Here is the [LINK]("https://yardstick.tidymodels.org/reference/ccc.html") to calculate CCC via the tidymodels package
+
+```{r example}
+# Bring predicted column from the model data frame to the observed data frame. 
+
+dat <- read_csv("df") %>% 
+  mutate(observed=as.numeric(observed)) %>% # incidence column
+mutate(predicted=as.numeric(predicted)) %>%
+  mutate(assessment_number=as.integer(assessment_number)) # optional step. Maybe ignore because NA output is produced as assessment numbers are different
+
+metric_results <- dat %>%
+  ccc(observed, predicted) # concordance correlation coefficient 
+
+metric_results %>%
+  summarise(average_estimate = mean(.estimate))
+```
+
+
+
+
