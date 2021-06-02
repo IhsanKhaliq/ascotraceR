@@ -16,9 +16,12 @@ test1 <- trace_asco(
 )
 
 test_that("days have updated after 5 increments",{
-  expect_equal(sapply(test1, function(x){as.character(x[["i_date"]])}), as.character(seq(from = sowing_date,
-                                                                            to = harvest_date + lubridate::ddays(1),
-                                                                            by = "days")))
+  expect_equal(sapply(test1, function(x){as.character(x[["i_date"]])}),
+               as.character(seq(
+                 from = sowing_date,
+                 to = harvest_date + lubridate::ddays(1),
+                 by = "days"
+               )))
   expect_length(test1, 5)
   expect_length(test1[[1]], 11)
   expect_equal(
@@ -77,6 +80,8 @@ test_that("intense primary_infection_foci lead to more infections",{
 
 
 # test running for 14 days
+# this will test that the infection intensifies with more days and
+#  that newly infected gp are moved to sporilating gp after the latent period
 test2 <- trace_asco(
   weather = newM_weather,
   paddock_length = 100,
@@ -105,6 +110,8 @@ test_that("intense primary_infection_foci lead to more infections",{
 
 
 # test running for 28 days
+# this will test that the infection intensifies with more days and
+#  that newly infected gp are moved to sporilating gp after the latent period
 test3 <- trace_asco(
   weather = newM_weather,
   paddock_length = 100,
@@ -124,7 +131,7 @@ test_that("test3 returns some sporulating gps",{
 })
 
 
-# test running for 28 days with multiple start locations
+# test running for 28 days with multiple (10) random start locations
 pdk <- as.data.table(expand.grid(x = 1:100,
                                  y = 1:100,
                                  load = 3))
@@ -244,6 +251,26 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 #   primary_infection_foci = qry)
 #
 
+
+# Example discussed 2/6/2021
+#   s_date <- as.POSIXct("1998-05-20")
+#   h_date <- as.POSIXct("1998-08-04")
+#
+#   example <- trace_asco(
+#   weather = #yourWeather######,
+#   paddock_length = 8,
+#   paddock_width = 45,
+#   initial_infection = s_date + lubridate::ddays(14),
+#   sowing_date = s_date,
+#   harvest_date = h_date,
+#   time_zone = "Australia/Brisbane",
+#   primary_infection_foci = "center",
+#   seeding_rate = 40,
+#   latent_period_cdd = 150
+# )
+# tracer_plot(dat = example,
+#             day = 82)
+# write.csv(test1[[5]]$paddock, "example.csv", row.names = FALSE)
 
 
 # future::plan("sequential")
