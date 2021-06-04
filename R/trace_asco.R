@@ -91,6 +91,8 @@ trace_asco <- function(weather,
                        spores_per_gp_per_wet_hour = 0.22){
 
 
+  x <- y <- sp_gp <- NULL
+
   # check date inputs for validity -----------------------------------------
   .vali_date <- function(x) {
     tryCatch(

@@ -8,6 +8,7 @@ spread_spores <-
            spore_interception_parameter,
            weather_hourly) {
 
+    rain <- NULL
 
     # k = intercept_spores(
     #   spore_interception_parameter = spore_interception_parameter,

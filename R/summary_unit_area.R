@@ -8,6 +8,6 @@
 #' @noRd
 
 summary_unit_area <-
-  function() {
+  function(summary_unit_width, summary_unit_length) {
     summary_unit_width * summary_unit_length
   }

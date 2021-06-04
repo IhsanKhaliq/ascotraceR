@@ -14,7 +14,7 @@ tracer_plot(dat, day, tiles = "sporulating_gp")
 \item{tiles}{what to response for the plot to render, options: sporulating_gp, new_gp,noninfected_gp}
 }
 \value{
-ggplot
+ggplot2 object
 }
 \description{
 plot one day from trace_asco output as a tile plot

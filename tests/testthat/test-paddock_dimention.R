@@ -1,4 +1,8 @@
-context("paddock_dimention")
+context("paddock_dimension")
+
+# this doesn't test any functionality from this package that I can tell? -as
+# it needs to be rewritten to actually test the paddock_dimension(), this just
+# tests `ceiling()`
 
 test_1 <-  ceiling(200 / 80)
 ceiling(200 / 80)
