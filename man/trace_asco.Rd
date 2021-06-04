@@ -84,24 +84,25 @@ chickpea paddock
 over a growing season
 }
 \examples{
-# First weather data needs to be imported and formated with `format_weather`
-Newmarracarra <-
-   read.csv(system.file("extdata",
-            "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
+First weather data needs to be imported and formatted with `format_weather`
+Billa_Billa_weather <-
+  read.csv(system.file("extdata",
+                       "2020_Billa_Billa_weather.csv", package = "ascotraceR"))
 station_data <-
-   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+  system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 
-weather_dat <- format_weather(
-   x = Newmarracarra,
-   POSIXct_time = "Local.Time",
-   temp = "mean_daily_temp",
-   ws = "ws",
-   wd_sd = "wd_sd",
-   rain = "rain_mm",
-   wd = "wd",
-   station = "Location",
-   time_zone = "Australia/Perth",
-   lonlat_file = station_data)
+Billa_Billa_weather <- format_weather(
+  x = Billa_Billa_weather,
+  POSIXct_time = "Local.Time",
+  temp = "mean_daily_temp",
+  ws = "ws",
+  wd_sd = "wd_sd",
+  rain = "rain_mm",
+  wd = "wd",
+  station = "Location",
+  time_zone = "Australia/Perth",
+  lonlat_file = station_data
+)
 
 
 traced <- trace_asco(
@@ -113,4 +114,5 @@ traced <- trace_asco(
   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(30),
   time_zone = "Australia/Perth",
   primary_infection_foci = "center")
+
 }

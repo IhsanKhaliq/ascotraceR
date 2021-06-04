@@ -44,35 +44,38 @@
 #' @export
 #'
 #' @examples
-# First weather data needs to be imported and formatted with `format_weather`
-Billa_Billa_weather <-
-   read.csv(system.file("extdata",
-            "2020_Billa_Billa_weather.csv", package = "ascotraceR"))
-station_data <-
-   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#' First weather data needs to be imported and formatted with `format_weather`
+#' Billa_Billa_weather <-
+#'   read.csv(system.file("extdata",
+#'                        "2020_Billa_Billa_weather.csv", package = "ascotraceR"))
+#' station_data <-
+#'   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#'
+#' Billa_Billa_weather <- format_weather(
+#'   x = Billa_Billa_weather,
+#'   POSIXct_time = "Local.Time",
+#'   temp = "mean_daily_temp",
+#'   ws = "ws",
+#'   wd_sd = "wd_sd",
+#'   rain = "rain_mm",
+#'   wd = "wd",
+#'   station = "Location",
+#'   time_zone = "Australia/Perth",
+#'   lonlat_file = station_data
+#' )
+#'
+#'
+#' traced <- trace_asco(
+#'   weather = weather_dat,
+#'   paddock_length = 100,
+#'   paddock_width = 100,
+#'   initial_infection = "1998-06-10",
+#'   sowing_date = as.POSIXct("1998-06-09"),
+#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(30),
+#'   time_zone = "Australia/Perth",
+#'   primary_infection_foci = "center")
+#'
 
-Billa_Billa_weather <- format_weather(
-   x = Billa_Billa_weather,
-   POSIXct_time = "Local.Time",
-   temp = "mean_daily_temp",
-   ws = "ws",
-   wd_sd = "wd_sd",
-   rain = "rain_mm",
-   wd = "wd",
-   station = "Location",
-   time_zone = "Australia/Perth",
-   lonlat_file = station_data)
-
-
-traced <- trace_asco(
-  weather = weather_dat,
-  paddock_length = 100,
-  paddock_width = 100,
-  initial_infection = "1998-06-10",
-  sowing_date = as.POSIXct("1998-06-09"),
-  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(30),
-  time_zone = "Australia/Perth",
-  primary_infection_foci = "center")
 trace_asco <- function(weather,
                        paddock_length,
                        paddock_width,

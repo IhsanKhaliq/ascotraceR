@@ -5,7 +5,7 @@
 \title{Calculate spore interception parameter}
 \usage{
 intercept_spores(
-  spore_interception_parameter = 6e-05,
+  spore_interception_parameter = 0.00006,
   max_growing_points_limit,
   max_new_growing_points_limit
 )
