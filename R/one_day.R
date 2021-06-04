@@ -30,6 +30,9 @@ one_day <- function(i_date,
                     spore_interception_parameter,
                     spores_per_gp_per_wet_hour) {
 
+  times <- temp <- wet_hours <- rain <- new_gp <- sporulating_gp <-
+    cdd_at_infection <- noninfected_gp <- NULL
+
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
 

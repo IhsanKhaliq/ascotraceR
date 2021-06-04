@@ -14,6 +14,8 @@
 #' @keywords internal
 #' @noRd
 which_paddock_row <- function(paddock, query){
+  x <- y <- NULL
+
   setDT(paddock)
   rows1 <-
     apply(query, 1, function(qu){

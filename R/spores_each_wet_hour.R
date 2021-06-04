@@ -20,6 +20,10 @@ spores_each_wet_hour <- function(h,
                                  max_interception_probability,
                                  spore_interception_parameter,
                                  spores_per_gp_per_wet_hour) {
+  rain <-
+    ws <-
+    wd <- wd_sd <- sporulating_gp <- spores_per_packet <- x <- y <-
+    NULL
 
   # obtain weather data for hour_i
 
