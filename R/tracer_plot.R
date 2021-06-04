@@ -4,7 +4,7 @@
 #' @param day integer, day of the simulation to plot
 #' @param tiles what to response for the plot to render, options: sporulating_gp, new_gp,noninfected_gp
 #'
-#' @return ggplot
+#' @return ggplot2 object
 #' @export
 #'
 #' @examples
