@@ -22,12 +22,24 @@ Authors@R:
 Description: A spatiotemporal model that simulates the spread of Ascochyta blight in chickpea fields based on location specific weather condition.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
+    classInt,
+    clifro,
+    cowplot,
+    extrafont,
+    ggpubr,
+    here,
+    knitr,
+    patchwork,
+    readxl,
+    readr,
+    rmarkdown,
+    showtext,
     testthat (>= 3.0.1),
-    knitr
+    viridis,
+    spelling
 Imports:
   data.table (>= 1.13.0),
   lubridate (>= 1.7.9.2),
@@ -43,3 +55,4 @@ Imports:
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5.0)
+Language: en-US
