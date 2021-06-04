@@ -54,7 +54,7 @@ is located. May be in a column or supplied as a character string.
 Optional, see also \code{r}. See details.}
 
 \item{temp}{column name or index in \code{x} that refers to temperature in degrees
-celsius}
+Celsius}
 
 \item{rain}{column name or index in \code{x} that refers to rainfall in mm.}
 

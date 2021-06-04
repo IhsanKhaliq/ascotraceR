@@ -27,7 +27,7 @@
 #'  is located. May be in a column or supplied as a character string.
 #'  Optional, see also `r`. See details.
 #' @param temp column name or index in `x` that refers to temperature in degrees
-#'  celsius
+#'  Celsius
 #' @param rain column name or index in `x` that refers to rainfall in mm.
 #' @param ws column name or index in `x` that refers to wind speed in km / h.
 #' @param wd column name or index in `x` that refers to wind direction in degrees.
