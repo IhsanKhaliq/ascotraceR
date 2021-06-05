@@ -92,10 +92,10 @@
 #' # Fake weather data files for testing and examples have been included in
 #' # \pkg{ascotraceR}.  The weather data files both are of the same format, so
 #' # they will be combined for formatting here.
-#'
-#' Newmarracarra <-
-#'    read.csv(system.file("extdata",
-#'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
+
+Billa_Billa_weather <-
+   read.csv(system.file("extdata",
+            "2020_Billa_Billa_weather.csv", package = "ascotraceR"))
 #' station_data <-
 #'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 #'
