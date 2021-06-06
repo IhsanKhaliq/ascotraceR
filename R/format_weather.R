@@ -96,21 +96,21 @@
 Billa_Billa_weather <-
    read.csv(system.file("extdata",
             "2020_Billa_Billa_weather.csv", package = "ascotraceR"))
-station_data <-
-   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
-#'
-#' weather <- format_weather(
-#'    x = Newmarracarra,
-#'    POSIXct_time = "Local.Time",
-#'    ws = "ws",
-#'    wd_sd = "wd_sd",
-#'    rain = "rain_mm",
-#'    wd = "wd",
-#'    station = "Location",
-#'    time_zone = "Australia/Perth",
-#'    lonlat_file = station_data
-#' )
-#'
+Billa_Billa_station_data <-
+   system.file("extdata", "Billa_Billa_stat_dat.csv", package = "ascotraceR")
+
+weather <- format_weather(
+   x = Billa_Billa_weather,
+   POSIXct_time = "local_time",
+   ws = " avg_wind_speed (m/s)",
+   wd_sd = "wd_sd",
+   rain = "rain",
+   wd = "wd",
+   station = "location",
+   time_zone = "Australia/Brisbane",
+   lonlat_file = Billa_Billa_station_data
+)
+
 #' @export
 #' @import data.table
 format_weather <- function(x,
