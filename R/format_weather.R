@@ -96,8 +96,8 @@
 Billa_Billa_weather <-
    read.csv(system.file("extdata",
             "2020_Billa_Billa_weather.csv", package = "ascotraceR"))
-#' station_data <-
-#'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+station_data <-
+   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 #'
 #' weather <- format_weather(
 #'    x = Newmarracarra,
