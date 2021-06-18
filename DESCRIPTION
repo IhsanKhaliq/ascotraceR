@@ -32,7 +32,6 @@ Suggests:
     extrafont,
     ggpubr,
     here,
-    knitr,
     patchwork,
     readxl,
     readr,
