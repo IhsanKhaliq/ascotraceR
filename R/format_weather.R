@@ -94,10 +94,52 @@
 #' # they will be combined for formatting here.
 
 Billa_Billa_weather <-
-   read.csv(system.file("extdata",
-            "2020_Billa_Billa_weather.csv", package = "ascotraceR"))
+  # use read_csv to avoid NAs introduced by coercion error
+   read_csv(system.file("extdata",
+            "2020_Billa_Billa_weather.csv", package = "ascotraceR")) %>%
+  # convert wind direction recorded as text to degrees
+  mutate(
+    wind_direction = case_when(
+      max_wind_direction == "N" ~ "0",
+      max_wind_direction == "NbE" ~ "11.25",
+      max_wind_direction == "NNE" ~ "22.5",
+      max_wind_direction == "NEbN" ~ "33.75",
+      max_wind_direction == "NE" ~ "45",
+      max_wind_direction == "NEbE" ~ "56.25",
+      max_wind_direction == "ENE" ~ "67.5",
+      max_wind_direction == "EbN" ~ "73.5",
+      max_wind_direction == "E" ~ "90",
+      max_wind_direction == "EbS" ~ "101.2",
+      max_wind_direction == "ESE" ~ "112.5",
+      max_wind_direction == "SEbE" ~ "123.8",
+      max_wind_direction == "SE" ~ "135.1",
+      max_wind_direction == "SEbS" ~ "146.3",
+      max_wind_direction == "SSE" ~ "157.6",
+      max_wind_direction == "SbE" ~ "168.8",
+      max_wind_direction == "S" ~ "180",
+      max_wind_direction == "SbW" ~ "191.2",
+      max_wind_direction == "SSW" ~ "202.5",
+      max_wind_direction == "SWbS" ~ "213.8",
+      max_wind_direction == "SW" ~ "225",
+      max_wind_direction == "SWbW" ~ "236.2",
+      max_wind_direction == "WSW" ~ "247.5",
+      max_wind_direction == "WbS" ~ "258.8",
+      max_wind_direction == "W" ~ "270",
+      max_wind_direction == "WbN" ~ "281.2",
+      max_wind_direction == "WNW" ~ "292.5",
+      max_wind_direction == "NWbW" ~ "303.8",
+      max_wind_direction == "NW" ~ "315",
+      max_wind_direction == "NWbN" ~ "326.2",
+      max_wind_direction == "NNW" ~ "337.5",
+      max_wind_direction == "NbW" ~ "348.8",
+      TRUE ~ max_wind_direction
+    )
+  ) %>%
+  mutate(wind_direction = as.numeric(wind_direction))
+
+
 Billa_Billa_station_data <-
-   system.file("extdata", "Billa_Billa_stat_dat.csv", package = "ascotraceR")
+  system.file("extdata", "Billa_Billa_stat_dat.csv", package = "ascotraceR")
 
 weather <- format_weather(
    x = Billa_Billa_weather,
@@ -108,7 +150,7 @@ weather <- format_weather(
    wd = "wd",
    station = "location",
    time_zone = "Australia/Brisbane",
-   lonlat_file = Billa_Billa_station_data
+   lonlat_file = "Billa_Billa_station_data"
 )
 
 #' @export
