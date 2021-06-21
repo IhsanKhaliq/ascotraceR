@@ -253,23 +253,26 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 
 
 # Example discussed 2/6/2021
-#   s_date <- as.POSIXct("1998-05-20")
-#   h_date <- as.POSIXct("1998-08-04")
-#
-#   example <- trace_asco(
-#   weather = #yourWeather######,
-#   paddock_length = 8,
-#   paddock_width = 45,
-#   initial_infection = s_date + lubridate::ddays(14),
-#   sowing_date = s_date,
-#   harvest_date = h_date,
-#   time_zone = "Australia/Brisbane",
-#   primary_infection_foci = "center",
-#   seeding_rate = 40,
-#   latent_period_cdd = 150
-# )
-# tracer_plot(dat = example,
-#             day = 82)
+
+#............... Billa Billa case study
+
+  s_date <- as.POSIXct("2020-06-04")
+  h_date <- as.POSIXct("1998-11-27")
+
+  example <- trace_asco(
+  weather = Billa_Billa_weather,
+  paddock_length = 20,
+  paddock_width = 20,
+  initial_infection = s_date + lubridate::ddays(13),
+  sowing_date = s_date,
+  harvest_date = h_date,
+  time_zone = "Australia/Brisbane",
+  primary_infection_foci = "center",
+  seeding_rate = 40,
+  latent_period_cdd = 150
+)
+tracer_plot(dat = example,
+            day = 82)
 # write.csv(test1[[5]]$paddock, "example.csv", row.names = FALSE)
 
 
