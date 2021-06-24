@@ -7,34 +7,29 @@ vignette: >
   %\VignetteIndexEntry{Quantitative model validation}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
-  %\VignetteDepends{broom}
-  %\VignetteDepends{lubridate}
-  %\VignetteDepends{tidyverse}
-  %\VignetteDepends{Metrics}
-  %\VignetteDepends{tidymodels}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, error = TRUE)
-knitr::opts_chunk$set(progress = TRUE, verbose = TRUE)
-knitr::opts_chunk$set(
-  echo = TRUE,
-  fig.width = 7,
-  fig.height = 7,
-  fig.align = "center"
-)
+# knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+# knitr::opts_chunk$set(progress = TRUE, verbose = TRUE)
+# knitr::opts_chunk$set(
+#   echo = TRUE,
+#   fig.width = 7,
+#   fig.height = 7,
+#   fig.align = "center"
+# )
 ```
 ## Load libraries 
 
 ```{r libraries, message=FALSE, echo=TRUE, warning=FALSE}
-library("readxl")
-library("broom")
-library("ggpubr")
-library("tidyverse")
-library("lubridate")
-library("ascotraceR")
-library("Metrics")
-library("tidymodels")
+# library("readxl")
+# library("broom")
+# library("ggpubr")
+# library("tidyverse")
+# library("lubridate")
+# library("ascotraceR")
+# library("Metrics")
+# library("tidymodels")
 ```
 
 Set seed number for reproducibility 
@@ -52,12 +47,12 @@ RMSE is used to measure the differences between values predicted by a model and 
 Here is the [link]("https://www.rdocumentation.org/packages/Metrics/versions/0.1.4/topics/rmse") to calculate RMSE via Metrics package. 
 
 ```{r example}
-# Example 
-actual <- c(1.1, 1.9, 3.0, 4.4, 5.0, 5.6)
-predicted <- c(0.9, 1.8, 2.5, 4.5, 5.0, 6.2)
-rmse(actual, predicted)
-
-# In our case 
+# # Example 
+# actual <- c(1.1, 1.9, 3.0, 4.4, 5.0, 5.6)
+# predicted <- c(0.9, 1.8, 2.5, 4.5, 5.0, 6.2)
+# rmse(actual, predicted)
+# 
+#  In our case 
 # predicted <- df %>% select(infected_gp)
 ```
 
@@ -70,17 +65,17 @@ Here is the [LINK]("https://yardstick.tidymodels.org/reference/ccc.html") to cal
 
 ```{r example}
 # Bring predicted column from the model data frame to the observed data frame. 
-
-dat <- read_csv("df") %>% 
-  mutate(observed=as.numeric(observed)) %>% # incidence column
-mutate(predicted=as.numeric(predicted)) %>%
-  mutate(assessment_number=as.integer(assessment_number)) # optional step. Maybe ignore because NA output is produced as assessment numbers are different
-
-metric_results <- dat %>%
-  ccc(observed, predicted) # concordance correlation coefficient 
-
-metric_results %>%
-  summarise(average_estimate = mean(.estimate))
+# 
+# dat <- read_csv("df") %>% 
+#   mutate(observed=as.numeric(observed)) %>% # incidence column
+# mutate(predicted=as.numeric(predicted)) %>%
+#   mutate(assessment_number=as.integer(assessment_number)) # optional step. Maybe ignore because NA output is produced as assessment numbers are different
+# 
+# metric_results <- dat %>%
+#   ccc(observed, predicted) # concordance correlation coefficient 
+# 
+# metric_results %>%
+#   summarise(average_estimate = mean(.estimate))
 ```
 
 

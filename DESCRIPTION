@@ -39,7 +39,9 @@ Suggests:
     showtext,
     testthat (>= 3.0.1),
     viridis,
-    spelling
+    spelling,
+    tidymodels,
+    Metrics
 Imports:
   data.table (>= 1.13.0),
   lubridate (>= 1.7.9.2),

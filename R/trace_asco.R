@@ -45,33 +45,72 @@
 #'
 #' @examples
 #' First weather data needs to be imported and formatted with `format_weather`
-#' Billa_Billa_weather <-
-#'   read.csv(system.file("extdata",
-#'                        "2020_Billa_Billa_weather.csv", package = "ascotraceR"))
+#' Billa_Billa <-
+#'   readr::read_csv(system.file("extdata",
+#'                        "2020_Billa_Billa_weather.csv", package = "ascotraceR")) %>%
+#'    # convert wind direction recorded as text to degrees
+#'   dplyr::mutate(
+#'     wind_direction = dplyr::case_when(
+#'       max_wind_direction == "N" ~ "0",
+#'       max_wind_direction == "NbE" ~ "11.25",
+#'       max_wind_direction == "NNE" ~ "22.5",
+#'       max_wind_direction == "NEbN" ~ "33.75",
+#'       max_wind_direction == "NE" ~ "45",
+#'       max_wind_direction == "NEbE" ~ "56.25",
+#'       max_wind_direction == "ENE" ~ "67.5",
+#'       max_wind_direction == "EbN" ~ "73.5",
+#'       max_wind_direction == "E" ~ "90",
+#'       max_wind_direction == "EbS" ~ "101.2",
+#'       max_wind_direction == "ESE" ~ "112.5",
+#'       max_wind_direction == "SEbE" ~ "123.8",
+#'       max_wind_direction == "SE" ~ "135.1",
+#'       max_wind_direction == "SEbS" ~ "146.3",
+#'       max_wind_direction == "SSE" ~ "157.6",
+#'       max_wind_direction == "SbE" ~ "168.8",
+#'       max_wind_direction == "S" ~ "180",
+#'       max_wind_direction == "SbW" ~ "191.2",
+#'       max_wind_direction == "SSW" ~ "202.5",
+#'       max_wind_direction == "SWbS" ~ "213.8",
+#'       max_wind_direction == "SW" ~ "225",
+#'       max_wind_direction == "SWbW" ~ "236.2",
+#'       max_wind_direction == "WSW" ~ "247.5",
+#'       max_wind_direction == "WbS" ~ "258.8",
+#'       max_wind_direction == "W" ~ "270",
+#'       max_wind_direction == "WbN" ~ "281.2",
+#'       max_wind_direction == "WNW" ~ "292.5",
+#'       max_wind_direction == "NWbW" ~ "303.8",
+#'       max_wind_direction == "NW" ~ "315",
+#'       max_wind_direction == "NWbN" ~ "326.2",
+#'       max_wind_direction == "NNW" ~ "337.5",
+#'       max_wind_direction == "NbW" ~ "348.8",
+#'       TRUE ~ max_wind_direction
+#'     )
+#'   ) %>%
+#'   dplyr::mutate(wind_direction = as.numeric(wind_direction))
+#'
 #' station_data <-
 #'   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 #'
-#' Billa_Billa_weather <- format_weather(
-#'   x = Billa_Billa_weather,
-#'   POSIXct_time = "Local.Time",
-#'   temp = "mean_daily_temp",
-#'   ws = "ws",
+#' weather_dat <- format_weather(x = Billa_Billa,
+#'   POSIXct_time = "local_time",
+#'   temp = "mean_daily_temperature",
+#'   ws = "avg_wind_speed (km/h)",
 #'   wd_sd = "wd_sd",
-#'   rain = "rain_mm",
-#'   wd = "wd",
-#'   station = "Location",
-#'   time_zone = "Australia/Perth",
+#'   rain = "rain",
+#'   wd = "wind_direction",
+#'   station = "location",
+#'   time_zone = "Australia/Brisbane",
 #'   lonlat_file = station_data
 #' )
 #'
 #'
 #' traced <- trace_asco(
 #'   weather = weather_dat,
-#'   paddock_length = 100,
-#'   paddock_width = 100,
-#'   initial_infection = "1998-06-10",
-#'   sowing_date = as.POSIXct("1998-06-09"),
-#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(30),
+#'   paddock_length = 20,
+#'   paddock_width = 20,
+#'   initial_infection = "2020-07-16",
+#'   sowing_date = as.POSIXct("2020-06-04"),
+#'   harvest_date = as.POSIXct("2020-11-27") + lubridate::ddays(30),
 #'   time_zone = "Australia/Perth",
 #'   primary_infection_foci = "center")
 #'

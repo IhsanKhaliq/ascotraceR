@@ -93,13 +93,13 @@
 #' # \pkg{ascotraceR}.  The weather data files both are of the same format, so
 #' # they will be combined for formatting here.
 #'
-#' Billa_Billa_weather <-
-  # use read_csv to avoid NAs introduced by coercion error
-#'   read_csv(system.file("extdata",
+#' Billa_Billa <-
+#'   # use read_csv to avoid NAs introduced by coercion error
+#'   readr::read_csv(system.file("extdata",
 #'             "2020_Billa_Billa_weather.csv", package = "ascotraceR")) %>%
-  # convert wind direction recorded as text to degrees
-#'   mutate(
-#'     wind_direction = case_when(
+#'   # convert wind direction recorded as text to degrees
+#'   dplyr::mutate(
+#'     wind_direction = dplyr::case_when(
 #'       max_wind_direction == "N" ~ "0",
 #'       max_wind_direction == "NbE" ~ "11.25",
 #'       max_wind_direction == "NNE" ~ "22.5",
@@ -135,27 +135,26 @@
 #'       TRUE ~ max_wind_direction
 #'     )
 #'   ) %>%
-#'   mutate(wind_direction = as.numeric(wind_direction))
-
-
-#' Billa_Billa_station_data <-
-#'   system.file("extdata", "Billa_Billa_stat_dat.csv", package = "ascotraceR")
+#'   dplyr::mutate(wind_direction = as.numeric(wind_direction))
 #'
-#' weather <- format_weather(
-#'    x = Billa_Billa_weather,
+#' station_data <-
+#'   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#'
+#' weather <- format_weather(x = Billa_Billa,
 #'    POSIXct_time = "local_time",
-#'    ws = " avg_wind_speed (m/s)",
+#'    ws = "avg_wind_speed (km/h)",
 #'    wd_sd = "wd_sd",
 #'    rain = "rain",
-#'    wd = "wd",
-#'    temp = "mean_daily_temperature"
+#'    wd = "wind_direction",
+#'    temp = "mean_daily_temperature",
 #'    station = "location",
 #'    time_zone = "Australia/Brisbane",
-#'    lonlat_file = Billa_Billa_station_data
-#' )
+#'    lonlat_file = station_data
+#'    )
 #'
 #' @export
-#' @import data.table
+#' @import  data.table
+
 format_weather <- function(x,
                            YYYY = NULL,
                            MM = NULL,
