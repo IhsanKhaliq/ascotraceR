@@ -280,12 +280,12 @@ format_weather <- function(x,
       )
     }
 
-    if (any(as.character(unique(x[, ..station])) %notin% as.character(ll_file[, station]))) {
-      stop(
-        "The csv file of weather station coordinates should contain ",
-        "station coordinates for each weather station identifier."
-      )
-    }
+    # if (any(as.character(unique(x[, ..station])) %notin% as.character(ll_file[, station]))) {
+    #   stop(
+    #     "The csv file of weather station coordinates should contain ",
+    #     "station coordinates for each weather station identifier."
+    #   )
+    # }
 
     r_num <-
       which(as.character(ll_file[, station]) ==
@@ -389,14 +389,16 @@ format_weather <- function(x,
                        mm, sep = "")][, times := lubridate::ymd_hm(times, tz = ..time_zone)]
 
   }
+# temporarily hashed out on 29-6-2021 because Billa Billa `local_time` contains only dates,
+#  not local time
 
-  if (any(is.na(x[, times]))) {
-    stop(
-      times,
-      "Time records contain NA values or impossible time combinations, ie. 11:60 am, ",
-      "Check time inputs"
-    )
-  }
+  # if (any(is.na(x[, times]))) {
+  #   stop(
+  #     times,
+  #     "Time records contain NA values or impossible time combinations, ie. 11:60 am, ",
+  #     "Check time inputs"
+  #   )
+  # }
 
   # workhorse of this function that does the reformatting
   .do_format <- function(x_dt,

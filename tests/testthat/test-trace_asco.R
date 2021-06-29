@@ -257,7 +257,7 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 #............... Billa Billa case study
 
 example <- trace_asco(
-  weather = weather_dat,
+  weather = Billa_Billa,
   paddock_length = 20,
   paddock_width = 20,
   initial_infection = "2020-07-16",

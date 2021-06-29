@@ -100,8 +100,8 @@
 #'   wd = "wind_direction",
 #'   station = "location",
 #'   time_zone = "Australia/Brisbane",
-#'   lonlat_file = station_data
-#' )
+#'   lonlat_file = station_data)
+#'
 #'
 #'
 #' traced <- trace_asco(
@@ -111,7 +111,7 @@
 #'   initial_infection = "2020-07-16",
 #'   sowing_date = as.POSIXct("2020-06-04"),
 #'   harvest_date = as.POSIXct("2020-11-27") + lubridate::ddays(30),
-#'   time_zone = "Australia/Perth",
+#'   time_zone = "Australia/Brisbane",
 #'   primary_infection_foci = "center")
 #'
 
