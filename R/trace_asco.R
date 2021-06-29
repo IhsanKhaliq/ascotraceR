@@ -110,10 +110,11 @@
 #'   paddock_width = 20,
 #'   initial_infection = "2020-07-16",
 #'   sowing_date = as.POSIXct("2020-06-04"),
-#'   harvest_date = as.POSIXct("2020-11-27") + lubridate::ddays(30),
+#'   harvest_date = as.POSIXct("2020-06-04") + lubridate::ddays(30),
 #'   time_zone = "Australia/Brisbane",
 #'   primary_infection_foci = "center")
-#'
+#'   traced[[30]]
+
 
 trace_asco <- function(weather,
                        paddock_length,
