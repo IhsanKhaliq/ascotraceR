@@ -332,9 +332,8 @@ format_weather <- function(x,
     # POSIXct class
     if (lubridate::tz(x[, times]) == "" ||
         lubridate::tz(x[, times]) == "UTC") {
-      x[, times := lubridate::ymd_hms(x[, times],
-                                      tz = ..time_zone,
-                                      quiet = TRUE)]
+      x[, times := lubridate::force_tz(x[, times],
+                                      tzone = ..time_zone)]
     }
   } else {
     # if POSIX formatted times were not supplied, create a POSIXct
