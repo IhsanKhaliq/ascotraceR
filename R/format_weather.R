@@ -421,8 +421,8 @@ format_weather <- function(x,
     # calculate the approximate logging frequency of the weather data
 
     log_freq <-
-      lubridate::int_length(lubridate::as.interval(x_dt[1, times],
-                                                   x_dt[.N, times])) /
+      lubridate::int_length(lubridate::int_diff(c(x_dt[1, times],
+                                                  x_dt[.N, times]))) /
       (nrow(x_dt) * 60)
 
     # if the logging frequency is less than 50 minutes aggregate to hourly
