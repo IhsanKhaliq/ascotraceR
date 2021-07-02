@@ -86,7 +86,12 @@
 #'       TRUE ~ max_wind_direction
 #'     )
 #'   ) %>%
-#'   dplyr::mutate(wind_direction = as.numeric(wind_direction))
+#'   dplyr::mutate(wind_direction = as.numeric(wind_direction)) %>%
+#'   dplyr::rename(wd = wind_direction) %>%
+#'   dplyr::rename(stationID=station) %>%
+#'   dplyr::rename(ws =  `avg_wind_speed (km/h)`) %>%
+#'   dplyr::mutate(wd_sd = as.numeric(sd(wd))) %>%
+#'   dplyr::mutate(ws_sd = as.numeric(sd(ws)))
 #'
 #' station_data <-
 #'   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
@@ -94,10 +99,10 @@
 #' weather_dat <- format_weather(x = Billa_Billa,
 #'   POSIXct_time = "local_time",
 #'   temp = "mean_daily_temperature",
-#'   ws = "avg_wind_speed (km/h)",
+#'   ws = "ws",
 #'   wd_sd = "wd_sd",
 #'   rain = "rain",
-#'   wd = "wind_direction",
+#'   wd = "wd",
 #'   station = "location",
 #'   time_zone = "Australia/Brisbane",
 #'   lonlat_file = station_data)
@@ -113,7 +118,7 @@
 #'   harvest_date = as.POSIXct("2020-06-04") + lubridate::ddays(30),
 #'   time_zone = "Australia/Brisbane",
 #'   primary_infection_foci = "center")
-#'   traced[[30]]
+#'   traced[[5]]
 
 
 trace_asco <- function(weather,

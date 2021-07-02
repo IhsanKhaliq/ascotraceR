@@ -126,10 +126,15 @@ Billa_Billa <-
       TRUE ~ max_wind_direction
     )
   ) \%>\%
-  dplyr::mutate(wind_direction = as.numeric(wind_direction))
+  dplyr::mutate(wind_direction = as.numeric(wind_direction)) \%>\%
+  rename(wd = 'wind_direction') \%>\%
+  rename(ws= 'avg_wind_speed (km/h')) \%>\%
+  mutate(wd_sd = sd(wd)) \%>\%
+  mutate(ws_sd = sd(ws))
 
-station_data<-
-  system.file("extdata", "Billa_Billa_stat_dat.csv", package = "ascotraceR")
+
+station_data <-
+  system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 
 weather_dat <- format_weather(x = Billa_Billa,
   POSIXct_time = "local_time",
@@ -140,8 +145,8 @@ weather_dat <- format_weather(x = Billa_Billa,
   wd = "wind_direction",
   station = "location",
   time_zone = "Australia/Brisbane",
-  lonlat_file = station_data
-)
+  lonlat_file = station_data)
+
 
 
 traced <- trace_asco(
@@ -150,8 +155,8 @@ traced <- trace_asco(
   paddock_width = 20,
   initial_infection = "2020-07-16",
   sowing_date = as.POSIXct("2020-06-04"),
-  harvest_date = as.POSIXct("2020-11-27") + lubridate::ddays(30),
-  time_zone = "Australia/Perth",
+  harvest_date = as.POSIXct("2020-06-04") + lubridate::ddays(30),
+  time_zone = "Australia/Brisbane",
   primary_infection_foci = "center")
-
+  traced[[5]]
 }
