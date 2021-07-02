@@ -140,6 +140,9 @@
 #' station_data <-
 #'   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 #'
+#' Billa_Billa$local_time <-
+#'    as.POSIXct(Billa_Billa$local_time, format = "%d/%m/%Y")
+#'
 #' weather <- format_weather(x = Billa_Billa,
 #'    POSIXct_time = "local_time",
 #'    ws = "avg_wind_speed (km/h)",
@@ -364,6 +367,11 @@ format_weather <- function(x,
                          old = POSIXct_time,
                          new = "times",
                          skip_absent = TRUE)
+
+    if("POSIXct" %in% class(x[,times]) == FALSE){
+      stop("'POSIXct_time' is not class POSIXct")
+    }
+
     x[, YYYY := lubridate::year(x[, times])]
     x[, MM := lubridate::month(x[, times])]
     x[, DD := lubridate::day(x[, times])]
@@ -374,9 +382,8 @@ format_weather <- function(x,
     # POSIXct class
     if (lubridate::tz(x[, times]) == "" ||
         lubridate::tz(x[, times]) == "UTC") {
-      x[, times := lubridate::ymd_hms(x[, times],
-                                      tz = ..time_zone,
-                                      quiet = TRUE)]
+      x[, times := lubridate::force_tz(x[, times],
+                                      tzone = ..time_zone)]
     }
   } else {
     # if POSIX formatted times were not supplied, create a POSIXct
