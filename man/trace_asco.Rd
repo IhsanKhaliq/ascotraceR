@@ -127,11 +127,11 @@ Billa_Billa <-
     )
   ) \%>\%
   dplyr::mutate(wind_direction = as.numeric(wind_direction)) \%>\%
-  rename(wd = 'wind_direction') \%>\%
-  rename(ws= 'avg_wind_speed (km/h')) \%>\%
-  mutate(wd_sd = sd(wd)) \%>\%
-  mutate(ws_sd = sd(ws))
-
+  dplyr::rename(wd = wind_direction) \%>\%
+  dplyr::rename(stationID=station) \%>\%
+  dplyr::rename(ws =  `avg_wind_speed (km/h)`) \%>\%
+  dplyr::mutate(wd_sd = as.numeric(sd(wd))) \%>\%
+  dplyr::mutate(ws_sd = as.numeric(sd(ws)))
 
 station_data <-
   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
@@ -139,10 +139,10 @@ station_data <-
 weather_dat <- format_weather(x = Billa_Billa,
   POSIXct_time = "local_time",
   temp = "mean_daily_temperature",
-  ws = "avg_wind_speed (km/h)",
+  ws = "ws",
   wd_sd = "wd_sd",
   rain = "rain",
-  wd = "wind_direction",
+  wd = "wd",
   station = "location",
   time_zone = "Australia/Brisbane",
   lonlat_file = station_data)

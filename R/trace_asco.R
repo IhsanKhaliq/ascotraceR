@@ -88,7 +88,7 @@
 #'   ) %>%
 #'   dplyr::mutate(wind_direction = as.numeric(wind_direction)) %>%
 #'   dplyr::rename(wd = wind_direction) %>%
-#'   dplyr::rename(stationID=station) %>%
+#'   dplyr::rename(stationID=location) %>%
 #'   dplyr::rename(ws =  `avg_wind_speed (km/h)`) %>%
 #'   dplyr::mutate(wd_sd = as.numeric(sd(wd))) %>%
 #'   dplyr::mutate(ws_sd = as.numeric(sd(ws)))
@@ -103,7 +103,7 @@
 #'   wd_sd = "wd_sd",
 #'   rain = "rain",
 #'   wd = "wd",
-#'   station = "location",
+#'   station = "stationID",
 #'   time_zone = "Australia/Brisbane",
 #'   lonlat_file = station_data)
 #'

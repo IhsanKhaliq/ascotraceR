@@ -187,6 +187,9 @@ Billa_Billa <-
 station_data <-
   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
 
+Billa_Billa$local_time <-
+   as.POSIXct(Billa_Billa$local_time, format = "\%d/\%m/\%Y")
+
 weather <- format_weather(x = Billa_Billa,
    POSIXct_time = "local_time",
    ws = "avg_wind_speed (km/h)",
