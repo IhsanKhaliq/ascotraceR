@@ -38,6 +38,7 @@
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #' @param n_foci only relevant when primary_infection_foci = "random" and notes the number
 #'  of primary_infection_foci at initial infection.
+#'  @importFrom dplyr
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock
@@ -46,10 +47,10 @@
 #' @examples
 #' First weather data needs to be imported and formatted with `format_weather`
 #' Billa_Billa <-
-#'   readr::read_csv(system.file("extdata",
+#'   read.csv(system.file("extdata",
 #'                        "2020_Billa_Billa_weather.csv", package = "ascotraceR")) %>%
 #'    # convert wind direction recorded as text to degrees
-#'   dplyr::mutate(
+#'   mutate(
 #'     wind_direction = dplyr::case_when(
 #'       max_wind_direction == "N" ~ "0",
 #'       max_wind_direction == "NbE" ~ "11.25",
@@ -86,15 +87,19 @@
 #'       TRUE ~ max_wind_direction
 #'     )
 #'   ) %>%
-#'   dplyr::mutate(wind_direction = as.numeric(wind_direction)) %>%
-#'   dplyr::rename(wd = wind_direction) %>%
-#'   dplyr::rename(stationID=location) %>%
-#'   dplyr::rename(ws =  `avg_wind_speed (km/h)`) %>%
-#'   dplyr::mutate(wd_sd = as.numeric(sd(wd))) %>%
-#'   dplyr::mutate(ws_sd = as.numeric(sd(ws)))
+#'   mutate(wind_direction = as.numeric(wind_direction)) %>%
+#'   rename(wd = wind_direction) %>%
+#'   rename(stationID=location) %>%
+#'   rename(ws =  `avg_wind_speed (km/h)`) %>%
+#'   mutate(wd_sd = as.numeric(sd(wd))) %>%
+#'   mutate(ws_sd = as.numeric(sd(ws)))
+#'
 #'
 #' station_data <-
-#'   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#'   system.file("extdata", "Billa_Billa_stat_dat.csv", package = "ascotraceR")
+#'
+#' Billa_Billa$local_time <-
+#'    as.POSIXct(Billa_Billa$local_time, format = "%d/%m/%Y")
 #'
 #' weather_dat <- format_weather(x = Billa_Billa,
 #'   POSIXct_time = "local_time",

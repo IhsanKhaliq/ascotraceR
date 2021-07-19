@@ -86,7 +86,7 @@ over a growing season
 \examples{
 First weather data needs to be imported and formatted with `format_weather`
 Billa_Billa <-
-  readr::read_csv(system.file("extdata",
+  read.csv(system.file("extdata",
                        "2020_Billa_Billa_weather.csv", package = "ascotraceR")) \%>\%
    # convert wind direction recorded as text to degrees
   dplyr::mutate(
@@ -126,15 +126,19 @@ Billa_Billa <-
       TRUE ~ max_wind_direction
     )
   ) \%>\%
-  dplyr::mutate(wind_direction = as.numeric(wind_direction)) \%>\%
-  dplyr::rename(wd = wind_direction) \%>\%
-  dplyr::rename(stationID=station) \%>\%
-  dplyr::rename(ws =  `avg_wind_speed (km/h)`) \%>\%
-  dplyr::mutate(wd_sd = as.numeric(sd(wd))) \%>\%
-  dplyr::mutate(ws_sd = as.numeric(sd(ws)))
+  mutate(wind_direction = as.numeric(wind_direction)) \%>\%
+  rename(wd = wind_direction) \%>\%
+  rename(stationID=location) \%>\%
+  rename(ws =  `avg_wind_speed (km/h)`) \%>\%
+  mutate(wd_sd = as.numeric(sd(wd))) \%>\%
+  mutate(ws_sd = as.numeric(sd(ws)))
+
 
 station_data <-
-  system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+  system.file("extdata", "Billa_Billa_stat_dat.csv", package = "ascotraceR")
+
+Billa_Billa$local_time <-
+   as.POSIXct(Billa_Billa$local_time, format = "\%d/\%m/\%Y")
 
 weather_dat <- format_weather(x = Billa_Billa,
   POSIXct_time = "local_time",
@@ -143,7 +147,7 @@ weather_dat <- format_weather(x = Billa_Billa,
   wd_sd = "wd_sd",
   rain = "rain",
   wd = "wd",
-  station = "location",
+  station = "stationID",
   time_zone = "Australia/Brisbane",
   lonlat_file = station_data)
 
