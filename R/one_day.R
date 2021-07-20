@@ -65,7 +65,7 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
 
 # Spread spores and infect plants
   # Update growing points for paddock coordinates
-  if(i_rainfall > 2){
+  if(i_rainfall > 0){
 
     newly_infected_dt <-
       rbindlist(
