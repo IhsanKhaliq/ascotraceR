@@ -38,7 +38,7 @@
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #' @param n_foci only relevant when primary_infection_foci = "random" and notes the number
 #'  of primary_infection_foci at initial infection.
-#'  @importFrom dplyr
+#'
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock
@@ -47,10 +47,10 @@
 #' @examples
 #' First weather data needs to be imported and formatted with `format_weather`
 #' Billa_Billa <-
-#'   read.csv(system.file("extdata",
+#'   readr::read_csv(system.file("extdata",
 #'                        "2020_Billa_Billa_weather.csv", package = "ascotraceR")) %>%
 #'    # convert wind direction recorded as text to degrees
-#'   mutate(
+#'   dplyr::mutate(
 #'     wind_direction = dplyr::case_when(
 #'       max_wind_direction == "N" ~ "0",
 #'       max_wind_direction == "NbE" ~ "11.25",
@@ -87,13 +87,15 @@
 #'       TRUE ~ max_wind_direction
 #'     )
 #'   ) %>%
-#'   mutate(wind_direction = as.numeric(wind_direction)) %>%
-#'   rename(wd = wind_direction) %>%
-#'   rename(stationID=location) %>%
-#'   rename(ws =  `avg_wind_speed (km/h)`) %>%
-#'   mutate(wd_sd = as.numeric(sd(wd))) %>%
-#'   mutate(ws_sd = as.numeric(sd(ws)))
-#'
+#'   dplyr::mutate(wind_direction = as.numeric(wind_direction)) %>%
+#'   dplyr::rename(wd = wind_direction) %>%
+#'   dplyr::rename(stationID=location) %>%
+#'   dplyr::rename(ws =  `avg_wind_speed (km/h)`) %>%
+#'   dplyr::mutate(wd_sd = as.numeric(sd(wd))) %>%
+#'   dplyr::mutate(ws_sd = as.numeric(sd(ws))) %>%
+#'   tidyr::replace_na(list(wet_hours = 0, y = "unknown"))
+#'   # replace na with 0 to see if this error goes away:
+#'   #"Error in if (i_wet_hours > 0) #{ : missing value where TRUE/FALSE needed"
 #'
 #' station_data <-
 #'   system.file("extdata", "Billa_Billa_stat_dat.csv", package = "ascotraceR")
@@ -120,10 +122,10 @@
 #'   paddock_width = 20,
 #'   initial_infection = "2020-07-16",
 #'   sowing_date = as.POSIXct("2020-06-04"),
-#'   harvest_date = as.POSIXct("2020-06-04") + lubridate::ddays(30),
+#'   harvest_date = as.POSIXct("2020-06-04") + lubridate::ddays(100),
 #'   time_zone = "Australia/Brisbane",
 #'   primary_infection_foci = "center")
-#'   traced[[5]]
+#'   traced[[100]]
 
 
 trace_asco <- function(weather,
