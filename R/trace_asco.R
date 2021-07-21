@@ -38,6 +38,8 @@
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #' @param n_foci only relevant when primary_infection_foci = "random" and notes the number
 #'  of primary_infection_foci at initial infection.
+#'  @param wind_distance Median conidia dispersal distance parameter of the half-Cauchy distribution
+#'  in relation to wind driven rain. Default to \code{o.15}
 #'
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
@@ -122,10 +124,19 @@
 #'   paddock_width = 20,
 #'   initial_infection = "2020-07-16",
 #'   sowing_date = as.POSIXct("2020-06-04"),
-#'   harvest_date = as.POSIXct("2020-06-04") + lubridate::ddays(100),
+#'   harvest_date = as.POSIXct("2020-06-04") + lubridate::ddays(145),
 #'   time_zone = "Australia/Brisbane",
-#'   primary_infection_foci = "center")
-#'   traced[[100]]
+#'   primary_infection_foci = "center",
+#'   seeding_rate  = 40,
+#'   gp_rr = 0.0065,
+#'   spores_per_gp_per_wet_hour = 0.22,
+#'   max_gp_lim = 600,
+#'   latent_period_cdd = 150,
+#'   primary_infection_intensity = 20)
+#'   traced[[145]]
+#'
+#'   tracer_plot(dat = traced,
+#'   day=145)
 
 
 trace_asco <- function(weather,
