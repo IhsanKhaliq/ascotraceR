@@ -130,9 +130,8 @@
 #'   seeding_rate  = 40,
 #'   gp_rr = 0.0065,
 #'   spores_per_gp_per_wet_hour = 0.22,
-#'   max_gp_lim = 600,
 #'   latent_period_cdd = 150,
-#'   primary_infection_intensity = 20)
+#'   primary_infection_intensity = 40)
 #'   traced[[145]]
 #'
 #'   tracer_plot(dat = traced,
