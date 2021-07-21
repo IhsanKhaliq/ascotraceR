@@ -70,9 +70,9 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
     newly_infected_dt <-
       rbindlist(
         lapply(
-          seq_len(nrow(weather_day[rain >= 0.1, ])),
+          seq_len(nrow(weather_day[rain >= 0, ])),
           FUN = spores_each_wet_hour,
-          weather_hourly = weather_day[rain >= 0.2, ],
+          weather_hourly = weather_day[rain >= 0, ],
           paddock = daily_vals[["paddock"]],
           max_interception_probability = max_interception_probability,
           spore_interception_parameter = spore_interception_parameter,
