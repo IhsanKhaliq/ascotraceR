@@ -26,8 +26,6 @@
 #' @param primary_infection_foci it refers to the inoculated quadrat
 #'  located at the centre of the paddock from where disease spreads
 #'  Defaults to \code{"centre"}
-#' @param primary_infection_intensity The intensity of the starting epidemic as
-#'  described by the number of number of sporulating growing points.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'  daily temperature means) is the period between infection and production of
 #'  lesions on susceptible growing points. Defaults to \code{200}
@@ -130,8 +128,7 @@
 #'   seeding_rate  = 40,
 #'   gp_rr = 0.0065,
 #'   spores_per_gp_per_wet_hour = 0.22,
-#'   latent_period_cdd = 150,
-#'   primary_infection_intensity = 40)
+#'   latent_period_cdd = 150)
 #'   traced[[145]]
 #'
 #'   tracer_plot(dat = traced,
