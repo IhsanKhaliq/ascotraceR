@@ -38,8 +38,9 @@
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #' @param n_foci only relevant when primary_infection_foci = "random" and notes the number
 #'  of primary_infection_foci at initial infection.
-#'  @param wind_distance Median conidia dispersal distance parameter of the half-Cauchy distribution
+#' @param wind_distance Median conidial dispersal distance parameter of the half-Cauchy distribution
 #'  in relation to wind driven rain. Default to \code{o.15}
+#'
 #'
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
@@ -129,10 +130,13 @@
 #'   primary_infection_foci = "center",
 #'   seeding_rate  = 40,
 #'   gp_rr = 0.0065,
+#'   primary_infection_intensity = 2,
 #'   spores_per_gp_per_wet_hour = 0.22,
 #'   latent_period_cdd = 150)
 #'   traced[[145]]
-#'
+
+#' write.csv(traced[[145]]$paddock, "testrun1.csv", row.names = FALSE)
+
 #'   tracer_plot(dat = traced,
 #'   day=145)
 
