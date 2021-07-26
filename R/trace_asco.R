@@ -70,9 +70,15 @@
 #'   paddock_width = 100,
 #'   initial_infection = "1998-06-10",
 #'   sowing_date = as.POSIXct("1998-06-09"),
-#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(30),
+#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70),
 #'   time_zone = "Australia/Perth",
+#'   gp_rr = 0.0065,
+#'   primary_infection_intensity = 1000,
+#'   spores_per_gp_per_wet_hour = 0.22,
 #'   primary_infection_foci = "center")
+#'   traced[[70]]
+#'
+#' write.csv(traced[[70]]$paddock, "testrun2.csv", row.names = FALSE)
 trace_asco <- function(weather,
                        paddock_length,
                        paddock_width,
