@@ -42,7 +42,7 @@ one_day <- function(i_date,
 
   # obtain summary weather for i_day
   i_mean_air_temp <- mean(weather_day[, temp])
-  i_wet_hours <- weather_day[2, wet_hours]
+  i_wet_hours <- weather_day[, wet_hours]
   i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
 
   # Start building a list of values for 'i'
@@ -97,7 +97,7 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
 
   # exposed gps which have undergone latent period are moved to sporulating gps
   daily_vals <- make_some_infective(daily_vals = daily_vals,
-                                    latent_period = 200)
+                                    latent_period = 150)
 
 
 # update infected coordinates
