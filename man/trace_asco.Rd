@@ -112,5 +112,5 @@ traced <- trace_asco(
   sowing_date = as.POSIXct("1998-06-09"),
   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(30),
   time_zone = "Australia/Perth",
-  primary_infection_foci = "center")
+  primary_infection_foci = "centre")
 }

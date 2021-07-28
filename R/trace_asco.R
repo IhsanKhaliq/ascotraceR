@@ -44,7 +44,7 @@
 #' @export
 #'
 #' @examples
-#' # First weather data needs to be imported and formated with `format_weather`
+#' # First weather data needs to be imported and formatted with `format_weather`
 #' Newmarracarra <-
 #'    read.csv(system.file("extdata",
 #'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
@@ -75,7 +75,7 @@
 #'   gp_rr = 0.0065,
 #'   primary_infection_intensity = 1000,
 #'   spores_per_gp_per_wet_hour = 0.22,
-#'   primary_infection_foci = "center")
+#'   primary_infection_foci = "centre")
 #'   traced[[70]]
 #'
 #' write.csv(traced[[70]]$paddock, "testrun2.csv", row.names = FALSE)
@@ -168,7 +168,7 @@ trace_asco <- function(weather,
                   c("x", "y")]
 
       } else{
-        if (primary_infection_foci == "center") {
+        if (primary_infection_foci == "centre") {
           primary_infection_foci <-
             paddock[x == as.integer(round(paddock_width / 2)) &
                       y == as.integer(round(paddock_length / 2)),

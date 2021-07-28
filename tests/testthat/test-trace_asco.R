@@ -12,7 +12,7 @@ test1 <- trace_asco(
   sowing_date = as.POSIXct("1998-05-09"),
   harvest_date = as.POSIXct("1998-05-12"),
   time_zone = "Australia/Perth", # weather file is in Perth timezone
-  primary_infection_foci = "center"
+  primary_infection_foci = "centre"
 )
 
 test_that("days have updated after 5 increments",{
@@ -54,7 +54,7 @@ test1.1 <- trace_asco(
   sowing_date = as.POSIXct("1998-05-09"),
   harvest_date = as.POSIXct("1998-05-12"),
   time_zone = "Australia/Perth", # weather file is in Perth timezone
-  primary_infection_foci = "center",
+  primary_infection_foci = "centre",
   primary_infection_intensity = 40
 )
 
@@ -90,7 +90,7 @@ test2 <- trace_asco(
   sowing_date = as.POSIXct("1998-03-09"),
   harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(14),
   time_zone = "Australia/Perth",
-  primary_infection_foci = "center"
+  primary_infection_foci = "centre"
 )
 
 test_that("intense primary_infection_foci lead to more infections",{
@@ -120,7 +120,7 @@ test3 <- trace_asco(
   sowing_date = as.POSIXct("1998-03-09"),
   harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(28),
   time_zone = "Australia/Perth",
-  primary_infection_foci = "center"
+  primary_infection_foci = "centre"
 )
 
 
@@ -264,7 +264,7 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 #   sowing_date = s_date,
 #   harvest_date = h_date,
 #   time_zone = "Australia/Brisbane",
-#   primary_infection_foci = "center",
+#   primary_infection_foci = "centre",
 #   seeding_rate = 40,
 #   latent_period_cdd = 150
 # )
@@ -329,7 +329,7 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 #   sowing_date = as.POSIXct("1998-05-09"),
 #   harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(100),
 #   time_zone = "Australia/Perth",
-#   primary_infection_foci = "center",
+#   primary_infection_foci = "centre",
 #   primary_infection_intensity = 40
 #
 # )
@@ -359,7 +359,7 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 #   sowing_date = as.POSIXct("1998-06-09"),
 #   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(175),
 #   time_zone = "Australia/Perth",
-#   primary_infection_foci = "center"
+#   primary_infection_foci = "centre"
 # )
 # test5[[102]] # look at values on the 102nd day
 #
