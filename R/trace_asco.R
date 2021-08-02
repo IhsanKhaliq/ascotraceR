@@ -26,8 +26,9 @@
 #' @param primary_infection_foci it refers to the inoculated quadrat
 #'  located at the centre of the paddock from where disease spreads
 #'  Defaults to \code{"centre"}
-#' @param primary_infection_intensity The intensity of the starting epidemic as
-#'  described by the number of number of sporulating growing points.
+#' @param primary_inoculum_intensity it refers to the intensity of primary inoculum as
+#'  described by number of sporulating growing points on infested stubble, which are placed
+#'  at the center of the plot as a source of inoculum.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'  daily temperature means) is the period between infection and production of
 #'  lesions on susceptible growing points. Defaults to \code{200}
@@ -130,7 +131,7 @@
 #'   primary_infection_foci = "center",
 #'   seeding_rate  = 40,
 #'   gp_rr = 0.0065,
-#'   primary_infection_intensity = 1000,
+#'   primary_inoculum_intensity = 1000,
 #'   spores_per_gp_per_wet_hour = 0.22,
 #'   latent_period_cdd = 150)
 #'   traced[[145]]
@@ -154,7 +155,7 @@ trace_asco <- function(weather,
                        latent_period_cdd = 200,
                        time_zone = "UTC",
                        primary_infection_foci = "random",
-                       primary_infection_intensity = 1,
+                       primary_inoculum_intensity = 1,
                        n_foci = 1,
                        spores_per_gp_per_wet_hour = 0.22){
 
@@ -186,12 +187,9 @@ trace_asco <- function(weather,
   }
 
 
-  # if (primary_infection_intensity > seeding_rate) {
-  #   stop(
-  #     "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
-  #     seeding_rate
-  #   )
-  # }
+  if (primary_inoculum_intensity <= 0) {
+    stop("primary_inoculum_intensity value should be above zero to initiate infections")
+  }
 
   # convert times to POSIXct -----------------------------------------------
   initial_infection <-
@@ -267,7 +265,7 @@ trace_asco <- function(weather,
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
   if(ncol(primary_infection_foci) == 2){
-    primary_infection_foci[,sp_gp := primary_infection_intensity]
+    primary_infection_foci[,sp_gp := primary_inoculum_intensity]
   }
 
   # define paddock variables at time 1
