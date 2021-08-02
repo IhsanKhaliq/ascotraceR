@@ -18,7 +18,7 @@ trace_asco(
   latent_period_cdd = 200,
   time_zone = "UTC",
   primary_infection_foci = "random",
-  primary_infection_intensity = 1,
+  primary_inoculum_intensity = 1,
   n_foci = 1,
   spores_per_gp_per_wet_hour = 0.22
 )
@@ -66,7 +66,7 @@ lesions on susceptible growing points. Defaults to \code{200}}
 located at the centre of the paddock from where disease spreads
 Defaults to \code{"centre"}}
 
-\item{primary_infection_intensity}{The intensity of the starting epidemic as
+\item{primary_inoculum_intensity}{The intensity of the starting epidemic as
 described by the number of number of sporulating growing points.}
 
 \item{n_foci}{only relevant when primary_infection_foci = "random" and notes the number
