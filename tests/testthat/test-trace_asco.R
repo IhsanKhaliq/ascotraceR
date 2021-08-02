@@ -55,7 +55,7 @@ test1.1 <- trace_asco(
   harvest_date = as.POSIXct("1998-05-12"),
   time_zone = "Australia/Perth", # weather file is in Perth timezone
   primary_infection_foci = "center",
-  primary_infection_intensity = 40
+  primary_inoculum_intensity = 40
 )
 
 test_that("intense primary_infection_foci lead to more infections",{
@@ -199,7 +199,7 @@ expect_error(
     harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(28),
     time_zone = "Australia/Perth",
     primary_infection_foci = qry,
-    primary_infection_intensity = 50,
+    primary_inoculum_intensity = 50,
     seeding_rate = 40
   )
 )})
@@ -305,7 +305,7 @@ tracer_plot(dat = example,
 #   harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(80),
 #   time_zone = "Australia/Perth",
 #   primary_infection_foci = qry,
-#   primary_infection_intensity = 40
+#   primary_inoculum_intensity = 40
 # )
 # test4[[80]] # look at values on the 80th day
 #
@@ -331,7 +331,7 @@ tracer_plot(dat = example,
 #   harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(100),
 #   time_zone = "Australia/Perth",
 #   primary_infection_foci = "center",
-#   primary_infection_intensity = 40
+#   primary_inoculum_intensity = 40
 #
 # )
 # beepr::beep(3)
