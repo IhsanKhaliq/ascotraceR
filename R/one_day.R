@@ -8,7 +8,7 @@
 #' @param weather_dat `data.table` of weather observations which includes the query date `i_date`
 #' @param max_gp numeric double a function of max_gp_lim x (1 - exp(-0.138629 x seeding_rate))
 #' @param spore_interception_parameter parameter indicating the probability of a spore
-#'   landing on a susceptible growing point
+#'   landing on a susceptible growing point. Defaults to \code{5}
 #' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #'
@@ -53,7 +53,7 @@ one_day <- function(i_date,
 
 
   max_interception_probability <-
-    interception_probability(target_density = 5 * max(daily_vals[["paddock"]][,new_gp]),
+    interception_probability(5 * max(daily_vals[["paddock"]][,new_gp]),
                              k = spore_interception_parameter)
 
   # need to make a copy of the data.table otherwise it will modify all data.tables
