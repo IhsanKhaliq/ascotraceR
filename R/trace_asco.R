@@ -306,8 +306,8 @@ trace_asco <- function(weather,
       infected_rows,
           c("noninfected_gp",
             "sporulating_gp") :=
-          .(noninfected_gp - primary_infection_foci[,3],
-            primary_infection_foci[,3])]
+          .(noninfected_gp - primary_infection_foci[,sp_gp],
+            primary_infection_foci[,sp_gp])]
     }
   }
 
