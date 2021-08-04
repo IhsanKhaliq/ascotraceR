@@ -238,6 +238,7 @@ trace_asco <- function(weather,
   #
   # refUninfectiveGPs <- minGrowingPoints <- seeding_rate
 
+  # Create a clean daily values list with no infection in paddocks
   daily_vals_list <- list(
     list(
       paddock = paddock, # data.table each row is a 1 x 1m coordinate
@@ -249,7 +250,9 @@ trace_asco <- function(weather,
       cr = 0,     # cumulative rainfall
       gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
       new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
-      infected_coords = primary_infection_foci,  # data.table
+      infected_coords = data.table(x = numeric(),
+                                   y = numeric(),
+                                   sp_gp = numeric()),  # data.table
       newly_infected =  data.table(x = numeric(),
                                    y = numeric(),
                                    spores_per_packet = numeric(),
