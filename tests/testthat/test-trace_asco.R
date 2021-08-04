@@ -39,6 +39,18 @@ test_that("days have updated after 5 increments",{
                                                    times <= harvest_date + lubridate::dhours(23) ,sum(!is.na(rain))])
   expect_equal(test1[[5]][["cdd"]], newM_weather[times > sowing_date + lubridate::dminutes(1) &
                                                    times <= harvest_date + lubridate::dhours(23) , mean(temp), by = day][, sum(V1)])
+  Ninf_coord <- lapply(test1, function(L1){
+    nrow(L1[["infected_coords"]])
+  })
+  # is infected coordinates updated after initial infection
+  expect_equal(unlist(Ninf_coord), c(0,1,1,1,1))
+
+  Ninf_pad <- lapply(test1, function(L1){
+    nrow(L1[["paddock"]][sporulating_gp > 0])
+  })
+  # is infected coordinates updated after initial infection
+  expect_equal(unlist(Ninf_pad), c(0,1,1,1,1))
+
 
 })
 
