@@ -306,12 +306,13 @@ trace_asco <- function(weather,
       lapply(daily_vals_list[i:length(daily_vals_list)], function(dl){
 
         # Infecting paddock
-        dl[["paddock"]][
-          infected_rows,
-          c("noninfected_gp",
-            "sporulating_gp") :=
-            .(noninfected_gp - primary_infection_foci[,sp_gp],
-              primary_infection_foci[,sp_gp])]
+        pad1 <- data.table::copy(dl[["paddock"]])
+        pad1[infected_rows,
+             c("noninfected_gp",
+               "sporulating_gp") :=
+               .(noninfected_gp - primary_infection_foci[, sp_gp],
+                 primary_infection_foci[, sp_gp])]
+        dl[["paddock"]] <- pad1
 
         # Edit infected_coordinates data.table
         dl[["infected_coords"]] <- primary_infection_foci
