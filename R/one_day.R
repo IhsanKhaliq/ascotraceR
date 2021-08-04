@@ -66,6 +66,8 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
   stop("NA values in daily_vals[['paddock']][,sporulating_gp] ")
 }
 
+  # Don't spread spores if there are no infected coordinates
+  if(nrow(daily_vals[["infected_coords"]]) > 0){
 # Spread spores and infect plants
   # Update growing points for paddock coordinates
   if(i_wet_hours > 2){
@@ -106,6 +108,7 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
 # update infected coordinates
   daily_vals[["infected_coords"]] <- daily_vals[["paddock"]][sporulating_gp > 0, c("x","y")]
 
+  }
 
 # Grow Plants
   # this code represents mathematica function `growth`; `updateRefUninfectiveGrowingPoints`
