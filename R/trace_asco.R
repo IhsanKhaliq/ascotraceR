@@ -254,7 +254,7 @@ trace_asco <- function(weather,
       cr = 0,     # cumulative rainfall
       gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
       new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
-      infected_coords = primary_infection_foci,  # data.frame
+      infected_coords = primary_infection_foci,  # data.table
       newly_infected =  data.table(x = numeric(),
                                    y = numeric(),
                                    spores_per_packet = numeric(),
@@ -277,15 +277,17 @@ trace_asco <- function(weather,
     daily_vals_list[[i]][["day"]] <- lubridate::yday(time_increments[i])
 
 
-
     # currently working on one_day
-    daily_vals_list[[i + 1]] <- one_day(i_date = time_increments[i],
-                       daily_vals = daily_vals_list[[i]],
-                       weather_dat = weather,
-                       gp_rr = gp_rr,
-                       max_gp = max_gp,
-                       spore_interception_parameter = spore_interception_parameter,
-                       spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour)
+    daily_vals_list[[i + 1]] <- one_day(
+      i_date = time_increments[i],
+      daily_vals = daily_vals_list[[i]],
+      weather_dat = weather,
+      gp_rr = gp_rr,
+      max_gp = max_gp,
+      spore_interception_parameter = spore_interception_parameter,
+      spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
+      infection_start = initial_infection
+    )
 
     # temporary line of code to test building of daily_vals in loop
     #daily_vals_list <- day_out
