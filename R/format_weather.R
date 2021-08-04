@@ -132,7 +132,7 @@ format_weather <- function(x,
                            r = NULL,
                            lonlat_file = NULL) {
   # CRAN Note avoidance
-  times <- ..station <- ..time_zone <- NULL #nocov
+  times <- NULL #nocov
 
   # Check x class
   if (!is.data.frame(x)) {
