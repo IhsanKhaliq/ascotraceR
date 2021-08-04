@@ -322,6 +322,7 @@ format_weather <- function(x,
                          old = POSIXct_time,
                          new = "times",
                          skip_absent = TRUE)
+    x[,times := as.POSIXct(times)]
     x[, YYYY := lubridate::year(x[, times])]
     x[, MM := lubridate::month(x[, times])]
     x[, DD := lubridate::day(x[, times])]
