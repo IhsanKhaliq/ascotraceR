@@ -223,11 +223,6 @@ trace_asco <- function(weather,
       0
     )]
 
-  paddock[infected_rows, "noninfected_gp" :=
-            seeding_rate - primary_infection_foci[,3]]
-  paddock[infected_rows, "sporulating_gp" :=
-            primary_infection_foci[,3]]
-
   # calculate additional parameters
   spore_interception_parameter <-
     0.00006 * (max_gp_lim/max_new_gp)
@@ -289,9 +284,15 @@ trace_asco <- function(weather,
       infection_start = initial_infection
     )
 
-    # temporary line of code to test building of daily_vals in loop
-    #daily_vals_list <- day_out
-
+    if(initial_infection == time_increments[i]){
+    # Infecting paddock
+    daily_vals_list[[i]][["paddock"]][
+      infected_rows,
+          c("noninfected_gp",
+            "sporulating_gp") :=
+          .(noninfected_gp - primary_infection_foci[,3],
+            primary_infection_foci[,3])]
+    }
   }
 
   daily_vals_list[[length(daily_vals_list)]][["i_date"]] <-
