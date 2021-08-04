@@ -98,7 +98,7 @@ trace_asco <- function(weather,
                        spores_per_gp_per_wet_hour = 0.22){
 
 
-  x <- y <- sp_gp <- NULL
+  x <- y <- load <- NULL
 
   # check date inputs for validity -----------------------------------------
   .vali_date <- function(x) {
@@ -206,7 +206,11 @@ trace_asco <- function(weather,
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
   if(ncol(primary_infection_foci) == 2){
-    primary_infection_foci[,sp_gp := primary_infection_intensity]
+    primary_infection_foci[,load := primary_infection_intensity]
+  }else{
+    if(all(colnames(primary_infection_foci) %in% c("x", "y"))){
+      stop("colnames for 'primary_infection_foci' not 'x', 'y' & 'load'.")
+    }
   }
 
   # define paddock variables at time 1
@@ -252,8 +256,7 @@ trace_asco <- function(weather,
       gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
       new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
       infected_coords = data.table(x = numeric(),
-                                   y = numeric(),
-                                   sp_gp = numeric()),  # data.table
+                                   y = numeric()),  # data.table
       newly_infected =  data.table(x = numeric(),
                                    y = numeric(),
                                    spores_per_packet = numeric(),
@@ -311,8 +314,8 @@ trace_asco <- function(weather,
         pad1[infected_rows,
              c("noninfected_gp",
                "sporulating_gp") :=
-               .(noninfected_gp - primary_infection_foci[, sp_gp],
-                 primary_infection_foci[, sp_gp])]
+               .(noninfected_gp - primary_infection_foci[, load],
+                 primary_infection_foci[, load])]
         dl[["paddock"]] <- pad1
 
         # Edit infected_coordinates data.table
