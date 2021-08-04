@@ -287,8 +287,7 @@ trace_asco <- function(weather,
       gp_rr = gp_rr,
       max_gp = max_gp,
       spore_interception_parameter = spore_interception_parameter,
-      spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
-      infection_start = initial_infection
+      spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour
     )
 
     # When the time of initial infection occurs, infect the paddock coordinates
