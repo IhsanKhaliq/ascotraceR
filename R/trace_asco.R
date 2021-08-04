@@ -124,12 +124,12 @@ trace_asco <- function(weather,
   }
 
 
-  if (primary_infection_intensity > seeding_rate) {
-    stop(
-      "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
-      seeding_rate
-    )
-  }
+  # if (primary_infection_intensity > seeding_rate) {
+  #   stop(
+  #     "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
+  #     seeding_rate
+  #   )
+  # }
 
   # convert times to POSIXct -----------------------------------------------
   initial_infection <-
@@ -287,8 +287,21 @@ trace_asco <- function(weather,
       infection_start = initial_infection
     )
 
+    # When the time of initial infection occurs, infect the paddock coordinates
     if(initial_infection == time_increments[i]){
-    # Infecting paddock
+
+      # if primary_infection_intensity exceeds the number of growing points send
+      #  warning
+      if (primary_infection_intensity > daily_vals_list[[i]][["gp_standard"]]) {
+        warning(
+          "primary_infection_intensity exceeds the number of growing points at time of infection 'growing_points': ",
+          daily_vals_list[[i]][["gp_standard"]],
+          "\nThis may cause an over estimation of disease spread"
+        )
+      }
+
+
+      # Infecting paddock
     daily_vals_list[[i]][["paddock"]][
       infected_rows,
           c("noninfected_gp",
