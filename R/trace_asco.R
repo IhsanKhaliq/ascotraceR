@@ -315,7 +315,7 @@ trace_asco <- function(weather,
         dl[["paddock"]] <- pad1
 
         # Edit infected_coordinates data.table
-        dl[["infected_coords"]] <- primary_infection_foci
+        dl[["infected_coords"]] <- primary_infection_foci[,c("x","y")]
       return(dl)
     })
 
