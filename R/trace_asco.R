@@ -23,9 +23,10 @@
 #'  per square meter. Defaults to \code{15000}.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems)
 #'  which develop per day, per square meter. Defaults to \code{350}.
-#' @param primary_infection_foci it refers to the inoculated quadrat
-#'  located at the centre of the paddock from where disease spreads
-#'  Defaults to \code{"centre"}
+#' @param primary_infection_foci refers to the inoculated coordinates where the
+#'  eppidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
+#'  a randomly selected coordinate in the paddock, a two column data.table of
+#'  coordinates with colnames c("x","y"), a three column data.table where the third
 #' @param primary_infection_intensity The intensity of the starting epidemic as
 #'  described by the number of number of sporulating growing points.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
@@ -97,7 +98,7 @@ trace_asco <- function(weather,
                        spores_per_gp_per_wet_hour = 0.22){
 
 
-  x <- y <- sp_gp <- NULL
+  x <- y <- load <- NULL
 
   # check date inputs for validity -----------------------------------------
   .vali_date <- function(x) {
@@ -124,12 +125,12 @@ trace_asco <- function(weather,
   }
 
 
-  if (primary_infection_intensity > seeding_rate) {
-    stop(
-      "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
-      seeding_rate
-    )
-  }
+  # if (primary_infection_intensity > seeding_rate) {
+  #   stop(
+  #     "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
+  #     seeding_rate
+  #   )
+  # }
 
   # convert times to POSIXct -----------------------------------------------
   initial_infection <-
@@ -205,7 +206,11 @@ trace_asco <- function(weather,
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
   if(ncol(primary_infection_foci) == 2){
-    primary_infection_foci[,sp_gp := primary_infection_intensity]
+    primary_infection_foci[,load := primary_infection_intensity]
+  }else{
+    if(all(colnames(primary_infection_foci) %in% c("x", "y"))){
+      stop("colnames for 'primary_infection_foci' not 'x', 'y' & 'load'.")
+    }
   }
 
   # define paddock variables at time 1
@@ -223,11 +228,6 @@ trace_asco <- function(weather,
       0
     )]
 
-  paddock[infected_rows, "noninfected_gp" :=
-            seeding_rate - primary_infection_foci[,3]]
-  paddock[infected_rows, "sporulating_gp" :=
-            primary_infection_foci[,3]]
-
   # calculate additional parameters
   spore_interception_parameter <-
     0.00006 * (max_gp_lim/max_new_gp)
@@ -243,6 +243,7 @@ trace_asco <- function(weather,
   #
   # refUninfectiveGPs <- minGrowingPoints <- seeding_rate
 
+  # Create a clean daily values list with no infection in paddocks
   daily_vals_list <- list(
     list(
       paddock = paddock, # data.table each row is a 1 x 1m coordinate
@@ -254,7 +255,8 @@ trace_asco <- function(weather,
       cr = 0,     # cumulative rainfall
       gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
       new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
-      infected_coords = primary_infection_foci,  # data.table
+      infected_coords = data.table(x = numeric(),
+                                   y = numeric()),  # data.table
       newly_infected =  data.table(x = numeric(),
                                    y = numeric(),
                                    spores_per_packet = numeric(),
@@ -285,13 +287,42 @@ trace_asco <- function(weather,
       gp_rr = gp_rr,
       max_gp = max_gp,
       spore_interception_parameter = spore_interception_parameter,
-      spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
-      infection_start = initial_infection
+      spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour
     )
 
-    # temporary line of code to test building of daily_vals in loop
-    #daily_vals_list <- day_out
+    # When the time of initial infection occurs, infect the paddock coordinates
+    if(initial_infection == time_increments[i]){
 
+      # if primary_infection_intensity exceeds the number of growing points send
+      #  warning
+      if (primary_infection_intensity > daily_vals_list[[i]][["gp_standard"]]) {
+        warning(
+          "primary_infection_intensity exceeds the number of growing points at time of infection 'growing_points': ",
+          daily_vals_list[[i]][["gp_standard"]],
+          "\nThis may cause an over estimation of disease spread"
+        )
+      }
+
+
+    # update the remaining increments with the primary infected coordinates
+    daily_vals_list[i:length(daily_vals_list)] <-
+      lapply(daily_vals_list[i:length(daily_vals_list)], function(dl){
+
+        # Infecting paddock
+        pad1 <- data.table::copy(dl[["paddock"]])
+        pad1[infected_rows,
+             c("noninfected_gp",
+               "sporulating_gp") :=
+               .(noninfected_gp - primary_infection_foci[, load],
+                 primary_infection_foci[, load])]
+        dl[["paddock"]] <- pad1
+
+        # Edit infected_coordinates data.table
+        dl[["infected_coords"]] <- primary_infection_foci[,c("x","y")]
+      return(dl)
+    })
+
+    }
   }
 
   daily_vals_list[[length(daily_vals_list)]][["i_date"]] <-

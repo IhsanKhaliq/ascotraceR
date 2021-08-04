@@ -2,7 +2,8 @@ context("Simulate disease progression for a single day increment")
 
 # import and define data
 seeding_rate <- 40
-primary_infection_foci <- c(50,50)
+primary_infection_foci <- data.table(x = 50,
+                                     y = 50)
 
 paddock <- as.data.table(expand.grid(x = 1:100,
                                      y = 1:100))
@@ -17,12 +18,12 @@ paddock[, c(
 ) :=
   list(
     seeding_rate,
-    fifelse(x == primary_infection_foci[1] &
-              y == primary_infection_foci[2], seeding_rate - 1,
+    fifelse(x == primary_infection_foci[,x] &
+              y == primary_infection_foci[,y], seeding_rate - 1,
             seeding_rate),
     0,
-    fifelse(x == primary_infection_foci[1] &
-              y == primary_infection_foci[2], 1,
+    fifelse(x == primary_infection_foci[,x] &
+              y == primary_infection_foci[,y], 1,
             0),
     0
   )]

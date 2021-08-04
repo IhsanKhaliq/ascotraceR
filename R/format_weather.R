@@ -132,7 +132,7 @@ format_weather <- function(x,
                            r = NULL,
                            lonlat_file = NULL) {
   # CRAN Note avoidance
-  times <- ..station <- ..time_zone <- NULL #nocov
+  times <- NULL #nocov
 
   # Check x class
   if (!is.data.frame(x)) {
@@ -322,6 +322,7 @@ format_weather <- function(x,
                          old = POSIXct_time,
                          new = "times",
                          skip_absent = TRUE)
+    x[,times := as.POSIXct(times)]
     x[, YYYY := lubridate::year(x[, times])]
     x[, MM := lubridate::month(x[, times])]
     x[, DD := lubridate::day(x[, times])]
