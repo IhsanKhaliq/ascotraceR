@@ -301,13 +301,23 @@ trace_asco <- function(weather,
       }
 
 
-      # Infecting paddock
-    daily_vals_list[[i]][["paddock"]][
-      infected_rows,
+    # update the remaining increments with the primary infected coordinates
+    daily_vals_list[i:length(daily_vals_list)] <-
+      lapply(daily_vals_list[i:length(daily_vals_list)], function(dl){
+
+        # Infecting paddock
+        dl[["paddock"]][
+          infected_rows,
           c("noninfected_gp",
             "sporulating_gp") :=
-          .(noninfected_gp - primary_infection_foci[,sp_gp],
-            primary_infection_foci[,sp_gp])]
+            .(noninfected_gp - primary_infection_foci[,sp_gp],
+              primary_infection_foci[,sp_gp])]
+
+        # Edit infected_coordinates data.table
+        dl[["infected_coords"]] <- primary_infection_foci
+      return(dl)
+    })
+
     }
   }
 
