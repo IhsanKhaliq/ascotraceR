@@ -76,10 +76,10 @@ test_that("intense primary_infection_foci lead to more infections",{
                                                                                          by = "days")))
   expect_length(test1.1, 5)
   expect_length(test1.1[[1]], 11)
-  expect_equal(test1.1[[5]][["newly_infected"]][,.N], 7)
+  expect_equal(test1.1[[5]][["newly_infected"]][,.N], 9)
   expect_equal(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 40)
   expect_length(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
-  expect_equal(test1.1[[5]][["newly_infected"]][spores_per_packet  > 0,spores_per_packet ], rep(1,7))
+  expect_equal(test1.1[[5]][["newly_infected"]][spores_per_packet  > 0,spores_per_packet ], rep(1,9))
   expect_equal(test1.1[[5]][["newly_infected"]][,unique(cdd_at_infection) ],87)
 
 })
@@ -160,8 +160,8 @@ test3 <- trace_asco(
   primary_infection_foci = qry
 )
 
-test3[[30]] # look at values on the 30th day
-# tracer_plot(test3,30)
+# test3[[30]] # look at values on the 30th day
+#  tracer_plot(test3,30)
 
 test_that("test3 returns some sporulating gps",{
   expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 33)
