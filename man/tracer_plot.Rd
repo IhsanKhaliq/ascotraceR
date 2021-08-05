@@ -11,7 +11,7 @@ tracer_plot(dat, day, tiles = "infectious_gp")
 
 \item{day}{integer, day of the simulation to plot}
 
-\item{tiles}{what to response for the plot to render, options: infectious_gp, new_gp,noninfected_gp}
+\item{tiles}{what to response for the plot to render, options: infectious_gp, new_gp,susceptible_gp}
 }
 \value{
 ggplot2 object

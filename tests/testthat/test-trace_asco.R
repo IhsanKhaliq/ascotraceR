@@ -29,7 +29,7 @@ test_that("days have updated after 5 increments",{
     c("x",
       "y",
       "new_gp",
-      "noninfected_gp",
+      "susceptible_gp",
       "exposed_gp",
       "infectious_gp")
   )
@@ -347,7 +347,7 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 # )
 # beepr::beep(3)
 # tracer_plot(test5,72, tiles = "infectious_gp")
-# tracer_plot(test5,72, tiles = "noninfected_gp")
+# tracer_plot(test5,72, tiles = "susceptible_gp")
 # tracer_plot(test5,72, tiles = "percent_gp_sporulating")
 # test5[[72]]
 #
