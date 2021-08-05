@@ -4,14 +4,14 @@
 \alias{tracer_plot}
 \title{plot one day from trace_asco output as a tile plot}
 \usage{
-tracer_plot(dat, day, tiles = "sporulating_gp")
+tracer_plot(dat, day, tiles = "infectious_gp")
 }
 \arguments{
 \item{dat}{nested list of ascotraceR class}
 
 \item{day}{integer, day of the simulation to plot}
 
-\item{tiles}{what to response for the plot to render, options: sporulating_gp, new_gp,noninfected_gp}
+\item{tiles}{what to response for the plot to render, options: infectious_gp, new_gp,noninfected_gp}
 }
 \value{
 ggplot2 object

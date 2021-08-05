@@ -219,7 +219,7 @@ trace_asco <- function(weather,
     "new_gp", # Change in the number of growing points since last iteration
     "noninfected_gp",
     "exposed_gp",
-    "sporulating_gp" # replacing InfectiveElementList
+    "infectious_gp" # replacing InfectiveElementList
   ) :=
     list(
       seeding_rate,
@@ -319,7 +319,7 @@ trace_asco <- function(weather,
         pad1 <- data.table::copy(dl[["paddock"]])
         pad1[infected_rows,
              c("noninfected_gp",
-               "sporulating_gp") :=
+               "infectious_gp") :=
                .(noninfected_gp - primary_infection_foci[, load],
                  primary_infection_foci[, load])]
         dl[["paddock"]] <- pad1

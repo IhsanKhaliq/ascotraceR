@@ -31,7 +31,7 @@ test_that("days have updated after 5 increments",{
       "new_gp",
       "noninfected_gp",
       "infected_gp",
-      "sporulating_gp")
+      "infectious_gp")
   )
   expect_equal(test1[[5]][["day"]], lubridate::yday(harvest_date)+1)
   expect_equal(test1[[5]][["i_day"]], 5)
@@ -46,7 +46,7 @@ test_that("days have updated after 5 increments",{
   expect_equal(unlist(Ninf_coord), c(0,1,1,1,1))
 
   Ninf_pad <- lapply(test1, function(L1){
-    nrow(L1[["paddock"]][sporulating_gp > 0])
+    nrow(L1[["paddock"]][infectious_gp > 0])
   })
   # is infected coordinates updated after initial infection
   expect_equal(unlist(Ninf_pad), c(0,1,1,1,1))
@@ -77,8 +77,8 @@ test_that("intense primary_infection_foci lead to more infections",{
   expect_length(test1.1, 5)
   expect_length(test1.1[[1]], 11)
   expect_equal(test1.1[[5]][["exposed_gps"]][,.N], 9)
-  expect_equal(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 40)
-  expect_length(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
+  expect_equal(test1.1[[5]][["paddock"]][infectious_gp > 0,infectious_gp], 40)
+  expect_length(test1.1[[5]][["paddock"]][infectious_gp > 0,infectious_gp], 1)
   expect_equal(test1.1[[5]][["exposed_gps"]][spores_per_packet  > 0,spores_per_packet ], rep(1,9))
   expect_equal(test1.1[[5]][["exposed_gps"]][,unique(cdd_at_infection) ],87)
 
@@ -112,8 +112,8 @@ test_that("intense primary_infection_foci lead to more infections",{
   expect_length(test2, 16)
   expect_length(test2[[1]], 11)
   expect_equal(test2[[5]][["exposed_gps"]][,.N], 0)
-  expect_equal(test2[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
-  expect_length(test2[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
+  expect_equal(test2[[5]][["paddock"]][infectious_gp > 0,infectious_gp], 1)
+  expect_length(test2[[5]][["paddock"]][infectious_gp > 0,infectious_gp], 1)
   expect_equal(test2[[5]][["exposed_gps"]][spores_per_packet  > 0,spores_per_packet ], numeric())
 
 })
@@ -137,7 +137,7 @@ test3 <- trace_asco(
 
 
 test_that("test3 returns some sporulating gps",{
-  expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 1)
+  expect_equal(test3[[30]][["paddock"]][,sum(infectious_gp)], 1)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
 })

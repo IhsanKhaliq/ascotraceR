@@ -13,7 +13,7 @@ paddock[, c(
   "new_gp", # Change in the number of growing points since last iteration
   "noninfected_gp",
   "infected_gp",
-  "sporulating_gp", # replacing InfectiveElementList
+  "infectious_gp", # replacing InfectiveElementList
   "cdd_at_infection"
 ) :=
   list(
@@ -111,14 +111,14 @@ test_that("one_day single infection foci returns expected output", {
       "new_gp",
       "noninfected_gp",
       "infected_gp",
-      "sporulating_gp",
+      "infectious_gp",
       "cdd_at_infection"
     )
   )
   expect_equal(round(test1[["paddock"]][,unique(new_gp)],6), c(4.667471, 4.551090))
   expect_equal(round(test1[["paddock"]][,unique(noninfected_gp)],5), c(44.66747, 43.55109))
   expect_equal(round(test1[["paddock"]][,unique(infected_gp)],6), 0)
-  expect_equal(round(test1[["paddock"]][,unique(sporulating_gp)],6), c(0, 1))
+  expect_equal(round(test1[["paddock"]][,unique(infectious_gp)],6), c(0, 1))
   })
 
 test2 <- one_day(i_date = od_t1_i_date,
@@ -171,14 +171,14 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
       "new_gp",
       "noninfected_gp",
       "infected_gp",
-      "sporulating_gp",
+      "infectious_gp",
       "cdd_at_infection"
     )
   )
   expect_equal(round(test2[["paddock"]][,unique(new_gp)],6), c(5.210471, 5.080625))
   expect_equal(round(test2[["paddock"]][,unique(noninfected_gp)],5), c(49.87794, 48.63171))
   expect_equal(round(test2[["paddock"]][,unique(infected_gp)],6), 0)
-  expect_equal(round(test2[["paddock"]][,unique(sporulating_gp)],6), c(0, 1))
+  expect_equal(round(test2[["paddock"]][,unique(infectious_gp)],6), c(0, 1))
 })
 
 # update cumulative degree days to past threshold
@@ -234,13 +234,13 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
       "new_gp",
       "noninfected_gp",
       "infected_gp",
-      "sporulating_gp",
+      "infectious_gp",
       "cdd_at_infection"
     )
   )
   expect_equal(round(test3[["paddock"]][,unique(new_gp)],6), c( 5.816238, 5.700011, 5.555145))
   expect_equal(round(test3[["paddock"]][,unique(noninfected_gp)],5), c(55.69418, 54.57795, 53.18686))
   expect_equal(round(test3[["paddock"]][,unique(infected_gp)],6), 0)
-  expect_equal(round(test3[["paddock"]][,unique(sporulating_gp)],6), c(0 ,1,2))
+  expect_equal(round(test3[["paddock"]][,unique(infectious_gp)],6), c(0 ,1,2))
 })
 

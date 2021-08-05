@@ -17,7 +17,7 @@ paddock[, c(
   "new_gp", # Change in the number of growing points since last iteration
   "noninfected_gp",
   "infected_gp",
-  "sporulating_gp" # replacing InfectiveElementList
+  "infectious_gp" # replacing InfectiveElementList
 ) :=
   list(
     seeding_rate,
@@ -77,7 +77,7 @@ test_that("test1 returns expected output",{
 
 
 # add more than one sporulating growing point
-paddock[, sporulating_gp := fifelse(x >= 53 &
+paddock[, infectious_gp := fifelse(x >= 53 &
                                    x <= 57 &
                                    y >= 53 &
                                    y <= 57, 5,

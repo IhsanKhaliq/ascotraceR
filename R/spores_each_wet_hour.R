@@ -30,7 +30,7 @@ spores_each_wet_hour <- function(h,
                                  spores_per_gp_per_wet_hour) {
   rain <-
     ws <-
-    wd <- wd_sd <- sporulating_gp <- spores_per_packet <- x <- y <-
+    wd <- wd_sd <- infectious_gp <- spores_per_packet <- x <- y <-
     NULL
 
   # obtain weather data for hour_i
@@ -41,10 +41,10 @@ spores_each_wet_hour <- function(h,
   stdev_wind_direction_in_hour = weather_hourly[h, wd_sd]
 
   # get data.table of infected coordinates
-  paddock_infective <- paddock[sporulating_gp > 0, ]
+  paddock_infective <- paddock[infectious_gp > 0, ]
 
   if (nrow(paddock_infective) == 0) {
-    stop("Can't detect any infection, please check sum(paddock$sporulating_gp > 0) is >= 1")
+    stop("Can't detect any infection, please check sum(paddock$infectious_gp > 0) is >= 1")
   }
 
   exposed_dt <-

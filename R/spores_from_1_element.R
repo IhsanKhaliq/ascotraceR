@@ -43,7 +43,7 @@ spores_from_1_element <-
       potentially_effective_spores(
         spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
         max_interception_probability = max_interception_probability,
-        paddock_source["sporulating_gp"]
+        paddock_source["infectious_gp"]
       )
 
     degree <- 0.01745

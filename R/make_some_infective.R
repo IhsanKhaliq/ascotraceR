@@ -11,7 +11,7 @@
 make_some_infective <- function(daily_vals,
                                 latent_period = 200) {
   cdd_at_infection <- x <- y <- noninfected_gp <- spores_per_packet <-
-    sporulating_gp <-
+    infectious_gp <-
     max_growing_points_limit <- min_growing_points <- NULL
 
   newly_exposed <- daily_vals[["exposed_gps"]]
@@ -39,8 +39,8 @@ make_some_infective <- function(daily_vals,
                                 paddock_vals[, noninfected_gp] - infections_new]
     }
 
-    daily_vals[["paddock"]][row_index, sporulating_gp :=
-                              daily_vals[["paddock"]][row_index, sporulating_gp] +
+    daily_vals[["paddock"]][row_index, infectious_gp :=
+                              daily_vals[["paddock"]][row_index, infectious_gp] +
                               infections_new]
 
   }

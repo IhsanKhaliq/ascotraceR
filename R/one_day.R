@@ -30,7 +30,7 @@ one_day <- function(i_date,
                     spore_interception_parameter,
                     spores_per_gp_per_wet_hour) {
 
-  times <- temp <- wet_hours <- rain <- new_gp <- sporulating_gp <-
+  times <- temp <- wet_hours <- rain <- new_gp <- infectious_gp <-
     cdd_at_infection <- noninfected_gp <- NULL
 
   # expand time to be hourly
@@ -59,8 +59,8 @@ one_day <- function(i_date,
   # need to make a copy of the data.table otherwise it will modify all data.tables
   # in the following functions
   daily_vals[["paddock"]] <- copy(daily_vals[["paddock"]])
-if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
-  stop("NA values in daily_vals[['paddock']][,sporulating_gp] ")
+if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
+  stop("NA values in daily_vals[['paddock']][,infectious_gp] ")
 }
 
   # Don't spread spores if there are no infected coordinates
@@ -96,7 +96,7 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
 
 
 # update infected coordinates
-  daily_vals[["infected_coords"]] <- daily_vals[["paddock"]][sporulating_gp > 0, c("x","y")]
+  daily_vals[["infected_coords"]] <- daily_vals[["paddock"]][infectious_gp > 0, c("x","y")]
 
   }
 
