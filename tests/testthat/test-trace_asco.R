@@ -30,7 +30,7 @@ test_that("days have updated after 5 increments",{
       "y",
       "new_gp",
       "noninfected_gp",
-      "infected_gp",
+      "exposed_gp",
       "infectious_gp")
   )
   expect_equal(test1[[5]][["day"]], lubridate::yday(harvest_date)+1)
@@ -164,7 +164,7 @@ test3 <- trace_asco(
 #  tracer_plot(test3,30)
 
 test_that("test3 returns some sporulating gps",{
-  expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 33)
+  expect_equal(test3[[30]][["paddock"]][,sum(infectious_gp)], 33)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
   expect_true(all(test3[[30]][["exposed_gps"]][,unique(cdd_at_infection)] > test3[[30]][["cdd"]] - 200))
@@ -321,7 +321,7 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 # test4[[80]] # look at values on the 80th day
 #
 # test_that("test4 returns some sporulating gps",{
-#   expect_equal(test4[[80]][["paddock"]][,sum(sporulating_gp)], 15592)
+#   expect_equal(test4[[80]][["paddock"]][,sum(infectious_gp)], 15592)
 #   expect_true(all(test4[[80]][["exposed_gps"]][,unique(cdd_at_infection)] > test4[[80]][["cdd"]] - 200))
 #
 # })
@@ -346,7 +346,7 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 #
 # )
 # beepr::beep(3)
-# tracer_plot(test5,72, tiles = "sporulating_gp")
+# tracer_plot(test5,72, tiles = "infectious_gp")
 # tracer_plot(test5,72, tiles = "noninfected_gp")
 # tracer_plot(test5,72, tiles = "percent_gp_sporulating")
 # test5[[72]]
@@ -376,7 +376,7 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 # test5[[102]] # look at values on the 102nd day
 #
 # test_that("test4 returns some sporulating gps from june",{
-#   expect_equal(test4[[102]][["paddock"]][,sum(sporulating_gp)], 5)
+#   expect_equal(test4[[102]][["paddock"]][,sum(infectious_gp)], 5)
 #
 #
 # })
