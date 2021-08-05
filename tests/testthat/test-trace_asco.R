@@ -417,18 +417,18 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 #   ))
 # })
 #
-ta1 <- trace_asco(
-      weather = weather_dat,
-      paddock_length = 20,
-      paddock_width = 20,
-      initial_infection = as.POSIXct("1998-06-04") + lubridate::ddays(30),
-      sowing_date = as.POSIXct("1998-06-09"),
-      harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(135) ,
-      time_zone = "Australia/Perth",
-      seeding_rate = 40,
-      gp_rr = 0.0065,
-      spores_per_gp_per_wet_hour = 0.22,
-      latent_period_cdd = 150,
-      primary_infection_intensity = 100,
-      primary_infection_foci = "center"
-    )
+# example mocked up on 5/8/2021 for ihsan
+# ta1 <- trace_asco(
+#       weather = weather_dat,
+#       paddock_length = 20,
+#       paddock_width = 20,
+#       initial_infection = as.POSIXct("1998-06-04") + lubridate::ddays(30),
+#       sowing_date = as.POSIXct("1998-06-09"),
+#       harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(135) ,
+#       time_zone = "Australia/Perth",
+#       seeding_rate = 40,
+#       gp_rr = 0.0065,
+#       spores_per_gp_per_wet_hour = 0.22,
+#       latent_period_cdd = 150,
+#       primary_infection_intensity = 100
+#     )
