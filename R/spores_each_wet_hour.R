@@ -47,7 +47,7 @@ spores_each_wet_hour <- function(h,
     stop("Can't detect any infection, please check sum(paddock$sporulating_gp > 0) is >= 1")
   }
 
-  newly_infected_dt <-
+  exposed_dt <-
     future.apply::future_apply(
       X = paddock_infective,
       MARGIN =  1,
@@ -61,33 +61,33 @@ spores_each_wet_hour <- function(h,
       paddock = paddock
     )
 
-  if (is.null(newly_infected_dt)) {
+  if (is.null(exposed_dt)) {
     return(data.table(
       x = numeric(),
       y = numeric(),
       spores_per_packet = numeric()
     ))
   } else{
-    newly_infected_dt <- rbindlist(newly_infected_dt)
+    exposed_dt <- rbindlist(exposed_dt)
   }
 
 
-  newly_infected_dt$spores_per_packet <-
+  exposed_dt$spores_per_packet <-
     successful_infections(
-      spore_targets = newly_infected_dt,
+      spore_targets = exposed_dt,
       paddock = paddock,
       spore_interception_parameter = spore_interception_parameter,
       max_interception_probability = max_interception_probability
     )
 
   # filter only successful interceptions inside the paddock
-  newly_infected_dt <-
-    newly_infected_dt[spores_per_packet > 0 &
+  exposed_dt <-
+    exposed_dt[spores_per_packet > 0 &
                         x >= min(paddock[, x]) &
                         x <= max(paddock[, x]) &
                         y >= min(paddock[, y]) &
                         y <= max(paddock[, y]) ,]
 
 
-  return(newly_infected_dt)
+  return(exposed_dt)
 }

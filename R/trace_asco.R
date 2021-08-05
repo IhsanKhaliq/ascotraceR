@@ -218,7 +218,7 @@ trace_asco <- function(weather,
   paddock[, c(
     "new_gp", # Change in the number of growing points since last iteration
     "noninfected_gp",
-    "infected_gp",
+    "exposed_gp",
     "sporulating_gp" # replacing InfectiveElementList
   ) :=
     list(
@@ -264,7 +264,7 @@ trace_asco <- function(weather,
       new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
       infected_coords = data.table(x = numeric(),
                                    y = numeric()),  # data.table
-      newly_infected =  data.table(x = numeric(),
+      exposed_gps =  data.table(x = numeric(),
                                    y = numeric(),
                                    spores_per_packet = numeric(),
                                    cdd_at_infection = numeric()) # data.table of infected growing points still in latent period and not sporilating (exposed_gp)

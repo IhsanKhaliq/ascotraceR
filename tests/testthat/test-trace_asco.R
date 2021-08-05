@@ -76,11 +76,11 @@ test_that("intense primary_infection_foci lead to more infections",{
                                                                                          by = "days")))
   expect_length(test1.1, 5)
   expect_length(test1.1[[1]], 11)
-  expect_equal(test1.1[[5]][["newly_infected"]][,.N], 9)
+  expect_equal(test1.1[[5]][["exposed_gps"]][,.N], 9)
   expect_equal(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 40)
   expect_length(test1.1[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
-  expect_equal(test1.1[[5]][["newly_infected"]][spores_per_packet  > 0,spores_per_packet ], rep(1,9))
-  expect_equal(test1.1[[5]][["newly_infected"]][,unique(cdd_at_infection) ],87)
+  expect_equal(test1.1[[5]][["exposed_gps"]][spores_per_packet  > 0,spores_per_packet ], rep(1,9))
+  expect_equal(test1.1[[5]][["exposed_gps"]][,unique(cdd_at_infection) ],87)
 
 })
 
@@ -111,10 +111,10 @@ test_that("intense primary_infection_foci lead to more infections",{
                                                                                            by = "days")))
   expect_length(test2, 16)
   expect_length(test2[[1]], 11)
-  expect_equal(test2[[5]][["newly_infected"]][,.N], 0)
+  expect_equal(test2[[5]][["exposed_gps"]][,.N], 0)
   expect_equal(test2[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
   expect_length(test2[[5]][["paddock"]][sporulating_gp > 0,sporulating_gp], 1)
-  expect_equal(test2[[5]][["newly_infected"]][spores_per_packet  > 0,spores_per_packet ], numeric())
+  expect_equal(test2[[5]][["exposed_gps"]][spores_per_packet  > 0,spores_per_packet ], numeric())
 
 })
 
@@ -167,7 +167,7 @@ test_that("test3 returns some sporulating gps",{
   expect_equal(test3[[30]][["paddock"]][,sum(sporulating_gp)], 33)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
-  expect_true(all(test3[[30]][["newly_infected"]][,unique(cdd_at_infection)] > test3[[30]][["cdd"]] - 200))
+  expect_true(all(test3[[30]][["exposed_gps"]][,unique(cdd_at_infection)] > test3[[30]][["cdd"]] - 200))
 
 })
 
@@ -322,7 +322,7 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 #
 # test_that("test4 returns some sporulating gps",{
 #   expect_equal(test4[[80]][["paddock"]][,sum(sporulating_gp)], 15592)
-#   expect_true(all(test4[[80]][["newly_infected"]][,unique(cdd_at_infection)] > test4[[80]][["cdd"]] - 200))
+#   expect_true(all(test4[[80]][["exposed_gps"]][,unique(cdd_at_infection)] > test4[[80]][["cdd"]] - 200))
 #
 # })
 #
@@ -417,3 +417,18 @@ test_that("primary_infection_foci input is a unrecognicsed character error",{
 #   ))
 # })
 #
+ta1 <- trace_asco(
+      weather = weather_dat,
+      paddock_length = 20,
+      paddock_width = 20,
+      initial_infection = as.POSIXct("1998-06-04") + lubridate::ddays(30),
+      sowing_date = as.POSIXct("1998-06-09"),
+      harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(135) ,
+      time_zone = "Australia/Perth",
+      seeding_rate = 40,
+      gp_rr = 0.0065,
+      spores_per_gp_per_wet_hour = 0.22,
+      latent_period_cdd = 150,
+      primary_infection_intensity = 100,
+      primary_infection_foci = "center"
+    )

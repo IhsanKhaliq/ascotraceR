@@ -69,7 +69,7 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
   # Update growing points for paddock coordinates
   if(i_wet_hours > 2){
 
-    newly_infected_dt <-
+    exposed_dt <-
       rbindlist(
         lapply(
           seq_len(nrow(weather_day[rain >= 0.1, ])),
@@ -81,18 +81,11 @@ if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
           spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour
         )
       )
-    newly_infected_dt[, cdd_at_infection := daily_vals[["cdd"]]]
+    exposed_dt[, cdd_at_infection := daily_vals[["cdd"]]]
 
-    # #aggregate infections
-    # newly_infected_dt <- newly_infected_dt[ , .N, by = .(x,y, cdd_at_infection)]
-    # setnames(
-    #   newly_infected_list,
-    #   old = c("x", "y", "cdd_at_infection", "N"),
-    #   new = c("x", "y", "cdd_at_infection", "spores_per_packet")
-    # )
 
-    daily_vals[["newly_infected"]] <- rbind(daily_vals[["newly_infected"]],
-                                            newly_infected_dt)
+    daily_vals[["exposed_gps"]] <- rbind(daily_vals[["exposed_gps"]],
+                                            exposed_dt)
 
 
   }

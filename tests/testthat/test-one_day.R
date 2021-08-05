@@ -51,7 +51,7 @@ daily_vals_list <-
     gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
     new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
     infected_coords = primary_infection_foci,  # data.frame
-    newly_infected = data.table() # data.table of infected growing points still in latent period and not sporilating (exposed_gp)
+    exposed_gps = data.table() # data.table of infected growing points still in latent period and not sporilating (exposed_gp)
   )
 
 
@@ -87,7 +87,7 @@ test_that("one_day single infection foci returns expected output", {
       "gp_standard",
       "new_gp",
       "infected_coords",
-      "newly_infected"
+      "exposed_gps"
     )
   )
   expect_equal(test1[["i_date"]], od_t1_i_date )
@@ -98,7 +98,7 @@ test_that("one_day single infection foci returns expected output", {
   expect_equal(test1[["cr"]],78.85 )
   expect_equal(round(test1[["gp_standard"]],5), 44.66747)
   expect_equal(test1[["new_gp"]],test1[["gp_standard"]] - seeding_rate)
-  expect_equal(test1[["newly_infected"]], data.table(x = c(50,54,50),
+  expect_equal(test1[["exposed_gps"]], data.table(x = c(50,54,50),
                                                      y = c(49,37,50),
                                                      spores_per_packet = c(1,1,1),
                                                      cdd_at_infection = c(18,18,18)))
@@ -147,7 +147,7 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
       "gp_standard",
       "new_gp",
       "infected_coords",
-      "newly_infected"
+      "exposed_gps"
     )
   )
   expect_equal(test2[["i_date"]], od_t1_i_date )
@@ -158,7 +158,7 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
   expect_equal(test2[["cr"]],78.85 +78.85)
   expect_equal(round(test2[["gp_standard"]],5), 44.66747 + 5.21047)
   expect_equal(round(test2[["new_gp"]],5),5.21047)
-  expect_equal(test2[["newly_infected"]], data.table(x = c(50,54,50),
+  expect_equal(test2[["exposed_gps"]], data.table(x = c(50,54,50),
                                                      y = c(49,37,50),
                                                      spores_per_packet = c(1,1,1),
                                                      cdd_at_infection = c(18,18,18)))
@@ -210,7 +210,7 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
       "gp_standard",
       "new_gp",
       "infected_coords",
-      "newly_infected"
+      "exposed_gps"
     )
   )
   expect_equal(test3[["i_date"]], od_t1_i_date )
@@ -221,7 +221,7 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
   expect_equal(test3[["cr"]], 78.85 + 78.85 + 78.85)
   expect_equal(round(test3[["gp_standard"]],5), 44.66747 + 5.21047 + 5.81624)
   expect_equal(round(test3[["new_gp"]],5),5.81624)
-  expect_equal(test3[["newly_infected"]], data.table(x = numeric(),
+  expect_equal(test3[["exposed_gps"]], data.table(x = numeric(),
                                                      y = numeric(),
                                                      spores_per_packet = numeric(),
                                                      cdd_at_infection = numeric()))
