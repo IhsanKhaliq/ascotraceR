@@ -31,7 +31,7 @@ one_day <- function(i_date,
                     spores_per_gp_per_wet_hour) {
 
   times <- temp <- wet_hours <- rain <- new_gp <- infectious_gp <-
-    cdd_at_infection <- noninfected_gp <- NULL
+    cdd_at_infection <- susceptible_gp <- NULL
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
@@ -115,10 +115,10 @@ if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
 
   # this might be quicker if there was no fifelse statement
   daily_vals[["paddock"]][, new_gp := fcase(
-    noninfected_gp == 0, 0,
-    noninfected_gp == daily_vals[["gp_standard"]], daily_vals[["new_gp"]],
-    noninfected_gp < daily_vals[["gp_standard"]], calc_new_gp(
-      current_growing_points = noninfected_gp,
+    susceptible_gp == 0, 0,
+    susceptible_gp == daily_vals[["gp_standard"]], daily_vals[["new_gp"]],
+    susceptible_gp < daily_vals[["gp_standard"]], calc_new_gp(
+      current_growing_points = susceptible_gp,
       gp_rr = gp_rr,
       max_gp = max_gp,
       mean_air_temp = i_mean_air_temp
@@ -128,7 +128,7 @@ if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
   daily_vals[["gp_standard"]] <-
     daily_vals[["gp_standard"]] + daily_vals[["new_gp"]]
 
-  daily_vals[["paddock"]][, noninfected_gp := noninfected_gp + new_gp]
+  daily_vals[["paddock"]][, susceptible_gp := susceptible_gp + new_gp]
 
 
 

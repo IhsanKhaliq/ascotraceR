@@ -217,7 +217,7 @@ trace_asco <- function(weather,
   #need to update so can assign a data.table of things primary infection foci!!!!!!!!!!!!!!!
   paddock[, c(
     "new_gp", # Change in the number of growing points since last iteration
-    "noninfected_gp",
+    "susceptible_gp",
     "exposed_gp",
     "infectious_gp" # replacing InfectiveElementList
   ) :=
@@ -318,9 +318,9 @@ trace_asco <- function(weather,
         # Infecting paddock
         pad1 <- data.table::copy(dl[["paddock"]])
         pad1[infected_rows,
-             c("noninfected_gp",
+             c("susceptible_gp",
                "infectious_gp") :=
-               .(noninfected_gp - primary_infection_foci[, load],
+               .(susceptible_gp - primary_infection_foci[, load],
                  primary_infection_foci[, load])]
         dl[["paddock"]] <- pad1
 

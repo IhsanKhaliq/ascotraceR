@@ -8,7 +8,7 @@ seeding_rate <- 40
 paddock <- as.data.table(expand.grid(x = 1:100,
                                      y = 1:100))
 paddock[, c("new_gp",
-            "noninfected_gp",
+            "susceptible_gp",
             "infected_gp",
             "infectious_gp",
             "cdd_at_infection") :=
@@ -68,7 +68,7 @@ test_that("test1 returns daily_values list with no changes", {
                  "exposed_gps"
                ))
 
-  expect_equal(test1[["paddock"]][, noninfected_gp], daily_values[["paddock"]][, noninfected_gp])
+  expect_equal(test1[["paddock"]][, susceptible_gp], daily_values[["paddock"]][, susceptible_gp])
   expect_equal(test1[["paddock"]][, infectious_gp], daily_values[["paddock"]][, infectious_gp])
   expect_equal(test1[["exposed_gps"]], daily_values[["exposed_gps"]])
   expect_false(any(is.na(test1[["paddock"]])))
@@ -104,7 +104,7 @@ test_that("test2 returns changes now latent_period has elapsed",{
   expect_silent(test3 <- make_some_infective(daily_vals = daily_values))
   expect_false(any(is.na(test2[["paddock"]])))
 
-  expect_equal(test2[["paddock"]][, sum(noninfected_gp)], 399845)
+  expect_equal(test2[["paddock"]][, sum(susceptible_gp)], 399845)
 
 })
 #
@@ -130,8 +130,8 @@ test_that("test2 returns changes now latent_period has elapsed",{
 #                ))
 #   expect_equal(test3[["paddock"]][infectious_gp > 0, .N ], 37)
 #   expect_equal(test3[["paddock"]][infectious_gp > 0, max(infectious_gp) ], 8)
-#   expect_true(all(test3[["paddock"]][, infectious_gp + noninfected_gp] == 40))
-#   expect_is(test3[["paddock"]][, noninfected_gp], "numeric")
+#   expect_true(all(test3[["paddock"]][, infectious_gp + susceptible_gp] == 40))
+#   expect_is(test3[["paddock"]][, susceptible_gp], "numeric")
 #   expect_is(test3[["paddock"]][, infectious_gp], "numeric")
 #   expect_false(any(is.na(test3[["paddock"]])))
 # })

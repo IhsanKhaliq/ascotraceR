@@ -10,7 +10,7 @@
 
 make_some_infective <- function(daily_vals,
                                 latent_period = 200) {
-  cdd_at_infection <- x <- y <- noninfected_gp <- spores_per_packet <-
+  cdd_at_infection <- x <- y <- susceptible_gp <- spores_per_packet <-
     infectious_gp <-
     max_growing_points_limit <- min_growing_points <- NULL
 
@@ -29,14 +29,14 @@ make_some_infective <- function(daily_vals,
     paddock_vals <- daily_vals[["paddock"]][row_index, ]
 
 
-    if (paddock_vals[, noninfected_gp] < newly_infectious[i_row, spores_per_packet]) {
+    if (paddock_vals[, susceptible_gp] < newly_infectious[i_row, spores_per_packet]) {
       infections_new <-
-        random_integer_from_real(paddock_vals[, noninfected_gp])
-      daily_vals[["paddock"]][row_index, noninfected_gp := 0]
+        random_integer_from_real(paddock_vals[, susceptible_gp])
+      daily_vals[["paddock"]][row_index, susceptible_gp := 0]
     } else{
       infections_new <- newly_infectious[i_row, spores_per_packet]
-      daily_vals[["paddock"]][row_index, noninfected_gp :=
-                                paddock_vals[, noninfected_gp] - infections_new]
+      daily_vals[["paddock"]][row_index, susceptible_gp :=
+                                paddock_vals[, susceptible_gp] - infections_new]
     }
 
     daily_vals[["paddock"]][row_index, infectious_gp :=
