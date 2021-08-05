@@ -42,6 +42,7 @@
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock
+#' @importFrom data.table .
 #' @export
 #'
 #' @examples
@@ -98,7 +99,7 @@ trace_asco <- function(weather,
                        spores_per_gp_per_wet_hour = 0.22){
 
 
-  x <- y <- load <- NULL
+  x <- y <- load <- susceptible_gp <- NULL
 
   # check date inputs for validity -----------------------------------------
   .vali_date <- function(x) {
