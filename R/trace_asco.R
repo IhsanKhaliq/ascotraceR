@@ -24,7 +24,7 @@
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems)
 #'  which develop per day, per square meter. Defaults to \code{350}.
 #' @param primary_infection_foci refers to the inoculated coordinates where the
-#'  eppidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
+#'  epidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
 #'  a randomly selected coordinate in the paddock, a two column data.table of
 #'  coordinates with colnames c("x","y"), a three column data.table where the third
 #' @param primary_infection_intensity The intensity of the starting epidemic as
