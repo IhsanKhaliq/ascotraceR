@@ -42,7 +42,6 @@
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock
-#' @importFrom data.table .
 #' @export
 #'
 #' @examples
@@ -321,7 +320,7 @@ trace_asco <- function(weather,
         pad1[infected_rows,
              c("susceptible_gp",
                "infectious_gp") :=
-               .(susceptible_gp - primary_infection_foci[, load],
+               list(susceptible_gp - primary_infection_foci[, load],
                  primary_infection_foci[, load])]
         dl[["paddock"]] <- pad1
 
