@@ -9,7 +9,7 @@ paddock <- as.data.table(expand.grid(x = 1:100,
                                      y = 1:100))
 paddock[, c("new_gp",
             "susceptible_gp",
-            "infected_gp",
+            "exposed_gp",
             "infectious_gp",
             "cdd_at_infection") :=
           list(

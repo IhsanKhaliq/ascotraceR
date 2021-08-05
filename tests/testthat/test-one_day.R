@@ -11,8 +11,8 @@ paddock <- as.data.table(expand.grid(x = 1:100,
 # initialise daily_vals
 paddock[, c(
   "new_gp", # Change in the number of growing points since last iteration
-  "noninfected_gp",
-  "infected_gp",
+  "susceptible_gp",
+  "exposed_gp",
   "infectious_gp", # replacing InfectiveElementList
   "cdd_at_infection"
 ) :=
@@ -109,15 +109,15 @@ test_that("one_day single infection foci returns expected output", {
       "x",
       "y",
       "new_gp",
-      "noninfected_gp",
-      "infected_gp",
+      "susceptible_gp",
+      "exposed_gp",
       "infectious_gp",
       "cdd_at_infection"
     )
   )
   expect_equal(round(test1[["paddock"]][,unique(new_gp)],6), c(4.667471, 4.551090))
-  expect_equal(round(test1[["paddock"]][,unique(noninfected_gp)],5), c(44.66747, 43.55109))
-  expect_equal(round(test1[["paddock"]][,unique(infected_gp)],6), 0)
+  expect_equal(round(test1[["paddock"]][,unique(susceptible_gp)],5), c(44.66747, 43.55109))
+  expect_equal(round(test1[["paddock"]][,unique(exposed_gp)],6), 0)
   expect_equal(round(test1[["paddock"]][,unique(infectious_gp)],6), c(0, 1))
   })
 
@@ -169,15 +169,15 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
       "x",
       "y",
       "new_gp",
-      "noninfected_gp",
-      "infected_gp",
+      "susceptible_gp",
+      "exposed_gp",
       "infectious_gp",
       "cdd_at_infection"
     )
   )
   expect_equal(round(test2[["paddock"]][,unique(new_gp)],6), c(5.210471, 5.080625))
-  expect_equal(round(test2[["paddock"]][,unique(noninfected_gp)],5), c(49.87794, 48.63171))
-  expect_equal(round(test2[["paddock"]][,unique(infected_gp)],6), 0)
+  expect_equal(round(test2[["paddock"]][,unique(susceptible_gp)],5), c(49.87794, 48.63171))
+  expect_equal(round(test2[["paddock"]][,unique(exposed_gp)],6), 0)
   expect_equal(round(test2[["paddock"]][,unique(infectious_gp)],6), c(0, 1))
 })
 
@@ -232,15 +232,15 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
       "x",
       "y",
       "new_gp",
-      "noninfected_gp",
-      "infected_gp",
+      "susceptible_gp",
+      "exposed_gp",
       "infectious_gp",
       "cdd_at_infection"
     )
   )
   expect_equal(round(test3[["paddock"]][,unique(new_gp)],6), c( 5.816238, 5.700011, 5.555145))
-  expect_equal(round(test3[["paddock"]][,unique(noninfected_gp)],5), c(55.69418, 54.57795, 53.18686))
-  expect_equal(round(test3[["paddock"]][,unique(infected_gp)],6), 0)
+  expect_equal(round(test3[["paddock"]][,unique(susceptible_gp)],5), c(55.69418, 54.57795, 53.18686))
+  expect_equal(round(test3[["paddock"]][,unique(exposed_gp)],6), 0)
   expect_equal(round(test3[["paddock"]][,unique(infectious_gp)],6), c(0 ,1,2))
 })
 

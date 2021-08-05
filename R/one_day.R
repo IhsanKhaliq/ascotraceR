@@ -16,7 +16,7 @@
 #'   a `paddock` an 'x' 'y' data.table, iteration day (i_day), cumulative daily weather data, such as:
 #'   cumulative degree days (cdd), cumulative wet hours (cwh) and cumulative rainfall in mm (cr);
 #'   standard growing points assuming growth is not impeeded by infection (gp_standard), new growing points
-#'   produced in the last 24 hours (new_gp), an 'xy' data.table of only sporulating growing points (infected_gp),
+#'   produced in the last 24 hours (new_gp), an 'xy' data.table of only infectious growing points,
 #'   and new_infections 'xy' data.table indicating exposed growing points in the latent period phase of
 #'   infection.
 #'

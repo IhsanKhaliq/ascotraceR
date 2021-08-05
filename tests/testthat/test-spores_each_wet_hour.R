@@ -16,7 +16,7 @@ seeding_rate <- 40
 paddock[, c(
   "new_gp", # Change in the number of growing points since last iteration
   "noninfected_gp",
-  "infected_gp",
+  "exposed_gp",
   "infectious_gp" # replacing InfectiveElementList
 ) :=
   list(
