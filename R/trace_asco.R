@@ -1,19 +1,19 @@
-#' Simulates the spread of Ascochyta blight in a chickpea field
+#' Simulates the spread of Ascochyta blight in a lupin field
 #'
-#' `trace_asco` simulates the spatiotemporal development of Ascochyta blight in a chickpea field
+#' `trace_asco` simulates the spatiotemporal development of Ascochyta blight in a lupin field
 #' over a growing season
 #'
-#' @param weather weather data, recorded by a local weather station, over a chickpea
+#' @param weather weather data, recorded by a local weather station, over a lupin
 #' growing season for the model operation
 #' @param paddock_length length of a paddock in metres (y)
 #' @param paddock_width width of a paddock in metres (x)
 #' @param sowing_date a character string of a date value indicating sowing
-#'  date of chickpea seed and the start of the ascotraceR model. Preferably
+#'  date of lupin seed and the start of the ascotraceR model. Preferably
 #'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #'  Assumes there is sufficient soil moisture to induce germination and start the
 #'  crop growing season.
 #' @param harvest_date a character string of a date value indicating harvest date of
-#' chickpea crop, which is also the last day to run the ascotraceR model. Preferably in
+#' lupin crop, which is also the last day to run the ascotraceR model. Preferably in
 #'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 #' @param seeding_rate indicate the rate at which chickpea seed is sown per
 #' square metre. Defaults to \code{40}

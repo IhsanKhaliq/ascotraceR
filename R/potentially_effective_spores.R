@@ -1,7 +1,7 @@
 #' Estimate the potentially infective spores
 #'
 #' @param spores_per_gp_per_wet_hour estimated number of spores produced in one
-#'  hour from a single chickpea growing point
+#'  hour from a single lupin growing point
 #' @param max_interception_probability double with length of one; Estimates the
 #'  maximum interception probability using the `spore_interception_parameter`,
 #'  see function `interception_probability()`

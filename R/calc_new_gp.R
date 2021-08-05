@@ -1,12 +1,12 @@
 #' Describes the Growth of Chickpea
 #'
-#' 'calc_new_gp()' describes the growth of chickpea in terms of development of growing
+#' 'calc_new_gp()' describes the growth of lupin in terms of development of growing
 #' points. Upon germination, each germinated seed produces one growing point that multiplies at a rate
 #' that is a function of temperature and is limited by proximity to a maximum growing point density.
 #'
 #' @param current_growing_points Are the current number of growing points at an iteration period
-#' @param gp_rr Is the rate of increase of chickpea growing points in an iteration period of one day
-#' @param max_gp Are the maximum number of chickpea growing points for each cultivar
+#' @param gp_rr Is the rate of increase of lupin growing points in an iteration period of one day
+#' @param max_gp Are the maximum number of lupin growing points for each cultivar
 #' @param mean_air_temp Is average daily temperature in Celsius
 #' @return Integer giving the number of new growing points formed in an iteration period of one day
 #'

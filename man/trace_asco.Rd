@@ -2,7 +2,7 @@
 % Please edit documentation in R/trace_asco.R
 \name{trace_asco}
 \alias{trace_asco}
-\title{Simulates the spread of Ascochyta blight in a chickpea field}
+\title{Simulates the spread of Ascochyta blight in a lupin field}
 \usage{
 trace_asco(
   weather,
@@ -24,7 +24,7 @@ trace_asco(
 )
 }
 \arguments{
-\item{weather}{weather data, recorded by a local weather station, over a chickpea
+\item{weather}{weather data, recorded by a local weather station, over a lupin
 growing season for the model operation}
 
 \item{paddock_length}{length of a paddock in metres (y)}
@@ -32,28 +32,28 @@ growing season for the model operation}
 \item{paddock_width}{width of a paddock in metres (x)}
 
 \item{sowing_date}{a character string of a date value indicating sowing
-date of chickpea seed and the start of the ascotraceR model. Preferably
+date of lupin seed and the start of the ascotraceR model. Preferably
 in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
 Assumes there is sufficient soil moisture to induce germination and start the
 crop growing season.}
 
 \item{harvest_date}{a character string of a date value indicating harvest date of
-chickpea crop, which is also the last day to run the ascotraceR model. Preferably in
+lupin crop, which is also the last day to run the ascotraceR model. Preferably in
 \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.}
 
 \item{initial_infection}{refers to initial or primary infection on seedlings,
 resulting in the production of infected growing points}
 
-\item{seeding_rate}{indicate the rate at which chickpea seed is sown per
+\item{seeding_rate}{indicate the rate at which lupin seed is sown per
 square metre. Defaults to \code{40}}
 
-\item{gp_rr}{refers to rate of increase in chickpea growing points
+\item{gp_rr}{refers to rate of increase in lupin growing points
 per degree Celsius per day. Defaults to \code{0.0065}}
 
-\item{max_gp_lim}{Maximum number of chickpea growing points (meristems) allowed
+\item{max_gp_lim}{Maximum number of lupin growing points (meristems) allowed
 per square meter. Defaults to \code{15000}.}
 
-\item{max_new_gp}{Maximum number of new chickpea growing points (meristems)
+\item{max_new_gp}{Maximum number of new lupin growing points (meristems)
 which develop per day, per square meter. Defaults to \code{350}.}
 
 \item{latent_period_cdd}{latent period in cumulative degree days (sum of
@@ -78,10 +78,10 @@ Also known as the 'spore_rate'. Value is dependent on the susceptibility of the 
 }
 \value{
 a x y \code{data.frame} simulating the spread of Ascochyta blight in a
-chickpea paddock
+lupin paddock
 }
 \description{
-\code{trace_asco} simulates the spatiotemporal development of Ascochyta blight in a chickpea field
+\code{trace_asco} simulates the spatiotemporal development of Ascochyta blight in a lupin field
 over a growing season
 }
 \examples{
