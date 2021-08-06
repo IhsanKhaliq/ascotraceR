@@ -51,7 +51,8 @@ one_day <- function(i_date,
   daily_vals[["cwh"]] <- daily_vals[["cwh"]] + i_wet_hours
   daily_vals[["cr"]] <- daily_vals[["cr"]] + i_rainfall
 
-
+  # max new growing points are multiplied by five as growing points remain susceptible
+  #  for five days.
   max_interception_probability <-
     interception_probability(target_density = 5 * max(daily_vals[["paddock"]][,new_gp]),
                              k = spore_interception_parameter)
