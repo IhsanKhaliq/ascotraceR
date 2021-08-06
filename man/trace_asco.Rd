@@ -63,7 +63,7 @@ lesions on susceptible growing points. Defaults to \code{200}}
 \item{time_zone}{refers to time in Coordinated Universal Time (UTC)}
 
 \item{primary_infection_foci}{refers to the inoculated coordinates where the
-eppidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
+epidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
 a randomly selected coordinate in the paddock, a two column data.table of
 coordinates with colnames c("x","y"), a three column data.table where the third}
 
@@ -87,7 +87,7 @@ over a growing season
 \examples{
 # First weather data needs to be imported and formatted with `format_weather`
 Newmarracarra <-
-   read.csv(system.file("extdata",
+   data.table::fread(system.file("extdata",
             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
 station_data <-
    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
