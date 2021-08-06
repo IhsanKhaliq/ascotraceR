@@ -169,7 +169,8 @@ trace_asco <- function(weather,
                   c("x", "y")]
 
       } else{
-        if (primary_infection_foci == "centre") {
+        if (primary_infection_foci == "centre" |
+            primary_infection_foci == "center") {
           primary_infection_foci <-
             paddock[x == as.integer(round(paddock_width / 2)) &
                       y == as.integer(round(paddock_length / 2)),
