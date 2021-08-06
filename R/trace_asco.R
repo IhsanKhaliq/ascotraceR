@@ -47,7 +47,7 @@
 #' @examples
 #' # First weather data needs to be imported and formatted with `format_weather`
 #' Newmarracarra <-
-#'    read.csv(system.file("extdata",
+#'    data.table::fread(system.file("extdata",
 #'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
 #' station_data <-
 #'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
@@ -99,6 +99,10 @@ trace_asco <- function(weather,
 
 
   x <- y <- load <- susceptible_gp <- NULL
+
+  if(!"data.table" %in% class(weather)){
+    stop("'weather' must be class \"asco.weather\"")
+  }
 
   # check date inputs for validity -----------------------------------------
   .vali_date <- function(x) {
