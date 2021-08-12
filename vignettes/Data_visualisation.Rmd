@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
   echo = TRUE,
   fig.width = 7,
   fig.height = 7,
-  fig.align = "centre"
+  fig.align = "center"
 )
 ```
 
@@ -100,8 +100,8 @@ mutate(incidence = incidence / 100) %>%  (optional step)
 -	Data wrangling of predicted data frame to fit binomial distribution 
 
 predicted %>%
- mutate(infectious_gp = infectious_gp / 40) %>%  # seeding rate = 40 (optional step)
- mutate(predicted_presence = if_else(infectious_gp > 0, 1, 0))
+ mutate(infected_gp = infected_gp / 40) %>%  # seeding rate = 40 (optional step)
+ mutate(predicted_presence = if_else(infected_gp > 0, 1, 0))
 
 -	Run the model with Billa Billa weather data and produce the heatmap (prediction), then combine it with the heatmap produced from the field experiment (observation). Repeat the same for Tosari [Link to the heatmap from the experiment is shown here](https://ihsankhaliq.github.io/spatiotemporaldynamics/articles/Data_visualisation.html)  
 

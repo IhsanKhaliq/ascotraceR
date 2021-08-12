@@ -93,26 +93,71 @@
 #' # \pkg{ascotraceR}.  The weather data files both are of the same format, so
 #' # they will be combined for formatting here.
 #'
-#' Newmarracarra <-
-#'    read.csv(system.file("extdata",
-#'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
-#' station_data <-
-#'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#' Billa_Billa <-
+#'   # use read_csv to avoid NAs introduced by coercion error
+#'   readr::read_csv(system.file("extdata",
+#'             "2020_Billa_Billa_weather.csv", package = "ascotraceR")) %>%
+#'   # convert wind direction recorded as text to degrees
+#'   dplyr::mutate(
+#'     wind_direction = dplyr::case_when(
+#'       max_wind_direction == "N" ~ "0",
+#'       max_wind_direction == "NbE" ~ "11.25",
+#'       max_wind_direction == "NNE" ~ "22.5",
+#'       max_wind_direction == "NEbN" ~ "33.75",
+#'       max_wind_direction == "NE" ~ "45",
+#'       max_wind_direction == "NEbE" ~ "56.25",
+#'       max_wind_direction == "ENE" ~ "67.5",
+#'       max_wind_direction == "EbN" ~ "73.5",
+#'       max_wind_direction == "E" ~ "90",
+#'       max_wind_direction == "EbS" ~ "101.2",
+#'       max_wind_direction == "ESE" ~ "112.5",
+#'       max_wind_direction == "SEbE" ~ "123.8",
+#'       max_wind_direction == "SE" ~ "135.1",
+#'       max_wind_direction == "SEbS" ~ "146.3",
+#'       max_wind_direction == "SSE" ~ "157.6",
+#'       max_wind_direction == "SbE" ~ "168.8",
+#'       max_wind_direction == "S" ~ "180",
+#'       max_wind_direction == "SbW" ~ "191.2",
+#'       max_wind_direction == "SSW" ~ "202.5",
+#'       max_wind_direction == "SWbS" ~ "213.8",
+#'       max_wind_direction == "SW" ~ "225",
+#'       max_wind_direction == "SWbW" ~ "236.2",
+#'       max_wind_direction == "WSW" ~ "247.5",
+#'       max_wind_direction == "WbS" ~ "258.8",
+#'       max_wind_direction == "W" ~ "270",
+#'       max_wind_direction == "WbN" ~ "281.2",
+#'       max_wind_direction == "WNW" ~ "292.5",
+#'       max_wind_direction == "NWbW" ~ "303.8",
+#'       max_wind_direction == "NW" ~ "315",
+#'       max_wind_direction == "NWbN" ~ "326.2",
+#'       max_wind_direction == "NNW" ~ "337.5",
+#'       max_wind_direction == "NbW" ~ "348.8",
+#'       TRUE ~ max_wind_direction
+#'     )
+#'   ) %>%
+#'   dplyr::mutate(wind_direction = as.numeric(wind_direction))
 #'
-#' weather <- format_weather(
-#'    x = Newmarracarra,
-#'    POSIXct_time = "Local.Time",
-#'    ws = "ws",
+#' station_data <-
+#'   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#'
+#' Billa_Billa$local_time <-
+#'    as.POSIXct(Billa_Billa$local_time, format = "%d/%m/%Y")
+#'
+#' weather <- format_weather(x = Billa_Billa,
+#'    POSIXct_time = "local_time",
+#'    ws = "avg_wind_speed (km/h)",
 #'    wd_sd = "wd_sd",
-#'    rain = "rain_mm",
-#'    wd = "wd",
-#'    station = "Location",
-#'    time_zone = "Australia/Perth",
+#'    rain = "rain",
+#'    wd = "wind_direction",
+#'    temp = "mean_daily_temperature",
+#'    station = "location",
+#'    time_zone = "Australia/Brisbane",
 #'    lonlat_file = station_data
-#' )
+#'    )
 #'
 #' @export
-#' @import data.table
+#' @import  data.table
+
 format_weather <- function(x,
                            YYYY = NULL,
                            MM = NULL,
@@ -132,7 +177,7 @@ format_weather <- function(x,
                            r = NULL,
                            lonlat_file = NULL) {
   # CRAN Note avoidance
-  times <- NULL #nocov
+  times <- ..station <- ..time_zone <- NULL #nocov
 
   # Check x class
   if (!is.data.frame(x)) {
@@ -215,7 +260,7 @@ format_weather <- function(x,
     mm <- "mm"
   }
   if (missing(wd_sd)) {
-    x$wd_sd <- NA########################
+    x[, wd_sd := rep(NA, .N)]
     wd_sd <- "wd_sd"
   }
   if (missing(temp)) {
@@ -238,16 +283,16 @@ format_weather <- function(x,
       )
     }
 
-    if (any(as.character(unique(x[, get(station)])) %notin% as.character(ll_file[, station]))) {
-      stop(
-        "The csv file of weather station coordinates should contain ",
-        "station coordinates for each weather station identifier."
-      )
-    }
+    # if (any(as.character(unique(x[, ..station])) %notin% as.character(ll_file[, station]))) {
+    #   stop(
+    #     "The csv file of weather station coordinates should contain ",
+    #     "station coordinates for each weather station identifier."
+    #   )
+    # }
 
     r_num <-
       which(as.character(ll_file[, station]) ==
-              as.character(unique(x[, get(station)])))
+              as.character(unique(x[, ..station])))
 
     x[, lat := rep(ll_file[r_num, lat], nrow(x))]
     x[, lon := rep(ll_file[r_num, lon], nrow(x))]
@@ -322,7 +367,11 @@ format_weather <- function(x,
                          old = POSIXct_time,
                          new = "times",
                          skip_absent = TRUE)
-    x[,times := as.POSIXct(times)]
+
+    if("POSIXct" %in% class(x[,times]) == FALSE){
+      stop("'POSIXct_time' is not class POSIXct")
+    }
+
     x[, YYYY := lubridate::year(x[, times])]
     x[, MM := lubridate::month(x[, times])]
     x[, DD := lubridate::day(x[, times])]
@@ -334,7 +383,7 @@ format_weather <- function(x,
     if (lubridate::tz(x[, times]) == "" ||
         lubridate::tz(x[, times]) == "UTC") {
       x[, times := lubridate::force_tz(x[, times],
-                                      tzone = time_zone)]
+                                      tzone = ..time_zone)]
     }
   } else {
     # if POSIX formatted times were not supplied, create a POSIXct
@@ -344,17 +393,19 @@ format_weather <- function(x,
                        MM, "-",
                        DD, " ",
                        hh, ":",
-                       mm, sep = "")][, times := lubridate::ymd_hm(times, tz = time_zone)]
+                       mm, sep = "")][, times := lubridate::ymd_hm(times, tz = ..time_zone)]
 
   }
+# temporarily hashed out on 29-6-2021 because Billa Billa `local_time` contains only dates,
+#  not local time
 
-  if (any(is.na(x[, times]))) {
-    stop(
-      times,
-      "Time records contain NA values or impossible time combinations, ie. 11:60 am, ",
-      "Check time inputs"
-    )
-  }
+  # if (any(is.na(x[, times]))) {
+  #   stop(
+  #     times,
+  #     "Time records contain NA values or impossible time combinations, ie. 11:60 am, ",
+  #     "Check time inputs"
+  #   )
+  # }
 
   # workhorse of this function that does the reformatting
   .do_format <- function(x_dt,
@@ -378,7 +429,8 @@ format_weather <- function(x,
 
     log_freq <-
       lubridate::int_length(lubridate::int_diff(c(x_dt[1, times],
-                                                   x_dt[.N, times]))) /
+                                                  x_dt[.N, times]))) /
+
       (nrow(x_dt) * 60)
 
     # if the logging frequency is less than 50 minutes aggregate to hourly

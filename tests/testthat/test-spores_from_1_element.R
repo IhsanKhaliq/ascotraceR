@@ -10,9 +10,9 @@ seeding_rate <- 40
 paddock <- as.data.table(expand.grid(x = 1:100,
                                      y = 1:100))
 paddock[, c("new_gp",
-            "susceptible_gp",
+            "noninfected_gp",
             "infected_gp",
-            "infectious_gp",
+            "sporulating_gp",
             "cdd_at_infection") :=
           list(
             seeding_rate,
@@ -27,7 +27,7 @@ paddock[, c("new_gp",
           )]
 
 
-paddock_infected <- paddock[infectious_gp > 0,]
+paddock_infected <- paddock[sporulating_gp > 0,]
 
 set.seed(667)
 
@@ -105,14 +105,14 @@ test_that("test3 is data.table of 1 row",{
 
 set.seed(666)
 
-#seleck 20 coordinates to randomly allocate infectious_gps
+#seleck 20 coordinates to randomly allocate infected_gps
 vec_R1 <- sample(1:nrow(paddock),size = 20, replace = FALSE)
 
 # filter paddock to only the infected coordinates
 paddock_infected <- paddock[vec_R1,]
 
-# give infected coordinates infectious_gp of between 1:20
-paddock_infected[,infectious_gp := sample(1:20, size = 20, replace = FALSE)]
+# give infected coordinates infected_gp of between 1:20
+paddock_infected[,sporulating_gp := sample(1:20, size = 20, replace = FALSE)]
 
 # use new infected data in model
 test4 <- apply(

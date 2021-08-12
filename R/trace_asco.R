@@ -23,12 +23,12 @@
 #'  per square meter. Defaults to \code{15000}.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems)
 #'  which develop per day, per square meter. Defaults to \code{350}.
-#' @param primary_infection_foci refers to the inoculated coordinates where the
-#'  epidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
-#'  a randomly selected coordinate in the paddock, a two column data.table of
-#'  coordinates with colnames c("x","y"), a three column data.table where the third
-#' @param primary_infection_intensity The intensity of the starting epidemic as
-#'  described by the number of number of sporulating growing points.
+#' @param primary_infection_foci it refers to the inoculated quadrat
+#'  located at the centre of the paddock from where disease spreads
+#'  Defaults to \code{"centre"}
+#' @param primary_inoculum_intensity it refers to the intensity of primary inoculum as
+#'  described by number of sporulating growing points on infested stubble, which are placed
+#'  at the center of the plot as a source of inoculum.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'  daily temperature means) is the period between infection and production of
 #'  lesions on susceptible growing points. Defaults to \code{200}
@@ -39,47 +39,109 @@
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #' @param n_foci only relevant when primary_infection_foci = "random" and notes the number
 #'  of primary_infection_foci at initial infection.
+#' @param wind_distance Median conidial dispersal distance parameter of the half-Cauchy distribution
+#'  in relation to wind driven rain. Default to \code{o.15}
+#'
+#'
 #'
 #' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
 #' chickpea paddock
 #' @export
 #'
 #' @examples
-#' # First weather data needs to be imported and formatted with `format_weather`
-#' Newmarracarra <-
-#'    data.table::fread(system.file("extdata",
-#'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
-#' station_data <-
-#'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#' First weather data needs to be imported and formatted with `format_weather`
+#' Billa_Billa <-
+#'   readr::read_csv(system.file("extdata",
+#'                        "2020_Billa_Billa_weather.csv", package = "ascotraceR")) %>%
+#'    # convert wind direction recorded as text to degrees
+#'   dplyr::mutate(
+#'     wind_direction = dplyr::case_when(
+#'       max_wind_direction == "N" ~ "0",
+#'       max_wind_direction == "NbE" ~ "11.25",
+#'       max_wind_direction == "NNE" ~ "22.5",
+#'       max_wind_direction == "NEbN" ~ "33.75",
+#'       max_wind_direction == "NE" ~ "45",
+#'       max_wind_direction == "NEbE" ~ "56.25",
+#'       max_wind_direction == "ENE" ~ "67.5",
+#'       max_wind_direction == "EbN" ~ "73.5",
+#'       max_wind_direction == "E" ~ "90",
+#'       max_wind_direction == "EbS" ~ "101.2",
+#'       max_wind_direction == "ESE" ~ "112.5",
+#'       max_wind_direction == "SEbE" ~ "123.8",
+#'       max_wind_direction == "SE" ~ "135.1",
+#'       max_wind_direction == "SEbS" ~ "146.3",
+#'       max_wind_direction == "SSE" ~ "157.6",
+#'       max_wind_direction == "SbE" ~ "168.8",
+#'       max_wind_direction == "S" ~ "180",
+#'       max_wind_direction == "SbW" ~ "191.2",
+#'       max_wind_direction == "SSW" ~ "202.5",
+#'       max_wind_direction == "SWbS" ~ "213.8",
+#'       max_wind_direction == "SW" ~ "225",
+#'       max_wind_direction == "SWbW" ~ "236.2",
+#'       max_wind_direction == "WSW" ~ "247.5",
+#'       max_wind_direction == "WbS" ~ "258.8",
+#'       max_wind_direction == "W" ~ "270",
+#'       max_wind_direction == "WbN" ~ "281.2",
+#'       max_wind_direction == "WNW" ~ "292.5",
+#'       max_wind_direction == "NWbW" ~ "303.8",
+#'       max_wind_direction == "NW" ~ "315",
+#'       max_wind_direction == "NWbN" ~ "326.2",
+#'       max_wind_direction == "NNW" ~ "337.5",
+#'       max_wind_direction == "NbW" ~ "348.8",
+#'       TRUE ~ max_wind_direction
+#'     )
+#'   ) %>%
+#'   dplyr::mutate(wind_direction = as.numeric(wind_direction)) %>%
+#'   dplyr::rename(wd = wind_direction) %>%
+#'   dplyr::rename(stationID=location) %>%
+#'   dplyr::rename(ws =  `avg_wind_speed (km/h)`) %>%
+#'   dplyr::mutate(wd_sd = as.numeric(sd(wd))) %>%
+#'   dplyr::mutate(ws_sd = as.numeric(sd(ws))) %>%
+#'   tidyr::replace_na(list(wet_hours = 0, y = "unknown"))
+#'   # replace na with 0 to see if this error goes away:
+#'   #"Error in if (i_wet_hours > 0) #{ : missing value where TRUE/FALSE needed"
 #'
-#' weather_dat <- format_weather(
-#'    x = Newmarracarra,
-#'    POSIXct_time = "Local.Time",
-#'    temp = "mean_daily_temp",
-#'    ws = "ws",
-#'    wd_sd = "wd_sd",
-#'    rain = "rain_mm",
-#'    wd = "wd",
-#'    station = "Location",
-#'    time_zone = "Australia/Perth",
-#'    lonlat_file = station_data)
+#' station_data <-
+#'   system.file("extdata", "Billa_Billa_stat_dat.csv", package = "ascotraceR")
+#'
+#' Billa_Billa$local_time <-
+#'    as.POSIXct(Billa_Billa$local_time, format = "%d/%m/%Y")
+#'
+#' weather_dat <- format_weather(x = Billa_Billa,
+#'   POSIXct_time = "local_time",
+#'   temp = "mean_daily_temperature",
+#'   ws = "ws",
+#'   wd_sd = "wd_sd",
+#'   rain = "rain",
+#'   wd = "wd",
+#'   station = "stationID",
+#'   time_zone = "Australia/Brisbane",
+#'   lonlat_file = station_data)
+#'
 #'
 #'
 #' traced <- trace_asco(
 #'   weather = weather_dat,
-#'   paddock_length = 100,
-#'   paddock_width = 100,
-#'   initial_infection = "1998-06-10",
-#'   sowing_date = as.POSIXct("1998-06-09"),
-#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70),
-#'   time_zone = "Australia/Perth",
+#'   paddock_length = 20,
+#'   paddock_width = 20,
+#'   initial_infection = "2020-07-16",
+#'   sowing_date = as.POSIXct("2020-06-04"),
+#'   harvest_date = as.POSIXct("2020-06-04") + lubridate::ddays(145),
+#'   time_zone = "Australia/Brisbane",
+#'   primary_infection_foci = "center",
+#'   seeding_rate  = 40,
 #'   gp_rr = 0.0065,
-#'   primary_infection_intensity = 1000,
+#'   primary_inoculum_intensity = 1000,
 #'   spores_per_gp_per_wet_hour = 0.22,
-#'   primary_infection_foci = "centre")
-#'   traced[[70]]
-#'
-#' write.csv(traced[[70]]$paddock, "testrun2.csv", row.names = FALSE)
+#'   latent_period_cdd = 150)
+#'   traced[[145]]
+
+#' write.csv(traced[[145]]$paddock, "testrun1.csv", row.names = FALSE)
+
+#'   tracer_plot(dat = traced,
+#'   day=145)
+
+
 trace_asco <- function(weather,
                        paddock_length,
                        paddock_width,
@@ -93,16 +155,12 @@ trace_asco <- function(weather,
                        latent_period_cdd = 200,
                        time_zone = "UTC",
                        primary_infection_foci = "random",
-                       primary_infection_intensity = 1,
+                       primary_inoculum_intensity = 1,
                        n_foci = 1,
                        spores_per_gp_per_wet_hour = 0.22){
 
 
-  x <- y <- load <- susceptible_gp <- NULL
-
-  if(!"data.table" %in% class(weather)){
-    stop("'weather' must be class \"asco.weather\"")
-  }
+  x <- y <- sp_gp <- NULL
 
   # check date inputs for validity -----------------------------------------
   .vali_date <- function(x) {
@@ -129,12 +187,9 @@ trace_asco <- function(weather,
   }
 
 
-  # if (primary_infection_intensity > seeding_rate) {
-  #   stop(
-  #     "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
-  #     seeding_rate
-  #   )
-  # }
+  if (primary_inoculum_intensity <= 0) {
+    stop("primary_inoculum_intensity value should be above zero to initiate infections")
+  }
 
   # convert times to POSIXct -----------------------------------------------
   initial_infection <-
@@ -173,8 +228,7 @@ trace_asco <- function(weather,
                   c("x", "y")]
 
       } else{
-        if (primary_infection_foci == "centre" |
-            primary_infection_foci == "center") {
+        if (primary_infection_foci == "center") {
           primary_infection_foci <-
             paddock[x == as.integer(round(paddock_width / 2)) &
                       y == as.integer(round(paddock_length / 2)),
@@ -211,20 +265,16 @@ trace_asco <- function(weather,
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
   if(ncol(primary_infection_foci) == 2){
-    primary_infection_foci[,load := primary_infection_intensity]
-  }else{
-    if(all(colnames(primary_infection_foci) %in% c("x", "y"))){
-      stop("colnames for 'primary_infection_foci' not 'x', 'y' & 'load'.")
-    }
+    primary_infection_foci[,sp_gp := primary_inoculum_intensity]
   }
 
   # define paddock variables at time 1
   #need to update so can assign a data.table of things primary infection foci!!!!!!!!!!!!!!!
   paddock[, c(
     "new_gp", # Change in the number of growing points since last iteration
-    "susceptible_gp",
-    "exposed_gp",
-    "infectious_gp" # replacing InfectiveElementList
+    "noninfected_gp",
+    "infected_gp",
+    "sporulating_gp" # replacing InfectiveElementList
   ) :=
     list(
       seeding_rate,
@@ -233,14 +283,12 @@ trace_asco <- function(weather,
       0
     )]
 
+  paddock[infected_rows, "noninfected_gp" :=
+            seeding_rate - primary_infection_foci[,3]]
+  paddock[infected_rows, "sporulating_gp" :=
+            primary_infection_foci[,3]]
+
   # calculate additional parameters
-  # Pauls interpretation of this calculation
-  # For a particular spread event (point in time), in space of all growing points
-  #  the maximum number of susceptible growing are 15000/350 = 42.86
-  #  The highest probability of a spore landing on the area of these 42 susceptible
-  #  growing points is 0.00006 * 42.86. However as the crop is always changing we
-  #  need to calculate the actual probability of interception depending on the
-  #  density of the crop canopy for that given time. See the function `interception_probability`
   spore_interception_parameter <-
     0.00006 * (max_gp_lim/max_new_gp)
 
@@ -255,7 +303,6 @@ trace_asco <- function(weather,
   #
   # refUninfectiveGPs <- minGrowingPoints <- seeding_rate
 
-  # Create a clean daily values list with no infection in paddocks
   daily_vals_list <- list(
     list(
       paddock = paddock, # data.table each row is a 1 x 1m coordinate
@@ -267,9 +314,8 @@ trace_asco <- function(weather,
       cr = 0,     # cumulative rainfall
       gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
       new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
-      infected_coords = data.table(x = numeric(),
-                                   y = numeric()),  # data.table
-      exposed_gps =  data.table(x = numeric(),
+      infected_coords = primary_infection_foci,  # data.frame
+      newly_infected =  data.table(x = numeric(),
                                    y = numeric(),
                                    spores_per_packet = numeric(),
                                    cdd_at_infection = numeric()) # data.table of infected growing points still in latent period and not sporilating (exposed_gp)
@@ -291,50 +337,19 @@ trace_asco <- function(weather,
     daily_vals_list[[i]][["day"]] <- lubridate::yday(time_increments[i])
 
 
+
     # currently working on one_day
-    daily_vals_list[[i + 1]] <- one_day(
-      i_date = time_increments[i],
-      daily_vals = daily_vals_list[[i]],
-      weather_dat = weather,
-      gp_rr = gp_rr,
-      max_gp = max_gp,
-      spore_interception_parameter = spore_interception_parameter,
-      spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour
-    )
+    daily_vals_list[[i + 1]] <- one_day(i_date = time_increments[i],
+                       daily_vals = daily_vals_list[[i]],
+                       weather_dat = weather,
+                       gp_rr = gp_rr,
+                       max_gp = max_gp,
+                       spore_interception_parameter = spore_interception_parameter,
+                       spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour)
 
-    # When the time of initial infection occurs, infect the paddock coordinates
-    if(initial_infection == time_increments[i]){
+    # temporary line of code to test building of daily_vals in loop
+    #daily_vals_list <- day_out
 
-      # if primary_infection_intensity exceeds the number of growing points send
-      #  warning
-      if (primary_infection_intensity > daily_vals_list[[i]][["gp_standard"]]) {
-        warning(
-          "primary_infection_intensity exceeds the number of growing points at time of infection 'growing_points': ",
-          daily_vals_list[[i]][["gp_standard"]],
-          "\nThis may cause an over estimation of disease spread"
-        )
-      }
-
-
-    # update the remaining increments with the primary infected coordinates
-    daily_vals_list[i:length(daily_vals_list)] <-
-      lapply(daily_vals_list[i:length(daily_vals_list)], function(dl){
-
-        # Infecting paddock
-        pad1 <- data.table::copy(dl[["paddock"]])
-        pad1[infected_rows,
-             c("susceptible_gp",
-               "infectious_gp") :=
-               list(susceptible_gp - primary_infection_foci[, load],
-                 primary_infection_foci[, load])]
-        dl[["paddock"]] <- pad1
-
-        # Edit infected_coordinates data.table
-        dl[["infected_coords"]] <- primary_infection_foci[,c("x","y")]
-      return(dl)
-    })
-
-    }
   }
 
   daily_vals_list[[length(daily_vals_list)]][["i_date"]] <-

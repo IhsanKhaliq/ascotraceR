@@ -16,7 +16,7 @@
 #'   a `paddock` an 'x' 'y' data.table, iteration day (i_day), cumulative daily weather data, such as:
 #'   cumulative degree days (cdd), cumulative wet hours (cwh) and cumulative rainfall in mm (cr);
 #'   standard growing points assuming growth is not impeeded by infection (gp_standard), new growing points
-#'   produced in the last 24 hours (new_gp), an 'xy' data.table of only infectious growing points,
+#'   produced in the last 24 hours (new_gp), an 'xy' data.table of only sporulating growing points (infected_gp),
 #'   and new_infections 'xy' data.table indicating exposed growing points in the latent period phase of
 #'   infection.
 #'
@@ -30,8 +30,8 @@ one_day <- function(i_date,
                     spore_interception_parameter,
                     spores_per_gp_per_wet_hour) {
 
-  times <- temp <- wet_hours <- rain <- new_gp <- infectious_gp <-
-    cdd_at_infection <- susceptible_gp <- NULL
+  times <- temp <- wet_hours <- rain <- new_gp <- sporulating_gp <-
+    cdd_at_infection <- noninfected_gp <- NULL
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
@@ -51,8 +51,7 @@ one_day <- function(i_date,
   daily_vals[["cwh"]] <- daily_vals[["cwh"]] + i_wet_hours
   daily_vals[["cr"]] <- daily_vals[["cr"]] + i_rainfall
 
-  # max new growing points are multiplied by five as growing points remain susceptible
-  #  for five days.
+
   max_interception_probability <-
     interception_probability(target_density = 5 * max(daily_vals[["paddock"]][,new_gp]),
                              k = spore_interception_parameter)
@@ -60,17 +59,15 @@ one_day <- function(i_date,
   # need to make a copy of the data.table otherwise it will modify all data.tables
   # in the following functions
   daily_vals[["paddock"]] <- copy(daily_vals[["paddock"]])
-if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
-  stop("NA values in daily_vals[['paddock']][,infectious_gp] ")
+if(any(is.na(daily_vals[["paddock"]][,sporulating_gp]))){
+  stop("NA values in daily_vals[['paddock']][,sporulating_gp] ")
 }
 
-  # Don't spread spores if there are no infected coordinates
-  if(nrow(daily_vals[["infected_coords"]]) > 0){
 # Spread spores and infect plants
   # Update growing points for paddock coordinates
   if(i_wet_hours > 2){
 
-    exposed_dt <-
+    newly_infected_dt <-
       rbindlist(
         lapply(
           seq_len(nrow(weather_day[rain >= 0.1, ])),
@@ -82,11 +79,18 @@ if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
           spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour
         )
       )
-    exposed_dt[, cdd_at_infection := daily_vals[["cdd"]]]
+    newly_infected_dt[, cdd_at_infection := daily_vals[["cdd"]]]
 
+    # #aggregate infections
+    # newly_infected_dt <- newly_infected_dt[ , .N, by = .(x,y, cdd_at_infection)]
+    # setnames(
+    #   newly_infected_list,
+    #   old = c("x", "y", "cdd_at_infection", "N"),
+    #   new = c("x", "y", "cdd_at_infection", "spores_per_packet")
+    # )
 
-    daily_vals[["exposed_gps"]] <- rbind(daily_vals[["exposed_gps"]],
-                                            exposed_dt)
+    daily_vals[["newly_infected"]] <- rbind(daily_vals[["newly_infected"]],
+                                            newly_infected_dt)
 
 
   }
@@ -97,9 +101,8 @@ if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
 
 
 # update infected coordinates
-  daily_vals[["infected_coords"]] <- daily_vals[["paddock"]][infectious_gp > 0, c("x","y")]
+  daily_vals[["infected_coords"]] <- daily_vals[["paddock"]][sporulating_gp > 0, c("x","y")]
 
-  }
 
 # Grow Plants
   # this code represents mathematica function `growth`; `updateRefUninfectiveGrowingPoints`
@@ -116,10 +119,10 @@ if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
 
   # this might be quicker if there was no fifelse statement
   daily_vals[["paddock"]][, new_gp := fcase(
-    susceptible_gp == 0, 0,
-    susceptible_gp == daily_vals[["gp_standard"]], daily_vals[["new_gp"]],
-    susceptible_gp < daily_vals[["gp_standard"]], calc_new_gp(
-      current_growing_points = susceptible_gp,
+    noninfected_gp == 0, 0,
+    noninfected_gp == daily_vals[["gp_standard"]], daily_vals[["new_gp"]],
+    noninfected_gp < daily_vals[["gp_standard"]], calc_new_gp(
+      current_growing_points = noninfected_gp,
       gp_rr = gp_rr,
       max_gp = max_gp,
       mean_air_temp = i_mean_air_temp
@@ -129,7 +132,7 @@ if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
   daily_vals[["gp_standard"]] <-
     daily_vals[["gp_standard"]] + daily_vals[["new_gp"]]
 
-  daily_vals[["paddock"]][, susceptible_gp := susceptible_gp + new_gp]
+  daily_vals[["paddock"]][, noninfected_gp := noninfected_gp + new_gp]
 
 
 

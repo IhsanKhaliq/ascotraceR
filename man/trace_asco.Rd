@@ -18,7 +18,7 @@ trace_asco(
   latent_period_cdd = 200,
   time_zone = "UTC",
   primary_infection_foci = "random",
-  primary_infection_intensity = 1,
+  primary_inoculum_intensity = 1,
   n_foci = 1,
   spores_per_gp_per_wet_hour = 0.22
 )
@@ -62,12 +62,11 @@ lesions on susceptible growing points. Defaults to \code{200}}
 
 \item{time_zone}{refers to time in Coordinated Universal Time (UTC)}
 
-\item{primary_infection_foci}{refers to the inoculated coordinates where the
-epidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
-a randomly selected coordinate in the paddock, a two column data.table of
-coordinates with colnames c("x","y"), a three column data.table where the third}
+\item{primary_infection_foci}{it refers to the inoculated quadrat
+located at the centre of the paddock from where disease spreads
+Defaults to \code{"centre"}}
 
-\item{primary_infection_intensity}{The intensity of the starting epidemic as
+\item{primary_inoculum_intensity}{The intensity of the starting epidemic as
 described by the number of number of sporulating growing points.}
 
 \item{n_foci}{only relevant when primary_infection_foci = "random" and notes the number
@@ -83,41 +82,4 @@ chickpea paddock
 \description{
 \code{trace_asco} simulates the spatiotemporal development of Ascochyta blight in a chickpea field
 over a growing season
-}
-\examples{
-# First weather data needs to be imported and formatted with `format_weather`
-Newmarracarra <-
-   data.table::fread(system.file("extdata",
-            "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
-station_data <-
-   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
-
-weather_dat <- format_weather(
-   x = Newmarracarra,
-   POSIXct_time = "Local.Time",
-   temp = "mean_daily_temp",
-   ws = "ws",
-   wd_sd = "wd_sd",
-   rain = "rain_mm",
-   wd = "wd",
-   station = "Location",
-   time_zone = "Australia/Perth",
-   lonlat_file = station_data)
-
-
-traced <- trace_asco(
-  weather = weather_dat,
-  paddock_length = 100,
-  paddock_width = 100,
-  initial_infection = "1998-06-10",
-  sowing_date = as.POSIXct("1998-06-09"),
-  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70),
-  time_zone = "Australia/Perth",
-  gp_rr = 0.0065,
-  primary_infection_intensity = 1000,
-  spores_per_gp_per_wet_hour = 0.22,
-  primary_infection_foci = "centre")
-  traced[[70]]
-
-write.csv(traced[[70]]$paddock, "testrun2.csv", row.names = FALSE)
 }
