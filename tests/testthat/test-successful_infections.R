@@ -17,9 +17,9 @@ primary_infection_foci <-
 # define paddock variables at time 1
 paddock[, c(
   "new_gp", # Change in the number of growing points since last iteration
-  "noninfected_gp",
-  "infected_gp",
-  "sporulating_gp", # replacing InfectiveElementList
+  "susceptible_gp",
+  "exposed_gp",
+  "infectious_gp", # replacing InfectiveElementList
   "cdd_at_infection"
 ) :=
   list(
