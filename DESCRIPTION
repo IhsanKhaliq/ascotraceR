@@ -22,7 +22,6 @@ Authors@R:
 Description: A spatiotemporal model that simulates the spread of Ascochyta blight in chickpea fields based on location specific weather condition.
 License: MIT + file LICENSE
 Encoding: UTF-8
-StagedInstall: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
@@ -32,6 +31,7 @@ Suggests:
     extrafont,
     ggpubr,
     here,
+    knitr,
     patchwork,
     readxl,
     readr,
@@ -39,9 +39,7 @@ Suggests:
     showtext,
     testthat (>= 3.0.1),
     viridis,
-    spelling,
-    tidymodels,
-    Metrics
+    spelling
 Imports:
   data.table (>= 1.13.0),
   lubridate (>= 1.7.9.2),
