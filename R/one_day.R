@@ -8,7 +8,7 @@
 #' @param weather_dat `data.table` of weather observations which includes the query date `i_date`
 #' @param max_gp numeric double a function of max_gp_lim x (1 - exp(-0.138629 x seeding_rate))
 #' @param spore_interception_parameter parameter indicating the probability of a spore
-#'   landing on a susceptible growing point
+#'   landing on a susceptible growing point. Defaults to \code{5}
 #' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
 #'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
 #'
@@ -42,7 +42,7 @@ one_day <- function(i_date,
 
   # obtain summary weather for i_day
   i_mean_air_temp <- mean(weather_day[, temp])
-  i_wet_hours <- weather_day[2, wet_hours]
+  i_wet_hours <- weather_day[, wet_hours]
   i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
 
   # Start building a list of values for 'i'
@@ -54,7 +54,7 @@ one_day <- function(i_date,
   # max new growing points are multiplied by five as growing points remain susceptible
   #  for five days.
   max_interception_probability <-
-    interception_probability(target_density = 5 * max(daily_vals[["paddock"]][,new_gp]),
+    interception_probability(5 * max(daily_vals[["paddock"]][,new_gp]),
                              k = spore_interception_parameter)
 
   # need to make a copy of the data.table otherwise it will modify all data.tables
@@ -68,14 +68,14 @@ if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
   if(nrow(daily_vals[["infected_coords"]]) > 0){
 # Spread spores and infect plants
   # Update growing points for paddock coordinates
-  if(i_wet_hours > 2){
+  if(i_rainfall > 0){
 
     exposed_dt <-
       rbindlist(
         lapply(
-          seq_len(nrow(weather_day[rain >= 0.1, ])),
+          seq_len(nrow(weather_day[rain >= 0, ])),
           FUN = spores_each_wet_hour,
-          weather_hourly = weather_day[rain >= 0.2, ],
+          weather_hourly = weather_day[rain >= 0, ],
           paddock = daily_vals[["paddock"]],
           max_interception_probability = max_interception_probability,
           spore_interception_parameter = spore_interception_parameter,
@@ -93,7 +93,7 @@ if(any(is.na(daily_vals[["paddock"]][,infectious_gp]))){
 
   # exposed gps which have undergone latent period are moved to sporulating gps
   daily_vals <- make_some_infective(daily_vals = daily_vals,
-                                    latent_period = 200)
+                                    latent_period = 150)
 
 
 # update infected coordinates
