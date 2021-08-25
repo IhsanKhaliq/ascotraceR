@@ -5,17 +5,15 @@
 #'  spores dispersed per growing point which is capable of causing infection on
 #'  an uninfected growing point. `spores_from_1_element()` calculates conidia
 #'  dispersed from??
-#' @param source_address where conidia dispersal originates
-#' @param potentially_effective_spores conidia with the ability to cause
-#'  infection
-#' @param spore_aggregation_limit ??
-#' @param spores_per_packet ??
-#' @param spore_packets ??
-#' @param width_distance ??
-#' @param length_distance ??
-#' @param target_address where conidia land
-#' @param new_infections new lesions
-#' @param adjus_for_interception ??
+#' @param paddock_source data.table of coordinates which contains sporulating
+#'  growing points and the one element from which conidia dispersal originates.
+#' @param spores_per_gp_per_wet_hour The 'spore rate' or conidia with the ability
+#'  to cause infection
+#' @param max_interception_probability double with length of one; Estimated using
+#'  the `spore_interception_parameter`, see function `interception_probability()`
+#' @param wind_direction_in_hour wind_direction
+#' @param average_wind_speed_in_hour avg wind dir
+#' @param stdev_wind_direction_in_hour std wind dir
 #' @param spore_aggregation_limit When spores/summary unit (n) is <= this value
 #'  n spores are produced as individuals.  When greater they are produced in
 #'  sporeAggregationLimit groups of sporeAggregationLimit spores  default:
@@ -45,7 +43,7 @@ spores_from_1_element <-
       potentially_effective_spores(
         spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
         max_interception_probability = max_interception_probability,
-        paddock_source["sporulating_gp"]
+        paddock_source["infectious_gp"]
       )
 
     degree <- 0.01745
