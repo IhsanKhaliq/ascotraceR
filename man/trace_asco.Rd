@@ -42,7 +42,7 @@ chickpea crop, which is also the last day to run the ascotraceR model. Preferabl
 \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.}
 
 \item{initial_infection}{refers to initial or primary infection on seedlings,
-resulting in the production of infected growing points}
+resulting in the production of infected growing points.}
 
 \item{seeding_rate}{indicate the rate at which chickpea seed is sown per
 square metre. Defaults to \code{40}}
