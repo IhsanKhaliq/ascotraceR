@@ -13,7 +13,7 @@
 #' @noRd
 
 splash_distance <-
-  function(rain_cauchy_parameter = 0.50,
+  function(rain_cauchy_parameter = 0.015,
            PSPH = 1) {
  s_d <- lapply(PSPH, function(peakSPH) {
    abs(

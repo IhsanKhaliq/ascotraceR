@@ -20,7 +20,7 @@
 #' @noRd
 wind_distance <-
   function(average_wind_speed_in_fifteen_minutes,
-           wind_cauchy_multiplier = 0.10,
+           wind_cauchy_multiplier = 0.015,
            PSPH = 1) {
     w_d <- lapply(PSPH, function(peakSPH) {
       abs(
