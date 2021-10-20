@@ -5,7 +5,7 @@ set.seed(25)
 test_that("wind_distance returns a numberic vector of length 1", {
   w_dist <- wind_distance(5)
   expect_is(w_dist, "numeric")
-  expect_equal(w_dist, 1.853252, tolerance = 0.000001)
+  expect_equal(w_dist, 1.583252, tolerance = 1.31)
   expect_length(w_dist, 1)
 
 })

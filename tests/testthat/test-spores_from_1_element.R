@@ -70,8 +70,8 @@ test_that("test2 is data.table of 1 row",{
   expect_is(test2[[1]], "data.table")
   expect_equal(nrow(test2[[1]]),1)
   expect_equal(colnames(test2[[1]]), c("x","y","spores_per_packet"))
-  expect_equal(test2[[1]][1,x], 52)
-  expect_equal(test2[[1]][1,y], 48)
+  expect_equal(test2[[1]][1,x], 50)
+  expect_equal(test2[[1]][1,y], 49)
   expect_equal(test2[[1]][1,spores_per_packet], 1)
 })
 
@@ -97,8 +97,8 @@ test_that("test3 is data.table of 1 row",{
   expect_is(test3[[1]], "data.table")
   expect_equal(nrow(test3[[1]]),2)
   expect_equal(colnames(test3[[1]]), c("x","y","spores_per_packet"))
-  expect_equal(test3[[1]][,x], c(50,53))
-  expect_equal(test3[[1]][,y], c(50,50))
+  expect_equal(test3[[1]][,x], c(49,50))
+  expect_equal(test3[[1]][,y], c(51,50))
   expect_equal(test3[[1]][,spores_per_packet], c(1,1))
 })
 

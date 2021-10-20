@@ -99,9 +99,9 @@ test_that("one_day single infection foci returns expected output", {
   expect_equal(round(test1[["gp_standard"]],5), 44.66747)
   expect_equal(test1[["new_gp"]],test1[["gp_standard"]] - seeding_rate)
   expect_equal(test1[["exposed_gps"]], data.table(x = c(50,54,50),
-                                                     y = c(49,37,50),
-                                                     spores_per_packet = c(1,1,1),
-                                                     cdd_at_infection = c(18,18,18)))
+                                                  y = c(49,37,50),
+                                                  spores_per_packet = c(1,1,1),
+                                                  cdd_at_infection = c(18,18,18)))
   expect_is(test1[["paddock"]], "data.table")
   expect_equal(
     colnames(test1[["paddock"]]),
@@ -238,9 +238,9 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
       "cdd_at_infection"
     )
   )
-  expect_equal(round(test3[["paddock"]][,unique(new_gp)],6), c( 5.816238, 5.700011, 5.555145))
-  expect_equal(round(test3[["paddock"]][,unique(susceptible_gp)],5), c(55.69418, 54.57795, 53.18686))
+  expect_equal(round(test3[["paddock"]][,unique(new_gp)],6), c(5.816238, 5.700011,5.438883))
+  expect_equal(round(test3[["paddock"]][,unique(susceptible_gp)],5), c(55.69418, 54.57795, 52.0706))
   expect_equal(round(test3[["paddock"]][,unique(exposed_gp)],6), 0)
-  expect_equal(round(test3[["paddock"]][,unique(infectious_gp)],6), c(0 ,1,2))
+  expect_equal(round(test3[["paddock"]][,unique(infectious_gp)],6), c(0,1,3))
 })
 

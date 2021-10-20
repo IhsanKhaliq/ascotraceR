@@ -76,10 +76,10 @@ test_that("intense primary_infection_foci lead to more infections",{
                                                                                          by = "days")))
   expect_length(test1.1, 5)
   expect_length(test1.1[[1]], 11)
-  expect_equal(test1.1[[5]][["exposed_gps"]][,.N], 9)
+  expect_equal(test1.1[[5]][["exposed_gps"]][,.N], 6)
   expect_equal(test1.1[[5]][["paddock"]][infectious_gp > 0,infectious_gp], 40)
   expect_length(test1.1[[5]][["paddock"]][infectious_gp > 0,infectious_gp], 1)
-  expect_equal(test1.1[[5]][["exposed_gps"]][spores_per_packet  > 0,spores_per_packet ], rep(1,9))
+  expect_equal(test1.1[[5]][["exposed_gps"]][spores_per_packet  > 0,spores_per_packet ], rep(1,6))
   expect_equal(test1.1[[5]][["exposed_gps"]][,unique(cdd_at_infection) ],87)
 
 })
