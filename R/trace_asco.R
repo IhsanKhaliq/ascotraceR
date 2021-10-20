@@ -78,8 +78,6 @@
 #'   spores_per_gp_per_wet_hour = 0.22,
 #'   primary_infection_foci = "centre")
 #'   traced[[70]]
-#'
-#' write.csv(traced[[70]]$paddock, "testrun2.csv", row.names = FALSE)
 trace_asco <- function(weather,
                        paddock_length,
                        paddock_width,
