@@ -99,7 +99,7 @@ test_that("one_day single infection foci returns expected output", {
   expect_equal(round(test1[["gp_standard"]],5), 44.66747)
   expect_equal(test1[["new_gp"]],test1[["gp_standard"]] - seeding_rate)
   expect_equal(test1[["exposed_gps"]], data.table(x = c(50,54,50),
-                                                  y = c(49,37,50),
+                                                  y = c(50,37,50),
                                                   spores_per_packet = c(1,1,1),
                                                   cdd_at_infection = c(18,18,18)))
   expect_is(test1[["paddock"]], "data.table")
@@ -159,7 +159,7 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
   expect_equal(round(test2[["gp_standard"]],5), 44.66747 + 5.21047)
   expect_equal(round(test2[["new_gp"]],5),5.21047)
   expect_equal(test2[["exposed_gps"]], data.table(x = c(50,54,50),
-                                                     y = c(49,37,50),
+                                                     y = c(50,37,50),
                                                      spores_per_packet = c(1,1,1),
                                                      cdd_at_infection = c(18,18,18)))
   expect_is(test2[["paddock"]], "data.table")
