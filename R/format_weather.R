@@ -265,7 +265,7 @@ format_weather <- function(x,
 
   # rename the columns if needed
   if (!is.null(YYYY)) {
-    data.table::setnames(
+    setnames(
       x,
       old = c(YYYY, MM, DD, hh, mm),
       new = c("YYYY", "MM", "DD", "hh", "mm"),
@@ -273,52 +273,52 @@ format_weather <- function(x,
     )
   }
 
-  data.table::setnames(x,
+  setnames(x,
                        old = temp,
                        new = "temp",
                        skip_absent = TRUE)
 
-  data.table::setnames(x,
+  setnames(x,
                        old = rain,
                        new = "rain",
                        skip_absent = TRUE)
 
-  data.table::setnames(x,
+  setnames(x,
                        old = ws,
                        new = "ws",
                        skip_absent = TRUE)
 
-  data.table::setnames(x,
+  setnames(x,
                        old = wd,
                        new = "wd",
                        skip_absent = TRUE)
 
-  data.table::setnames(x,
+  setnames(x,
                        old = wd_sd,
                        new = "wd_sd",
                        skip_absent = TRUE)
 
-  data.table::setnames(x,
+  setnames(x,
                        old = station,
                        new = "station",
                        skip_absent = TRUE)
 
   if (!is.null(lat)) {
-    data.table::setnames(x,
+    setnames(x,
                          old = lat,
                          new = "lat",
                          skip_absent = TRUE)
   }
 
   if (!is.null(lon)) {
-    data.table::setnames(x,
+    setnames(x,
                          old = lon,
                          new = "lon",
                          skip_absent = TRUE)
   }
 
   if (!is.null(POSIXct_time)) {
-    data.table::setnames(x,
+    setnames(x,
                          old = POSIXct_time,
                          new = "times",
                          skip_absent = TRUE)

@@ -47,7 +47,7 @@
 #' @examples
 #' # First weather data needs to be imported and formatted with `format_weather`
 #' Newmarracarra <-
-#'    data.table::fread(system.file("extdata",
+#'    fread(system.file("extdata",
 #'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
 #' station_data <-
 #'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
@@ -319,7 +319,7 @@ trace_asco <- function(weather,
       lapply(daily_vals_list[i:length(daily_vals_list)], function(dl){
 
         # Infecting paddock
-        pad1 <- data.table::copy(dl[["paddock"]])
+        pad1 <- copy(dl[["paddock"]])
         pad1[infected_rows,
              c("susceptible_gp",
                "infectious_gp") :=
