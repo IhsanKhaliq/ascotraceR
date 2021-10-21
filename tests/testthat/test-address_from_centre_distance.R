@@ -32,11 +32,12 @@ test_that("test4 returns correct coordinates with negatives", {
 test3 <-
   address_from_centre_distance(offset_distance = c(-45.93146,-4.90950),
                                start_address = c(50, 50))
+xy <- data.table::data.table(x = round(50 - 45.93146),
+                             y = round(50 - 4.90950))
 
 test_that("test3 returns correct coordinates with negatives and floating points",
           {
-            expect_equal(test3, data.table::data.table(x = round(50 - 45.93146),
-                                                       y = round(50 - 4.90950)))
+            expect_equal(test3, xy)
             expect_length(test3, 2)
             expect_true(any(is.na(test3)) == FALSE)
             expect_type(test3[,x], "integer")
