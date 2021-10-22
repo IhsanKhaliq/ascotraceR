@@ -2,13 +2,13 @@
 #'  dispersal models
 #'
 #' Formats raw weather data into an object suitable for use in
-#'  \code{\link{trace_asco}} function ensuring that the supplied weather data meet
+#'  [trace_asco()] function ensuring that the supplied weather data meet
 #'  the requirements of the model to run.
 #'  Internal support for multithreaded operations is provided through
-#'   \CRANpkg{future}.  If more than one station is present, the process
-#'   can be made faster by using \code{\link[future]{plan}}.
+#'  \CRANpkg{future}. If more than one station is present, the process can be
+#'  made faster by using [future::plan()].
 #'
-#' @param x a \code{\link{data.frame}} object of weather station data for
+#' @param x a [data.frame] object of weather station data for
 #'  formatting.
 #' @param YYYY column name or index in `x` that refers to the year when the
 #'  weather was logged.
@@ -67,11 +67,11 @@
 #'  a separate file may be provided that contains the longitude, latitude and
 #'  matching station name to provide station locations in the final
 #'  `ascotraceR.weather` object that is created by specifying the file path to
-#'  a \acronym{CSV file} using `lonlat_file`.
-#' @return A \code{ascotraceR.weather} object (an extension of
+#'  a \acronym{CSV} file using `lonlat_file`.
+#' @return A `ascotraceR.weather` object (an extension of
 #'  \CRANpkg{data.table}) containing the supplied weather aggregated to each
-#'  hour in a suitable format for use with \code{\link{trace_asco}}
-#'  containing the following columns:
+#'  hour in a suitable format for use with [trace_asco()] containing the
+#'  following columns:
 #' \tabular{rl}{
 #'    **times**: \tab Time in POSIXct format \cr
 #'    **rain**: \tab Rainfall in mm \cr

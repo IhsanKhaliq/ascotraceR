@@ -1,53 +1,53 @@
 #' Simulates the spread of Ascochyta blight in a chickpea field
 #'
-#' `trace_asco` simulates the spatiotemporal development of Ascochyta blight in a chickpea field
-#' over a growing season
+#' `trace_asco` simulates the spatiotemporal development of Ascochyta blight in
+#'  a chickpea field over a growing season.
 #'
-#' @param weather weather data, recorded by a local weather station, over a chickpea
-#' growing season for the model operation
-#' @param paddock_length length of a paddock in metres (y)
-#' @param paddock_width width of a paddock in metres (x)
+#' @param weather weather data, recorded by a local weather station, over a
+#'  chickpea growing season for the model operation.
+#' @param paddock_length length of a paddock in metres (y).
+#' @param paddock_width width of a paddock in metres (x).
 #' @param sowing_date a character string of a date value indicating sowing
 #'  date of chickpea seed and the start of the ascotraceR model. Preferably
-#'  in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
-#'  Assumes there is sufficient soil moisture to induce germination and start the
-#'  crop growing season.
-#' @param harvest_date a character string of a date value indicating harvest date of
-#' chickpea crop, which is also the last day to run the ascotraceR model. Preferably in
-#'  \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
+#'  in ISO8601 format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
+#'  Assumes there is sufficient soil moisture to induce germination and start
+#'  the crop growing season.
+#' @param harvest_date a character string of a date value indicating harvest
+#'  date of chickpea crop, which is also the last day to run the ascotraceR
+#'  model. Preferably in ISO8601 format (YYYY-MM-DD), \emph{e.g.},
+#'  \dQuote{2020-04-26}.
 #' @param seeding_rate indicate the rate at which chickpea seed is sown per
-#' square metre. Defaults to \code{40}
+#' square metre. Defaults to `40`.
 #' @param gp_rr refers to rate of increase in chickpea growing points
-#' per degree Celsius per day. Defaults to \code{0.0065}
-#' @param max_gp_lim Maximum number of chickpea growing points (meristems) allowed
-#'  per square meter. Defaults to \code{15000}.
+#' per degree Celsius per day. Defaults to `0.0065`.
+#' @param max_gp_lim Maximum number of chickpea growing points (meristems)
+#'  allowed per square metre. Defaults to `15000`.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems)
-#'  which develop per day, per square meter. Defaults to \code{350}.
+#'  which develop per day, per square metre. Defaults to `350`.
 #' @param primary_infection_foci refers to the inoculated coordinates where the
-#'  epidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
-#'  a randomly selected coordinate in the paddock, a two column data.table of
-#'  coordinates with colnames c("x","y"), a three column data.table where the third
+#'  epidemic starts. Accepted inputs are: `centre` (Default) or `random`.
 #' @param primary_infection_intensity The intensity of the starting epidemic as
 #'  described by the number of number of sporulating growing points.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'  daily temperature means) is the period between infection and production of
-#'  lesions on susceptible growing points. Defaults to \code{200}
+#'  lesions on susceptible growing points. Defaults to `200`.
 #' @param initial_infection refers to initial or primary infection on seedlings,
 #'  resulting in the production of infected growing points.
-#' @param time_zone refers to time in Coordinated Universal Time (UTC)
-#' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
-#'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
-#' @param n_foci only relevant when primary_infection_foci = "random" and notes the number
-#'  of primary_infection_foci at initial infection.
+#' @param time_zone refers to time in Coordinated Universal Time (UTC).
+#' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating
+#'  growing point each wet hour. Also known as the `spore_rate`. Value is
+#'  dependent on the susceptibility of the host genotype.
+#' @param n_foci only relevant when `primary_infection_foci = "random"` and
+#'  notes the number of `primary_infection_foci` at initial infection.
 #'
-#' @return a x y `data.frame` simulating the spread of Ascochyta blight in a
+#' @return an x y [data.frame] simulating the spread of Ascochyta blight in a
 #' chickpea paddock
 #' @export
 #'
 #' @examples
 #' # First weather data needs to be imported and formatted with `format_weather`
 #' Newmarracarra <-
-#'    fread(system.file("extdata",
+#'    read.csv(system.file("extdata",
 #'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
 #' station_data <-
 #'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
