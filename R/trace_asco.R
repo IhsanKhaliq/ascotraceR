@@ -26,7 +26,7 @@
 #' @param primary_infection_foci refers to the inoculated coordinates where the
 #'  epidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
 #'  a randomly selected coordinate in the paddock, a two column data.table of
-#'  coordinates with colnames c("x","y"), a three column data.table where the third
+#'  coordinates with colnames c("x","y")
 #' @param primary_infection_intensity The intensity of the starting epidemic as
 #'  described by the number of number of sporulating growing points.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
