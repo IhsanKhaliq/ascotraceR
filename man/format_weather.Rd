@@ -27,7 +27,7 @@ format_weather(
 )
 }
 \arguments{
-\item{x}{a \code{\link{data.frame}} object of weather station data for
+\item{x}{a \link{data.frame} object of weather station data for
 formatting.}
 
 \item{YYYY}{column name or index in \code{x} that refers to the year when the
@@ -86,8 +86,8 @@ Optional, see also \code{lon} and \code{lat}.}
 \value{
 A \code{ascotraceR.weather} object (an extension of
 \CRANpkg{data.table}) containing the supplied weather aggregated to each
-hour in a suitable format for use with \code{\link{trace_asco}}
-containing the following columns:
+hour in a suitable format for use with \code{\link[=trace_asco]{trace_asco()}} containing the
+following columns:
 \tabular{rl}{
 \strong{times}: \tab Time in POSIXct format \cr
 \strong{rain}: \tab Rainfall in mm \cr
@@ -106,11 +106,11 @@ containing the following columns:
 }
 \description{
 Formats raw weather data into an object suitable for use in
-\code{\link{trace_asco}} function ensuring that the supplied weather data meet
+\code{\link[=trace_asco]{trace_asco()}} function ensuring that the supplied weather data meet
 the requirements of the model to run.
 Internal support for multithreaded operations is provided through
-\CRANpkg{future}.  If more than one station is present, the process
-can be made faster by using \code{\link[future]{plan}}.
+\CRANpkg{future}. If more than one station is present, the process can be
+made faster by using \code{\link[future:plan]{future::plan()}}.
 }
 \details{
 \code{time_zone}
@@ -133,11 +133,11 @@ will drop these column variables.  If these data are not included, (\code{NULL})
 a separate file may be provided that contains the longitude, latitude and
 matching station name to provide station locations in the final
 \code{ascotraceR.weather} object that is created by specifying the file path to
-a \acronym{CSV file} using \code{lonlat_file}.
+a \acronym{CSV} file using \code{lonlat_file}.
 }
 \examples{
 # Fake weather data files for testing and examples have been included in
-# \pkg{ascotraceR}.  The weather data files both are of the same format, so
+# ascotraceR.  The weather data files both are of the same format, so
 # they will be combined for formatting here.
 
 Newmarracarra <-

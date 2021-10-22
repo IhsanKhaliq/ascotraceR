@@ -24,70 +24,70 @@ trace_asco(
 )
 }
 \arguments{
-\item{weather}{weather data, recorded by a local weather station, over a chickpea
-growing season for the model operation}
+\item{weather}{weather data, recorded by a local weather station, over a
+chickpea growing season for the model operation.}
 
-\item{paddock_length}{length of a paddock in metres (y)}
+\item{paddock_length}{length of a paddock in metres (y).}
 
-\item{paddock_width}{width of a paddock in metres (x)}
+\item{paddock_width}{width of a paddock in metres (x).}
 
 \item{sowing_date}{a character string of a date value indicating sowing
 date of chickpea seed and the start of the ascotraceR model. Preferably
-in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
-Assumes there is sufficient soil moisture to induce germination and start the
-crop growing season.}
+in ISO8601 format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
+Assumes there is sufficient soil moisture to induce germination and start
+the crop growing season.}
 
-\item{harvest_date}{a character string of a date value indicating harvest date of
-chickpea crop, which is also the last day to run the ascotraceR model. Preferably in
-\acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.}
+\item{harvest_date}{a character string of a date value indicating harvest
+date of chickpea crop, which is also the last day to run the ascotraceR
+model. Preferably in ISO8601 format (YYYY-MM-DD), \emph{e.g.},
+\dQuote{2020-04-26}.}
 
 \item{initial_infection}{refers to initial or primary infection on seedlings,
 resulting in the production of infected growing points.}
 
 \item{seeding_rate}{indicate the rate at which chickpea seed is sown per
-square metre. Defaults to \code{40}}
+square metre. Defaults to \code{40}.}
 
 \item{gp_rr}{refers to rate of increase in chickpea growing points
-per degree Celsius per day. Defaults to \code{0.0065}}
+per degree Celsius per day. Defaults to \code{0.0065}.}
 
-\item{max_gp_lim}{Maximum number of chickpea growing points (meristems) allowed
-per square meter. Defaults to \code{15000}.}
+\item{max_gp_lim}{Maximum number of chickpea growing points (meristems)
+allowed per square metre. Defaults to \code{15000}.}
 
 \item{max_new_gp}{Maximum number of new chickpea growing points (meristems)
-which develop per day, per square meter. Defaults to \code{350}.}
+which develop per day, per square metre. Defaults to \code{350}.}
 
 \item{latent_period_cdd}{latent period in cumulative degree days (sum of
 daily temperature means) is the period between infection and production of
-lesions on susceptible growing points. Defaults to \code{200}}
+lesions on susceptible growing points. Defaults to \code{200}.}
 
-\item{time_zone}{refers to time in Coordinated Universal Time (UTC)}
+\item{time_zone}{refers to time in Coordinated Universal Time (UTC).}
 
 \item{primary_infection_foci}{refers to the inoculated coordinates where the
-epidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
-a randomly selected coordinate in the paddock, a two column data.table of
-coordinates with colnames c("x","y"), a three column data.table where the third}
+epidemic starts. Accepted inputs are: \code{centre} (Default) or \code{random}.}
 
 \item{primary_infection_intensity}{The intensity of the starting epidemic as
 described by the number of number of sporulating growing points.}
 
-\item{n_foci}{only relevant when primary_infection_foci = "random" and notes the number
-of primary_infection_foci at initial infection.}
+\item{n_foci}{only relevant when \code{primary_infection_foci = "random"} and
+notes the number of \code{primary_infection_foci} at initial infection.}
 
-\item{spores_per_gp_per_wet_hour}{Number of spores produced per sporulating growing point each wet hour.
-Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.}
+\item{spores_per_gp_per_wet_hour}{Number of spores produced per sporulating
+growing point each wet hour. Also known as the \code{spore_rate}. Value is
+dependent on the susceptibility of the host genotype.}
 }
 \value{
-a x y \code{data.frame} simulating the spread of Ascochyta blight in a
+an x y \link{data.frame} simulating the spread of Ascochyta blight in a
 chickpea paddock
 }
 \description{
-\code{trace_asco} simulates the spatiotemporal development of Ascochyta blight in a chickpea field
-over a growing season
+\code{trace_asco} simulates the spatiotemporal development of Ascochyta blight in
+a chickpea field over a growing season.
 }
 \examples{
 # First weather data needs to be imported and formatted with `format_weather`
 Newmarracarra <-
-   data.table::fread(system.file("extdata",
+   read.csv(system.file("extdata",
             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
 station_data <-
    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
