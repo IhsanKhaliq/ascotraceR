@@ -1,14 +1,15 @@
 #' plot one day from trace_asco output as a tile plot
 #'
-#' @param dat nested list of ascotraceR class
+#' @param dat nested list of `ascotraceR` class
 #' @param day integer, day of the simulation to plot
-#' @param tiles what to response for the plot to render, options: infectious_gp, new_gp,susceptible_gp
+#' @param tiles what to response for the plot to render, options:
+#'  `infectious_gp`, `new_gp`, `susceptible_gp`.
 #'
 #' @return ggplot2 object
 #' @export
 #'
 #' @examples
-#' # First weather data needs to be imported and formated with `format_weather`
+#' # First weather data needs to be imported and formatted with `format_weather`
 #' Newmarracarra <-
 #'    read.csv(system.file("extdata",
 #'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
