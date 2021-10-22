@@ -351,7 +351,7 @@ format_weather <- function(x,
   if (any(is.na(x[, times]))) {
     stop(
       times,
-      "Time records contain NA values or impossible time combinations, ie. 11:60 am, ",
+      "Time records contain NA values or impossible time combinations, e.g., 11:60 am, ",
       "Check time inputs"
     )
   }
