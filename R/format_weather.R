@@ -90,7 +90,7 @@
 #'
 #' @examples
 #' # Fake weather data files for testing and examples have been included in
-#' # \pkg{ascotraceR}.  The weather data files both are of the same format, so
+#' # ascotraceR.  The weather data files both are of the same format, so
 #' # they will be combined for formatting here.
 #'
 #' Newmarracarra <-
