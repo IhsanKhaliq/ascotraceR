@@ -240,7 +240,7 @@ format_weather <- function(x,
 
     if (any(as.character(unique(x[, get(station)])) %notin% as.character(ll_file[, station]))) {
       stop(
-        "The csv file of weather station coordinates should contain ",
+        "The CSV file of weather station coordinates should contain ",
         "station coordinates for each weather station identifier."
       )
     }
