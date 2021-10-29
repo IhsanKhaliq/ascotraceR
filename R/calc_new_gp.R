@@ -6,14 +6,14 @@
 #' limited by proximity to a maximum growing point density.
 #'
 #' @param current_growing_points Are the current number of growing points at an
-#'  iteration period
+#'   iteration period
 #' @param gp_rr Is the rate of increase of chickpea growing points in an
-#'  iteration period of one day
+#'   iteration period of one day
 #' @param max_gp Are the maximum number of chickpea growing points for each
-#'  cultivar
+#'   cultivar
 #' @param mean_air_temp Is average daily temperature in Celsius
 #' @return Integer giving the number of new growing points formed in an
-#'  iteration period of one day
+#'   iteration period of one day
 #'
 #' @keywords internal
 #' @noRd
