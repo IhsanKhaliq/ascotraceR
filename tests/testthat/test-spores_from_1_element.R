@@ -1,4 +1,3 @@
-context("spores produced from a spatial unit with at least one infected growing point")
 
 # import weather and filter to a single day with rain
 # w_dat <- fread(file = "tests/testthat/formatted_weather_one_day.csv")

@@ -1,4 +1,3 @@
-context("spores spread each day triggered by each wet hour")
 
 # load formatted weather data
 # weather_day <- fread("tests/testthat/formatted_weather_one_day.csv")
@@ -36,15 +35,16 @@ spore_interception_parameter <-
 ####  write some tests
 # test 1 - single inputs tested 100 times
 set.seed(666)
-for(repeat1000 in 1:100){
-test1 <- spores_each_wet_hour(
-  h = 1,
-  weather_hourly = weather_day,
-  paddock = paddock,
-  max_interception_probability = 1,
-  spore_interception_parameter = spore_interception_parameter,
-  spores_per_gp_per_wet_hour = 0.22
-)}
+for(repeat1000 in 1:100) {
+  test1 <- spores_each_wet_hour(
+    h = 1,
+    weather_hourly = weather_day,
+    paddock = paddock,
+    max_interception_probability = 1,
+    spore_interception_parameter = spore_interception_parameter,
+    spores_per_gp_per_wet_hour = 0.22
+  )
+}
 
 test_that("test1 returns expected output",{
   expect_is(test1, "data.table")
@@ -93,16 +93,16 @@ test2 <- spores_each_wet_hour(
   spores_per_gp_per_wet_hour = 0.22
 )
 
-test_that("test2 returns expected output",{
+test_that("test2 returns expected output", {
   expect_is(test2, "data.table")
   expect_equal(nrow(test2), 15)
   expect_equal(colnames(test2), c("x", "y", "spores_per_packet"))
   expect_equal(test2[1, x], 54)
   expect_equal(test2[1, y], 53)
   expect_equal(test2[1, spores_per_packet], 1)
-  expect_is(test2[,x], "integer")
-  expect_is(test2[,y], "integer")
-  expect_is(test2[,spores_per_packet], "integer")
+  expect_is(test2[, x], "integer")
+  expect_is(test2[, y], "integer")
+  expect_is(test2[, spores_per_packet], "integer")
 })
 
 test3 <- lapply(seq_len(weather_day[1,wet_hours]),
@@ -129,5 +129,3 @@ test_that("test3 with lapply returns expected output",{
   expect_is(test3[,spores_per_packet], "integer")
   expect_false(any(is.na(test3)))
 })
-
-

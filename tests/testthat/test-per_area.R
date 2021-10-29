@@ -1,4 +1,3 @@
-context("per_area")
 
 test_1 <- list(1* 20*20)
 

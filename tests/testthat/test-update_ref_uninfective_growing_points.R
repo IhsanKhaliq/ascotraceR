@@ -1,4 +1,3 @@
-context("update ref uninfective growing points")
 
 test_1 <- (5000*0.0065* 15000*20*350)
 

@@ -1,4 +1,3 @@
-context("Estimate the potentially effective spores")
 
 test1 <-
   potentially_effective_spores(

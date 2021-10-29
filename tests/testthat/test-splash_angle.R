@@ -1,4 +1,3 @@
-context("Splashed dispersed conidia returns an rnorm splash angle")
 
 sa1 <- splash_angle()
 
