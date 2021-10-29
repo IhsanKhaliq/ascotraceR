@@ -60,7 +60,8 @@ Celsius}
 
 \item{ws}{column name or index in \code{x} that refers to wind speed in km / h.}
 
-\item{wd}{column name or index in \code{x} that refers to wind direction in degrees.}
+\item{wd}{column name or index in \code{x} that refers to wind direction in
+degrees.}
 
 \item{wd_sd}{column name or index in \code{x} that refers to wind speed in km / h
 character.  This is only applicable if weather data is already summarised to
@@ -105,14 +106,15 @@ following columns:
 }
 }
 \description{
-Formats raw weather data into an object suitable for use in
+Formats raw weather data into an object suitable for use in the
 \code{\link[=trace_asco]{trace_asco()}} function ensuring that the supplied weather data meet
 the requirements of the model to run.
+}
+\details{
 Internal support for multithreaded operations is provided through
 \CRANpkg{future}. If more than one station is present, the process can be
 made faster by using \code{\link[future:plan]{future::plan()}}.
-}
-\details{
+
 \code{time_zone}
 All weather stations must fall within the same time zone.  If the required
 stations are located in differing time zones, separate \code{ascotraceR.weather}

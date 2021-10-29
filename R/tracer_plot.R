@@ -1,4 +1,4 @@
-#' plot one day from trace_asco output as a tile plot
+#' Plot one day from trace_asco output as a tile plot
 #'
 #' @param dat nested list of `ascotraceR` class
 #' @param day integer, day of the simulation to plot
@@ -38,15 +38,13 @@
 #'   time_zone = "Australia/Perth",
 #'   primary_infection_foci = "centre")
 #'
-#'   tracer_plot(traced,102)
+#'   tracer_plot(traced, 102)
 
 
 tracer_plot <- function(dat, day, tiles = "infectious_gp") {
   x <- y <- infectious_gp <- susceptible_gp <- NULL
 
   dat1 <- dat[[day]][["paddock"]]
-
-
 
   if (tiles == "infectious_gp") {
     p1 <- ggplot2::ggplot(data = dat1, ggplot2::aes(x, y)) +

@@ -1,10 +1,11 @@
 #' Format weather data into a ascotraceR.weather object for use in the spore
 #'  dispersal models
 #'
-#' Formats raw weather data into an object suitable for use in
+#' Formats raw weather data into an object suitable for use in the
 #'  [trace_asco()] function ensuring that the supplied weather data meet
 #'  the requirements of the model to run.
-#'  Internal support for multithreaded operations is provided through
+#'
+#' Internal support for multithreaded operations is provided through
 #'  \CRANpkg{future}. If more than one station is present, the process can be
 #'  made faster by using [future::plan()].
 #'
@@ -225,7 +226,9 @@ format_weather <- function(x,
   }
 
   if (all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)) == FALSE) {
-    stop("Supplied column names are not found in column names of x")
+    stop(
+      call. = FALSE,
+      "Supplied column names are not found in column names of `x`.")
   }
 
   # import and assign longitude and latitude from a file if provided

@@ -11,20 +11,21 @@ intercept_spores(
 )
 }
 \arguments{
-\item{spore_interception_parameter}{multiplier to determine spore interception parameter.
-Defaults to \code{0.00006}}
+\item{spore_interception_parameter}{multiplier to determine spore
+interception parameter. Defaults to \code{0.00006}}
 
-\item{max_growing_points_limit}{Are the maximum number of growing points per square metre.
-Defaults to \code{15000}}
+\item{max_growing_points_limit}{Are the maximum number of growing points per
+square metre. efaults to \code{15000}}
 
-\item{max_new_growing_points_limit}{A \emph{numeric} number indicating number of new growing points
-developed per square metre in an iteration period of one day.  Defaults to \code{350}
+\item{max_new_growing_points_limit}{A \emph{numeric} number indicating number of
+new growing points developed per square metre in an iteration period of one
+day.  Defaults to \code{350}
 @keywords internal
 @noRd}
 }
 \description{
-The parameter which controls the relationship between uninfected growing points per area
-and probability of a spore causing an infection.
+The parameter which controls the relationship between uninfected growing
+points per area and probability of a spore causing an infection.
 The spore_interception_parameter gives an estimate of spores not producing
 infections
 }

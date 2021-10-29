@@ -2,25 +2,26 @@
 % Please edit documentation in R/tracer_plot.R
 \name{tracer_plot}
 \alias{tracer_plot}
-\title{plot one day from trace_asco output as a tile plot}
+\title{Plot one day from trace_asco output as a tile plot}
 \usage{
 tracer_plot(dat, day, tiles = "infectious_gp")
 }
 \arguments{
-\item{dat}{nested list of ascotraceR class}
+\item{dat}{nested list of \code{ascotraceR} class}
 
 \item{day}{integer, day of the simulation to plot}
 
-\item{tiles}{what to response for the plot to render, options: infectious_gp, new_gp,susceptible_gp}
+\item{tiles}{what to response for the plot to render, options:
+\code{infectious_gp}, \code{new_gp}, \code{susceptible_gp}.}
 }
 \value{
 ggplot2 object
 }
 \description{
-plot one day from trace_asco output as a tile plot
+Plot one day from trace_asco output as a tile plot
 }
 \examples{
-# First weather data needs to be imported and formated with `format_weather`
+# First weather data needs to be imported and formatted with `format_weather`
 Newmarracarra <-
    read.csv(system.file("extdata",
             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
@@ -49,5 +50,5 @@ traced <- trace_asco(
   time_zone = "Australia/Perth",
   primary_infection_foci = "centre")
 
-  tracer_plot(traced,102)
+  tracer_plot(traced, 102)
 }
