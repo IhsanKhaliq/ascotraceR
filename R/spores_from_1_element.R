@@ -7,10 +7,11 @@
 #'  dispersed from??
 #' @param paddock_source data.table of coordinates which contains sporulating
 #'  growing points and the one element from which conidia dispersal originates.
-#' @param spores_per_gp_per_wet_hour The 'spore rate' or conidia with the ability
-#'  to cause infection
-#' @param max_interception_probability double with length of one; Estimated using
-#'  the `spore_interception_parameter`, see function `interception_probability()`
+#' @param spores_per_gp_per_wet_hour The 'spore rate' or conidia with the
+#'  ability to cause infection
+#' @param max_interception_probability double with length of one; Estimated
+#' using the `spore_interception_parameter`, see function
+#'  `interception_probability()`
 #' @param wind_direction_in_hour wind_direction
 #' @param average_wind_speed_in_hour avg wind dir
 #' @param stdev_wind_direction_in_hour std wind dir
@@ -22,7 +23,8 @@
 #'  describes the median distance of spore travel due to rain splashes. default:
 #'   `0.5`
 #' @param paddock data.table of x and y coordinates; provides the dimensions of
-#'  the paddock so function only returns target_coordinates in the paddock area.
+#'  the paddock so function only returns `target_coordinates` in the paddock
+#'  area.
 #' @keywords internal
 #' @noRd
 spores_from_1_element <-
@@ -37,8 +39,8 @@ spores_from_1_element <-
            paddock) {
     x <- y <- NULL
 
-    # this might be able to be calculated at the spread_spores level, and If statement should come first
-    # given that it is if == 0
+    # this might be able to be calculated at the spread_spores level, and `If`
+    # statement should come first given that it is if == 0
     spore_packets <-
       potentially_effective_spores(
         spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
@@ -48,12 +50,11 @@ spores_from_1_element <-
 
     degree <- 0.01745
 
-
     if (spore_packets > spore_aggregation_limit) {
       spores_per_packet <- spore_packets / spore_aggregation_limit
       spore_packets <- spore_aggregation_limit
     } else{
-      spores_per_packet = 1
+      spores_per_packet <- 1
     }
 
     if (spore_packets == 0) {
@@ -99,5 +100,4 @@ spores_from_1_element <-
     # I think adjust_for_interception should be moved up to the
     # spread_spores function as it depends on other paddock parameters
     #return(adjust_for_interception(new_infections))
-
   }

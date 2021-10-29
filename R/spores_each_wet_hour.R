@@ -1,23 +1,25 @@
 #' Calculates number of conidia dispersed during each wet hour
 #'
-#' 'spores_each_wet_hour()' calculates number of conidia dispersed during each
-#' wet hour when rainfall threshold is reached
+#' Calculates number of conidia dispersed during each wet hour when rainfall
+#'  threshold is reached or exceeded.
 #'
 #' @param h hour in the day which the spores for each wet hour are calculated
-#' @param weather_hourly data.table of hourly weather for only the day for which
-#'  the spores are being estimated
+#' @param weather_hourly [data.table] of hourly weather for only the day for
+#'  which the spores are being estimated
 #' @param paddock data.table of paddock coordinates detailing the growing points
 #'  and infections at each location
-#' @param spore_interception_parameter double with length of one; the maximum number
-#'  of susceptible growing are 15000/350 = 42.86. The highest probability of a
-#'  spore landing on the area of these 42 susceptible growing points is
-#'  `0.00006 * 42.86 (i.e. 0.00006 * (max_gp_lim/max_new_gp))`. However as the
-#'  crop is always changing we need to calculate the actual probability of interception
-#'  depending on the density of the crop canopy for that given time.
-#' @param max_interception_probability double with length of one; Estimated using
-#'  the `spore_interception_parameter`, see function `interception_probability()`
-#' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating growing point each wet hour.
-#'   Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.
+#' @param spore_interception_parameter double with length of one; the maximum
+#'  number of susceptible growing are 15000/350 = 42.86. The highest probability
+#'  of a spore landing on the area of these 42 susceptible growing points is
+#'  `0.00006 * 42.86 (i.e. 0.00006 * (max_gp_lim/max_new_gp))`. However, as the
+#'  crop is always changing we need to calculate the actual probability of
+#'  interception depending on the density of the crop canopy for that given time.
+#' @param max_interception_probability double with length of one; Estimated
+#'  using the `spore_interception_parameter`, see function
+#'  `interception_probability()`
+#' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating
+#' growing point each wet hour. Also known as the `spore_rate`. Value is
+#' dependent on the susceptibility of the host genotype.
 #' @keywords internal
 #' @noRd
 
@@ -28,23 +30,24 @@ spores_each_wet_hour <- function(h,
                                  spore_interception_parameter,
                                  max_interception_probability,
                                  spores_per_gp_per_wet_hour) {
-  rain <-
-    ws <-
-    wd <- wd_sd <- infectious_gp <- spores_per_packet <- x <- y <-
+  rain <- ws <- wd <- wd_sd <- infectious_gp <- spores_per_packet <- x <- y <-
     NULL
 
   # obtain weather data for hour_i
 
   rain_in_hour <- weather_hourly[h, rain]
   average_wind_speed_in_hour <- weather_hourly[h, ws]
-  wind_direction_in_hour = weather_hourly[h, wd]
-  stdev_wind_direction_in_hour = weather_hourly[h, wd_sd]
+  wind_direction_in_hour <-  weather_hourly[h, wd]
+  stdev_wind_direction_in_hour <-  weather_hourly[h, wd_sd]
 
   # get data.table of infected coordinates
   paddock_infective <- paddock[infectious_gp > 0, ]
 
   if (nrow(paddock_infective) == 0) {
-    stop("Can't detect any infection, please check sum(paddock$infectious_gp > 0) is >= 1")
+    stop(
+      call. = FALSE,
+      "Can't detect any infection, please check that",
+      "`sum(paddock$infectious_gp > 0)` is >= 1")
   }
 
   exposed_dt <-

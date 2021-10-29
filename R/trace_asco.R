@@ -98,8 +98,10 @@ trace_asco <- function(weather,
 
   x <- y <- load <- susceptible_gp <- NULL
 
-  if(!"data.table" %in% class(weather)){
-    stop("'weather' must be class \"asco.weather\"")
+  if (!"data.table" %in% class(weather)){
+    stop(
+      call. = FALSE,
+      "'weather' must be class \"asco.weather\"")
   }
 
   # check date inputs for validity -----------------------------------------
@@ -136,13 +138,16 @@ trace_asco <- function(weather,
 
   # convert times to POSIXct -----------------------------------------------
   initial_infection <-
-    lubridate::ymd(.vali_date(initial_infection), tz = time_zone) + lubridate::dhours(0)
+    lubridate::ymd(.vali_date(initial_infection), tz = time_zone) +
+    lubridate::dhours(0)
 
   sowing_date <-
-    lubridate::ymd(.vali_date(sowing_date), tz = time_zone) + lubridate::dhours(0)
+    lubridate::ymd(.vali_date(sowing_date), tz = time_zone) +
+    lubridate::dhours(0)
 
   harvest_date <-
-    lubridate::ymd(.vali_date(harvest_date), tz = time_zone) + lubridate::dhours(23)
+    lubridate::ymd(.vali_date(harvest_date), tz = time_zone) +
+    lubridate::dhours(23)
 
   # check epidemic start is after sowing date
   if (initial_infection <= sowing_date) {
@@ -187,7 +192,10 @@ trace_asco <- function(weather,
       if (is.vector(primary_infection_foci)) {
         if (length(primary_infection_foci) != 2 |
             is.numeric(primary_infection_foci) == FALSE) {
-          stop("primary_infection_foci should be supplied as a numeric vector of length two")
+          stop(
+            call. = FALSE,
+            "`primary_infection_foci` should be supplied as a numeric vector",
+            "of length two")
         }
         primary_infection_foci <-
           as.data.table(as.list(primary_infection_foci))
@@ -199,7 +207,9 @@ trace_asco <- function(weather,
           is.data.frame(primary_infection_foci)) {
         setDT(primary_infection_foci)
         if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
-          stop("primary_infection_foci data.table needs colnames 'x' and 'y'")
+          stop(
+            call. = FALSE,
+            "primary_infection_foci data.table needs colnames 'x' and 'y'")
         }
 
       }
@@ -210,11 +220,12 @@ trace_asco <- function(weather,
 
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
-  if(ncol(primary_infection_foci) == 2){
-    primary_infection_foci[,load := primary_infection_intensity]
-  }else{
-    if(all(colnames(primary_infection_foci) %in% c("x", "y"))){
-      stop("colnames for 'primary_infection_foci' not 'x', 'y' & 'load'.")
+  if (ncol(primary_infection_foci) == 2) {
+    primary_infection_foci[, load := primary_infection_intensity]
+  } else{
+    if (all(colnames(primary_infection_foci) %in% c("x", "y"))) {
+      stop(call. = FALSE,
+           "colnames for 'primary_infection_foci' not 'x', 'y' & 'load'.")
     }
   }
 
@@ -283,7 +294,7 @@ trace_asco <- function(weather,
   daily_vals_list <- rep(daily_vals_list,
                          length(time_increments)+1)
 
-  for(i in seq_len(length(time_increments))){
+  for (i in seq_len(length(time_increments))){
 
     # update time values for iteration of loop
     daily_vals_list[[i]][["i_date"]] <- time_increments[i]
@@ -303,13 +314,15 @@ trace_asco <- function(weather,
     )
 
     # When the time of initial infection occurs, infect the paddock coordinates
-    if(initial_infection == time_increments[i]){
+    if (initial_infection == time_increments[i]) {
 
       # if primary_infection_intensity exceeds the number of growing points send
       #  warning
       if (primary_infection_intensity > daily_vals_list[[i]][["gp_standard"]]) {
         warning(
-          "primary_infection_intensity exceeds the number of growing points at time of infection 'growing_points': ",
+          call. = FALSE,
+          "`primary_infection_intensity` exceeds the number of growing points",
+          "at time of infection `growing_points`: ",
           daily_vals_list[[i]][["gp_standard"]],
           "\nThis may cause an over estimation of disease spread"
         )
@@ -339,10 +352,10 @@ trace_asco <- function(weather,
 
   daily_vals_list[[length(daily_vals_list)]][["i_date"]] <-
     daily_vals_list[[length(daily_vals_list)]][["i_date"]] + lubridate::ddays(1)
-  daily_vals_list[[length(daily_vals_list)]][["i_day"]] <- length(daily_vals_list)
+  daily_vals_list[[length(daily_vals_list)]][["i_day"]] <-
+    length(daily_vals_list)
   daily_vals_list[[length(daily_vals_list)]][["day"]] <-
     lubridate::yday(daily_vals_list[[length(daily_vals_list)]][["i_date"]])
-
 
   return(daily_vals_list)
 }

@@ -19,8 +19,5 @@ spread_spores <-
     # filter weather data to just wet hours
     wet_hour_weather <-
       weather_hourly[rain >= 0.2,]
-
-
-
     }
 

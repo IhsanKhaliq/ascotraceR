@@ -17,8 +17,10 @@ address_from_centre_distance <-
     ))
     if (any(is.na(destination))) {
       stop(
-        "address_from_centre_distance is returning NAs; check input coordinates\n
-           offset_distance: ", offset_distance[1], ", ", offset_distance[2],
+        call. = FALSE,
+        "address_from_centre_distance is returning NAs;",
+        " check input coordinates\n",
+        "offset_distance: ", offset_distance[1], ", ", offset_distance[2],
         "; start_address: ", start_address[1], ", ",  start_address[2]
       )
     }

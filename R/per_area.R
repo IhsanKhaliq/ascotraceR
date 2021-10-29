@@ -1,7 +1,7 @@
 #' Area of a summary unit (an observation quadrat or a paddock)
 #'
-#' 'per_area()' gives information on the area of a summary unit (an observation quadrate
-#' or a paddock) in metres
+#' 'per_area()' gives information on the area of a summary unit (an observation
+#'  quadrat or a paddock) in metres
 #'
 #' @param summary_unit_area a paddock or an observation quadrat area in metres
 #' @param per_summary_unit each summary unit

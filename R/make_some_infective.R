@@ -29,7 +29,8 @@ make_some_infective <- function(daily_vals,
     paddock_vals <- daily_vals[["paddock"]][row_index, ]
 
 
-    if (paddock_vals[, susceptible_gp] < newly_infectious[i_row, spores_per_packet]) {
+    if (paddock_vals[, susceptible_gp] <
+        newly_infectious[i_row, spores_per_packet]) {
       infections_new <-
         random_integer_from_real(paddock_vals[, susceptible_gp])
       daily_vals[["paddock"]][row_index, susceptible_gp := 0]

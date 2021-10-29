@@ -30,7 +30,8 @@
 #'  Celsius
 #' @param rain column name or index in `x` that refers to rainfall in mm.
 #' @param ws column name or index in `x` that refers to wind speed in km / h.
-#' @param wd column name or index in `x` that refers to wind direction in degrees.
+#' @param wd column name or index in `x` that refers to wind direction in
+#'  degrees.
 #' @param wd_sd column name or index in `x` that refers to wind speed in km / h
 #'  character.  This is only applicable if weather data is already summarised to
 #'  hourly increments. See details.
@@ -233,13 +234,16 @@ format_weather <- function(x,
 
     if (any(c("station", "lon", "lat") %notin% colnames(ll_file))) {
       stop(
+        call. = FALSE,
         "The csv file of weather station coordinates should contain ",
         "column names 'station','lat' and 'lon'."
       )
     }
 
-    if (any(as.character(unique(x[, get(station)])) %notin% as.character(ll_file[, station]))) {
+    if (any(as.character(unique(x[, get(station)])) %notin%
+            as.character(ll_file[, station]))) {
       stop(
+        call. = FALSE,
         "The CSV file of weather station coordinates should contain ",
         "station coordinates for each weather station identifier."
       )
@@ -344,15 +348,18 @@ format_weather <- function(x,
                        MM, "-",
                        DD, " ",
                        hh, ":",
-                       mm, sep = "")][, times := lubridate::ymd_hm(times, tz = time_zone)]
+                       mm, sep = "")][, times :=
+                                        lubridate::ymd_hm(times,
+                                                          tz = time_zone)]
 
   }
 
   if (any(is.na(x[, times]))) {
     stop(
+      call. = FALSE,
       times,
-      "Time records contain NA values or impossible time combinations, e.g., 11:60 am, ",
-      "Check time inputs"
+      "Time records contain NA values or impossible time combinations,",
+      "e.g., 11:60 am. Check time inputs"
     )
   }
 
@@ -421,6 +428,7 @@ format_weather <- function(x,
     } else{
       if (all(is.na(x_dt[, wd_sd]))) {
         stop(
+          call. = FALSE,
           "`format_weather()` was unable to detect or calculate `wd_sd`. ",
           "Please supply a standard deviation of wind direction."
         )
