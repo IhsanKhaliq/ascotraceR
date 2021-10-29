@@ -161,65 +161,6 @@ test_that("dat_no_location contains the correct output", {
   ))
 })
 
-
-
-
-
-
-
-# when more than one station is supplied, lapply is used -----------------------
-
-# test_that("`format_weather()` handles multiple stations", {
-#    scaddan <-
-#       system.file("extdata", "scaddan_weather.csv", package = "blackspot")
-#    naddacs <-
-#       system.file("extdata", "naddacs_weather.csv", package = "blackspot")
-#
-#    weather_file_list <- list(scaddan, naddacs)
-#    weather_station_data <-
-#       lapply(X = weather_file_list, FUN = read.csv)
-#
-#    weather_station_data <- do.call("rbind", weather_station_data)
-#
-#    weather_dat <- format_weather(
-#       x = weather_station_data,
-#       POSIXct_time = "Local.Time",
-#       ws = "meanWindSpeeds",
-#       wd_sd = "stdDevWindDirections",
-#       rain = "Rainfall",
-#       wd = "meanWindDirections",
-#       lon = "Station.Longitude",
-#       lat = "Station.Latitude",
-#       station = "StationID",
-#       time_zone = "Australia/Perth"
-#    )
-#
-#    expect_is(weather_dat, "blackspot.weather")
-#    expect_equal(
-#       names(weather_dat),
-#       c(
-#          "times",
-#          "rain",
-#          "ws",
-#          "wd",
-#          "wd_sd",
-#          "lon",
-#          "lat",
-#          "station",
-#          "YYYY",
-#          "MM",
-#          "DD",
-#          "hh",
-#          "mm"
-#       )
-#    )
-#    expect_equal(dim(weather_dat), c(8784, 13))
-#    expect_true(anyNA(weather_dat$lon) == FALSE)
-#    expect_true(anyNA(weather_dat$lat) == FALSE)
-#    expect_equal(round(unique(weather_dat$lon), 1), c(135.7, 135.9))
-#    expect_equal(round(unique(weather_dat$lat), 1), c(-33.1, -33.3))
-# })
-
 # identify lon lat from cols ---------------------------------------------------
 test_that("`format_weather()` works when lat lon are in data", {
   dat_minutes <- 10080 # equal to, 7 * 24 * 60
