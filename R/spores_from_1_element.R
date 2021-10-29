@@ -1,30 +1,30 @@
 #' Infective spores per unit area
 #'
 #' Returns the number of `spore_packets` as a proportion of the spore
-#'  aggregation limit (spores_per_packet). `spore_packets` being the number of
-#'  spores dispersed per growing point which is capable of causing infection on
-#'  an uninfected growing point. `spores_from_1_element()` calculates conidia
-#'  dispersed from??
+#' aggregation limit (spores_per_packet). `spore_packets` being the number of
+#' spores dispersed per growing point which is capable of causing infection on
+#' an uninfected growing point. `spores_from_1_element()` calculates conidia
+#' dispersed from??
 #' @param paddock_source data.table of coordinates which contains sporulating
-#'  growing points and the one element from which conidia dispersal originates.
+#'   growing points and the one element from which conidia dispersal originates.
 #' @param spores_per_gp_per_wet_hour The 'spore rate' or conidia with the
-#'  ability to cause infection
+#'   ability to cause infection
 #' @param max_interception_probability double with length of one; Estimated
-#' using the `spore_interception_parameter`, see function
-#'  `interception_probability()`
+#'   using the `spore_interception_parameter`, see function
+#'   `interception_probability()`
 #' @param wind_direction_in_hour wind_direction
 #' @param average_wind_speed_in_hour avg wind dir
 #' @param stdev_wind_direction_in_hour std wind dir
 #' @param spore_aggregation_limit When spores/summary unit (n) is <= this value
-#'  n spores are produced as individuals.  When greater they are produced in
-#'  sporeAggregationLimit groups of sporeAggregationLimit spores  default:
-#'  `1000`
+#'   n spores are produced as individuals.  When greater they are produced in
+#'   sporeAggregationLimit groups of sporeAggregationLimit spores  default:
+#'   `1000`
 #' @param rain_cauchy_parameter parameter used in the cauchy distribution and
-#'  describes the median distance of spore travel due to rain splashes. default:
-#'   `0.5`
+#'   describes the median distance of spore travel due to rain splashes.
+#'   default: `0.5`
 #' @param paddock data.table of x and y coordinates; provides the dimensions of
-#'  the paddock so function only returns `target_coordinates` in the paddock
-#'  area.
+#'   the paddock so function only returns `target_coordinates` in the paddock
+#'   area.
 #' @keywords internal
 #' @noRd
 spores_from_1_element <-

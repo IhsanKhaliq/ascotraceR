@@ -1,4 +1,4 @@
-# this function has been made redunant as it just passes everything betweeen different levels
+# this function has been made redundant as it just passes everything between different levels
 # and does not do anything really important
 spread_spores <-
   function(wet_hours,

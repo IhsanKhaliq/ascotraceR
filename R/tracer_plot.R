@@ -3,7 +3,7 @@
 #' @param dat nested list of `ascotraceR` class
 #' @param day integer, day of the simulation to plot
 #' @param tiles what to response for the plot to render, options:
-#'  `infectious_gp`, `new_gp`, `susceptible_gp`.
+#'   `infectious_gp`, `new_gp`, `susceptible_gp`.
 #'
 #' @return ggplot2 object
 #' @export
