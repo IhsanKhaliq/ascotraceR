@@ -1,4 +1,3 @@
-
 # import and define data
 seeding_rate <- 40
 primary_infection_foci <- data.table(x = 50,

@@ -1,4 +1,3 @@
-
 # this doesn't test any functionality from this package that I can tell? -as
 # it needs to be rewritten to actually test the paddock_dimension(), this just
 # tests `ceiling()`

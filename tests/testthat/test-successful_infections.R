@@ -1,4 +1,3 @@
-
 # for manual testing
 #spore_dat <- fread("tests/testthat/test-data_successful_infections.csv")
 

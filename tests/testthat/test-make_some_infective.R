@@ -1,4 +1,3 @@
-
 #newly_infected_list <- fread(file = "tests/testthat/data-newly_infected_list.csv")
 newly_infected_list <- fread(file = "data-newly_infected_list.csv")
 
@@ -122,31 +121,3 @@ test_that("test2 returns changes now latent_period has elapsed", {
   expect_equal(test2[["paddock"]][, sum(susceptible_gp)], 399845)
 
 })
-#
-# # sp2 <- fread("tests/testthat/data-newly_infected_list.csv")
-# sp2 <- fread("data-newly_infected_list.csv")
-#
-# test3 <- make_some_infective(spore_packet = sp2,
-#                daily_vals = daily_values)
-#
-# test_that("test3 long dt input returns a list with changes to paddock", {
-#   expect_is(test3, "list")
-#   expect_length(test3, 7)
-#   expect_is(test3[["paddock"]], "data.table")
-#   expect_equal(names(test3),
-#                c(
-#                  "paddock",
-#                  "i_day",
-#                  "cdd",
-#                  "cwh",
-#                  "cr",
-#                  "gp_standard",
-#                  "new_gp"
-#                ))
-#   expect_equal(test3[["paddock"]][infectious_gp > 0, .N ], 37)
-#   expect_equal(test3[["paddock"]][infectious_gp > 0, max(infectious_gp) ], 8)
-#   expect_true(all(test3[["paddock"]][, infectious_gp + susceptible_gp] == 40))
-#   expect_is(test3[["paddock"]][, susceptible_gp], "numeric")
-#   expect_is(test3[["paddock"]][, infectious_gp], "numeric")
-#   expect_false(any(is.na(test3[["paddock"]])))
-# })
