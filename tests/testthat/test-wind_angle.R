@@ -1,4 +1,3 @@
-
 w_a <- wind_angle(1, 30, 1)
 w_a10 <- wind_angle(1, 30, 10)
 

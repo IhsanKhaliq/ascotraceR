@@ -1,4 +1,3 @@
-
 sowing_date <- as.POSIXct("1998-05-09", tz = "Australia/Perth")
 harvest_date <- as.POSIXct("1998-05-12", tz = "Australia/Perth")
 
@@ -67,7 +66,6 @@ test_that("days have updated after 5 increments", {
 })
 
 
-
 set.seed(667)
 # test more intensity start
 test1.1 <- trace_asco(
@@ -103,7 +101,6 @@ test_that("intense primary_infection_foci lead to more infections", {
   expect_equal(test1.1[[5]][["exposed_gps"]][, unique(cdd_at_infection)], 87)
 })
 
-
 # test running for 14 days
 # this will test that the infection intensifies with more days and
 #  that newly infected gp are moved to sporilating gp after the latent period
@@ -137,9 +134,6 @@ test_that("intense primary_infection_foci lead to more infections", {
                                              0, spores_per_packet], numeric())
 
 })
-
-
-
 
 # test running for 28 days
 # this will test that the infection intensifies with more days and
@@ -293,46 +287,23 @@ test_that("primary_infection_foci input is a unrecognicsed character error",
 #   harvest_date = as.POSIXct("1998-08-04"),
 #   time_zone = "Australia/Perth",
 #   primary_infection_foci = qry)
-#
-
-
-# Example discussed 2/6/2021
-#   s_date <- as.POSIXct("1998-05-20")
-#   h_date <- as.POSIXct("1998-08-04")
-#
-#   example <- trace_asco(
-#   weather = #yourWeather######,
-#   paddock_length = 8,
-#   paddock_width = 45,
-#   initial_infection = s_date + lubridate::ddays(14),
-#   sowing_date = s_date,
-#   harvest_date = h_date,
-#   time_zone = "Australia/Brisbane",
-#   primary_infection_foci = "centre",
-#   seeding_rate = 40,
-#   latent_period_cdd = 150
-# )
-# tracer_plot(dat = example,
-#             day = 82)
-# write.csv(test1[[5]]$paddock, "example.csv", row.names = FALSE)
 
 
 # future::plan("sequential")
 
-# # Test for stop error is triggered
-# test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
-#   expect_error(
-#   ta1 <- trace_asco(
-#     weather = weather_dat,
-#     paddock_length = 100,
-#     paddock_width = 100,
-#     initial_infection = "1998-03-09",
-#     sowing_date = as.POSIXct("1998-03-09"),
-#     harvest_date = as.POSIXct("1998-03-12"),
-#     time_zone = "Australia/Perth"
-#   ))
-# })
-#
+# Test for stop error is triggered
+test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
+  expect_error(
+  ta1 <- trace_asco(
+    weather = weather_dat,
+    paddock_length = 100,
+    paddock_width = 100,
+    initial_infection = "1998-03-09",
+    sowing_date = as.POSIXct("1998-03-09"),
+    harvest_date = as.POSIXct("1998-03-12"),
+    time_zone = "Australia/Perth"
+  ))
+})
 
 
 
@@ -361,10 +332,6 @@ test_that("primary_infection_foci input is a unrecognicsed character error",
 # tracer_plot(test4, 82)
 
 
-
-
-
-#
 # test5 <- trace_asco(
 #   weather = newM_weather,
 #   paddock_length = 20,
@@ -384,17 +351,8 @@ test_that("primary_infection_foci input is a unrecognicsed character error",
 # test5[[72]]
 #
 # sapply(test5, function(x){as.character(x[["cdd"]])})
-#
 
-#
-
-# Sowing of chick pea normally occurs between
-#   Mid May to Mid June
-
-
-
-#
-# # test running for 100 days
+# test running for 100 days
 # test5 <- trace_asco(
 #   weather = newM_weather,
 #   paddock_length = 75,
@@ -435,32 +393,18 @@ test_that("primary_infection_foci input is a unrecognicsed character error",
 # })
 #
 #
-# # Test for stop error is triggered
-# test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
-#   expect_error(
-#   ta1 <- trace_asco(
-#     weather = weather_dat,
-#     paddock_length = 100,
-#     paddock_width = 100,
-#     initial_infection = "1998-03-09",
-#     sowing_date = as.POSIXct("1998-03-09"),
-#     harvest_date = as.POSIXct("1998-03-12"),
-#     time_zone = "Australia/Perth"
-#   ))
-# })
-#
-# example mocked up on 5/8/2021 for ihsan
-# ta1 <- trace_asco(
-#       weather = weather_dat,
-#       paddock_length = 20,
-#       paddock_width = 20,
-#       initial_infection = as.POSIXct("1998-06-04") + lubridate::ddays(30),
-#       sowing_date = as.POSIXct("1998-06-09"),
-#       harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(135) ,
-#       time_zone = "Australia/Perth",
-#       seeding_rate = 40,
-#       gp_rr = 0.0065,
-#       spores_per_gp_per_wet_hour = 0.22,
-#       latent_period_cdd = 150,
-#       primary_infection_intensity = 100
-#     )
+# Test for stop error is triggered
+test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
+  expect_error(
+  ta1 <- trace_asco(
+    weather = weather_dat,
+    paddock_length = 100,
+    paddock_width = 100,
+    initial_infection = "1998-03-09",
+    sowing_date = as.POSIXct("1998-03-09"),
+    harvest_date = as.POSIXct("1998-03-12"),
+    time_zone = "Australia/Perth"
+  ))
+})
+
+
