@@ -1,9 +1,9 @@
 #' Calculates area of a summary unit
 #'
 #' 'summary_unit_area()' calculates area of a summary unit i.e., an observation
-#' quadrat or paddock in metres
-#' @param  summary_unit_width width in metres
-#' @param summary_unit_length length in metres
+#' quadra in metres
+#' @param  summary_unit_width width in metres. Defaults value `1`.
+#' @param summary_unit_length length in metres. Defaults value `1`.
 #' @keywords internal
 #' @noRd
 
