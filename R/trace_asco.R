@@ -45,6 +45,7 @@
 #' @export
 #'
 #' @examples
+#'
 #' # First weather data needs to be imported and formatted with `format_weather`
 #' Newmarracarra <-
 #'    read.csv(system.file("extdata",
@@ -64,21 +65,22 @@
 #'    time_zone = "Australia/Perth",
 #'    lonlat_file = station_data)
 #'
-#'
+#' Now the `trace_asco` function can be run to simulate disease spread
 #' traced <- trace_asco(
 #'   weather = weather_dat,
 #'   paddock_length = 100,
 #'   paddock_width = 100,
 #'   initial_infection = "1998-06-10",
 #'   sowing_date = as.POSIXct("1998-06-09"),
-#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70),
+#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70), # run the model for 70 days
 #'   time_zone = "Australia/Perth",
 #'   gp_rr = 0.0065,
 #'   primary_infection_intensity = 1000,
 #'   spores_per_gp_per_wet_hour = 0.22,
 #'   primary_infection_foci = "centre")
 #'
-#' traced[[70]]
+#' traced[[70]] # extracts the model output for 70 _days_
+
 trace_asco <- function(weather,
                        paddock_length,
                        paddock_width,
@@ -181,7 +183,7 @@ trace_asco <- function(weather,
 
       } else{
         if (primary_infection_foci == "centre" |
-            primary_infection_foci == "center") {
+            primary_infection_foci == "centre") {
           primary_infection_foci <-
             paddock[x == as.integer(round(paddock_width / 2)) &
                       y == as.integer(round(paddock_length / 2)),
