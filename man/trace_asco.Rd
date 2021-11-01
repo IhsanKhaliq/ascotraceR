@@ -31,11 +31,11 @@ chickpea growing season for the model operation.}
 
 \item{paddock_width}{width of a paddock in metres (x).}
 
-\item{sowing_date}{a character string of a date value indicating sowing
-date of chickpea seed and the start of the ascotraceR model. Preferably
-in ISO8601 format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
-Assumes there is sufficient soil moisture to induce germination and start
-the crop growing season.}
+\item{sowing_date}{a character string of a date value indicating sowing date
+of chickpea seed and the start of the ascotraceR model. Preferably in
+ISO8601 format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}. Assumes there
+is sufficient soil moisture to induce germination and start the crop
+growing season.}
 
 \item{harvest_date}{a character string of a date value indicating harvest
 date of chickpea crop, which is also the last day to run the ascotraceR
@@ -48,8 +48,8 @@ resulting in the production of infected growing points.}
 \item{seeding_rate}{indicate the rate at which chickpea seed is sown per
 square metre. Defaults to \code{40}.}
 
-\item{gp_rr}{refers to rate of increase in chickpea growing points
-per degree Celsius per day. Defaults to \code{0.0065}.}
+\item{gp_rr}{refers to rate of increase in chickpea growing points per degree
+Celsius per day. Defaults to \code{0.0065}.}
 
 \item{max_gp_lim}{Maximum number of chickpea growing points (meristems)
 allowed per square metre. Defaults to \code{15000}.}
