@@ -122,6 +122,26 @@ format_weather <- function(x,
          "`x` must be provided as a `data.frame` object for formatting.")
   }
 
+  # is this a pre-formatted data.frame that needs to be reformatted?
+  if(all(c("times", "rain", "ws", "wd", "wd_sd", "lon", "lat",
+           "station", "YYYY", "MM", "DD", "hh", "mm") %in% colnames(x))){
+
+    # set as data.table
+    setDT(x)
+
+
+    if (is.null(time_zone)) {
+      stop("Please provide the timezone of the source weather stations. If this
+              was pre-formatted, use 'UTC'")
+    } else{
+      x[, times := lubridate::ymd_hms(times, tz = time_zone)]
+    }
+
+    class(x) <- union("asco.weather", class(x))
+
+    return(x)
+  }
+
   # Check for missing inputs before proceeding
   if (is.null(POSIXct_time) &&
       is.null(YYYY) && is.null(MM) && is.null(DD) && is.null(hh)) {
