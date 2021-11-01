@@ -117,5 +117,6 @@ traced <- trace_asco(
   primary_infection_intensity = 1000,
   spores_per_gp_per_wet_hour = 0.22,
   primary_infection_foci = "centre")
-  traced[[70]]
+
+traced[[70]]
 }
