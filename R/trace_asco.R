@@ -122,7 +122,8 @@ trace_asco <- function(weather,
         stop(call. = FALSE,
              "`",
              x,
-             "` is not a valid entry for date. Please enter as `YYYY-MM-DD`.\n")
+             "` is not a valid entry for date.\n",
+             "Please enter as `YYYY-MM-DD`.\n")
       }
     )
   return(x)
