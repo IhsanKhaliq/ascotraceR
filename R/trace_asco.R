@@ -185,7 +185,9 @@ trace_asco <- function(weather,
                       y == as.integer(round(paddock_length / 2)),
                     c("x", "y")]
         }else{
-          stop("primary_infection_foci input not recognised")
+          stop(
+            call. = FALSE,
+            "primary_infection_foci input not recognised")
       }
       }
     } else{
