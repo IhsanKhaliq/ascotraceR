@@ -136,7 +136,7 @@ format_weather <- function(x,
   }
 
   # is this a pre-formatted data.frame that needs to be reformatted?
-  if(all(c("times", "rain", "ws", "wd", "wd_sd", "lon", "lat",
+  if(all(c("times", "temp","rain", "ws", "wd", "wd_sd", "wet_hours",
            "station", "YYYY", "MM", "DD", "hh", "mm") %in% colnames(x))){
 
     # set as data.table
