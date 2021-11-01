@@ -51,4 +51,13 @@ traced <- trace_asco(
   primary_infection_foci = "centre")
 
   tracer_plot(traced, 102)
+tracer_plot(traced,102) +
+  ggplot2::scale_fill_gradient(low = "lightgoldenrod", high = "red")
+tracer_plot(traced,102) +
+  ggplot2::scale_fill_viridis_b()
+
+tracer_plot(traced,102, tiles = "susceptible_gp") +
+  ggplot2::scale_fill_gradient(low = "lightgoldenrod", high = "palegreen4")
+tracer_plot(traced,102, tiles = "percent_gp_sporulating") +
+  ggplot2::scale_fill_gradient(low = "white", high = "black")
 }
