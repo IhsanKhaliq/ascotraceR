@@ -660,3 +660,26 @@ test_that("Incorrect column names are picked up and error is given", {
     )
   )
 })
+
+test_that("function can reformat weather data previously saved as csv and
+          read back in",{
+            fileName <- paste0(tempfile(),".csv")
+            write.csv(x = dat_no_location,
+                      file = fileName,
+                      row.names = FALSE)
+            w_dat <- read.csv(fileName)
+
+            expect_equal(class(w_dat), "data.frame")
+            expect_equal(colnames(w_dat), c("times", "temp", "rain", "ws", "wd",
+                                            "wd_sd", "station", "YYYY", "MM", "DD",
+                                            "hh", "mm", "day", "hours_in_day",
+                                            "wet_hours", "ws_sd"
+                                            ))
+            w_dat <- format_weather(w_dat, time_zone = "UTC")
+            expect_equal(class(w_dat), c("asco.weather","data.table", "data.frame"))
+            expect_equal(colnames(w_dat), c("times", "temp", "rain", "ws", "wd",
+                                            "wd_sd", "station", "YYYY", "MM", "DD",
+                                            "hh", "mm", "day", "hours_in_day",
+                                            "wet_hours", "ws_sd"))
+
+          })
