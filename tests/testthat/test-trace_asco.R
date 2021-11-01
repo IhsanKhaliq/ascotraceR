@@ -271,24 +271,6 @@ test_that("primary_infection_foci input is a unrecognicsed character error",
           })
 
 
-
-# library(future)
-# future::plan("multisession")
-# qry <- data.table(x = c(15,30),
-#                   y = c(4,4),
-#                   load = 40)
-#
-# test7 <- trace_asco(
-#   weather = newM_weather,
-#   paddock_length = 8,
-#   paddock_width = 45,
-#   initial_infection = "1998-06-18",
-#   sowing_date = as.POSIXct("1998-05-20"),
-#   harvest_date = as.POSIXct("1998-08-04"),
-#   time_zone = "Australia/Perth",
-#   primary_infection_foci = qry)
-
-
 # future::plan("sequential")
 
 # Test for stop error is triggered
@@ -306,93 +288,6 @@ test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
 })
 
 
-
-# The following tests require time and computing power and are not included in regular testing
-#
-# # # test running for 100 days
-# test4 <- trace_asco(
-#   weather = newM_weather,
-#   paddock_length = 100,
-#   paddock_width = 100,
-#   initial_infection = "1998-05-10",
-#   sowing_date = as.POSIXct("1998-05-09"),
-#   harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(80),
-#   time_zone = "Australia/Perth",
-#   primary_infection_foci = qry,
-#   primary_infection_intensity = 40
-# )
-# test4[[80]] # look at values on the 80th day
-#
-# test_that("test4 returns some sporulating gps",{
-#   expect_equal(test4[[80]][["paddock"]][,sum(infectious_gp)], 15592)
-#   expect_true(all(test4[[80]][["exposed_gps"]][,unique(cdd_at_infection)] > test4[[80]][["cdd"]] - 200))
-#
-# })
-#
-# tracer_plot(test4, 82)
-
-
-# test5 <- trace_asco(
-#   weather = newM_weather,
-#   paddock_length = 20,
-#   paddock_width = 20,
-#   initial_infection = "1998-05-10",
-#   sowing_date = as.POSIXct("1998-05-09"),
-#   harvest_date = as.POSIXct("1998-05-09") + lubridate::ddays(100),
-#   time_zone = "Australia/Perth",
-#   primary_infection_foci = "centre",
-#   primary_infection_intensity = 40
-#
-# )
-# beepr::beep(3)
-# tracer_plot(test5,72, tiles = "infectious_gp")
-# tracer_plot(test5,72, tiles = "susceptible_gp")
-# tracer_plot(test5,72, tiles = "percent_gp_sporulating")
-# test5[[72]]
-#
-# sapply(test5, function(x){as.character(x[["cdd"]])})
-
-# test running for 100 days
-# test5 <- trace_asco(
-#   weather = newM_weather,
-#   paddock_length = 75,
-#   paddock_width = 75,
-#   initial_infection = "1998-06-10",
-#   sowing_date = as.POSIXct("1998-06-09"),
-#   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(175),
-#   time_zone = "Australia/Perth",
-#   primary_infection_foci = "centre"
-# )
-# test5[[102]] # look at values on the 102nd day
-#
-# test_that("test4 returns some sporulating gps from june",{
-#   expect_equal(test4[[102]][["paddock"]][,sum(infectious_gp)], 5)
-#
-#
-# })
-#
-#
-#
-# test_that("trace_asco daily_vals returns an daily vals data.frame", {
-#   expect_is(ta1, "data.frame")
-#   expect_true(all(c("cdd", "cwh", "cr", "i", "day") %in% colnames(ta1)))
-# })
-#
-# test_that("trace_asco daily_vals returns the correct data.frame dimensions", {
-#   expect_equal(nrow(ta1), 4)
-#   expect_equal(ncol(ta1), 5)
-# })
-#
-# test_that("trace_asco daily_vals the following contents", {
-#   expect_equal(ta1$cdd, c(0,28,53,71))
-#   expect_equal(ta1$cwh, c(0,0,0,5))
-#   expect_equal(ta1$cr, c(0,0,0,5.33))
-#   expect_equal(ta1$i[1], as.POSIXct("1998-03-09", tz = "Australia/Perth"))
-#   expect_equal(ta1$day, c(68,69,70,71))
-#   expect_equal(ncol(ta1), 5)
-# })
-#
-#
 # Test for stop error is triggered
 test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
   expect_error(
