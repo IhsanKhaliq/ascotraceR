@@ -35,7 +35,7 @@ one_day <- function(i_date,
                     max_gp,
                     spore_interception_parameter,
                     spores_per_gp_per_wet_hour) {
-  times <- temp <- wet_hours <- rain <- new_gp <- infectious_gp <-
+  times <- temp <- rain <- new_gp <- infectious_gp <-
     cdd_at_infection <- susceptible_gp <- NULL
 
   # expand time to be hourly
@@ -47,7 +47,7 @@ one_day <- function(i_date,
 
   # obtain summary weather for i_day
   i_mean_air_temp <- mean(weather_day[, temp])
-  i_wet_hours <- weather_day[2, wet_hours]
+  i_wet_hours <- weather_day[, sum(rain > 0,na.rm = TRUE)]
   i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
 
   # Start building a list of values for 'i'
