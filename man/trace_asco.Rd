@@ -54,7 +54,7 @@ Celsius per day. Defaults to \code{0.0065}.}
 \item{max_gp_lim}{Maximum number of chickpea growing points (meristems)
 allowed per square metre. Defaults to \code{15000}.}
 
-\item{max_new_gp}{Maximum number of new chickpea growing points (meristems)
+\item{max_new_gp}{Maximum number of new chickpea growing points (meristems),
 which develop per day, per square metre. Defaults to \code{350}.}
 
 \item{latent_period_cdd}{latent period in cumulative degree days (sum of
