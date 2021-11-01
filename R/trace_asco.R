@@ -22,7 +22,7 @@
 #'   Celsius per day. Defaults to `0.0065`.
 #' @param max_gp_lim Maximum number of chickpea growing points (meristems)
 #'   allowed per square metre. Defaults to `15000`.
-#' @param max_new_gp Maximum number of new chickpea growing points (meristems)
+#' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
 #' @param primary_infection_foci refers to the inoculated coordinates where the
 #'   epidemic starts. Accepted inputs are: `centre` (Default) or `random`.
@@ -77,7 +77,8 @@
 #'   primary_infection_intensity = 1000,
 #'   spores_per_gp_per_wet_hour = 0.22,
 #'   primary_infection_foci = "centre")
-#'   traced[[70]]
+#'
+#' traced[[70]]
 trace_asco <- function(weather,
                        paddock_length,
                        paddock_width,
@@ -98,7 +99,7 @@ trace_asco <- function(weather,
 
   x <- y <- load <- susceptible_gp <- NULL
 
-  if (!"data.table" %in% class(weather)){
+  if (!"data.table" %in% class(weather)) {
     stop(
       call. = FALSE,
       "'weather' must be class \"asco.weather\"")
@@ -118,11 +119,12 @@ trace_asco <- function(weather,
                                         "bdY",
                                         "bdy"
                                       )),
-      warning = function(c) {
+      warning = function(w) {
         stop(call. = FALSE,
-             "\n",
+             "`",
              x,
-             " is not a valid entry for date. Enter as YYYY-MM-DD.\n")
+             "` is not a valid entry for date.\n",
+             "Please enter as `YYYY-MM-DD`.\n")
       }
     )
   return(x)
@@ -185,7 +187,9 @@ trace_asco <- function(weather,
                       y == as.integer(round(paddock_length / 2)),
                     c("x", "y")]
         }else{
-          stop("primary_infection_foci input not recognised")
+          stop(
+            call. = FALSE,
+            "primary_infection_foci input not recognised")
       }
       }
     } else{
@@ -292,15 +296,14 @@ trace_asco <- function(weather,
                          by = "days")
 
   daily_vals_list <- rep(daily_vals_list,
-                         length(time_increments)+1)
+                         length(time_increments) + 1)
 
-  for (i in seq_len(length(time_increments))){
-
+  for (i in seq_len(length(time_increments))) {
     # update time values for iteration of loop
     daily_vals_list[[i]][["i_date"]] <- time_increments[i]
     daily_vals_list[[i]][["i_day"]] <- i
-    daily_vals_list[[i]][["day"]] <- lubridate::yday(time_increments[i])
-
+    daily_vals_list[[i]][["day"]] <-
+      lubridate::yday(time_increments[i])
 
     # currently working on one_day
     daily_vals_list[[i + 1]] <- one_day(

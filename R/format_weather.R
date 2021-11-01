@@ -82,19 +82,32 @@
 #'
 #' @examples
 #' # Weather data files for Newmarracara for testing and examples have been
-#' included in # ascotraceR.  The weather data files both are of the same
-#' format, so # they will be combined for formatting here.
+#' # included in ascotraceR. The weather data files both are of the same format,
+#' # so they will be combined for formatting here.
 #'
-#' Newmarracarra <- read.csv(system.file("extdata",
-#' "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")) station_data
-#' <- system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#' Newmarracarra <- read.csv(
+#'  system.file("extdata",
+#'              "1998_Newmarracarra_weather_table.csv",
+#'              package = "ascotraceR")
+#')
 #'
-#' weather <- format_weather( x = Newmarracarra, POSIXct_time = "Local.Time", ws
-#' = "ws", wd_sd = "wd_sd", rain = "rain_mm", wd = "wd", station = "Location",
-#' time_zone = "Australia/Perth", lonlat_file = station_data )
+#' station_data <- system.file("extdata",
+#'                             "stat_dat.csv",
+#'                             package = "ascotraceR")
+#'
+#' weather <- format_weather(
+#'   x = Newmarracarra,
+#'   POSIXct_time = "Local.Time",
+#'   ws = "ws",
+#'   wd_sd = "wd_sd",
+#'   rain = "rain_mm",
+#'   wd = "wd",
+#'   station = "Location",
+#'   time_zone = "Australia/Perth",
+#'   lonlat_file = station_data
+#' )
 #'
 #' @export
-#' @import data.table
 format_weather <- function(x,
                            YYYY = NULL,
                            MM = NULL,
