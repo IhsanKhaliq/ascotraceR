@@ -294,15 +294,14 @@ trace_asco <- function(weather,
                          by = "days")
 
   daily_vals_list <- rep(daily_vals_list,
-                         length(time_increments)+1)
+                         length(time_increments) + 1)
 
-  for (i in seq_len(length(time_increments))){
-
+  for (i in seq_len(length(time_increments))) {
     # update time values for iteration of loop
     daily_vals_list[[i]][["i_date"]] <- time_increments[i]
     daily_vals_list[[i]][["i_day"]] <- i
-    daily_vals_list[[i]][["day"]] <- lubridate::yday(time_increments[i])
-
+    daily_vals_list[[i]][["day"]] <-
+      lubridate::yday(time_increments[i])
 
     # currently working on one_day
     daily_vals_list[[i + 1]] <- one_day(
