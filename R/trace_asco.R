@@ -169,10 +169,6 @@ trace_asco <- function(weather,
 
 
   # sample a paddock location randomly if a starting foci is not given
-  if (is.data.table(primary_infection_foci) &
-      all(c("x", "y") %in% colnames(primary_infection_foci))) {
-    # Skip the rest of the tests
-  } else{
   if (class(primary_infection_foci) == "character") {
     if (primary_infection_foci == "random") {
       primary_infection_foci <-
@@ -216,9 +212,6 @@ trace_asco <- function(weather,
         stop(call. = FALSE,
              "primary_infection_foci data.frame needs colnames 'x' and 'y'")
       }
-
-      }
-
     }
   }
 
