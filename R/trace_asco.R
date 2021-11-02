@@ -173,13 +173,13 @@ trace_asco <- function(weather,
       all(c("x", "y") %in% colnames(primary_infection_foci))) {
     # Skip the rest of the tests
   } else{
-    if (class(primary_infection_foci) == "character") {
-      if (primary_infection_foci == "random") {
-        primary_infection_foci <-
-          paddock[sample(seq_len(nrow(paddock)),
-                         size = n_foci,
-                         replace = TRUE),
-                  c("x", "y")]
+  if (class(primary_infection_foci) == "character") {
+    if (primary_infection_foci == "random") {
+      primary_infection_foci <-
+        paddock[sample(seq_len(nrow(paddock)),
+                       size = n_foci,
+                       replace = TRUE),
+                c("x", "y")]
 
       } else{
         if (primary_infection_foci == "centre" |
