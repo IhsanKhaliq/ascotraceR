@@ -222,10 +222,10 @@ trace_asco <- function(weather,
     }
   }
 
-
+  # get rownumbers for paddock data.table that need to be set as infected
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
-  if (ncol(primary_infection_foci) == 2) {
+  if ("load" %in% colnames(primary_infection_foci) == FALSE) {
     primary_infection_foci[, load := primary_infection_intensity]
   } else{
     if (all(colnames(primary_infection_foci) %in% c("x", "y"))) {
