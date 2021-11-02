@@ -64,7 +64,11 @@ lesions on susceptible growing points. Defaults to \code{200}.}
 \item{time_zone}{refers to time in Coordinated Universal Time (UTC).}
 
 \item{primary_infection_foci}{refers to the inoculated coordinates where the
-epidemic starts. Accepted inputs are: \code{centre} (Default) or \code{random}.}
+epidemic starts. Accepted inputs are: \code{centre} or \code{random} (Default) or a
+data.frame with column names 'x', 'y' and 'load'. The data.frame inputs informs
+the model of specific grid cell/s coordinates where the epidemic should begin.
+Column 'load' is optional can specifies the \code{primary_infection_intensity}
+for each coordinate.}
 
 \item{primary_infection_intensity}{The intensity of the starting epidemic as
 described by the number of number of sporulating growing points.}
@@ -85,6 +89,7 @@ chickpea paddock
 a chickpea field over a growing season.
 }
 \examples{
+
 # First weather data needs to be imported and formatted with `format_weather`
 Newmarracarra <-
    read.csv(system.file("extdata",
@@ -104,19 +109,19 @@ weather_dat <- format_weather(
    time_zone = "Australia/Perth",
    lonlat_file = station_data)
 
-
+# Now the `trace_asco` function can be run to simulate disease spread
 traced <- trace_asco(
   weather = weather_dat,
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-06-10",
   sowing_date = as.POSIXct("1998-06-09"),
-  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70),
+  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70), # run the model for 70 days
   time_zone = "Australia/Perth",
   gp_rr = 0.0065,
   primary_infection_intensity = 1000,
   spores_per_gp_per_wet_hour = 0.22,
   primary_infection_foci = "centre")
 
-traced[[70]]
+traced[[70]] # extracts the model output for 70 _days_
 }
