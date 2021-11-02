@@ -181,42 +181,41 @@ trace_asco <- function(weather,
                        replace = TRUE),
                 c("x", "y")]
 
-      } else{
-        if (primary_infection_foci == "centre" |
-            primary_infection_foci == "centre") {
-          primary_infection_foci <-
-            paddock[x == as.integer(round(paddock_width / 2)) &
-                      y == as.integer(round(paddock_length / 2)),
-                    c("x", "y")]
-        }else{
-          stop(
-            call. = FALSE,
-            "primary_infection_foci input not recognised")
-      }
-      }
     } else{
-      if (is.vector(primary_infection_foci)) {
-        if (length(primary_infection_foci) != 2 |
-            is.numeric(primary_infection_foci) == FALSE) {
-          stop(
-            call. = FALSE,
-            "`primary_infection_foci` should be supplied as a numeric vector",
-            "of length two")
-        }
+      if (primary_infection_foci == "centre" |
+          primary_infection_foci == "centre") {
         primary_infection_foci <-
-          as.data.table(as.list(primary_infection_foci))
-        setnames(x = primary_infection_foci,
-                 old = c("V1", "V2"),
-                 new = c("x", "y"))
+          paddock[x == as.integer(round(paddock_width / 2)) &
+                    y == as.integer(round(paddock_length / 2)),
+                  c("x", "y")]
+      } else{
+        stop(call. = FALSE,
+             "primary_infection_foci input not recognised")
       }
-      if (is.data.table(primary_infection_foci) == FALSE &
-          is.data.frame(primary_infection_foci)) {
-        setDT(primary_infection_foci)
-        if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
-          stop(
-            call. = FALSE,
-            "primary_infection_foci data.table needs colnames 'x' and 'y'")
-        }
+    }
+  } else{
+    if (is.vector(primary_infection_foci)) {
+      if (length(primary_infection_foci) != 2 |
+          is.numeric(primary_infection_foci) == FALSE) {
+        stop(
+          call. = FALSE,
+          "`primary_infection_foci` should be supplied as a numeric vector",
+          "of length two"
+        )
+      }
+      primary_infection_foci <-
+        as.data.table(as.list(primary_infection_foci))
+      setnames(x = primary_infection_foci,
+               old = c("V1", "V2"),
+               new = c("x", "y"))
+    }
+    if (is.data.table(primary_infection_foci) == FALSE &
+        is.data.frame(primary_infection_foci)) {
+      setDT(primary_infection_foci)
+      if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
+        stop(call. = FALSE,
+             "primary_infection_foci data.frame needs colnames 'x' and 'y'")
+      }
 
       }
 
