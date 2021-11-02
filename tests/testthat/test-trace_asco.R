@@ -270,36 +270,34 @@ test_that("primary_infection_foci input is a unrecognicsed character error",
             )
           })
 
-
-# future::plan("sequential")
-
 # Test for stop error is triggered
 test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
   expect_error(
   ta1 <- trace_asco(
-    weather = weather_dat,
+    weather = newM_weather,
     paddock_length = 100,
     paddock_width = 100,
     initial_infection = "1998-03-09",
     sowing_date = as.POSIXct("1998-03-09"),
     harvest_date = as.POSIXct("1998-03-12"),
     time_zone = "Australia/Perth"
-  ))
+  ),regexp = "The `initial_infection` occurs on or before `sowing_date`.Please use an `initial_infection` date which occurs after `crop_sowing`.")
 })
 
 
-# Test for stop error is triggered
-test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
+# trace_asco stops on error for non formatted weather data
+test_that("trace_asco stops on error for non formatted weather data",{
+  newM_weather2 <- copy(newM_weather)
+  class(newM_weather2) <- c("data.table", "data.frame")
   expect_error(
-  ta1 <- trace_asco(
-    weather = weather_dat,
-    paddock_length = 100,
-    paddock_width = 100,
-    initial_infection = "1998-03-09",
-    sowing_date = as.POSIXct("1998-03-09"),
-    harvest_date = as.POSIXct("1998-03-12"),
-    time_zone = "Australia/Perth"
-  ))
+    ta1 <- trace_asco(
+      weather = newM_weather2,
+      paddock_length = 100,
+      paddock_width = 100,
+      initial_infection = "1998-03-10",
+      sowing_date = as.POSIXct("1998-03-09"),
+      harvest_date = as.POSIXct("1998-03-12"),
+      time_zone = "Australia/Perth"
+    ), regexp = "'weather' must be class \"asco.weather\"")
 })
-
 
