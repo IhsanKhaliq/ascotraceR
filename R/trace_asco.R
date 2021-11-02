@@ -25,7 +25,11 @@
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
 #' @param primary_infection_foci refers to the inoculated coordinates where the
-#'   epidemic starts. Accepted inputs are: `centre` (Default) or `random`.
+#'   epidemic starts. Accepted inputs are: `centre` or `random` (Default) or a
+#'   data.frame with column names 'x', 'y' and 'load'. The data.frame inputs informs
+#'   the model of specific grid cell/s coordinates where the epidemic should begin.
+#'   Column 'load' is optional can specifies the `primary_infection_intensity`
+#'   for each coordinate.
 #' @param primary_infection_intensity The intensity of the starting epidemic as
 #'   described by the number of number of sporulating growing points.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
@@ -65,7 +69,7 @@
 #'    time_zone = "Australia/Perth",
 #'    lonlat_file = station_data)
 #'
-#' Now the `trace_asco` function can be run to simulate disease spread
+#' # Now the `trace_asco` function can be run to simulate disease spread
 #' traced <- trace_asco(
 #'   weather = weather_dat,
 #'   paddock_length = 100,
@@ -169,10 +173,7 @@ trace_asco <- function(weather,
 
 
   # sample a paddock location randomly if a starting foci is not given
-  if (is.data.table(primary_infection_foci) &
-      all(c("x", "y") %in% colnames(primary_infection_foci))) {
-    # Skip the rest of the tests
-  } else{
+  if ("data.frame" %in% class(primary_infection_foci) == FALSE) {
     if (class(primary_infection_foci) == "character") {
       if (primary_infection_foci == "random") {
         primary_infection_foci <-
@@ -188,11 +189,10 @@ trace_asco <- function(weather,
             paddock[x == as.integer(round(paddock_width / 2)) &
                       y == as.integer(round(paddock_length / 2)),
                     c("x", "y")]
-        }else{
-          stop(
-            call. = FALSE,
-            "primary_infection_foci input not recognised")
-      }
+        } else{
+          stop(call. = FALSE,
+               "primary_infection_foci input not recognised")
+        }
       }
     } else{
       if (is.vector(primary_infection_foci)) {
@@ -201,7 +201,8 @@ trace_asco <- function(weather,
           stop(
             call. = FALSE,
             "`primary_infection_foci` should be supplied as a numeric vector",
-            "of length two")
+            "of length two"
+          )
         }
         primary_infection_foci <-
           as.data.table(as.list(primary_infection_foci))
@@ -209,24 +210,23 @@ trace_asco <- function(weather,
                  old = c("V1", "V2"),
                  new = c("x", "y"))
       }
-      if (is.data.table(primary_infection_foci) == FALSE &
-          is.data.frame(primary_infection_foci)) {
-        setDT(primary_infection_foci)
-        if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
-          stop(
-            call. = FALSE,
-            "primary_infection_foci data.table needs colnames 'x' and 'y'")
-        }
-
+    }
+  } else{
+    if (is.data.table(primary_infection_foci) == FALSE &
+        is.data.frame(primary_infection_foci)) {
+      setDT(primary_infection_foci)
+      if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
+        stop(call. = FALSE,
+             "primary_infection_foci data.frame needs colnames 'x' and 'y'")
       }
-
     }
   }
 
 
+  # get rownumbers for paddock data.table that need to be set as infected
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
-  if (ncol(primary_infection_foci) == 2) {
+  if ("load" %in% colnames(primary_infection_foci) == FALSE) {
     primary_infection_foci[, load := primary_infection_intensity]
   } else{
     if (all(colnames(primary_infection_foci) %in% c("x", "y"))) {
@@ -234,6 +234,7 @@ trace_asco <- function(weather,
            "colnames for 'primary_infection_foci' not 'x', 'y' & 'load'.")
     }
   }
+
 
   # define paddock variables at time 1
   #need to update so can assign a data.table of things primary infection foci!!!!!!!!!!!!!!!
