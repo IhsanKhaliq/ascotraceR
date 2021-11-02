@@ -25,7 +25,11 @@
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
 #' @param primary_infection_foci refers to the inoculated coordinates where the
-#'   epidemic starts. Accepted inputs are: `centre` (Default) or `random`.
+#'   epidemic starts. Accepted inputs are: `centre` or `random` (Default) or a
+#'   data.frame with column names 'x', 'y' and 'load'. The data.frame inputs informs
+#'   the model of specific grid cell/s coordinates where the epidemic should begin.
+#'   Column 'load' is optional can specifies the `primary_infection_intensity`
+#'   for each coordinate.
 #' @param primary_infection_intensity The intensity of the starting epidemic as
 #'   described by the number of number of sporulating growing points.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
