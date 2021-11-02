@@ -65,7 +65,7 @@
 #'    time_zone = "Australia/Perth",
 #'    lonlat_file = station_data)
 #'
-#' Now the `trace_asco` function can be run to simulate disease spread
+#' # Now the `trace_asco` function can be run to simulate disease spread
 #' traced <- trace_asco(
 #'   weather = weather_dat,
 #'   paddock_length = 100,
