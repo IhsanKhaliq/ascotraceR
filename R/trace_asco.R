@@ -174,42 +174,44 @@ trace_asco <- function(weather,
 
   # sample a paddock location randomly if a starting foci is not given
   if ("data.frame" %in% class(primary_infection_foci) == FALSE) {
-  if (class(primary_infection_foci) == "character") {
-    if (primary_infection_foci == "random") {
-      primary_infection_foci <-
-        paddock[sample(seq_len(nrow(paddock)),
-                       size = n_foci,
-                       replace = TRUE),
-                c("x", "y")]
-
-    } else{
-      if (primary_infection_foci == "centre" |
-          primary_infection_foci == "centre") {
+    if (class(primary_infection_foci) == "character") {
+      if (primary_infection_foci == "random") {
         primary_infection_foci <-
-          paddock[x == as.integer(round(paddock_width / 2)) &
-                    y == as.integer(round(paddock_length / 2)),
+          paddock[sample(seq_len(nrow(paddock)),
+                         size = n_foci,
+                         replace = TRUE),
                   c("x", "y")]
+
       } else{
-        stop(call. = FALSE,
-             "primary_infection_foci input not recognised")
+        if (primary_infection_foci == "centre" |
+            primary_infection_foci == "centre") {
+          primary_infection_foci <-
+            paddock[x == as.integer(round(paddock_width / 2)) &
+                      y == as.integer(round(paddock_length / 2)),
+                    c("x", "y")]
+        } else{
+          stop(call. = FALSE,
+               "primary_infection_foci input not recognised")
+        }
+      }
+    } else{
+      if (is.vector(primary_infection_foci)) {
+        if (length(primary_infection_foci) != 2 |
+            is.numeric(primary_infection_foci) == FALSE) {
+          stop(
+            call. = FALSE,
+            "`primary_infection_foci` should be supplied as a numeric vector",
+            "of length two"
+          )
+        }
+        primary_infection_foci <-
+          as.data.table(as.list(primary_infection_foci))
+        setnames(x = primary_infection_foci,
+                 old = c("V1", "V2"),
+                 new = c("x", "y"))
       }
     }
   } else{
-    if (is.vector(primary_infection_foci)) {
-      if (length(primary_infection_foci) != 2 |
-          is.numeric(primary_infection_foci) == FALSE) {
-        stop(
-          call. = FALSE,
-          "`primary_infection_foci` should be supplied as a numeric vector",
-          "of length two"
-        )
-      }
-      primary_infection_foci <-
-        as.data.table(as.list(primary_infection_foci))
-      setnames(x = primary_infection_foci,
-               old = c("V1", "V2"),
-               new = c("x", "y"))
-    }
     if (is.data.table(primary_infection_foci) == FALSE &
         is.data.frame(primary_infection_foci)) {
       setDT(primary_infection_foci)
@@ -219,6 +221,7 @@ trace_asco <- function(weather,
       }
     }
   }
+
 
   # get rownumbers for paddock data.table that need to be set as infected
   infected_rows <- which_paddock_row(paddock = paddock,
@@ -231,6 +234,7 @@ trace_asco <- function(weather,
            "colnames for 'primary_infection_foci' not 'x', 'y' & 'load'.")
     }
   }
+
 
   # define paddock variables at time 1
   #need to update so can assign a data.table of things primary infection foci!!!!!!!!!!!!!!!
