@@ -1,4 +1,4 @@
-#' To be deleted after discussion
+#' Rounds up or down real numbers depending on the values
 #'
 #' @keywords internal
 #' @noRd
