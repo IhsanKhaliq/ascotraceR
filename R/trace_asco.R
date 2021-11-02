@@ -101,7 +101,7 @@ trace_asco <- function(weather,
 
   x <- y <- load <- susceptible_gp <- NULL
 
-  if (!"data.table" %in% class(weather)) {
+  if (!"asco.weather" %in% class(weather)) {
     stop(
       call. = FALSE,
       "'weather' must be class \"asco.weather\"")
