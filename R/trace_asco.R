@@ -176,7 +176,7 @@ trace_asco <- function(weather,
                          replace = TRUE),
                   c("x", "y")]
 
-      } else{
+      } else {
         if (primary_infection_foci == "centre" |
             primary_infection_foci == "centre") {
           primary_infection_foci <-
@@ -188,7 +188,7 @@ trace_asco <- function(weather,
                "primary_infection_foci input not recognised")
         }
       }
-    } else{
+    } else {
       if (is.vector(primary_infection_foci)) {
         if (length(primary_infection_foci) != 2 |
             is.numeric(primary_infection_foci) == FALSE) {
@@ -231,7 +231,7 @@ trace_asco <- function(weather,
 
 
   # define paddock variables at time 1
-  #need to update so can assign a data.table of things primary infection foci!!!!!!!!!!!!!!!
+  # need to update so can assign a data.table of things primary infection foci!!
   paddock[, c(
     "new_gp", # Change in the number of growing points since last iteration
     "susceptible_gp",
@@ -246,15 +246,15 @@ trace_asco <- function(weather,
     )]
 
   # calculate additional parameters
-  # Pauls interpretation of this calculation
-  # For a particular spread event (point in time), in space of all growing points
-  #  the maximum number of susceptible growing are 15000/350 = 42.86
-  #  The highest probability of a spore landing on the area of these 42 susceptible
-  #  growing points is 0.00006 * 42.86. However as the crop is always changing we
-  #  need to calculate the actual probability of interception depending on the
-  #  density of the crop canopy for that given time. See the function `interception_probability`
-  spore_interception_parameter <-
-    0.00006 * (max_gp_lim/max_new_gp)
+  # Paul's interpretation of this calculation
+  # For a particular spread event (point in time), in space of all growing
+  # points the maximum number of susceptible growing are 15000/350 = 42.86
+  # The highest probability of a spore landing on the area of these 42
+  # susceptible growing points is 0.00006 * 42.86. However, as the crop is
+  # always changing, we need to calculate the actual probability of interception
+  # depending on the density of the crop canopy for that given time. See the
+  # function `interception_probability()`
+  spore_interception_parameter <- 0.00006 * (max_gp_lim/max_new_gp)
 
   # define max_gp
   max_gp <- max_gp_lim * (1 - exp(-0.138629 * seeding_rate))
