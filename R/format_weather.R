@@ -208,8 +208,8 @@ format_weather <- function(x,
     time_zone <-
       unique(
         lutz::tz_lookup_coords(
-          lat = stats::median(as.vector(raster::extent(r))[3:4]),
-          lon = stats::median(as.vector(raster::extent(r))[1:2]),
+          lat = stats::median(as.vector(terra::ext(r))[3:4]),
+          lon = stats::median(as.vector(terra::ext(r))[1:2]),
           method = "accurate"
         )
       )

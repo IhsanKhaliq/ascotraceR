@@ -52,7 +52,7 @@ Imports:
   circular (>= 0.4-93),
   stats,
   sf,
-  raster (>= 3.4-5)
+  terra
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5.0)

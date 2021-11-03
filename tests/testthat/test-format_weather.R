@@ -335,13 +335,14 @@ test_that("`format_weather() stops if lonlat input lacks proper names", {
   )
 
   # while ascotraceR does not use rasters lets create one for testing
-  eyre_temp <- raster::raster(
+  eyre_temp <- terra::rast(
     nrows = 180,
     ncols = 360,
-    xmn = -135.7,
-    xmx = 135.9,
-    ymn = -33.4,
-    ymx = -33.2
+    nlyrs = 1,
+    xmin = -135.7,
+    xmax = 135.9,
+    ymin = -33.4,
+    ymax = -33.2
   )
 
   expect_error(
@@ -484,13 +485,14 @@ test_that("`format_weather() creates a YYYY MM DD... cols", {
   )
 
   # while ascotraceR does not use rasters lets create one for testing
-  eyre_temp <- raster::raster(
+  eyre_temp <- terra::rast(
     nrows = 180,
     ncols = 360,
-    xmn = -135.7,
-    xmx = 135.9,
-    ymn = -33.4,
-    ymx = -33.2
+    nlyrs = 1,
+    xmin = -135.7,
+    xmax = 135.9,
+    ymin = -33.4,
+    ymax = -33.2
   )
 
   expect_named(
