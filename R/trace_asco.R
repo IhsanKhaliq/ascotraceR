@@ -162,12 +162,9 @@ trace_asco <- function(weather,
     )
   }
 
-
-  # makePaddock equivalent
-  paddock <- as.data.table(expand.grid(x = 1:paddock_width,
-                                       y = 1:paddock_length))
-
-
+  # makePaddock equivalent ------
+  paddock <- as.data.table(CJ(x = 1:paddock_width,
+                              y = 1:paddock_length))
 
   # sample a paddock location randomly if a starting foci is not given
   if ("data.frame" %in% class(primary_infection_foci) == FALSE) {
