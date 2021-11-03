@@ -67,7 +67,9 @@ one_day <- function(i_date,
   # data.tables in the following functions
   daily_vals[["paddock"]] <- copy(daily_vals[["paddock"]])
   if (any(is.na(daily_vals[["paddock"]][, infectious_gp]))) {
-    stop("NA values in daily_vals[['paddock']][,infectious_gp] ")
+    stop(
+      call. = FALSE,
+      "NA values in daily_vals[['paddock']][,infectious_gp]")
   }
 
   # Don't spread spores if there are no infected coordinates
