@@ -104,8 +104,6 @@ one_day <- function(i_date,
       daily_vals[["exposed_gps"]] <-
         rbind(daily_vals[["exposed_gps"]],
               exposed_dt)
-
-
     }
 
     # exposed gps which have undergone latent period are moved to sporulating gps
