@@ -18,7 +18,7 @@ weather_dat <- format_weather(
    time_zone = "Australia/Perth",
    lonlat_file = station_data)
 
-test1 <- trace_asco(
+dat <- trace_asco(
   weather = weather_dat,
   paddock_length = 100,
   paddock_width = 100,
@@ -28,9 +28,11 @@ test1 <- trace_asco(
   time_zone = "Australia/Perth",
   primary_infection_foci = "centre")
 
+test1 <- tracer_plot(dat, 5, tiles = "infectious_gp")
 
 test_that("expected output is returned", {
-  expect_is(test1, "list")
+  expect_is(test1, "ggplot")
+  expect_false(any(is.na(test1)))
   expect_error(
     scale_colour_continuous(
       type = function()
@@ -46,4 +48,6 @@ test_that("expected output is returned", {
     scale_fill_binned(type = scale_fill_brewer),
     "could not find function \"scale_fill_binned\""
   )
+
 })
+
