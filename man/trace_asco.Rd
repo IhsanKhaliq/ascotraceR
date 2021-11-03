@@ -65,10 +65,10 @@ lesions on susceptible growing points. Defaults to \code{200}.}
 
 \item{primary_infection_foci}{refers to the inoculated coordinates where the
 epidemic starts. Accepted inputs are: \code{centre} or \code{random} (Default) or a
-data.frame with column names 'x', 'y' and 'load'. The data.frame inputs informs
-the model of specific grid cell/s coordinates where the epidemic should begin.
-Column 'load' is optional can specifies the \code{primary_infection_intensity}
-for each coordinate.}
+data.frame with column names 'x', 'y' and 'load'. The \code{data.frame} inputs
+inform the model of specific grid cell/s coordinates where the epidemic
+should begin. The 'load' column is optional and can specify the
+\code{primary_infection_intensity} for each coordinate.}
 
 \item{primary_infection_intensity}{The intensity of the starting epidemic as
 described by the number of number of sporulating growing points.}
@@ -81,8 +81,30 @@ growing point each wet hour. Also known as the \code{spore_rate}. Value is
 dependent on the susceptibility of the host genotype.}
 }
 \value{
-an x y \link{data.frame} simulating the spread of Ascochyta blight in a
-chickpea paddock
+\link{list} object with two elements. The first is a \link{matrix} of values
+calculated by the model where each row is a unique observation that contains:
+\describe{
+\item{day}{numeric day of the simulation run}
+\item{x}{location of metre squared area on x-axis in simulated paddock}
+\item{y}{location of metre squared area on y-axis in simulated paddock}
+\item{new_gp}{new growing points on \code{day} for location \code{x} and \code{y}}
+\item{susceptible_gp}{susceptible growing points on \code{day} for location \code{x} and \code{y}}
+\item{exposed_gp}{exposed growing points on \code{day} for location \code{x} and \code{y}}
+\item{infectious_gp}{infectious points on \code{day} for location \code{x} and \code{y}}
+\item{infected_coords}{coordinates for infected quadrats on \code{day}}
+\item{exposed_gps}{exposed growing points in the latent period phase of infection on \code{day} for location \code{x} and \code{y}}
+\item{spores_per_packet}{}
+\item{cdd_at_infection}{cumulative degree days at infection}
+}
+The second is a \code{data.table} containing:
+\describe{
+\item{i_date}{}
+\item{i_day}{}
+\item{i_date}{}
+\item{cwh}{cumulative wet hours on \code{day}}
+\item{cr}{cumulative rainfall on \code{day}}
+\item{cdd}{cumulative degree days on \code{day}}
+}
 }
 \description{
 \code{trace_asco} simulates the spatiotemporal development of Ascochyta blight in
