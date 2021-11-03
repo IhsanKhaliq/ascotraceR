@@ -3,25 +3,25 @@ Title: A Spatiotemporal Model to Simulate the Spread of Ascochyta Blight in Chic
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Ihsanul",
-           family = "Khaliq",
-           role = c("aut"),
-           email = "ihsan.khaliq@usq.edu.au",
-           comment = c(ORCID = "0000-0003-4171-0917")),
+          family = "Khaliq",
+          role = c("aut"),
+          email = "ihsan.khaliq@usq.edu.au",
+          comment = c(ORCID = "0000-0003-4171-0917")),
       person(given = "Paul",
-           family = "Melloy",
-           role = c("aut", "cre"),
-           email = "paul.melloy@usq.edu.au",
-           comment = c(ORCID = "0000-0003-4253-7167")),
+          family = "Melloy",
+          role = c("aut", "cre"),
+          email = "paul.melloy@usq.edu.au",
+          comment = c(ORCID = "0000-0003-4253-7167")),
       person(given = "Adam H.",
-         family = "Sparks",
-         role = c("aut", "ccp"),
-         email = "adamhsparks@gmail.com",
-         comment = c(ORCID = "0000-0002-0061-8359")),
+          family = "Sparks",
+          role = c("aut", "ccp"),
+          email = "adamhsparks@gmail.com",
+          comment = c(ORCID = "0000-0002-0061-8359")),
     person("Grains Research and Development Corporation Project USQ1903-003RTX",
-    role = c("fnd", "cph")),
+          role = c("fnd", "cph")),
     person("University of Southern Queensland", role = "cph"),
     person(given = "Western Australia Agriculture Authority (WAAA)",
-    role = "cph"))
+          role = "cph"))
 Description: A spatiotemporal model that simulates the spread of Ascochyta
     blight in chickpea fields based on location-specific weather conditions.
 License: MIT + file LICENSE
