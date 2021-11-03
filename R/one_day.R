@@ -52,18 +52,18 @@ one_day <- function(i_date,
 
   # subset weather data by day
   weather_day <-
-    weather_dat[times %in% i_time,]
+    weather_dat[times %in% i_time, ]
 
   # obtain summary weather for i_day
-  i_mean_air_temp <- mean(weather_day[, temp])
+  i_mean_air_temp <- mean(weather_day$temp)
   i_wet_hours <- weather_day[, sum(rain > 0,na.rm = TRUE)]
   i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
 
   # Start building a list of values for 'i'
   # NOTE: I may add this to after `make_some_infective`
-  daily_vals[["cdd"]] <- daily_vals[["cdd"]] + i_mean_air_temp
-  daily_vals[["cwh"]] <- daily_vals[["cwh"]] + i_wet_hours
-  daily_vals[["cr"]] <- daily_vals[["cr"]] + i_rainfall
+  daily_vals$cdd <- sum(daily_vals$cdd, i_mean_air_temp)
+  daily_vals$cwh <- sum(daily_vals$cwh, i_wet_hours)
+  daily_vals$cr <- sum(daily_vals$cr, i_rainfall)
 
   # max new growing points are multiplied by five as growing points remain
   # susceptible for five days.
@@ -74,11 +74,11 @@ one_day <- function(i_date,
 
   # need to make a copy of the data.table otherwise it will modify all
   # data.tables in the following functions
-  daily_vals[["paddock"]] <- copy(daily_vals[["paddock"]])
+  daily_vals$paddock <- copy(daily_vals$paddock)
   if (any(is.na(daily_vals[["paddock"]][, infectious_gp]))) {
     stop(
       call. = FALSE,
-      "NA values in daily_vals[['paddock']][,infectious_gp]")
+      "`NA` values in daily_vals[['paddock']][,infectious_gp]")
   }
 
   # Don't spread spores if there are no infected coordinates
@@ -92,7 +92,7 @@ one_day <- function(i_date,
             seq_len(nrow(weather_day[rain >= 0.1,])),
             FUN = spores_each_wet_hour,
             weather_hourly = weather_day[rain >= 0.2,],
-            paddock = daily_vals[["paddock"]],
+            paddock = daily_vals$paddock,
             max_interception_probability = max_interception_probability,
             spore_interception_parameter = spore_interception_parameter,
             spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour
@@ -101,8 +101,8 @@ one_day <- function(i_date,
       exposed_dt[, cdd_at_infection := daily_vals[["cdd"]]]
 
 
-      daily_vals[["exposed_gps"]] <-
-        rbind(daily_vals[["exposed_gps"]],
+      daily_vals$exposed_gps <-
+        rbind(daily_vals$exposed_gps,
               exposed_dt)
     }
 
@@ -112,8 +112,8 @@ one_day <- function(i_date,
 
 
     # update infected coordinates
-    daily_vals[["infected_coords"]] <-
-      daily_vals[["paddock"]][infectious_gp > 0,
+    daily_vals$infected_coords <-
+      daily_vals$paddock[infectious_gp > 0,
                               c("x", "y")]
 
   }
@@ -123,23 +123,21 @@ one_day <- function(i_date,
 
   # `updateGrowingPointsAllInfectiveElements`
   # Update Growing points for non-infected coords for time i
-  daily_vals[["new_gp"]] <-
+  daily_vals$new_gp <-
     calc_new_gp(
-      current_growing_points = daily_vals[["gp_standard"]],
+      current_growing_points = daily_vals$gp_standard,
       gp_rr = gp_rr,
       max_gp = max_gp,
       mean_air_temp = i_mean_air_temp
     )
 
-
-
   # this might be quicker if there was no fifelse statement
-  daily_vals[["paddock"]][, new_gp := fcase(
+  daily_vals$paddock[, new_gp := fcase(
     susceptible_gp == 0,
     0,
-    susceptible_gp == daily_vals[["gp_standard"]],
-    daily_vals[["new_gp"]],
-    susceptible_gp < daily_vals[["gp_standard"]],
+    susceptible_gp == daily_vals$gp_standard,
+    daily_vals$new_gp,
+    susceptible_gp < daily_vals$gp_standard,
     calc_new_gp(
       current_growing_points = susceptible_gp,
       gp_rr = gp_rr,
@@ -148,8 +146,7 @@ one_day <- function(i_date,
     )
   )]
 
-  daily_vals[["gp_standard"]] <-
-    daily_vals[["gp_standard"]] + daily_vals[["new_gp"]]
+  daily_vals$gp_standard <- sum(daily_vals$gp_standard, daily_vals$new_gp)
 
   daily_vals[["paddock"]][, susceptible_gp := susceptible_gp + new_gp]
 
