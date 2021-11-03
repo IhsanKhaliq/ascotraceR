@@ -2,7 +2,8 @@
 % Please edit documentation in R/tracer_plot.R
 \name{tracer_plot}
 \alias{tracer_plot}
-\title{Plot one day from trace_asco output as a tile plot}
+\title{context("tracer_plot")
+Plot trace_asco output}
 \usage{
 tracer_plot(dat, day, tiles = "infectious_gp")
 }
@@ -18,7 +19,9 @@ tracer_plot(dat, day, tiles = "infectious_gp")
 ggplot2 object
 }
 \description{
-Plot one day from trace_asco output as a tile plot
+Wrapper function which takes the output object of a trace_asco
+and plots a snapshot at a point in time (day) using ggplot::geom_tile(),
+effectively producing a heat-map
 }
 \examples{
 # First weather data needs to be imported and formatted with `format_weather`
