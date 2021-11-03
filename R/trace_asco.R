@@ -21,7 +21,7 @@
 #' @param gp_rr refers to rate of increase in chickpea growing points per degree
 #'   Celsius per day. Defaults to `0.0065`.
 #' @param max_gp_lim Maximum number of chickpea growing points (meristems)
-#'   allowed per square metre. Defaults to `15000`.
+#'   allowed per square metre. Defaults to `5000`.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
 #' @param primary_infection_foci refers to the inoculated coordinates where the

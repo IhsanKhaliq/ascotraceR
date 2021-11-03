@@ -8,7 +8,7 @@
 #' @param spore_interception_parameter multiplier to determine spore
 #'   interception parameter. Defaults to \code{0.00006}
 #' @param max_growing_points_limit Are the maximum number of growing points per
-#'   square metre. efaults to \code{15000}
+#'   square metre. efaults to \code{5000}
 #' @param max_new_growing_points_limit A *numeric* number indicating number of
 #'   new growing points developed per square metre in an iteration period of one
 #'   day.  Defaults to \code{350}
