@@ -134,32 +134,6 @@ trace_asco <- function(weather,
       "Please use `format_weather()` to properly format the weather data.")
   }
 
-  # check date inputs for validity -----------------------------------------
-  .vali_date <- function(x) {
-    tryCatch(
-      # try to parse the date format using lubridate
-      x <- lubridate::parse_date_time(x,
-                                      c(
-                                        "Ymd",
-                                        "dmY",
-                                        "mdY",
-                                        "BdY",
-                                        "Bdy",
-                                        "bdY",
-                                        "bdy"
-                                      )),
-      warning = function(w) {
-        stop(call. = FALSE,
-             "`",
-             x,
-             "` is not a valid entry for date.\n",
-             "Please enter as `YYYY-MM-DD`.\n")
-      }
-    )
-  return(x)
-  }
-
-
   # if (primary_infection_intensity > seeding_rate) {
   #   stop(
   #     "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
@@ -387,4 +361,36 @@ trace_asco <- function(weather,
     lubridate::yday(daily_vals_list[[length(daily_vals_list)]][["i_date"]])
 
   return(daily_vals_list)
+}
+
+#' Check date inputs for validity
+#'
+#' @param x an object for checking
+#'
+#' @return a POSIXct date-time object
+#' @keywords internal
+#' @noRd
+#'
+.vali_date <- function(x) {
+  tryCatch(
+    # try to parse the date format using lubridate
+    x <- lubridate::parse_date_time(x,
+                                    c(
+                                      "Ymd",
+                                      "dmY",
+                                      "mdY",
+                                      "BdY",
+                                      "Bdy",
+                                      "bdY",
+                                      "bdy"
+                                    )),
+    warning = function(w) {
+      stop(call. = FALSE,
+           "`",
+           x,
+           "` is not a valid entry for date.\n",
+           "Please enter as `YYYY-MM-DD`.\n")
+    }
+  )
+  return(x)
 }
