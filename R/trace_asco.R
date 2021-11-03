@@ -130,7 +130,8 @@ trace_asco <- function(weather,
   if (!"asco.weather" %in% class(weather)) {
     stop(
       call. = FALSE,
-      "'weather' must be class \"asco.weather\"")
+      "'weather' must be class \"asco.weather\"",
+      "Please use `format_weather()` to properly format the weather data.")
   }
 
   # check date inputs for validity -----------------------------------------
