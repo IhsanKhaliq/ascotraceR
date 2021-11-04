@@ -36,27 +36,25 @@
 #'   time_zone = "Australia/Perth",
 #'   primary_infection_foci = "centre")
 #'
-#' tidy_trace(traced)
+#' tidied <- tidy_trace(traced)
+#'
+#' # take a look at the infectious growing points on day 102
+#' ggplot(data = filter(tidied, i_day == 102),
+#'        aes(x = x, y = y, fill = infectious_gp)) +
+#'   geom_tile()
 tidy_trace <- function(trace) {
 
   i_date <- t(as.data.table(lapply(X = trace, `[[`, 2)))
-  sub_trace <- setDT(map_df(trace, ~ unlist(.[3:9])))
+  sub_trace <- setDT(purrr::map_df(trace, ~ unlist(.[3:9])))
   sub_trace[, i_date := lubridate::as_date(i_date)]
+  sub_trace[, new_gp := NULL] # this is a duplicated value
+  setkey(sub_trace, i_day)
 
-  infected_coords <- rbindlist(lapply(X = trace, `[[`, 10),
-                               idcol = "i_day")
   paddock <- rbindlist(lapply(trace, `[[`, 1),
                        idcol = "i_day")
-  infected <- rbindlist(lapply(trace, `[[`, 11),
-                        idcol = "i_day")
-  # create a col indicating whether and quadrat is infected or not
-  infected[, infected := rep_len(TRUE, .N)]
+  setkey(paddock, i_day)
 
-  tidy_trace_dt <- paddock[sub_trace, on = c("i_day", "new_gp")]
-  tidy_trace_dt <- infected[tidy_trace_dt, on = c("i_day", "x", "y")]
-
-  # replace any `NA` values with `FALSE` in the "infected" col
-  tidy_trace_dt[, "infected"][is.na(tidy_trace_dt[, "infected"])] <- FALSE
+  tidy_trace_dt <- merge(x = paddock, y = sub_trace, all.x = TRUE)
 
   setcolorder(tidy_trace_dt, c("i_day", "i_date", "day"))
   return(tidy_trace_dt)
