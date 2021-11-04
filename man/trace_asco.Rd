@@ -42,8 +42,9 @@ date of chickpea crop, which is also the last day to run the ascotraceR
 model. Preferably in ISO8601 format (YYYY-MM-DD), \emph{e.g.},
 \dQuote{2020-04-26}.}
 
-\item{initial_infection}{refers to initial or primary infection on seedlings,
-resulting in the production of infected growing points.}
+\item{initial_infection}{a character string of a date value referring to the
+initial or primary infection on seedlings, resulting in the production of
+infected growing points.}
 
 \item{seeding_rate}{indicate the rate at which chickpea seed is sown per
 square metre. Defaults to \code{40}.}
@@ -52,7 +53,7 @@ square metre. Defaults to \code{40}.}
 Celsius per day. Defaults to \code{0.0065}.}
 
 \item{max_gp_lim}{Maximum number of chickpea growing points (meristems)
-allowed per square metre. Defaults to \code{15000}.}
+allowed per square metre. Defaults to \code{5000}.}
 
 \item{max_new_gp}{Maximum number of new chickpea growing points (meristems),
 which develop per day, per square metre. Defaults to \code{350}.}
@@ -70,8 +71,10 @@ inform the model of specific grid cell/s coordinates where the epidemic
 should begin. The 'load' column is optional and can specify the
 \code{primary_infection_intensity} for each coordinate.}
 
-\item{primary_infection_intensity}{The intensity of the starting epidemic as
-described by the number of number of sporulating growing points.}
+\item{primary_infection_intensity}{The intensity of the starting epidemic is
+described by the number of sporulating growing points (from seed infection
+and/or volunteers) and/or sporulating lesions from crop debris at
+\code{initial_infection}.}
 
 \item{n_foci}{only relevant when \code{primary_infection_foci = "random"} and
 notes the number of \code{primary_infection_foci} at initial infection.}

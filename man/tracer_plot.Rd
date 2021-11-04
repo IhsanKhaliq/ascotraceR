@@ -2,17 +2,16 @@
 % Please edit documentation in R/tracer_plot.R
 \name{tracer_plot}
 \alias{tracer_plot}
-\title{context("tracer_plot")
-Plot trace_asco output}
+\title{Plot trace_asco output}
 \usage{
 tracer_plot(dat, day, tiles = "infectious_gp")
 }
 \arguments{
-\item{dat}{nested list of \code{ascotraceR} class}
+\item{dat}{Nested list of \code{ascotraceR} class}
 
-\item{day}{integer, day of the simulation to plot}
+\item{day}{Integer, day of the simulation to plot}
 
-\item{tiles}{what to response for the plot to render, options:
+\item{tiles}{The aesthetics or response for the plot to render, options:
 \code{infectious_gp}, \code{new_gp}, \code{susceptible_gp}.}
 }
 \value{
