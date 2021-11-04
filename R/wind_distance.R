@@ -1,6 +1,6 @@
 #' Wind distance dispersal parameter
 #'
-#' `wind_distance()` determines distance conidia disperse, in metres, by wind
+#' `wind_distance()` Determines distance conidia disperse, in metres, by wind
 #' driven rain Conidia are assumed to spread from the centre of each subunit.
 #' The destination subunit, where conidia land, could be the same subunit or
 #' another subunit within or outside the paddock.
@@ -8,7 +8,7 @@
 #' @param average_wind_speed_in_fifteen_minutes A *numeric* value in m/s
 #' @param wind_cauchy_multiplier A Cauchy scaling parameter
 #' @param PSPH A numeric vector estimated from '.estimate_spore_discharge()'
-#' @return numerical vector, which returns distance conidia dispersed by wind
+#' @return Numerical vector, which returns distance conidia dispersed by wind
 #'   driven rain from the source of infection
 #' @examples
 #' wind_distance(10) # returns a single estimate
