@@ -55,7 +55,6 @@
 #'   \item{y}{location of metre squared area on y-axis in simulated paddock}
 #'   \item{new_gp}{new growing points on `day` for location `x` and `y`}
 #'   \item{susceptible_gp}{susceptible growing points on `day` for location `x` and `y`}
-#'   \item{exposed_gp}{exposed growing points on `day` for location `x` and `y`}
 #'   \item{infectious_gp}{infectious points on `day` for location `x` and `y`}
 #'   \item{infected_coords}{coordinates for infected quadrats on `day`}
 #'   \item{exposed_gps}{exposed growing points in the latent period phase of infection on `day` for location `x` and `y`}
