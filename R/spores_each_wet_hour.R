@@ -3,19 +3,19 @@
 #' Calculates number of conidia dispersed during each wet hour when rainfall
 #' threshold is reached or exceeded.
 #'
-#' @param h hour in the day which the spores for each wet hour are calculated
+#' @param h Hour in the day which the spores for each wet hour are calculated
 #' @param weather_hourly [data.table] of hourly weather for only the day for
 #'   which the spores are being estimated
-#' @param paddock data.table of paddock coordinates detailing the growing points
-#'   and infections at each location
-#' @param spore_interception_parameter double with length of one; the maximum
-#'   number of susceptible growing are 15000/350 = 42.86. The highest
-#'   probability of a spore landing on the area of these 42 susceptible growing
-#'   points is `0.00006 * 42.86 (i.e. 0.00006 * (max_gp_lim/max_new_gp))`.
-#'   However, as the crop is always changing we need to calculate the actual
-#'   probability of interception depending on the density of the crop canopy for
-#'   that given time.
-#' @param max_interception_probability double with length of one; Estimated
+#' @param paddock A data.table of paddock coordinates detailing the growing
+#'   points and infections at each location
+#' @param spore_interception_parameter A double with length of one; the maximum
+#'   number of susceptible growing are 5000/350 = 14.2. The highest probability
+#'   of a spore landing on the area of these 14 susceptible growing points is
+#'   `0.00006 * 14.2 (i.e. 0.00006 * (max_gp_lim/max_new_gp))`. However, as the
+#'   crop is always changing we need to calculate the actual probability of
+#'   interception depending on the density of the crop canopy for that given
+#'   time.
+#' @param max_interception_probability DoubleS with length of one; Estimated
 #'   using the `spore_interception_parameter`, see function
 #'   `interception_probability()`
 #' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating
