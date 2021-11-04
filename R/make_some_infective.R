@@ -1,17 +1,17 @@
 #' Make infected growing points sources for spore dispersal
 #'
-#' @param spore_packet data.table with three variables, 'x', 'y' and
+#' @param spore_packet A data.table with three variables, 'x', 'y' and
 #'   'spores_per_packet'
-#' @param daily_vals list of the current day's values and paddock data.table
-#' @param latent_period latent period in cumulative degree days (sum of daily
+#' @param daily_vals A list of the current day's values and paddock data.table
+#' @param latent_period Latent period in cumulative degree days (sum of daily
 #'   temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `200`.
-#' @param cdd_at_infection cummulative degree days when infection occurred
-#' @param susceptible_gp represent non-infected growing points
-#' @param  infectious_gp represent sporulating lesions
+#' @param cdd_at_infection Cummulative degree days when infection occurred
+#' @param susceptible_gp Represents non-infected growing points
+#' @param  infectious_gp Represents sporulating lesions
 #' @param  max_growing_points_limit Are the maximum number of growing points per
 #'   square metre. efaults to \code{5000}
-#' @param paddock data.table detailing the growing points and infections
+#' @param paddock A data.table detailing the growing points and infections
 #'
 #'
 #' @return updated daily_vals list
