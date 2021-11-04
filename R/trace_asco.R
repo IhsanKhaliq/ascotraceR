@@ -30,13 +30,16 @@
 #'   inform the model of specific grid cell/s coordinates where the epidemic
 #'   should begin. The 'load' column is optional and can specify the
 #'   `primary_infection_intensity` for each coordinate.
-#' @param primary_infection_intensity The intensity of the starting epidemic as
-#'   described by the number of number of sporulating growing points.
+#' @param primary_infection_intensity The intensity of the starting epidemic is
+#'   described by the number of sporulating growing points (from seed infection
+#'   and/or volunteers) and/or sporulating lesions from crop debris at
+#'   `initial_infection`.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `200`.
-#' @param initial_infection refers to initial or primary infection on seedlings,
-#'   resulting in the production of infected growing points.
+#' @param initial_infection a character string of a date value referring to the
+#'   initial or primary infection on seedlings, resulting in the production of
+#'   infected growing points.
 #' @param time_zone refers to time in Coordinated Universal Time (UTC).
 #' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating
 #'   growing point each wet hour. Also known as the `spore_rate`. Value is
@@ -321,10 +324,10 @@ trace_asco <- function(weather,
       if (primary_infection_intensity > daily_vals_list[[i]][["gp_standard"]]) {
         warning(
           call. = FALSE,
-          "`primary_infection_intensity` exceeds the number of growing points",
+          "`primary_infection_intensity` exceeds the number of growing points ",
           "at time of infection `growing_points`: ",
           daily_vals_list[[i]][["gp_standard"]],
-          "\nThis may cause an over estimation of disease spread"
+          "\nThis may cause an overestimation of disease spread"
         )
       }
 
@@ -335,10 +338,13 @@ trace_asco <- function(weather,
 
         # Infecting paddock
         pad1 <- copy(dl[["paddock"]])
+
         pad1[infected_rows,
              c("susceptible_gp",
                "infectious_gp") :=
-               list(susceptible_gp - primary_infection_foci[, load],
+               list(fifelse(test = primary_infection_foci[, load] > susceptible_gp,
+                            yes = susceptible_gp,
+                            no = susceptible_gp - primary_infection_foci[, load]),
                  primary_infection_foci[, load])]
         dl[["paddock"]] <- pad1
 
