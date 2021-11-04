@@ -23,6 +23,16 @@ calc_new_gp <-
            max_gp,
            mean_air_temp) {
 
+    # Check values are not lower than 0
+    sapply(current_growing_points, function(cgp){
+      if(cgp < 0){
+        stop(call. = FALSE,
+             "'current_growing_points' (value = ",cgp,") can't be < 0",
+             sep = "")
+      }
+    })
+
+    # calculate number of new growing points in 24 hours
     current_growing_points *
       gp_rr *
       mean_air_temp *
