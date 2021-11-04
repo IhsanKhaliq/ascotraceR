@@ -44,5 +44,10 @@ traced <- trace_asco(
   time_zone = "Australia/Perth",
   primary_infection_foci = "centre")
 
-tidy_trace(traced)
+tidied <- tidy_trace(traced)
+
+# take a look at the infectious growing points on day 102
+ggplot(data = filter(tidied, i_day == 102),
+       aes(x = x, y = y, fill = infectious_gp)) +
+  geom_tile()
 }
