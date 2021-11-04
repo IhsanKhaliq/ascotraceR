@@ -9,42 +9,42 @@
 #' \CRANpkg{future}. If more than one station is present, the process can be
 #' made faster by using [future::plan()].
 #'
-#' @param x a [data.frame] object of weather station data for formatting.
-#' @param YYYY column name or index in `x` that refers to the year when the
+#' @param x A [data.frame] object of weather station data for formatting.
+#' @param YYYY Column name or index in `x` that refers to the year when the
 #'   weather was logged.
-#' @param MM column name or index in `x` that refers to the month (numerical)
+#' @param MM Column name or index in `x` that refers to the month (numerical)
 #'   when the weather was logged.
-#' @param DD column name or index in `x` that refers to the day of month when
+#' @param DD Column name or index in `x` that refers to the day of month when
 #'   the weather was logged.
-#' @param hh column name or index in `x` that refers to the hour (24 hour) when
+#' @param hh Column name or index in `x` that refers to the hour (24 hour) when
 #'   the weather was logged.
 #' @param mm column name or index in `x` that refers to the minute when the
 #'   weather was logged.
-#' @param POSIXct_time column name or index in `x` which contains a `POSIXct`
+#' @param POSIXct_time Column name or index in `x` which contains a `POSIXct`
 #'   formatted time. This can be used instead of arguments `YYYY`, `MM`, `DD`,
 #'   `hh`, `mm.`
-#' @param time_zone time zone (Olsen time zone format) where the weather station
+#' @param time_zone Time zone (Olsen time zone format) where the weather station
 #'   is located. May be in a column or supplied as a character string. Optional,
 #'   see also `r`. See details.
-#' @param temp column name or index in `x` that refers to temperature in degrees
+#' @param temp Column name or index in `x` that refers to temperature in degrees
 #'   Celsius
-#' @param rain column name or index in `x` that refers to rainfall in mm.
-#' @param ws column name or index in `x` that refers to wind speed in km / h.
-#' @param wd column name or index in `x` that refers to wind direction in
+#' @param rain Column name or index in `x` that refers to rainfall in mm.
+#' @param ws Column name or index in `x` that refers to wind speed in km / h.
+#' @param wd Column name or index in `x` that refers to wind direction in
 #'   degrees.
-#' @param wd_sd column name or index in `x` that refers to wind speed in km / h
+#' @param wd_sd Column name or index in `x` that refers to wind speed in km / h
 #'   character.  This is only applicable if weather data is already summarised
 #'   to hourly increments. See details.
-#' @param station column name or index in `x` that refers to the weather station
+#' @param station Column name or index in `x` that refers to the weather station
 #'   name or identifier. See details.
-#' @param lon column name or index in `x` that refers to weather station's
+#' @param lon Column name or index in `x` that refers to weather station's
 #'   longitude.  See details.
-#' @param lat column name or index in `x` that refers to weather station's
+#' @param lat Column name or index in `x` that refers to weather station's
 #'   latitude.  See details.
 #' @param r Spatial raster which is intended to be used with this weather data
 #'   for use in the blackspot model. Used to fetch time_zone if it is not
 #'   supplied in data. Optional, see also `time_zone`.
-#' @param lonlat_file a file path to a csv which included station name/id and
+#' @param lonlat_file A file path to a csv which included station name/id and
 #'   longitude and latitude coordinates if they are not supplied in data.
 #'   Optional, see also `lon` and `lat`.
 #'
