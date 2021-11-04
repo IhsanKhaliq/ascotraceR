@@ -3,6 +3,9 @@
 #' Utilises a source coordinate, a distance vector and angle, then returns the
 #' destination coordinate
 #'
+#' @param start_address Starting address of spores dispersal
+#' @param offset_distance The offset distance of the actual distance spores
+#'   travel
 #' @keywords internal
 #' @noRd
 
