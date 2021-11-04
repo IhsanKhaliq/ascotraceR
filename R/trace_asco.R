@@ -335,10 +335,13 @@ trace_asco <- function(weather,
 
         # Infecting paddock
         pad1 <- copy(dl[["paddock"]])
+
         pad1[infected_rows,
              c("susceptible_gp",
                "infectious_gp") :=
-               list(susceptible_gp - primary_infection_foci[, load],
+               list(fifelse(test = primary_infection_foci[, load] > susceptible_gp,
+                            yes = susceptible_gp,
+                            no = susceptible_gp - primary_infection_foci[, load]),
                  primary_infection_foci[, load])]
         dl[["paddock"]] <- pad1
 
