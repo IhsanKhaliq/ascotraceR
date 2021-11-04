@@ -1,10 +1,10 @@
 #' Returns the row numbers of an x y data frame
 #'
 #' @param paddock The template data frame you wish to know the row numbers of
-#' @param query data.frame with column names 'x' and 'y' for which you want to
+#' @param query Data.frame with column names 'x' and 'y' for which you want to
 #'   know the row number of in the paddock data.table
 #'
-#' @return vector of row numbers
+#' @return Vector of row numbers
 #'
 #' @examples
 #' pdk <- as.data.table(expand.grid(x = 1:100,
