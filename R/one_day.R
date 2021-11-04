@@ -94,7 +94,7 @@ one_day <- function(i_date,
           lapply(
             seq_len(nrow(weather_day[rain >= 0.1,])),
             FUN = spores_each_wet_hour,
-            weather_hourly = weather_day[rain >= 0.2,],
+            weather_hourly = weather_day[rain >= 0.1,],
             paddock = daily_vals$paddock,
             max_interception_probability = max_interception_probability,
             spore_interception_parameter = spore_interception_parameter,
