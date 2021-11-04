@@ -11,7 +11,7 @@
 #' @param  infectious_gp represent sporulating lesions
 #' @param  max_growing_points_limit Are the maximum number of growing points per
 #'   square metre. efaults to \code{5000}
-#' @param paddock data.table detailing the growing points and infections at each
+#' @param paddock data.table detailing the growing points and infections
 #'
 #'
 #' @return updated daily_vals list
