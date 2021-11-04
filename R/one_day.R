@@ -88,7 +88,7 @@ one_day <- function(i_date,
   if (nrow(daily_vals[["infected_coords"]]) > 0) {
     # Spread spores and infect plants
     # Update growing points for paddock coordinates
-    if (i_wet_hours > 2) {
+    if (i_rainfall > 2) {
       exposed_dt <-
         rbindlist(
           lapply(
