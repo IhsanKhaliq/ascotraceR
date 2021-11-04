@@ -5,24 +5,24 @@
 #' spores dispersed per growing point which is capable of causing infection on
 #' an uninfected growing point. `spores_from_1_element()` calculates conidia
 #' dispersed from pycnidia
-#' @param paddock_source data.table of coordinates which contains sporulating
+#' @param paddock_source A data.table of coordinates which contains sporulating
 #'   growing points and the one element from which conidia dispersal originates.
-#' @param spores_per_gp_per_wet_hour The 'spore rate' or conidial production rate per growing point with the
-#'   ability to cause infection
-#' @param max_interception_probability double with length of one; Estimated
+#' @param spores_per_gp_per_wet_hour The 'spore rate' or conidial production
+#'   rate per growing point during each wet hour
+#' @param max_interception_probability Doubles with length of one; Estimated
 #'   using the `spore_interception_parameter`, see function
 #'   `interception_probability()`
-#' @param wind_direction_in_hour wind_direction
-#' @param average_wind_speed_in_hour avg wind speed
-#' @param stdev_wind_direction_in_hour std wind dir
+#' @param wind_direction_in_hour Wind_direction
+#' @param average_wind_speed_in_hour Avg wind speed
+#' @param stdev_wind_direction_in_hour Std wind dir
 #' @param spore_aggregation_limit When spores/summary unit (n) is <= this value
-#'   n spores are produced as individuals.  When greater they are produced in
+#'   n spores are produced as individuals. When greater they are produced in
 #'   sporeAggregationLimit groups of sporeAggregationLimit spores  default:
 #'   `1000`
-#' @param rain_cauchy_parameter parameter used in the cauchy distribution and
-#'   describes the median distance of spore travel due to rain splashes.
-#'   default: `0.5`
-#' @param paddock data.table of x and y coordinates; provides the dimensions of
+#' @param rain_cauchy_parameter A parameter used in the cauchy distribution and
+#'   describes the median distance spores travel due to rain splashes. default:
+#'   `0.5`
+#' @param paddock A data.table of x and y coordinates; provides the dimensions of
 #'   the paddock so function only returns `target_coordinates` in the paddock
 #'   area.
 #' @keywords internal
