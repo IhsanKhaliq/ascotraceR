@@ -36,7 +36,7 @@
 #'   `initial_infection`.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
-#'   lesions on susceptible growing points. Defaults to `200`.
+#'   lesions on susceptible growing points. Defaults to `150`.
 #' @param initial_infection a character string of a date value referring to the
 #'   initial or primary infection on seedlings, resulting in the production of
 #'   infected growing points.
@@ -287,7 +287,7 @@ trace_asco <- function(weather,
       exposed_gps =  data.table(x = numeric(),
                                    y = numeric(),
                                    spores_per_packet = numeric(),
-                                   cdd_at_infection = numeric()) # data.table of infected growing points still in latent period and not sporilating (exposed_gp)
+                                   cdd_at_infection = numeric()) # data.table of infected growing points still in latent period and not sporulating (exposed_gp)
     )
   )
 
