@@ -1,16 +1,16 @@
-#' Indicates infections leading to disease or lesions development
+#' Indicates successful infections leading to disease or lesions development
 #'
-#' [successful_infections()] determines successful infections. That is,
+#' [successful_infections()] Determines successful infections. That is,
 #' infections that have developed into visible lesions
 #'
-#' @param spore_targets a data.table with variables x, y and spores_per_packet
-#'   (formally name spore_packet)
-#' @param paddock data.table containing all parameters for each 1 x 1 coordinate
-#'   in the paddock
-#' @param spore_interception_parameter a function of the maximum growing points
-#'   limit (usually 15000 for lupin) and the maximum new growing points rate
+#' @param spore_targets A data.table with variables x, y and spores_per_packet
+#'   (formally named spore_packet)
+#' @param paddock A data.table containing all parameters for each 1 x 1
+#'   coordinate in the paddock
+#' @param spore_interception_parameter A function of the maximum growing points
+#'   limit (usually 15000 for lupin) and the maximum new growing points limit
 #'   i.e. - 0.00006 * (max_gp_lim/max_new_gp)
-#' @param max_interception_probability are the number of new growing points
+#' @param max_interception_probability Probability of interception of conidia
 #' @return a vector of spores_per_packet each referring to a row in
 #'   spore_targets
 #' @keywords internal
