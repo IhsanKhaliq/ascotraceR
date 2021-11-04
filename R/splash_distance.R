@@ -1,6 +1,6 @@
 #' Splash Distance Dispersal Parameter
 #'
-#' `wind_distance()` determines distance conidia travel, in metres, via a rain
+#' `wind_distance()` Determines distance conidia travel, in metres, via a rain
 #' splash
 #'
 #' @param rain_cauchy_parameter A Cauchy scaling parameter
