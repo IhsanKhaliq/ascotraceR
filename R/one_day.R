@@ -111,7 +111,7 @@ one_day <- function(i_date,
 
     # exposed gps which have undergone latent period are moved to sporulating gps
     daily_vals <- make_some_infective(daily_vals = daily_vals,
-                                      latent_period = 200)
+                                      latent_period = 150)
 
 
     # update infected coordinates
