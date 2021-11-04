@@ -18,7 +18,7 @@
 #'   the weather was logged.
 #' @param hh Column name or index in `x` that refers to the hour (24 hour) when
 #'   the weather was logged.
-#' @param mm column name or index in `x` that refers to the minute when the
+#' @param mm Column name or index in `x` that refers to the minute when the
 #'   weather was logged.
 #' @param POSIXct_time Column name or index in `x` which contains a `POSIXct`
 #'   formatted time. This can be used instead of arguments `YYYY`, `MM`, `DD`,
