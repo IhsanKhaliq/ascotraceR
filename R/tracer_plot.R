@@ -1,13 +1,12 @@
-#' context("tracer_plot")
 #' Plot trace_asco output
 #'
 #' @description Wrapper function which takes the output object of a trace_asco
 #'   and plots a snapshot at a point in time (day) using ggplot::geom_tile(),
 #'   effectively producing a heat-map
 #'
-#' @param dat nested list of `ascotraceR` class
-#' @param day integer, day of the simulation to plot
-#' @param tiles what to response for the plot to render, options:
+#' @param dat Nested list of `ascotraceR` class
+#' @param day Integer, day of the simulation to plot
+#' @param tiles The aesthetics or response for the plot to render, options:
 #'   `infectious_gp`, `new_gp`, `susceptible_gp`.
 #'
 #' @return ggplot2 object
