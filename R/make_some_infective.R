@@ -1,4 +1,4 @@
-#' Make infected growing points sources for spore dispersal
+#' Makes infected growing points sources for spore dispersal
 #'
 #' @param spore_packet A data.table with three variables, 'x', 'y' and
 #'   'spores_per_packet'
