@@ -1,10 +1,11 @@
 #' Simulates the spread of Ascochyta blight in a chickpea field
 #'
-#' `trace_asco` simulates the spatiotemporal development of Ascochyta blight in
-#' a chickpea field over a growing season.
+#' Simulate the spatiotemporal development of Ascochyta blight in a chickpea
+#' paddock over a growing season on a one square metre basis.
 #'
-#' @param weather weather data, recorded by a local weather station, over a
-#'   chickpea growing season for the model operation.
+#' @param weather weather data for a representative chickpea paddock that
+#'   contains weather data for a complete chickpea growing season for the
+#'   model's operation.
 #' @param paddock_length length of a paddock in metres (y).
 #' @param paddock_width width of a paddock in metres (x).
 #' @param sowing_date a character string of a date value indicating sowing date

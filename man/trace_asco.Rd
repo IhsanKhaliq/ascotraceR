@@ -24,8 +24,9 @@ trace_asco(
 )
 }
 \arguments{
-\item{weather}{weather data, recorded by a local weather station, over a
-chickpea growing season for the model operation.}
+\item{weather}{weather data for a representative chickpea paddock that
+contains weather data for a complete chickpea growing season for the
+model's operation.}
 
 \item{paddock_length}{length of a paddock in metres (y).}
 
@@ -116,8 +117,8 @@ latent period phase of infection
 }
 }
 \description{
-\code{trace_asco} simulates the spatiotemporal development of Ascochyta blight in
-a chickpea field over a growing season.
+Simulate the spatiotemporal development of Ascochyta blight in a chickpea
+paddock over a growing season on a one square metre basis.
 }
 \examples{
 
