@@ -4,7 +4,8 @@
 #'
 #' @param trace a nested list output from [trace_asco()]
 #'
-#' @return a `data.table`
+#' @return A tidy \CRANpkg{data.table} of [trace_asco()] output.
+#' @seealso [summarise_trace()], [trace_asco()]
 #' @export
 #'
 #' @examples
