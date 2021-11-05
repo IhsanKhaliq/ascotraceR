@@ -9,6 +9,7 @@ POSIXct
 Phytopathology
 Salam
 Spatiotemporal
+Summarise
 Sweetingham
 Tosari
 Visualise
@@ -19,7 +20,11 @@ asco
 ascotracR
 ascotraceR’s
 blackspot
+cdd
+coords
+cr
 csv
+cwh
 et
 foci
 ggplot
@@ -33,7 +38,6 @@ meristems
 metre
 metres
 multithreaded
-noRd
 quadrat
 quadrats
 sd
@@ -41,6 +45,7 @@ spatiotemporal
 sporulating
 subunit
 summarised
+summarising
 wd
 ws
 xxA
