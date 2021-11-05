@@ -42,6 +42,7 @@
 #'
 summarise_trace <- function(trace) {
 
+  i_day <- new_gp <- `.` <- NULL
   summarised_trace <- tidy_trace(trace)
 
   new_gp <- summarised_trace[, .(new_gp = mean(new_gp)), by = i_day]

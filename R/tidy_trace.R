@@ -40,11 +40,13 @@
 #' tidied <- tidy_trace(traced)
 #'
 #' # take a look at the infectious growing points on day 102
-#' ggplot(data = filter(tidied, i_day == 102),
+#' library(ggplot2)
+#' ggplot(data = subset(tidied, i_day == 102),
 #'        aes(x = x, y = y, fill = infectious_gp)) +
 #'   geom_tile()
 tidy_trace <- function(trace) {
 
+  i_day <- new_gp <- NULL
   i_date <- t(as.data.table(lapply(X = trace, `[[`, 2)))
   sub_trace <- setDT(purrr::map_df(trace, ~ unlist(.[3:9])))
   sub_trace[, i_date := lubridate::as_date(i_date)]
