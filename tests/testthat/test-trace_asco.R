@@ -93,11 +93,11 @@ test_that("intense primary_infection_foci lead to more infections", {
   ))
   expect_length(test1.1, 5)
   expect_length(test1.1[[1]], 11)
-  expect_equal(test1.1[[5]][["exposed_gps"]][, .N], 6)
+  expect_equal(test1.1[[5]][["exposed_gps"]][, .N], 2)
   expect_equal(test1.1[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 40)
   expect_length(test1.1[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 1)
   expect_equal(test1.1[[5]][["exposed_gps"]][spores_per_packet  >
-                                               0, spores_per_packet], rep(1, 6))
+                                               0, spores_per_packet], rep(1, 2))
   expect_equal(test1.1[[5]][["exposed_gps"]][, unique(cdd_at_infection)], 87)
 })
 
@@ -180,7 +180,7 @@ test3 <- trace_asco(
 #  tracer_plot(test3,30)
 
 test_that("test3 returns some sporulating gps", {
-  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 33)
+  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 31)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
   expect_true(all(test3[[30]][["exposed_gps"]][, unique(cdd_at_infection)] >
