@@ -41,7 +41,7 @@ the weather was logged.}
 \item{hh}{Column name or index in \code{x} that refers to the hour (24 hour) when
 the weather was logged.}
 
-\item{mm}{column name or index in \code{x} that refers to the minute when the
+\item{mm}{Column name or index in \code{x} that refers to the minute when the
 weather was logged.}
 
 \item{POSIXct_time}{Column name or index in \code{x} which contains a \code{POSIXct}
