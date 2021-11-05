@@ -67,10 +67,8 @@ weather_dat <- format_weather(
 
 A function, `trace_asco()`, is provided to simulate the spread of Ascochyta blight in a chickpea field over a growing season.
 The inputs needed to run the function include weather data, paddock length and width, sowing and harvest dates, chickpea growing points replication rate, primary infection intensity, latent period, number of conidia produced per lesion and the location of primary infection foci (centre or random).
+The model output is a nested list with items for each day of the model run.
 See the help file for `trace_asco()` for more information.
-The model output is a list with two elements.
-The first element is a [matrix] that contains prediction related host and the disease (e.g., infectious growing points and spores per packet). 
-The second element is a [data.table] that summarises weather variables (e.g., cumulative rain and cumulative wet hours) over a growing season.
 
 ```{r trace-asco}
 # Predict Ascochyta blight spread for the year 1988 at Newmarracarra
