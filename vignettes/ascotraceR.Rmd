@@ -14,7 +14,7 @@ vignette: >
 ## Introduction to _ascotraceR_
 
 _ascotraceR_ is an R package of the 'ascotraceR' model developed to simulate the spread of Ascochyta blight in a chickpea field over a growing season.
-Parameters and variables used in the model were mostly derived from the literature and subjected to validation in the field.
+Parameters and variables used in the model were mostly derived from the literature and were subjected to validation in the field.
 The model uses daily weather data to simulate disease spread and a set of weather data is included with the package for demonstration purposes.
 
 ### Getting started
@@ -66,10 +66,10 @@ weather_dat <- format_weather(
 ### Simulate Ascochyta blight spread
 
 A function, `trace_asco()`, is provided to simulate the spread of Ascochyta blight in a chickpea field over a growing season.
-The inputs needed to run the function include weather data, paddock length and width, sowing and harvest date, chickpea growing points replication rate, primary infection intensity, latent period, number of conidia produced per lesion and the location of primary infection foci (centre or random).
+The inputs needed to run the function include weather data, paddock length and width, sowing and harvest dates, chickpea growing points replication rate, primary infection intensity, latent period, number of conidia produced per lesion and the location of primary infection foci (centre or random).
 See the help file for `trace_asco()` for more information.
 The model output is a list with two elements.
-The first element is a [matrix] that contains prediction related host and disease (e.g., infectious growing points and spores per packet). 
+The first element is a [matrix] that contains prediction related host and the disease (e.g., infectious growing points and spores per packet). 
 The second element is a [data.table] that summarises weather variables (e.g., cumulative rain and cumulative wet hours) over a growing season.
 
 ```{r trace-asco}
