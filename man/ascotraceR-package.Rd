@@ -8,6 +8,14 @@
 \description{
 A spatiotemporal model that simulates the spread of Ascochyta blight in chickpea fields based on location-specific weather conditions.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/IhsanKhaliq/ascotraceR}
+  \item Report bugs at \url{https://github.com/IhsanKhaliq/ascotraceR/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Paul Melloy \email{paul.melloy@usq.edu.au} (\href{https://orcid.org/0000-0003-4253-7167}{ORCID})
 
