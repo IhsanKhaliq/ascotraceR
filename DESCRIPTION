@@ -24,15 +24,14 @@ Authors@R:
           role = "cph"))
 Description: A spatiotemporal model that simulates the spread of Ascochyta
     blight in chickpea fields based on location-specific weather conditions.
+URL: https://github.com/IhsanKhaliq/ascotraceR
+BugReports: https://github.com/IhsanKhaliq/ascotraceR/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Suggests:
-  knitr,
-  rmarkdown,
-  spelling,
-  testthat (>= 3.0.1)
+Depends: 
+    R (>= 3.5.0)
 Imports:
   data.table (>= 1.13.0),
   lubridate (>= 1.7.9.2),
@@ -45,9 +44,12 @@ Imports:
   stats,
   sf,
   terra
+Suggests:
+  knitr,
+  rmarkdown,
+  spelling,
+  testthat (>= 3.0.1)
 VignetteBuilder: knitr
-Depends: 
-    R (>= 3.5.0)
 Language: en-US
 X-schema.org-applicationCategory: Tools
 X-schema.org-keywords: chickpea, botanical-epidemiology, plant-disease-model,
