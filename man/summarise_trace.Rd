@@ -11,7 +11,8 @@ summarise_trace(trace)
 }
 \value{
 A \CRANpkg{data.table} summarising the model's output for a paddock
-on a daily time-step.
+on a daily time-step with the area under the disease progress curve
+(\acronym{AUDPC}) at the paddock level for the simulation's run.
 }
 \description{
 Creates a paddock-level summary \CRANpkg{data.table} from the output of
