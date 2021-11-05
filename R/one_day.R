@@ -1,4 +1,4 @@
-#' Simulates Ascochyta spore dispersal for a single day increment
+#' Simulates Ascochyta rabiei spore dispersal for a single day increment
 #'
 #' @param i_date A character string or POSIXct formatted string indicating an
 #'   iteration date of the model. Preferably in \acronym{ISO8601} format
