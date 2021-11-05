@@ -60,5 +60,5 @@ tidy_trace <- function(trace) {
   tidy_trace_dt <- merge(x = paddock, y = sub_trace, all.x = TRUE)
 
   setcolorder(tidy_trace_dt, c("i_day", "i_date", "day"))
-  return(tidy_trace_dt)
+  return(tidy_trace_dt[])
 }
