@@ -1,0 +1,171 @@
+---
+title: ascotraceR
+author: "Vignette Author" 
+output:
+  rmarkdown::html_document:
+    theme: journal
+vignette: >
+  %\VignetteIndexEntry{ascotraceR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{ggplot2}
+---
+
+
+
+
+## Introduction to _ascotraceR_
+
+_ascotraceR_ is an R package of the 'ascotraceR' model developed to simulate the spread of Ascochyta blight in a chickpea field over a growing season. Parameters and variables used in the model were mostly derived from the literature and subjected to validation in the field.
+The model uses daily weather data to simulate disease spread.
+A function, `get_wth()`, is provided to simplify downloading weather data via the [_nasapower_](https://cran.r-project.org/package=nasapower) package (Sparks 2018, Sparks 2020) or [_chirps_](https://docs.ropensci.org/chirps/) package (de Sousa _et al. 2020), which provides weather data from the Client for the Climate Hazards Center 'CHIRPS' and 'CHIRTS' and simulates Ascochyta blight spread in a chickpea field over a growing season using a function, `trace_asco()`.
+
+### Getting started
+
+Load the library.
+
+
+```r
+library("ascotraceR")
+```
+
+### Get weather data
+
+If weather data is not available on your local computer, the simplest way to use the model is to download weather data from NASA POWER using `get_wth()`, which provides the data in a format suitable for use in the model and is freely available.
+See the help file for `naspower::get_power()` for more details of this functionality and details on the data (Sparks 2018, Sparks 2020). An example is shown below
+
+
+```r
+# Fetch weather for year 2000 season at the IRRI Zeigler Experiment Station
+wth <- get_wth(
+  lonlat = c(121.25562, 14.6774),
+  dates = c("2000-01-01", "2000-12-31")
+)
+
+wth
+```
+
+```
+##        YYYYMMDD DOY  TEMP  RHUM  RAIN     LAT      LON
+##   1: 2000-01-01   1 24.38 91.25 14.93 14.6774 121.2556
+##   2: 2000-01-02   2 24.27 90.88  6.96 14.6774 121.2556
+##   3: 2000-01-03   3 23.82 88.38  2.28 14.6774 121.2556
+##   4: 2000-01-04   4 23.68 88.00  0.87 14.6774 121.2556
+##   5: 2000-01-05   5 24.11 88.12  0.43 14.6774 121.2556
+##  ---                                                  
+## 362: 2000-12-27 362 24.46 92.50 21.15 14.6774 121.2556
+## 363: 2000-12-28 363 24.64 91.94  6.01 14.6774 121.2556
+## 364: 2000-12-29 364 24.58 90.81  5.49 14.6774 121.2556
+## 365: 2000-12-30 365 25.31 86.25  2.07 14.6774 121.2556
+## 366: 2000-12-31 366 24.48 87.81  3.45 14.6774 121.2556
+```
+
+If the weather data is available on your local computer then simply import the weather data as shown below. The weather data should at least contain the following data:
+
+ - A date and time increment,
+
+ - rainfall (mm),
+
+ - mean wind speed (km/h),
+
+ - mean wind direction (degrees),
+
+ - standard deviation of wind direction (degrees),
+
+ - longitude of recording weather station (decimal degrees),
+
+ - latitude of the recording weather station (decimal degrees), and
+
+ - weather station name or other unique identifier.
+
+
+```{r}
+Newmarracarra <-   read.csv(
+  system.file("extdata",
+              "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")
+)
+
+head(Newmarracarra)
+```
+
+
+### Wrangle weather data 
+
+A function, `format_weather()`, is provided to convert raw weather data into the format appropriate for the model. It is mandatory to format weather data before running the model.
+Time zone can also be set manually using `time_zone` argument.
+If latitude and longitude are not supplied in the raw weather data, a a separate CSV file listing latitude and longitude can be supplied to meet this requirement (see `?format_weather` for more details).
+
+
+```{r}
+weather_dat <- format_weather(
+  x = Newmarracarra,
+  POSIXct_time = "Local.Time",
+  temp = "mean_daily_temp",
+  ws = "ws",
+  wd_sd = "wd_sd",
+  rain = "rain_mm",
+  wd = "wd",
+  station = "Location",
+  time_zone = "Australia/Perth",
+  lonlat_file = station_data
+)
+```
+
+
+### Simulate Ascochyta blight spread
+
+A function, `trace_asco()`, is provided to simulate the spread of Ascochyta blight in a chickpea field over a growing season. The inputs needed to run the function include weather data, paddock length and width, sowing and harvest date, chickpea growing points replication rate, primary infection intensity, latent period, number of conidia produced per lesion and the location of primary infection foci (centre or random). See the help file for `trace_asco()` for more information
+The model output is a list with two elements. The first element is a [matrix] that contains prediction related host and disease (e.g., infectious growing points and spores per packet). The second element is a `data.table` that summarises weather variables (e.g., cumulative rain and cumulative wet hours) over a growing season.  
+
+
+```{r}
+# Predict Ascochyta blight spread for the year 1988 at Newmarracarra
+traced <- trace_asco(
+  weather = weather_dat,
+  paddock_length = 100,
+  paddock_width = 100,
+  initial_infection = "1998-06-10",
+  sowing_date = as.POSIXct("1998-06-09"),
+  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(100),
+  time_zone = "Australia/Perth",
+  primary_infection_foci = "centre"
+)
+
+```
+
+
+### Tidy up or summarise the model output
+
+Functions `tidy_trace()` and `summarise_trace()` have been provided to tidy up and summarise the model output
+
+## Tidy up the model output 
+
+```{r}
+tidied <- tidy_trace(traced)
+tidied
+```
+
+
+### Summarise the model output
+
+```{r}
+summary <- summarise_trace(traced) 
+summary
+```
+
+## Plot using _ggplot2_
+
+Plot the number of infectious growing points on day 102
+```{r}
+ggplot(data = subset(tidied, i_day == 102),
+       aes(x = x, y = y, fill = infectious_gp)) +
+  geom_tile()
+```
+
+
+# References
+
+Adam Sparks (2018). nasapower: A NASA POWER Global Meteorology, Surface Solar Energy and Climatology Data
+Client for R. Journal of Open Source Software, 3(30), 1035, DOI: [10.21105/joss.01035](https://doi.org/10.21105/joss.01035).
+
+Adam Sparks (2020). _nasapower: NASA-POWER Data from R_. R package version 3.0.1, URL: <https://CRAN.R-project.org/package=nasapower>.
