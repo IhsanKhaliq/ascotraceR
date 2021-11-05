@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # ascotraceR: A weather driven model to simulate the spread of Ascochyta blight in chickpea over a growing season 
 
-The goal of of _ascotraceR_ is to develop a weather driven model to simulate the spread of Ascochyta blight disease in chickpea over a growing season.
+The goal of of _ascotraceR_ is to develop a weather driven model to simulate the spread of Ascochyta blight disease in a chickpea field over a growing season.
 
 This model is adapted from a model developed by [(Diggle _et al._ 2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the spread of anthracnose in a lupin field.
 The model is run using local weather data, and simulates both host and pathogen related activities.
@@ -28,12 +28,12 @@ You may install it from GitHub this way.
 ```r
 if (!require("remotes"))
   install.packages("remotes")
-remotes::install_github("adamhsparks/epicrop",
+remotes::install_github("IhsanKhaliq/ascotraceR",
                         build_vignettes = TRUE
 )
 ```
 
-Once installed you can simulate disease in a chickpea paddock.
+Once installed you can simulate disease spread in a chickpea paddock.
 
 Load the library.
 
@@ -60,7 +60,7 @@ station_data <-
 ### Wrangle weather data 
 
 A function, `format_weather()`, is provided to convert raw weather data into the format appropriate for the model.
-It is mandatory to use this function to ensure weather is properly formatted data before running the model.
+It is mandatory to use this function to ensure weather data is properly formatted before running the model.
 
 ```{r format-weather}
 weather_dat <- format_weather(
