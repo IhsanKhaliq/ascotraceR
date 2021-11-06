@@ -4,7 +4,7 @@
 weather_day <- fread("formatted_weather_one_day.csv")
 
 # makePaddock equivalent
-paddock <- as.data.table(expand.grid(x = 1:100,
+paddock <- as.data.table(CJ(x = 1:100,
                                      y = 1:100))
 
 primary_infection_foci <-

@@ -7,7 +7,7 @@
 #' @return Vector of row numbers
 #'
 #' @examples
-#' pdk <- as.data.table(expand.grid(x = 1:100,
+#' pdk <- as.data.table(CJ(x = 1:100,
 #'                                  y = 1:100))
 #' qry <- pdk[sample(1:nrow(pdk), 5),]
 #' which_paddock_row(pdk, qry)

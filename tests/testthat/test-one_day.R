@@ -3,7 +3,7 @@ seeding_rate <- 40
 primary_infection_foci <- data.table(x = 50,
                                      y = 50)
 
-paddock <- as.data.table(expand.grid(x = 1:100,
+paddock <- as.data.table(CJ(x = 1:100,
                                      y = 1:100))
 
 # initialise daily_vals
