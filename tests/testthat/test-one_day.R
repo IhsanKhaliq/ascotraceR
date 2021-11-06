@@ -105,7 +105,7 @@ test_that("one_day single infection foci returns expected output", {
   expect_equal(test1[["cdd"]], 18)
   expect_equal(test1[["cwh"]], 15)
   expect_equal(test1[["cr"]], 78.85)
-  expect_equal(round(test1[["gp_standard"]], 5), 44.66747)
+  expect_equal(test1[["gp_standard"]], 44.66747, tolerance = 0.001)
   expect_equal(test1[["new_gp"]], test1[["gp_standard"]] - seeding_rate)
   expect_equal(test1[["exposed_gps"]],
                data.table(
@@ -127,10 +127,14 @@ test_that("one_day single infection foci returns expected output", {
       "cdd_at_infection"
     )
   )
-  expect_equal(round(test1[["paddock"]][, unique(new_gp)], 6), c(4.667471, 4.551090))
-  expect_equal(round(test1[["paddock"]][, unique(susceptible_gp)], 5), c(44.66747, 43.55109))
-  expect_equal(round(test1[["paddock"]][, unique(exposed_gp)], 6), 0)
-  expect_equal(round(test1[["paddock"]][, unique(infectious_gp)], 6), c(0, 1))
+  expect_equal(test1[["paddock"]][, unique(new_gp)],
+               c(4.667471, 4.551090), tolerance = 0.001)
+  expect_equal(test1[["paddock"]][, unique(susceptible_gp)],
+               c(44.66747, 43.55109), tolerance = 0.001)
+  expect_equal(test1[["paddock"]][, unique(exposed_gp)], 0,
+               tolerance = 0.001)
+  expect_equal(test1[["paddock"]][, unique(infectious_gp)], c(0, 1),
+               tolerance = 0.001)
 })
 
 test2 <- one_day(
@@ -169,11 +173,12 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
             expect_equal(test2[["i_date"]], od_t1_i_date)
             expect_equal(test2[["i_day"]], 1)
             expect_equal(test2[["day"]], 132)
-            expect_equal(test2[["cdd"]], 18 + 18)
-            expect_equal(test2[["cwh"]], 15 + 15)
-            expect_equal(test2[["cr"]], 78.85 + 78.85)
-            expect_equal(round(test2[["gp_standard"]], 5), 44.66747 + 5.21047)
-            expect_equal(round(test2[["new_gp"]], 5), 5.21047)
+            expect_equal(test2[["cdd"]], sum(18, 18))
+            expect_equal(test2[["cwh"]], sum(15, 15))
+            expect_equal(test2[["cr"]], sum(78.85, 78.85))
+            expect_equal(test2[["gp_standard"]], sum(44.66747, 5.21047),
+                         tolerance = 0.001)
+            expect_equal(test2[["new_gp"]], 5.21047, tolerance = 0.001)
             expect_equal(test2[["exposed_gps"]],
                          data.table(
                            x = c(50, 54, 50),
@@ -194,10 +199,14 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
                 "cdd_at_infection"
               )
             )
-            expect_equal(round(test2[["paddock"]][, unique(new_gp)], 6), c(5.210471, 5.080625))
-            expect_equal(round(test2[["paddock"]][, unique(susceptible_gp)], 5), c(49.87794, 48.63171))
-            expect_equal(round(test2[["paddock"]][, unique(exposed_gp)], 6), 0)
-            expect_equal(round(test2[["paddock"]][, unique(infectious_gp)], 6), c(0, 1))
+            expect_equal(test2[["paddock"]][, unique(new_gp)],
+                         c(5.210471, 5.080625), tolerance = 0.001)
+            expect_equal(test2[["paddock"]][, unique(susceptible_gp)],
+                         c(49.87794, 48.63171), tolerance = 0.001)
+            expect_equal(test2[["paddock"]][, unique(exposed_gp)], 0,
+                         tolerance = 0.001)
+            expect_equal(test2[["paddock"]][, unique(infectious_gp)],
+                         c(0, 1), tolerance = 0.001)
           })
 
 # update cumulative degree days to past threshold
@@ -242,10 +251,11 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
             expect_equal(test3[["cdd"]], 219)
             expect_equal(test3[["cwh"]], 15 + 15 + 15)
             expect_equal(test3[["cr"]], 78.85 + 78.85 + 78.85)
-            expect_equal(round(test3[["gp_standard"]], 5), 44.66747 +
-                           5.21047 +
-                           5.81624)
-            expect_equal(round(test3[["new_gp"]], 5), 5.81624)
+            expect_equal(test3[["gp_standard"]], sum(44.66747,
+                                                     5.21047,
+                                                     5.81624),
+                         tolerance = 0.001)
+            expect_equal(test3[["new_gp"]], 5.81624, tolerance = 0.0001)
             expect_equal(
               test3[["exposed_gps"]],
               data.table(
@@ -268,8 +278,12 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
                 "cdd_at_infection"
               )
             )
-            expect_equal(round(test3[["paddock"]][, unique(new_gp)], 6), c(5.816238, 5.700011, 5.438883))
-            expect_equal(round(test3[["paddock"]][, unique(susceptible_gp)], 5), c(55.69418, 54.57795, 52.0706))
-            expect_equal(round(test3[["paddock"]][, unique(exposed_gp)], 6), 0)
-            expect_equal(round(test3[["paddock"]][, unique(infectious_gp)], 6), c(0, 1, 3))
+            expect_equal(test3[["paddock"]][, unique(new_gp)],
+                         c(5.816238, 5.438883, 5.700011), tolerance = 0.001)
+            expect_equal(test3[["paddock"]][, unique(susceptible_gp)],
+                         c(55.69418, 52.0706, 54.57795), tolerance = 0.001)
+            expect_equal(test3[["paddock"]][, unique(exposed_gp)], 0,
+                         tolerance = 0.001)
+            expect_equal(test3[["paddock"]][, unique(infectious_gp)],
+                         c(0, 3, 1), tolerance = 0.1)
           })
