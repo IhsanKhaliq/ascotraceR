@@ -1,16 +1,13 @@
-# for manual testing
-#spore_dat <- fread("tests/testthat/test-data_successful_infections.csv")
 
 # for manual automatic check() testing
-spore_dat <- fread("test-data_successful_infections.csv")
+load(test_path("test-data_successful_infections.rda"))
 seeding_rate <- 40
 
 # makePaddock equivalent
-paddock <- as.data.table(expand.grid(x = 1:100,
-                                     y = 1:100))
+paddock <- as.data.table(CJ(x = 1:100,
+                            y = 1:100))
 
-primary_infection_foci <-
-  c(50, 50)
+primary_infection_foci <- c(50, 50)
 
 # define paddock variables at time 1
 paddock[, c("new_gp",

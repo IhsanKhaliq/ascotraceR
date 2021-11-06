@@ -1,10 +1,10 @@
-#newly_infected_list <- fread(file = "tests/testthat/data-newly_infected_list.csv")
-newly_infected_list <- fread(file = "data-newly_infected_list.csv")
+# test_data.rda contains lat/lon and date values for the following tests
+load(test_path("newly_infected_list.rda"))
 
 # create data and parameters
 seeding_rate <- 40
-paddock <- as.data.table(expand.grid(x = 1:100,
-                                     y = 1:100))
+paddock <- as.data.table(CJ(x = 1:100,
+                            y = 1:100))
 paddock[, c("new_gp",
             "susceptible_gp",
             "exposed_gp",
