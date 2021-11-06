@@ -9,12 +9,13 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   %\VignetteDepends{ggplot2}
+  %\VignetteDepends{data.table}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.width = 7, fig.height = 7)
 
-suggested_packages <- "ggplot2"
+suggested_packages <- c("ggplot2", "data.table")
 
 knitr::opts_chunk$set(eval = all(
   vapply(
@@ -38,22 +39,25 @@ Load the library.
 
 ```{r, load-libs}
 library("ascotraceR")
+library("data.table")
 ```
 
 Import the weather data
 
 ```{r load-weather}
 # weather data
-Newmarracarra <- read.csv(
+Billa_Billa <- fread(
   system.file("extdata",
-              "1998_Newmarracarra_weather_table.csv", package = "ascotraceR")
+              "2020_Billa_Billa_weather_data_ozforecast.csv", package = "ascotraceR")
 )
 
-head(Newmarracarra)
+# format time column
+Billa_Billa[, local_time := lubridate::dmy_hm(local_time)]
 
-# weather station location information
-station_data <-
-  system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+# specify the station coordinates of the Billa Billa weather station
+Billa_Billa[, c("lat", "lon") := .(-28.1011505,150.3307084)]
+
+head(Billa_Billa)
 ```
 
 ### Wrangle weather data 
@@ -64,18 +68,23 @@ Time zone can also be set manually using `time_zone` argument.
 If latitude and longitude are not supplied in the raw weather data, a a separate CSV file listing latitude and longitude can be supplied to meet this requirement (see `?format_weather` for more details).
 
 ```{r format-weather}
-weather_dat <- format_weather(
-  x = Newmarracarra,
-  POSIXct_time = "Local.Time",
+Billa_Billa <- format_weather(
+  x = Billa_Billa,
+  POSIXct_time = "local_time",
   temp = "mean_daily_temp",
   ws = "ws",
   wd_sd = "wd_sd",
   rain = "rain_mm",
   wd = "wd",
-  station = "Location",
-  time_zone = "Australia/Perth",
-  lonlat_file = station_data
+  station = "location",
+  time_zone = "Australia/Brisbane",
+  lon = "lon",
+  lat = "lat"
 )
+
+# calculate the number of wet_hours in a day
+Billa_Billa[, wet_hours := sum(rain >0), by = .(YYYY,MM,DD)]
+Billa_Billa[rain>0, .(times, rain, wet_hours)]
 ```
 
 ### Simulate Ascochyta blight spread
@@ -86,17 +95,23 @@ The model output is a nested list with items for each day of the model run.
 See the help file for `trace_asco()` for more information.
 
 ```{r trace-asco}
-# Predict Ascochyta blight spread for the year 1988 at Newmarracarra
+# Predict Ascochyta blight spread for the year 2020 at Billa Billa
 traced <- trace_asco(
-  weather = weather_dat,
-  paddock_length = 100,
-  paddock_width = 100,
-  initial_infection = "1998-06-10",
-  sowing_date = as.POSIXct("1998-06-09"),
-  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(100),
-  time_zone = "Australia/Perth",
-  primary_infection_foci = "centre"
-)
+      weather = Billa_Billa,
+      paddock_length = 20,
+      paddock_width = 20,
+      initial_infection = as.POSIXct("2020-07-17"),
+      sowing_date = as.POSIXct("2020-06-04"),
+      harvest_date = as.POSIXct("2020-10-27"),
+      time_zone = "Australia/Brisbane",
+      seeding_rate = 40,
+      gp_rr = 0.0065,
+      spores_per_gp_per_wet_hour = 0.6,
+      #min = 0.15 - max = 0.6 (step 0.05)
+      latent_period_cdd = 150,
+      primary_infection_intensity = 100,
+      primary_infection_foci = "centre"
+    )
 ```
 
 ### Tidy up or summarise the model output
@@ -120,13 +135,13 @@ summarised
 
 ## Plot using _ggplot2_
 
-Plot the number of infectious growing points on day 102.
+Plot the number of infectious growing points on day 132.
 
 ```{r plot}
 
 library("ggplot2")
 
-ggplot(data = subset(tidied, i_day == 102),
+ggplot(data = subset(tidied, i_day == 132),
        aes(x = x, y = y, fill = infectious_gp)) +
   geom_tile()
 ```
