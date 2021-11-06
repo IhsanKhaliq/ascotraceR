@@ -1,3 +1,4 @@
+
 sowing_date <- as.POSIXct("1998-05-09", tz = "Australia/Perth")
 harvest_date <- as.POSIXct("1998-05-12", tz = "Australia/Perth")
 
