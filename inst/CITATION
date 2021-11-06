@@ -1,0 +1,14 @@
+citHeader("To cite ascotraceR in publications use:")
+
+
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "{ascotraceR}: A Spatiotemporal Model to Simulate the Spread of Ascochyta Blight in Chickpea",
+         author = c(person("Ihsanul", "Khaliq"),
+                    person("Paul", "Melloy"),
+                    person("Adam H.", "Sparks")),
+         year = year,
+         note = note,
+         url = "https://github.com/IhsanKhaliq/ascotraceR")
