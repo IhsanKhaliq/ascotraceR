@@ -4,7 +4,7 @@ primary_infection_foci <- data.table(x = 50,
                                      y = 50)
 
 paddock <- as.data.table(CJ(x = 1:100,
-                                     y = 1:100))
+                            y = 1:100))
 
 # initialise daily_vals
 paddock[, c("new_gp",
@@ -63,9 +63,6 @@ daily_vals_list <-
     # data.frame
     exposed_gps = data.table() # data.table of infected growing points still in latent period and not sporilating (exposed_gp)
   )
-
-
-#newly_inf <- fread("tests/testthat/data-newly_infected_list.csv")
 
 
 # begin testing

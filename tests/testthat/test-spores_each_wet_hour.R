@@ -1,14 +1,12 @@
 
 # load formatted weather data
-# weather_day <- fread("tests/testthat/formatted_weather_one_day.csv")
-weather_day <- fread("formatted_weather_one_day.csv")
+load(test_path("formatted_weather_one_day.rda"))
 
 # makePaddock equivalent
 paddock <- as.data.table(CJ(x = 1:100,
-                                     y = 1:100))
+                            y = 1:100))
 
-primary_infection_foci <-
-    c(50,50)
+primary_infection_foci <- c(50, 50)
 seeding_rate <- 40
 
 # define paddock variables at time 1
@@ -20,25 +18,28 @@ paddock[, c(
 ) :=
   list(
     seeding_rate,
-    fifelse(x == primary_infection_foci[1] &
-              y == primary_infection_foci[2], seeding_rate - 1,
-            seeding_rate),
+    fifelse(
+      x == primary_infection_foci[1] &
+        y == primary_infection_foci[2],
+      seeding_rate - 1,
+      seeding_rate
+    ),
     0,
     fifelse(x == primary_infection_foci[1] &
               y == primary_infection_foci[2], 1,
             0)
   )]
 
-spore_interception_parameter <-
-  0.00006 * (15000 / 350)
+spore_interception_parameter <- 0.00006 * (15000 / 350)
 
 ####  write some tests
 # test 1 - single inputs tested 100 times
 set.seed(666)
-for(repeat1000 in 1:100) {
+
+for (repeat1000 in 1:100) {
   test1 <- spores_each_wet_hour(
     h = 1,
-    weather_hourly = weather_day,
+    weather_hourly = w_dat,
     paddock = paddock,
     max_interception_probability = 1,
     spore_interception_parameter = spore_interception_parameter,
@@ -86,7 +87,7 @@ paddock[, infectious_gp := fifelse(x >= 53 &
 
 test2 <- spores_each_wet_hour(
   h = 1,
-  weather_hourly = weather_day,
+  weather_hourly = w_dat,
   paddock = paddock,
   max_interception_probability = 1,
   spore_interception_parameter = spore_interception_parameter,
