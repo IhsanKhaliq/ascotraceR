@@ -69,7 +69,7 @@ test2 <- apply(
 
 test_that("test2 is data.table of 1 row", {
   expect_is(test2, "list")
-  expect_is(test2[[1]], "data.table")
+  expect_s3_class(test2[[1]], "data.table")
   expect_equal(nrow(test2[[1]]), 1)
   expect_equal(colnames(test2[[1]]), c("x", "y", "spores_per_packet"))
   expect_equal(test2[[1]][1, x], 50)
@@ -98,7 +98,7 @@ test3 <- apply(
 
 test_that("test3 is data.table of 1 row", {
   expect_is(test3, "list")
-  expect_is(test3[[1]], "data.table")
+  expect_s3_class(test3[[1]], "data.table")
   expect_equal(nrow(test3[[1]]), 2)
   expect_equal(colnames(test3[[1]]), c("x", "y", "spores_per_packet"))
   expect_equal(test3[[1]][, x], c(49, 50))
@@ -138,7 +138,7 @@ test4 <- apply(
 test_that("test4 is a list of data.tables", {
   expect_is(test4, "list")
   expect_length(test4, 20)
-  expect_is(test4[[2]], "data.table")
+  expect_s3_class(test4[[2]], "data.table")
   expect_equal(nrow(test4[[2]]), 3)
   expect_silent(dt_test4 <- rbindlist(test4))
   expect_equal(colnames(dt_test4), c("x", "y", "spores_per_packet"))

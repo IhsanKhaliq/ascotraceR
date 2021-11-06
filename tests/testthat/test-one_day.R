@@ -117,7 +117,7 @@ test_that("one_day single infection foci returns expected output", {
                  spores_per_packet = c(1, 1, 1),
                  cdd_at_infection = c(18, 18, 18)
                ))
-  expect_is(test1[["paddock"]], "data.table")
+  expect_s3_class(test1[["paddock"]], "data.table")
   expect_equal(
     colnames(test1[["paddock"]]),
     c(
@@ -184,7 +184,7 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
                            spores_per_packet = c(1, 1, 1),
                            cdd_at_infection = c(18, 18, 18)
                          ))
-            expect_is(test2[["paddock"]], "data.table")
+            expect_s3_class(test2[["paddock"]], "data.table")
             expect_equal(
               colnames(test2[["paddock"]]),
               c(
@@ -258,7 +258,7 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
                 cdd_at_infection = numeric()
               )
             )
-            expect_is(test3[["paddock"]], "data.table")
+            expect_s3_class(test3[["paddock"]], "data.table")
             expect_equal(
               colnames(test3[["paddock"]]),
               c(

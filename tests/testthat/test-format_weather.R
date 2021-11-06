@@ -51,7 +51,7 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
 
             )
 
-            expect_is(weather_dt, "asco.weather")
+            expect_s3_class(weather_dt, "asco.weather")
             expect_equal(
               names(weather_dt),
               c(
@@ -201,8 +201,8 @@ test_that("`format_weather()` works when lat lon are in data", {
   )
 
 
-  expect_is(weather_dt, "asco.weather")
-  expect_is(weather_dt, "data.table")
+  expect_s3_class(weather_dt, "asco.weather")
+  expect_s3_class(weather_dt, "data.table")
 
   expect_named(
     weather_dt,
