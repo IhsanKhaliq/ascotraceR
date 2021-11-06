@@ -7,5 +7,5 @@ NULL
 # from `lutz`
 
 stub <- function() {
-  sf::st_as_sf()
+  sf::st_as_sf() # nocov
 }
