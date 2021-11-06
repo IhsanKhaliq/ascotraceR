@@ -8,8 +8,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 # ascotraceR: A weather driven model to simulate the spread of Ascochyta blight in chickpea over a growing season
 
 The goal of of *ascotraceR* is to develop a weather driven model to
-simulate the spread of Ascochyta blight disease in chickpea over a
-growing season.
+simulate the spread of Ascochyta blight disease in a chickpea field over
+a growing season.
 
 This model is adapted from a model developed by [(Diggle *et al.*
 2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the
@@ -30,12 +30,12 @@ way.
 ``` r
 if (!require("remotes"))
   install.packages("remotes")
-remotes::install_github("adamhsparks/epicrop",
+remotes::install_github("IhsanKhaliq/ascotraceR",
                         build_vignettes = TRUE
 )
 ```
 
-Once installed you can simulate disease in a chickpea paddock.
+Once installed you can simulate disease spread in a chickpea paddock.
 
 Load the library.
 
@@ -80,7 +80,7 @@ station_data <-
 
 A function, `format_weather()`, is provided to convert raw weather data
 into the format appropriate for the model. It is mandatory to use this
-function to ensure weather is properly formatted data before running the
+function to ensure weather data is properly formatted before running the
 model.
 
 ``` r
@@ -134,23 +134,23 @@ summarise_trace(traced)
     ##   4:     4  5.040696       53.99001          0        0.0001 1998-06-12 163
     ##   5:     5  4.512701       58.50272          0        0.0001 1998-06-13 164
     ##  ---                                                                       
-    ##  98:    98 18.093468     4754.64897          0        0.0043 1998-09-14 257
-    ##  99:    99 16.815333     4771.46360          0        0.0050 1998-09-15 258
-    ## 100:   100 13.015206     4784.47881          0        0.0050 1998-09-16 259
-    ## 101:   101 14.685692     4799.16340          0        0.0061 1998-09-17 260
-    ## 102:   102 15.898207     4815.06091          0        0.0068 1998-09-18 261
-    ##       cdd cwh     cr gp_standard  AUDPC
-    ##   1:    0   0   0.00    40.00000 0.1108
-    ##   2:   19   9  45.99    44.90033 0.1108
-    ##   3:   33  18  50.43    48.94942 0.1108
-    ##   4:   49  30  75.08    53.99013 0.1108
-    ##   5:   62  41  89.07    58.50284 0.1108
-    ##  ---                                   
-    ##  98: 1221 266 323.10  4754.65131 0.1108
-    ##  99: 1233 268 323.50  4771.46642 0.1108
-    ## 100: 1243 269 323.70  4784.48146 0.1108
-    ## 101: 1255 269 323.70  4799.16688 0.1108
-    ## 102: 1269 269 323.70  4815.06474 0.1108
+    ##  98:    98 18.093345     4754.65059          0        0.0008 1998-09-14 257
+    ##  99:    99 16.815183     4771.46558          0        0.0010 1998-09-15 258
+    ## 100:   100 13.015089     4784.48067          0        0.0010 1998-09-16 259
+    ## 101:   101 14.685479     4799.16614          0        0.0010 1998-09-17 260
+    ## 102:   102 15.897925     4815.06397          0        0.0011 1998-09-18 261
+    ##       cdd cwh     cr gp_standard   AUDPC
+    ##   1:    0   0   0.00    40.00000 0.03265
+    ##   2:   19   9  45.99    44.90033 0.03265
+    ##   3:   33  18  50.43    48.94942 0.03265
+    ##   4:   49  30  75.08    53.99013 0.03265
+    ##   5:   62  41  89.07    58.50284 0.03265
+    ##  ---                                    
+    ##  98: 1221 266 323.10  4754.65131 0.03265
+    ##  99: 1233 268 323.50  4771.46642 0.03265
+    ## 100: 1243 269 323.70  4784.48146 0.03265
+    ## 101: 1255 269 323.70  4799.16688 0.03265
+    ## 102: 1269 269 323.70  4815.06474 0.03265
 
 ## Reference
 
