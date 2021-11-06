@@ -91,29 +91,28 @@ including:
 \itemize{
 \item \strong{paddock}, an 'x' 'y' \CRANpkg{data.table} containing:
 \itemize{
-\item \strong{x}, Location of quadrat on x-axis in paddock
-\item \strong{y}, Location of quadrat on y-axis in paddock
-\item \strong{new_gp},
-\item \strong{susceptible_gp},
-\item \strong{exposed_gp},
-\item \strong{infectious_gp},
+\item \strong{x}, location of quadrat on x-axis in paddock,
+\item \strong{y}, location of quadrat on y-axis in paddock,
+\item \strong{new_gp}, new growing points produced in the last 24 hours,
+\item \strong{susceptible_gp}, susceptible growing points in the last 24 hours,
+\item \strong{exposed_gp}, exposed growing points in the last 24 hours,
+\item \strong{infectious_gp}, infectious growing points in the last 24 hours,
 }
-\item \strong{i_day}, model iteration day
+\item \strong{i_day}, model iteration day,
 \item \strong{cumulative daily weather data}, a \CRANpkg{data.table} containing:
 \itemize{
-\item \strong{cdd}, cumulative degree days
-\item \strong{cwh}, cumulative wet hours
-\item \strong{cr}, cumulative rainfall in mm
+\item \strong{cdd}, cumulative degree days,
+\item \strong{cwh}, cumulative wet hours,
+\item \strong{cr}, cumulative rainfall in mm,
 \item \strong{gp_standard}, standard growing points assuming growth is not impeded
-by infection
+by infection,
 }
-\item \strong{new_gp}, new growing points produced in the last 24 hours
 \item \strong{infected_coords}, a \CRANpkg{data.table} of only infectious growing
-point coordinates
+point coordinates,
 \item \strong{new_infections}, a \CRANpkg{data.table} of newly infected growing
-points
+points,
 \item \strong{exposed_gp}, a \CRANpkg{data.table} of exposed growing points in the
-latent period phase of infection
+latent period phase of infection.
 }
 }
 \description{
@@ -121,7 +120,7 @@ Simulate the spatiotemporal development of Ascochyta blight in a chickpea
 paddock over a growing season on a one square metre basis.
 }
 \examples{
-
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # First weather data needs to be imported and formatted with `format_weather`
 Newmarracarra <-
    read.csv(system.file("extdata",
@@ -156,6 +155,7 @@ traced <- trace_asco(
   primary_infection_foci = "centre")
 
 traced[[70]] # extracts the model output for day 70
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=tidy_trace]{tidy_trace()}}, \code{\link[=summarise_trace]{summarise_trace()}}

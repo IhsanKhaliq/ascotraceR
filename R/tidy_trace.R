@@ -6,9 +6,9 @@
 #'
 #' @return A tidy \CRANpkg{data.table} of [trace_asco()] output.
 #' @seealso [summarise_trace()], [trace_asco()]
-#' @export
 #'
-#' @examples
+#' @examplesIf interactive()
+#'
 #' Newmarracarra <-
 #'    read.csv(system.file("extdata",
 #'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
@@ -44,6 +44,9 @@
 #' ggplot(data = subset(tidied, i_day == 102),
 #'        aes(x = x, y = y, fill = infectious_gp)) +
 #'   geom_tile()
+#'
+#' @export
+#'
 tidy_trace <- function(trace) {
 
   i_day <- new_gp <- NULL

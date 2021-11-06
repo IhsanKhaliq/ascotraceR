@@ -8,9 +8,10 @@
 #' @return A \CRANpkg{data.table} summarising the model's output for a paddock
 #'  on a daily time-step with the area under the disease progress curve
 #'  (\acronym{AUDPC}) at the paddock level for the simulation's run.
-#' @export
+#'
 #' @seealso [trace_asco()], [tidy_trace()]
-#' @examples
+#'
+#' @examplesIf interactive()
 #' Newmarracarra <-
 #'    read.csv(system.file("extdata",
 #'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
@@ -40,7 +41,8 @@
 #'   primary_infection_foci = "centre")
 #'
 #' tidied <- summarise_trace(traced)
-#'
+#' @export
+
 summarise_trace <- function(trace) {
 
   i_day <- new_gp <- AUDPC <- `.` <- NULL

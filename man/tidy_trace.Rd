@@ -16,6 +16,8 @@ A tidy \CRANpkg{data.table} of \code{\link[=trace_asco]{trace_asco()}} output.
 Creates a tidy \CRANpkg{data.table} from the output of \code{\link[=trace_asco]{trace_asco()}}.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
 Newmarracarra <-
    read.csv(system.file("extdata",
             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
@@ -51,6 +53,7 @@ library(ggplot2)
 ggplot(data = subset(tidied, i_day == 102),
        aes(x = x, y = y, fill = infectious_gp)) +
   geom_tile()
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=summarise_trace]{summarise_trace()}}, \code{\link[=trace_asco]{trace_asco()}}
