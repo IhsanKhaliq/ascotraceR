@@ -11,6 +11,21 @@ vignette: >
   %\VignetteDepends{ggplot2}
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 7, fig.height = 7)
+
+suggested_packages <- "ggplot2"
+
+knitr::opts_chunk$set(eval = all(
+  vapply(
+    suggested_packages,
+    requireNamespace,
+    quietly = TRUE,
+    FUN.VALUE = FALSE
+  )
+))
+```
+
 ## Introduction to _ascotraceR_
 
 _ascotraceR_ is an R package of the 'ascotraceR' model developed to simulate the spread of Ascochyta blight in a chickpea field over a growing season.
