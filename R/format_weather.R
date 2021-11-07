@@ -169,7 +169,7 @@ format_weather <- function(x,
       x[, times := lubridate::ymd_hms(times, tz = time_zone)]
     }
 
-    class(x) <- union("asco.weather", class(x))
+    setattr(x, "class", union("asco.weather", class(x)))
 
     return(x)
   }
