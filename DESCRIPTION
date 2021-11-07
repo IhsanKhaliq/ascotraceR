@@ -21,7 +21,9 @@ Authors@R:
             USQ1903-003RTX", role = c("fnd", "cph")),
     person("University of Southern Queensland", role = "cph"),
     person(given = "Western Australia Agriculture Authority (WAAA)",
-          role = "cph"))
+          role = "cph",
+          comment = c("Supported the development of ascotraceR through Adam H.
+          Sparks' time.")))
 Description: A spatiotemporal model that simulates the spread of Ascochyta
     blight in chickpea fields based on location-specific weather conditions.
 URL: https://github.com/IhsanKhaliq/ascotraceR
