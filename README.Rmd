@@ -37,7 +37,7 @@ Once installed you can simulate disease spread in a chickpea paddock.
 
 Load the library.
 
-```{r, load-libs}
+```{r, load-libs, message=FALSE}
 library("ascotraceR")
 library("data.table")
 library("lubridate")
