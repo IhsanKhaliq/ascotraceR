@@ -360,7 +360,7 @@ test_that("`format_weather() stops if lonlat input lacks proper names", {
       lonlat_file = file.path(tempdir(), "stat_coord.csv"),
       r = eyre_temp
     ),
-    regexp = "The csv file of weather station coordinates *"
+    regexp = "The CSV file of weather station coordinates *"
   )
   unlink(file.path(tempdir(), "stat_coord.csv"))
 })
