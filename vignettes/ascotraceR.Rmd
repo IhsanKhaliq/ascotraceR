@@ -8,23 +8,10 @@ vignette: >
   %\VignetteIndexEntry{ascotraceR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  %\VignetteDepends{ggplot2}
-  %\VignetteDepends{data.table}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.width = 7, fig.height = 7)
-
-suggested_packages <- c("ggplot2", "data.table")
-
-knitr::opts_chunk$set(eval = all(
-  vapply(
-    suggested_packages,
-    requireNamespace,
-    quietly = TRUE,
-    FUN.VALUE = FALSE
-  )
-))
 ```
 
 ## Introduction to _ascotraceR_
@@ -39,6 +26,8 @@ Load the library.
 
 ```{r, load-libs}
 library("ascotraceR")
+library("lubridate")
+library("ggplot2")
 library("data.table")
 ```
 
@@ -47,15 +36,18 @@ Import the weather data
 ```{r load-weather}
 # weather data
 Billa_Billa <- fread(
-  system.file("extdata",
-              "2020_Billa_Billa_weather_data_ozforecast.csv", package = "ascotraceR")
+  system.file(
+    "extdata",
+    "2020_Billa_Billa_weather_data_ozforecast.csv",
+    package = "ascotraceR"
+  )
 )
 
 # format time column
-Billa_Billa[, local_time := lubridate::dmy_hm(local_time)]
+Billa_Billa[, local_time := dmy_hm(local_time)]
 
 # specify the station coordinates of the Billa Billa weather station
-Billa_Billa[, c("lat", "lon") := .(-28.1011505,150.3307084)]
+Billa_Billa[, c("lat", "lon") := .(-28.1011505, 150.3307084)]
 
 head(Billa_Billa)
 ```
@@ -83,8 +75,8 @@ Billa_Billa <- format_weather(
 )
 
 # calculate the number of wet_hours in a day
-Billa_Billa[, wet_hours := sum(rain >0), by = .(YYYY,MM,DD)]
-Billa_Billa[rain>0, .(times, rain, wet_hours)]
+Billa_Billa[, wet_hours := sum(rain > 0), by = .(YYYY, MM, DD)]
+Billa_Billa[rain > 0, .(times, rain, wet_hours)]
 ```
 
 ### Simulate Ascochyta blight spread
@@ -97,21 +89,20 @@ See the help file for `trace_asco()` for more information.
 ```{r trace-asco}
 # Predict Ascochyta blight spread for the year 2020 at Billa Billa
 traced <- trace_asco(
-      weather = Billa_Billa,
-      paddock_length = 20,
-      paddock_width = 20,
-      initial_infection = as.POSIXct("2020-07-17"),
-      sowing_date = as.POSIXct("2020-06-04"),
-      harvest_date = as.POSIXct("2020-10-27"),
-      time_zone = "Australia/Brisbane",
-      seeding_rate = 40,
-      gp_rr = 0.0065,
-      spores_per_gp_per_wet_hour = 0.6,
-      #min = 0.15 - max = 0.6 (step 0.05)
-      latent_period_cdd = 150,
-      primary_infection_intensity = 100,
-      primary_infection_foci = "centre"
-    )
+  weather = Billa_Billa,
+  paddock_length = 20,
+  paddock_width = 20,
+  initial_infection = as.POSIXct("2020-07-17"),
+  sowing_date = as.POSIXct("2020-06-04"),
+  harvest_date = as.POSIXct("2020-10-27"),
+  time_zone = "Australia/Brisbane",
+  seeding_rate = 40,
+  gp_rr = 0.0065,
+  spores_per_gp_per_wet_hour = 0.6,
+  latent_period_cdd = 150,
+  primary_infection_intensity = 100,
+  primary_infection_foci = "centre"
+)
 ```
 
 ### Tidy up or summarise the model output
@@ -138,9 +129,6 @@ summarised
 Plot the number of infectious growing points on day 132.
 
 ```{r plot}
-
-library("ggplot2")
-
 ggplot(data = subset(tidied, i_day == 132),
        aes(x = x, y = y, fill = infectious_gp)) +
   geom_tile()
