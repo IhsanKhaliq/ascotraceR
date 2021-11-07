@@ -549,6 +549,6 @@ format_weather <- function(x,
     x_out$lon <- NULL
   }
 
-  class(x_out) <- union("asco.weather", class(x_out))
-  return(x_out)
+  setattr(x_out, "class", union("asco.weather", class(x_out)))
+  return(x_out[])
 }
