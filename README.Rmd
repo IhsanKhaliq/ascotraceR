@@ -39,6 +39,7 @@ Load the library.
 
 ```{r, load-libs}
 library("ascotraceR")
+library("data.table")
 ```
 
 Import the weather data
@@ -46,15 +47,18 @@ Import the weather data
 ```{r load-weather}
 # weather data
 Billa_Billa <- fread(
-  system.file("extdata",
-              "2020_Billa_Billa_weather_data_ozforecast.csv", package = "ascotraceR")
+  system.file(
+    "extdata",
+    "2020_Billa_Billa_weather_data_ozforecast.csv",
+    package = "ascotraceR"
+  )
 )
 
 # format time column
 Billa_Billa[, local_time := lubridate::dmy_hm(local_time)]
 
 # specify the station coordinates of the Billa Billa weather station
-Billa_Billa[, c("lat", "lon") := .(-28.1011505,150.3307084)]
+Billa_Billa[, c("lat", "lon") := .(-28.1011505, 150.3307084)]
 
 head(Billa_Billa)
 ```
@@ -80,8 +84,8 @@ Billa_Billa <- format_weather(
 )
 
 # calculate the number of wet_hours in a day
-Billa_Billa[, wet_hours := sum(rain >0), by = .(YYYY,MM,DD)]
-Billa_Billa[rain>0, .(times, rain, wet_hours)]
+Billa_Billa[, wet_hours := sum(rain > 0), by = .(YYYY, MM, DD)]
+Billa_Billa[rain > 0, .(times, rain, wet_hours)]
 ```
 
 ### Simulate Ascochyta blight spread
@@ -91,21 +95,21 @@ A function, `trace_asco()`, is provided to simulate the spread of Ascochyta blig
 ```{r trace-asco}
 # Predict Ascochyta blight spread for the year 2020 at Billa Billa
 traced <- trace_asco(
-      weather = Billa_Billa,
-      paddock_length = 20,
-      paddock_width = 20,
-      initial_infection = as.POSIXct("2020-07-17"),
-      sowing_date = as.POSIXct("2020-06-04"),
-      harvest_date = as.POSIXct("2020-10-27"),
-      time_zone = "Australia/Brisbane",
-      seeding_rate = 40,
-      gp_rr = 0.0065,
-      spores_per_gp_per_wet_hour = 0.6,
-      #min = 0.15 - max = 0.6 (step 0.05)
-      latent_period_cdd = 150,
-      primary_infection_intensity = 100,
-      primary_infection_foci = "centre"
-    )
+  weather = Billa_Billa,
+  paddock_length = 20,
+  paddock_width = 20,
+  initial_infection = as.POSIXct("2020-07-17"),
+  sowing_date = as.POSIXct("2020-06-04"),
+  harvest_date = as.POSIXct("2020-10-27"),
+  time_zone = "Australia/Brisbane",
+  seeding_rate = 40,
+  gp_rr = 0.0065,
+  spores_per_gp_per_wet_hour = 0.6,
+  #min = 0.15 - max = 0.6 (step 0.05)
+  latent_period_cdd = 150,
+  primary_infection_intensity = 100,
+  primary_infection_foci = "centre"
+)
 ```
 
 ### Summarise the output
