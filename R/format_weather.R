@@ -270,7 +270,7 @@ format_weather <- function(x,
     if (any(c("station", "lon", "lat") %notin% colnames(ll_file))) {
       stop(
         call. = FALSE,
-        "The csv file of weather station coordinates should contain ",
+        "The CSV file of weather station coordinates should contain ",
         "column names 'station','lat' and 'lon'."
       )
     }
