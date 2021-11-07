@@ -30,9 +30,7 @@ set.seed(666)
 
 daily_values <- list(
   paddock = paddock,
-  # i_date = sowing_date,  # day of the simulation (iterator)
   i_day = 1,
-  # day = lubridate::yday(sowing_date),    # day of the year
   cdd = 50,
   # cumulative degree days
   cwh = 0,
