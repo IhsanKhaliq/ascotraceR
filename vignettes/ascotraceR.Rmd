@@ -73,10 +73,6 @@ Billa_Billa <- format_weather(
   lon = "lon",
   lat = "lat"
 )
-
-# calculate the number of wet_hours in a day
-Billa_Billa[, wet_hours := sum(rain > 0), by = .(YYYY, MM, DD)]
-Billa_Billa[rain > 0, .(times, rain, wet_hours)]
 ```
 
 ### Simulate Ascochyta blight spread
