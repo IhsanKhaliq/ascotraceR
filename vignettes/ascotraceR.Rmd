@@ -22,9 +22,9 @@ The model uses daily weather data to simulate disease spread and a set of weathe
 
 ### Getting started
 
-Load the library.
+Load the libraries.
 
-```{r, load-libs}
+```{r, load-libs, message=FALSE}
 library("ascotraceR")
 library("lubridate")
 library("ggplot2")
