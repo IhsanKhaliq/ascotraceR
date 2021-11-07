@@ -2,8 +2,8 @@
 % Please edit documentation in R/format_weather.R
 \name{format_weather}
 \alias{format_weather}
-\title{Format weather data into a ascotraceR.weather object for use in the spore
-dispersal models}
+\title{Format weather data into an ascotraceR.weather S3 class object for use in
+spore dispersal models}
 \usage{
 format_weather(
   x,
@@ -27,61 +27,64 @@ format_weather(
 )
 }
 \arguments{
-\item{x}{A \link{data.frame} object of weather station data for formatting.}
+\item{x}{A \link{data.frame} object of weather station data for formatting.
+\code{character}.}
 
 \item{YYYY}{Column name or index in \code{x} that refers to the year when the
-weather was logged.}
+weather was logged. \code{character}.}
 
 \item{MM}{Column name or index in \code{x} that refers to the month (numerical)
-when the weather was logged.}
+when the weather was logged. \code{character}.}
 
 \item{DD}{Column name or index in \code{x} that refers to the day of month when
-the weather was logged.}
+the weather was logged. \code{character}.}
 
 \item{hh}{Column name or index in \code{x} that refers to the hour (24 hour) when
-the weather was logged.}
+the weather was logged. \code{character}.}
 
 \item{mm}{Column name or index in \code{x} that refers to the minute when the
-weather was logged.}
+weather was logged. \code{character}.}
 
 \item{POSIXct_time}{Column name or index in \code{x} which contains a \code{POSIXct}
 formatted time. This can be used instead of arguments \code{YYYY}, \code{MM}, \code{DD},
-\code{hh}, \code{mm.}}
+\code{hh}, \code{mm.} \code{character}.}
 
 \item{time_zone}{Time zone (Olsen time zone format) where the weather station
 is located. May be in a column or supplied as a character string. Optional,
-see also \code{r}. See details.}
+see also \code{r}. \code{character}. See details.}
 
 \item{temp}{Column name or index in \code{x} that refers to temperature in degrees
-Celsius}
+Celsius. \code{character}.}
 
-\item{rain}{Column name or index in \code{x} that refers to rainfall in mm.}
+\item{rain}{Column name or index in \code{x} that refers to rainfall in mm.
+\code{character}.}
 
-\item{ws}{Column name or index in \code{x} that refers to wind speed in km / h.}
+\item{ws}{Column name or index in \code{x} that refers to wind speed in km / h.
+\code{character}.}
 
 \item{wd}{Column name or index in \code{x} that refers to wind direction in
-degrees.}
+degrees. \code{character}.}
 
-\item{wd_sd}{Column name or index in \code{x} that refers to wind speed in km / h
-character.  This is only applicable if weather data is already summarised
-to hourly increments. See details.}
+\item{wd_sd}{Column name or index in \code{x} that refers to wind speed columns
+standard deviation .\code{character}.  This is only applicable if weather data
+is already summarised to hourly increments. See details.}
 
 \item{station}{Column name or index in \code{x} that refers to the weather station
-name or identifier. See details.}
+name or identifier. \code{character}. See details.}
 
 \item{lon}{Column name or index in \code{x} that refers to weather station's
-longitude.  See details.}
+longitude. \code{character}. See details.}
 
 \item{lat}{Column name or index in \code{x} that refers to weather station's
-latitude.  See details.}
+latitude. \code{character}. See details.}
 
 \item{r}{Spatial raster which is intended to be used with this weather data
-for use in the blackspot model. Used to fetch time_zone if it is not
-supplied in data. Optional, see also \code{time_zone}.}
+for use in the blackspot model. Used to set \code{time_zone} if it is not
+supplied in data. \code{character}. Optional, see also \code{time_zone}.}
 
-\item{lonlat_file}{A file path to a csv which included station name/id and
-longitude and latitude coordinates if they are not supplied in data.
-Optional, see also \code{lon} and \code{lat}.}
+\item{lonlat_file}{A file path to a \acronym{CSV} which included station
+name/id and longitude and latitude coordinates if they are not supplied in
+the data. \code{character}. Optional, see also \code{lon} and \code{lat}.}
 }
 \value{
 A \code{ascotraceR.weather} object (an extension of \CRANpkg{data.table})
@@ -109,17 +112,17 @@ made faster by using \code{\link[future:plan]{future::plan()}}.
 \code{time_zone} All weather stations must fall within the same time
 zone.  If the required stations are located in differing time zones,
 separate \code{ascotraceR.weather} objects must be created for each time zone.
-If a raster object of previous crops is provided that spans time zones, an
-error will be emitted.
+If a raster object, \code{r}, of previous crops is provided that spans time
+zones, an error will be emitted.
 
 \code{wd_sd} If weather data is provided in hourly increments, a column
 with the standard deviation of the wind direction over the hour is required
-to be provided. If the weather data are sub-hourly, these data will be
-calculated and returned automatically.
+to be provided. If the weather data are sub-hourly, the standard deviation
+will be calculated and returned automatically.
 
 \code{lon}, \code{lat} and \code{lonlat_file} If \code{x} provides longitude and
 latitude values for station locations, these may be specified in the \code{lon}
-and \code{lat} columns.  If gps coordinates are not relevant to the study
+and \code{lat} columns.  If the coordinates are not relevant to the study
 location \code{NA} can be specified and the function will drop these column
 variables.  If these data are not included, (\code{NULL}) a separate file may be
 provided that contains the longitude, latitude and matching station name to
