@@ -540,13 +540,11 @@ format_weather <- function(x,
     )
   )
 
-  # remove lat lon columns if they are NA
+  # remove lat lon columns if they are NA. Presume that if lat is `NA` then the
+  # values of lon have no real utility either so we only check if lat is `NA`
   if (all(is.na(unique(x_out[, lat])))) {
-    x_out$lat <- NULL
-  }
-
-  if (all(is.na(unique(x_out[, lon])))) {
-    x_out$lon <- NULL
+    x_out[, lat := NULL]
+    x_out[, lon := NULL]
   }
 
   setattr(x_out, "class", union("asco.weather", class(x_out)))
