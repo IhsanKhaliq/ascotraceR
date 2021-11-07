@@ -1,5 +1,5 @@
-#' Format weather data into a ascotraceR.weather object for use in the spore
-#' dispersal models
+#' Format weather data into an ascotraceR.weather S3 class object for use in
+#' spore dispersal models
 #'
 #' Formats raw weather data into an object suitable for use in the
 #' [trace_asco()] function ensuring that the supplied weather data meet the
