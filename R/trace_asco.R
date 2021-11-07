@@ -135,6 +135,7 @@ trace_asco <- function(weather,
 
   if (primary_inoculum_intensity < 0) {
     stop(
+      call. = FALSE,
       "primary_inoculum_intensity has to be greater than 0 for the model to simulate
   disease spread"
     )
