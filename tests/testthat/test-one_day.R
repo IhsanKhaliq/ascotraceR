@@ -47,7 +47,7 @@ daily_vals_list <-
     i_date = od_t1_i_date,
     # day of the simulation (iterator)
     i_day = 1,
-    day = lubridate::yday(od_t1_i_date),
+    day = yday(od_t1_i_date),
     # day of the year
     cdd = 0,
     # cumulative degree days

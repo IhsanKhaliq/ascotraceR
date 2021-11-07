@@ -39,7 +39,7 @@ test_that("days have updated after 5 increments", {
       "infectious_gp"
     )
   )
-  expect_equal(test1[[5]][["day"]], lubridate::yday(harvest_date) + 1)
+  expect_equal(test1[[5]][["day"]], yday(harvest_date) + 1)
   expect_equal(test1[[5]][["i_day"]], 5)
   expect_equal(test1[[5]][["cwh"]], newM_weather[times >
                                                    sowing_date +
