@@ -30,8 +30,8 @@
 #'   data.frame with column names 'x', 'y' and 'load'. The `data.frame` inputs
 #'   inform the model of specific grid cell/s coordinates where the epidemic
 #'   should begin. The 'load' column is optional and can specify the
-#'   `primary_infection_intensity` for each coordinate.
-#' @param primary_infection_intensity The intensity of the starting epidemic is
+#'   `primary_inoculum_intensity` for each coordinate.
+#' @param primary_inoculum_intensity The intensity of the starting epidemic is
 #'   described by the number of sporulating growing points (from seed infection
 #'   and/or volunteers) and/or sporulating lesions from crop debris at
 #'   `initial_infection`.
@@ -104,7 +104,7 @@
 #'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70), # run the model for 70 days
 #'   time_zone = "Australia/Perth",
 #'   gp_rr = 0.0065,
-#'   primary_infection_intensity = 1000,
+#'   primary_inoculum_intensity = 1000,
 #'   spores_per_gp_per_wet_hour = 0.22,
 #'   primary_infection_foci = "centre")
 #'
@@ -125,7 +125,7 @@ trace_asco <- function(weather,
                        latent_period_cdd = 150,
                        time_zone = "UTC",
                        primary_infection_foci = "random",
-                       primary_infection_intensity = 1,
+                       primary_inoculum_intensity = 1,
                        n_foci = 1,
                        spores_per_gp_per_wet_hour = 0.22){
 
@@ -139,9 +139,9 @@ trace_asco <- function(weather,
       "Please use `format_weather()` to properly format the weather data.")
   }
 
-  # if (primary_infection_intensity > seeding_rate) {
+  # if (primary_inoculum_intensity > seeding_rate) {
   #   stop(
-  #     "primary_infection_intensity exceeds the number of starting growing points - 'seeding_rate': ",
+  #     "primary_inoculum_intensity exceeds the number of starting growing points - 'seeding_rate': ",
   #     seeding_rate
   #   )
   # }
@@ -226,7 +226,7 @@ trace_asco <- function(weather,
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
   if ("load" %in% colnames(primary_infection_foci) == FALSE) {
-    primary_infection_foci[, load := primary_infection_intensity]
+    primary_infection_foci[, load := primary_inoculum_intensity]
   } else{
     if (all(colnames(primary_infection_foci) %in% c("x", "y"))) {
       stop(call. = FALSE,
@@ -320,12 +320,12 @@ trace_asco <- function(weather,
     # When the time of initial infection occurs, infect the paddock coordinates
     if (initial_infection == time_increments[i]) {
 
-      # if primary_infection_intensity exceeds the number of growing points send
+      # if primary_inoculum_intensity exceeds the number of growing points send
       #  warning
-      if (primary_infection_intensity > daily_vals_list[[i]][["gp_standard"]]) {
+      if (primary_inoculum_intensity > daily_vals_list[[i]][["gp_standard"]]) {
         warning(
           call. = FALSE,
-          "`primary_infection_intensity` exceeds the number of growing points ",
+          "`primary_inoculum_intensity` exceeds the number of growing points ",
           "at time of infection `growing_points`: ",
           daily_vals_list[[i]][["gp_standard"]],
           "\nThis may cause an overestimation of disease spread"

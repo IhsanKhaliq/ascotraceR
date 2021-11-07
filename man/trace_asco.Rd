@@ -18,7 +18,7 @@ trace_asco(
   latent_period_cdd = 150,
   time_zone = "UTC",
   primary_infection_foci = "random",
-  primary_infection_intensity = 1,
+  primary_inoculum_intensity = 1,
   n_foci = 1,
   spores_per_gp_per_wet_hour = 0.22
 )
@@ -70,9 +70,9 @@ epidemic starts. Accepted inputs are: \code{centre} or \code{random} (Default) o
 data.frame with column names 'x', 'y' and 'load'. The \code{data.frame} inputs
 inform the model of specific grid cell/s coordinates where the epidemic
 should begin. The 'load' column is optional and can specify the
-\code{primary_infection_intensity} for each coordinate.}
+\code{primary_inoculum_intensity} for each coordinate.}
 
-\item{primary_infection_intensity}{The intensity of the starting epidemic is
+\item{primary_inoculum_intensity}{The intensity of the starting epidemic is
 described by the number of sporulating growing points (from seed infection
 and/or volunteers) and/or sporulating lesions from crop debris at
 \code{initial_infection}.}
@@ -150,7 +150,7 @@ traced <- trace_asco(
   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70), # run the model for 70 days
   time_zone = "Australia/Perth",
   gp_rr = 0.0065,
-  primary_infection_intensity = 1000,
+  primary_inoculum_intensity = 1000,
   spores_per_gp_per_wet_hour = 0.22,
   primary_infection_foci = "centre")
 

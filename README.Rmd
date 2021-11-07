@@ -104,7 +104,7 @@ traced <- trace_asco(
   spores_per_gp_per_wet_hour = 0.6,
   #min = 0.15 - max = 0.6 (step 0.05)
   latent_period_cdd = 150,
-  primary_infection_intensity = 100,
+  primary_inoculum_intensity = 100,
   primary_infection_foci = "centre"
 )
 ```
