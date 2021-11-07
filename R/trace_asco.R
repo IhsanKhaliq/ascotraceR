@@ -278,7 +278,7 @@ trace_asco <- function(weather,
       paddock = paddock, # data.table each row is a 1 x 1m coordinate
       i_date = sowing_date,  # day of the simulation (iterator)
       i_day = 1,
-      day = lubridate::yday(sowing_date),    # day of the year
+      day = yday(sowing_date),    # day of the year
       cdd = 0,    # cumulative degree days
       cwh = 0,    # cumulative wet hours
       cr = 0,     # cumulative rainfall
@@ -304,8 +304,7 @@ trace_asco <- function(weather,
     # update time values for iteration of loop
     daily_vals_list[[i]][["i_date"]] <- time_increments[i]
     daily_vals_list[[i]][["i_day"]] <- i
-    daily_vals_list[[i]][["day"]] <-
-      lubridate::yday(time_increments[i])
+    daily_vals_list[[i]][["day"]] <- yday(time_increments[i])
 
     # currently working on one_day
     daily_vals_list[[i + 1]] <- one_day(
@@ -363,7 +362,7 @@ trace_asco <- function(weather,
   daily_vals_list[[length(daily_vals_list)]][["i_day"]] <-
     length(daily_vals_list)
   daily_vals_list[[length(daily_vals_list)]][["day"]] <-
-    lubridate::yday(daily_vals_list[[length(daily_vals_list)]][["i_date"]])
+    yday(daily_vals_list[[length(daily_vals_list)]][["i_date"]])
 
   return(daily_vals_list)
 }
