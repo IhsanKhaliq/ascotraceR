@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "ascotraceR",
   "description": "A spatiotemporal model that simulates the spread of Ascochyta\n    blight in chickpea fields based on location-specific weather conditions.",
@@ -37,7 +40,15 @@
       "@id": "https://orcid.org/0000-0002-0061-8359"
     }
   ],
-  "contributor": {},
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Paul",
+      "familyName": "Melloy",
+      "email": "paul.melloy@usq.edu.au",
+      "@id": "https://orcid.org/0000-0003-4253-7167"
+    }
+  ],
   "copyrightHolder": [
     {
       "@type": "Organization",
@@ -68,6 +79,18 @@
     }
   ],
   "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggplot2",
+      "name": "ggplot2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "knitr",
@@ -179,19 +202,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "ggplot2",
-      "name": "ggplot2",
-      "version": ">= 3.3.3",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "lutz",
       "name": "lutz",
       "version": ">= 0.3.1",
@@ -260,6 +270,30 @@
   ],
   "applicationCategory": "Tools",
   "keywords": ["chickpea", "botanical-epidemiology", "plant-disease-model", "agricultural-modelling", "agricultural-modeling", "crop-protection", "agricultural-research", "model", "modelling", "modeling", "ascochyta-rabiei"],
-  "fileSize": "1881.768KB",
-  "developmentStatus": "https://www.repostatus.org/#active"
+  "fileSize": "2734.809KB",
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Ihsanul",
+          "familyName": "Khaliq"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Paul",
+          "familyName": "Melloy"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Adam H.",
+          "familyName": "Sparks"
+        }
+      ],
+      "name": "{ascotraceR}: A Spatiotemporal Model to Simulate the Spread of Ascochyta Blight in Chickpea",
+      "url": "https://github.com/IhsanKhaliq/ascotraceR"
+    }
+  ]
 }
