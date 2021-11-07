@@ -140,16 +140,31 @@ format_weather <- function(x,
   }
 
   # is this a pre-formatted data.frame that needs to be reformatted?
-  if(all(c("times", "temp","rain", "ws", "wd", "wd_sd", "wet_hours",
-           "station", "YYYY", "MM", "DD", "hh", "mm") %in% colnames(x))){
-
+  if (all(
+    c(
+      "times",
+      "temp",
+      "rain",
+      "ws",
+      "wd",
+      "wd_sd",
+      "wet_hours",
+      "station",
+      "YYYY",
+      "MM",
+      "DD",
+      "hh",
+      "mm"
+    ) %in% colnames(x)
+  )) {
     # set as data.table
-    setDT(x)
-
+    x <- data.table(x)
 
     if (is.null(time_zone)) {
-      stop("Please provide the timezone of the source weather stations. If this
-              was pre-formatted, use 'UTC'")
+      stop(
+        "Please provide the timezone of the source weather stations. If this
+              was pre-formatted, use 'UTC'"
+      )
     } else{
       x[, times := lubridate::ymd_hms(times, tz = time_zone)]
     }
@@ -273,15 +288,15 @@ format_weather <- function(x,
       which(as.character(ll_file[, station]) ==
               as.character(unique(x[, get(station)])))
 
-    x[, lat := rep(ll_file[r_num, lat], nrow(x))]
-    x[, lon := rep(ll_file[r_num, lon], nrow(x))]
+    x[, lat := rep(ll_file[r_num, lat], .N)]
+    x[, lon := rep(ll_file[r_num, lon], .N)]
   }
 
   # If lat and long are specified as NA
   if (!is.null(lat) & !is.null(lon)) {
     if (is.na(lat) & is.na(lon)) {
-      x[, lat := rep(NA, nrow(x))]
-      x[, lon := rep(NA, nrow(x))]
+      x[, lat := rep(NA, .N)]
+      x[, lon := rep(NA, .N)]
       lat <- "lat"
       lon <- "lon"
     }
@@ -297,56 +312,57 @@ format_weather <- function(x,
     )
   }
 
-  setnames(x,
-                       old = temp,
-                       new = "temp",
-                       skip_absent = TRUE)
 
   setnames(x,
-                       old = rain,
-                       new = "rain",
-                       skip_absent = TRUE)
+           old = temp,
+           new = "temp",
+           skip_absent = TRUE)
 
   setnames(x,
-                       old = ws,
-                       new = "ws",
-                       skip_absent = TRUE)
+           old = rain,
+           new = "rain",
+           skip_absent = TRUE)
 
   setnames(x,
-                       old = wd,
-                       new = "wd",
-                       skip_absent = TRUE)
+           old = ws,
+           new = "ws",
+           skip_absent = TRUE)
 
   setnames(x,
-                       old = wd_sd,
-                       new = "wd_sd",
-                       skip_absent = TRUE)
+           old = wd,
+           new = "wd",
+           skip_absent = TRUE)
 
   setnames(x,
-                       old = station,
-                       new = "station",
-                       skip_absent = TRUE)
+           old = wd_sd,
+           new = "wd_sd",
+           skip_absent = TRUE)
+
+  setnames(x,
+           old = station,
+           new = "station",
+           skip_absent = TRUE)
 
   if (!is.null(lat)) {
     setnames(x,
-                         old = lat,
-                         new = "lat",
-                         skip_absent = TRUE)
+             old = lat,
+             new = "lat",
+             skip_absent = TRUE)
   }
 
   if (!is.null(lon)) {
     setnames(x,
-                         old = lon,
-                         new = "lon",
-                         skip_absent = TRUE)
+             old = lon,
+             new = "lon",
+             skip_absent = TRUE)
   }
 
   if (!is.null(POSIXct_time)) {
     setnames(x,
-                         old = POSIXct_time,
-                         new = "times",
-                         skip_absent = TRUE)
-    x[,times := as.POSIXct(times)]
+             old = POSIXct_time,
+             new = "times",
+             skip_absent = TRUE)
+    x[, times := as.POSIXct(times)]
     x[, YYYY := lubridate::year(x[, times])]
     x[, MM := lubridate::month(x[, times])]
     x[, DD := lubridate::day(x[, times])]
@@ -358,7 +374,7 @@ format_weather <- function(x,
     if (lubridate::tz(x[, times]) == "" ||
         lubridate::tz(x[, times]) == "UTC") {
       x[, times := lubridate::force_tz(x[, times],
-                                      tzone = time_zone)]
+                                       tzone = time_zone)]
     }
   } else {
     # if POSIX formatted times were not supplied, create a POSIXct
