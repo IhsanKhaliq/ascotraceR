@@ -44,13 +44,6 @@ spores_each_wet_hour <- function(h,
   # get data.table of infected coordinates
   paddock_infective <- paddock[infectious_gp > 0, ]
 
-  if (nrow(paddock_infective) == 0) {
-    stop(
-      call. = FALSE,
-      "Can't detect any infection, please check that",
-      "`sum(paddock$infectious_gp > 0)` is >= 1")
-  }
-
   exposed_dt <-
     future.apply::future_apply(
       X = paddock_infective,
