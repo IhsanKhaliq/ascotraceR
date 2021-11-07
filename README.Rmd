@@ -40,6 +40,7 @@ Load the library.
 ```{r, load-libs}
 library("ascotraceR")
 library("data.table")
+library("lubridate")
 ```
 
 Import the weather data
@@ -55,10 +56,7 @@ Billa_Billa <- fread(
 )
 
 # format time column
-Billa_Billa[, local_time := lubridate::dmy_hm(local_time)]
-
-# calculate the number of wet_hours in a day
-Billa_Billa[, wet_hours := sum(rain > 0), by = .(YYYY, MM, DD)]
+Billa_Billa[, local_time := dmy_hm(local_time)]
 
 # specify the station coordinates of the Billa Billa weather station
 Billa_Billa[, c("lat", "lon") := .(-28.1011505, 150.3307084)]
