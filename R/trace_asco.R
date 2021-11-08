@@ -133,7 +133,7 @@ trace_asco <- function(weather,
       "Please use `format_weather()` to properly format the weather data.")
   }
 
-  if (primary_inoculum_intensity < 0) {
+  if (primary_inoculum_intensity <= 0) {
     stop(
       call. = FALSE,
       "primary_inoculum_intensity has to be greater than 0 for the model to simulate
