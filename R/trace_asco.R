@@ -31,11 +31,11 @@
 #'   inform the model of specific grid cell/s coordinates where the epidemic
 #'   should begin. The 'load' column is optional and can specify the
 #'   `primary_inoculum_intensity` for each coordinate.
-#' @param primary_inoculum_intensity Refers to the amount of primary inoculum.
-#'   The sources of primary inoculum can be infected seed, volunteer chickpea
-#'   plants or infested stubble from the previous seasons. Infested stubble
-#'   serves as the source of primary inoculum in the current model. Defaults to
-#'   `200`.
+#' @param primary_inoculum_intensity Refers to the amount of primary inoculum
+#'   (number of lesions on infested stubble in the model). The sources of
+#'   primary inoculum can be infected seed, volunteer chickpea plants or
+#'   infested stubble from the previous seasons. Infested stubble serves as the
+#'   source of primary inoculum in the current model. Defaults to `200`.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
