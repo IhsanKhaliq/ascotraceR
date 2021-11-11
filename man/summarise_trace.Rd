@@ -3,7 +3,7 @@
 \name{summarise_trace}
 \alias{summarise_trace}
 \alias{summarize_trace}
-\title{Summarise a trace_asco output nested list}
+\title{Summarise a trace_asco output nested list as a single data.frame object}
 \usage{
 summarise_trace(trace)
 
@@ -33,7 +33,8 @@ impeded by infection on \code{i_day} (n) \cr
 }
 \description{
 Creates a paddock-level summary \CRANpkg{data.table} from the output of
-\code{\link[=trace_asco]{trace_asco()}} on a daily time-step.
+\code{\link[=trace_asco]{trace_asco()}} on a daily time-step where each row represents one day for
+the entire paddock.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
