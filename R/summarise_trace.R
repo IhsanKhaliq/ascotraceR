@@ -1,7 +1,8 @@
-#' Summarise a trace_asco output nested list
+#' Summarise a trace_asco output nested list as a single data.frame object
 #'
 #' Creates a paddock-level summary \CRANpkg{data.table} from the output of
-#'  [trace_asco()] on a daily time-step.
+#'  [trace_asco()] on a daily time-step where each row represents one day for
+#'  the entire paddock.
 #'
 #' @param trace a nested list output from [trace_asco()]
 #'
