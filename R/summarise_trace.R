@@ -7,7 +7,21 @@
 #'
 #' @return A \CRANpkg{data.table} summarising the model's output for a paddock
 #'  on a daily time-step with the area under the disease progress curve
-#'  (\acronym{AUDPC}) at the paddock level for the simulation's run.
+#'  (\acronym{AUDPC}) at the paddock level for the simulation's run with the
+#'  following columns:
+#'   \tabular{rl}{
+#'   **i_day**: \tab Model iteration day (day) \cr
+#'   **new_gp**: \tab New growing points on `i_day` (n) \cr
+#'   **susceptible_gp**: \tab Susceptible growing points on `i_day` (n) \cr
+#'   **exposed_gp**: \tab Exposed growing points on `i_day` (n) \cr
+#'   **i_date**: \tab Calendar date corresponding to model's `i_day` \cr
+#'   **day**: \tab Julian day or numeric day of year (day) \cr
+#'   **cdd**: \tab Cumulative degree days (day) \cr
+#'   **cwh**: \tab Cumulative wet hours (h) \cr
+#'   **cr**: \tab Cumulative rainfall (mm) \cr
+#'   **gp_standard**: \tab standard growing points assuming growth is not
+#'           impeded by infection on `i_day` (n) \cr
+#'   **AUDPC**: \tab Area under the disease progress curve (AUDPC) \cr}
 #'
 #' @seealso [trace_asco()], [tidy_trace()]
 #'
