@@ -63,13 +63,13 @@ summarise_trace <- function(trace) {
 
   summarised_trace <- tidy_trace(trace)
 
-  new_gp <- summarised_trace[, .(new_gp = mean(new_gp)), by = i_day]
+  new_gp <- summarised_trace[, .(new_gp = sum(new_gp)), by = i_day]
   susceptible_gp <-
-    summarised_trace[, .(susceptible_gp = mean(susceptible_gp)), by = i_day]
+    summarised_trace[, .(susceptible_gp = sum(susceptible_gp)), by = i_day]
   exposed_gp <-
-    summarised_trace[, .(exposed_gp = mean(exposed_gp)), by = i_day]
+    summarised_trace[, .(exposed_gp = sum(exposed_gp)), by = i_day]
   infectious_gp <-
-    summarised_trace[, .(infectious_gp = mean(infectious_gp)), by = i_day]
+    summarised_trace[, .(infectious_gp = sum(infectious_gp)), by = i_day]
 
   x <- unique(summarised_trace[, c("i_day",
                                    "i_date",
