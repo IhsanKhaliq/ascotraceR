@@ -54,7 +54,7 @@
 #'   time_zone = "Australia/Perth",
 #'   primary_infection_foci = "centre")
 #'
-#' tidied <- summarise_trace(traced)
+#' summarised <- summarise_trace(traced)
 #' @export
 
 summarise_trace <- function(trace) {
