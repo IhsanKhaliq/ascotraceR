@@ -2,9 +2,12 @@
 % Please edit documentation in R/summarise_trace.R
 \name{summarise_trace}
 \alias{summarise_trace}
+\alias{summarize_trace}
 \title{Summarise a trace_asco output nested list}
 \usage{
 summarise_trace(trace)
+
+summarize_trace(trace)
 }
 \arguments{
 \item{trace}{a nested list output from \code{\link[=trace_asco]{trace_asco()}}}
@@ -12,7 +15,21 @@ summarise_trace(trace)
 \value{
 A \CRANpkg{data.table} summarising the model's output for a paddock
 on a daily time-step with the area under the disease progress curve
-(\acronym{AUDPC}) at the paddock level for the simulation's run.
+(\acronym{AUDPC}) at the paddock level for the simulation's run with the
+following columns:
+\tabular{rl}{
+\strong{i_day}: \tab Model iteration day (day) \cr
+\strong{new_gp}: \tab New growing points on \code{i_day} (n) \cr
+\strong{susceptible_gp}: \tab Susceptible growing points on \code{i_day} (n) \cr
+\strong{exposed_gp}: \tab Exposed growing points on \code{i_day} (n) \cr
+\strong{i_date}: \tab Calendar date corresponding to model's \code{i_day} \cr
+\strong{day}: \tab Julian day or numeric day of year (day) \cr
+\strong{cdd}: \tab Cumulative degree days (day) \cr
+\strong{cwh}: \tab Cumulative wet hours (h) \cr
+\strong{cr}: \tab Cumulative rainfall (mm) \cr
+\strong{gp_standard}: \tab standard growing points assuming growth is not
+impeded by infection on \code{i_day} (n) \cr
+\strong{AUDPC}: \tab Area under the disease progress curve (AUDPC) \cr}
 }
 \description{
 Creates a paddock-level summary \CRANpkg{data.table} from the output of
@@ -48,7 +65,39 @@ traced <- trace_asco(
   time_zone = "Australia/Perth",
   primary_infection_foci = "centre")
 
-tidied <- summarise_trace(traced)
+summarised <- summarise_trace(traced)
+\dontshow{\}) # examplesIf}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
+Newmarracarra <-
+   read.csv(system.file("extdata",
+            "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
+station_data <-
+   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+
+weather_dat <- format_weather(
+   x = Newmarracarra,
+   POSIXct_time = "Local.Time",
+   temp = "mean_daily_temp",
+   ws = "ws",
+   wd_sd = "wd_sd",
+   rain = "rain_mm",
+   wd = "wd",
+   station = "Location",
+   time_zone = "Australia/Perth",
+   lonlat_file = station_data)
+
+traced <- trace_asco(
+  weather = weather_dat,
+  paddock_length = 100,
+  paddock_width = 100,
+  initial_infection = "1998-06-10",
+  sowing_date = as.POSIXct("1998-06-09"),
+  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(100),
+  time_zone = "Australia/Perth",
+  primary_infection_foci = "centre")
+
+summarised <- summarise_trace(traced)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

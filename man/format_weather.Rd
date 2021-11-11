@@ -90,14 +90,20 @@ the data. \code{character}. Optional, see also \code{lon} and \code{lat}.}
 A \code{ascotraceR.weather} object (an extension of \CRANpkg{data.table})
 containing the supplied weather aggregated to each hour in a suitable
 format for use with \code{\link[=trace_asco]{trace_asco()}} containing the following columns:
-\tabular{rl}{ \strong{times}: \tab Time in POSIXct format \cr \strong{rain}: \tab
-Rainfall in mm \cr \strong{ws}: \tab Wind speed in km / h \cr \strong{wd}: \tab Wind
-direction in compass degrees \cr \strong{wd_sd}: \tab Wind direction standard
-deviation in compass degrees \cr \strong{lon}: \tab Station longitude in decimal
-degrees \cr \strong{lat}: \tab Station latitude in decimal degrees \cr
-\strong{station}: \tab Unique station identifying name \cr \strong{YYYY}: \tab Year
-\cr \strong{MM}: \tab Month \cr \strong{DD}: \tab Day \cr \strong{hh}: \tab Hour \cr
-\strong{mm}: \tab Minute \cr }
+\tabular{rl}{
+\strong{times}: \tab Time in POSIXct format \cr
+\strong{rain}: \tab Rainfall in mm \cr
+\strong{ws}: \tab Wind speed in km / h \cr
+\strong{wd}: \tab Wind direction in compass degrees \cr
+\strong{wd_sd}: \tab Wind direction standard deviation in compass degrees \cr
+\strong{lon}: \tab Station longitude in decimal degrees \cr
+\strong{lat}: \tab Station latitude in decimal degrees \cr
+\strong{station}: \tab Unique station identifying name \cr
+\strong{YYYY}: \tab Year \cr
+\strong{MM}: \tab Month \cr
+\strong{DD}: \tab Day \cr
+\strong{hh}: \tab Hour \cr
+\strong{mm}: \tab Minute \cr}
 }
 \description{
 Formats raw weather data into an object suitable for use in the

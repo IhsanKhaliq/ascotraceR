@@ -2,6 +2,7 @@
 
 export(format_weather)
 export(summarise_trace)
+export(summarize_trace)
 export(tidy_trace)
 export(trace_asco)
 import(data.table)
