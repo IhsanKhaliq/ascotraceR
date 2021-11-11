@@ -75,14 +75,20 @@
 #' @return A `ascotraceR.weather` object (an extension of \CRANpkg{data.table})
 #'   containing the supplied weather aggregated to each hour in a suitable
 #'   format for use with [trace_asco()] containing the following columns:
-#'   \tabular{rl}{ **times**: \tab Time in POSIXct format \cr **rain**: \tab
-#'   Rainfall in mm \cr **ws**: \tab Wind speed in km / h \cr **wd**: \tab Wind
-#'   direction in compass degrees \cr **wd_sd**: \tab Wind direction standard
-#'   deviation in compass degrees \cr **lon**: \tab Station longitude in decimal
-#'   degrees \cr **lat**: \tab Station latitude in decimal degrees \cr
-#'   **station**: \tab Unique station identifying name \cr **YYYY**: \tab Year
-#'   \cr **MM**: \tab Month \cr **DD**: \tab Day \cr **hh**: \tab Hour \cr
-#'   **mm**: \tab Minute \cr }
+#'   \tabular{rl}{
+#'   **times**: \tab Time in POSIXct format \cr
+#'   **rain**: \tab Rainfall in mm \cr
+#'   **ws**: \tab Wind speed in km / h \cr
+#'   **wd**: \tab Wind direction in compass degrees \cr
+#'   **wd_sd**: \tab Wind direction standard deviation in compass degrees \cr
+#'   **lon**: \tab Station longitude in decimal degrees \cr
+#'   **lat**: \tab Station latitude in decimal degrees \cr
+#'   **station**: \tab Unique station identifying name \cr
+#'   **YYYY**: \tab Year \cr
+#'   **MM**: \tab Month \cr
+#'   **DD**: \tab Day \cr
+#'   **hh**: \tab Hour \cr
+#'   **mm**: \tab Minute \cr}
 #'
 #' @examples
 #' # Weather data files for Newmarracara for testing and examples have been
