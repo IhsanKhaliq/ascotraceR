@@ -1,13 +1,28 @@
-#' Summarise a trace_asco output nested list
+#' Summarise a trace_asco output nested list as a single data.frame object
 #'
 #' Creates a paddock-level summary \CRANpkg{data.table} from the output of
-#'  [trace_asco()] on a daily time-step.
+#'  [trace_asco()] on a daily time-step where each row represents one day for
+#'  the entire paddock.
 #'
 #' @param trace a nested list output from [trace_asco()]
 #'
 #' @return A \CRANpkg{data.table} summarising the model's output for a paddock
 #'  on a daily time-step with the area under the disease progress curve
-#'  (\acronym{AUDPC}) at the paddock level for the simulation's run.
+#'  (\acronym{AUDPC}) at the paddock level for the simulation's run with the
+#'  following columns:
+#'   \tabular{rl}{
+#'   **i_day**: \tab Model iteration day (day) \cr
+#'   **new_gp**: \tab New growing points on `i_day` (n) \cr
+#'   **susceptible_gp**: \tab Susceptible growing points on `i_day` (n) \cr
+#'   **exposed_gp**: \tab Exposed growing points on `i_day` (n) \cr
+#'   **i_date**: \tab Calendar date corresponding to model's `i_day` \cr
+#'   **day**: \tab Julian day or numeric day of year (day) \cr
+#'   **cdd**: \tab Cumulative degree days (day) \cr
+#'   **cwh**: \tab Cumulative wet hours (h) \cr
+#'   **cr**: \tab Cumulative rainfall (mm) \cr
+#'   **gp_standard**: \tab standard growing points assuming growth is not
+#'           impeded by infection on `i_day` (n) \cr
+#'   **AUDPC**: \tab Area under the disease progress curve (AUDPC) \cr}
 #'
 #' @seealso [trace_asco()], [tidy_trace()]
 #'
@@ -40,7 +55,7 @@
 #'   time_zone = "Australia/Perth",
 #'   primary_infection_foci = "centre")
 #'
-#' tidied <- summarise_trace(traced)
+#' summarised <- summarise_trace(traced)
 #' @export
 
 summarise_trace <- function(trace) {
@@ -49,13 +64,13 @@ summarise_trace <- function(trace) {
 
   summarised_trace <- tidy_trace(trace)
 
-  new_gp <- summarised_trace[, .(new_gp = mean(new_gp)), by = i_day]
+  new_gp <- summarised_trace[, .(new_gp = sum(new_gp)), by = i_day]
   susceptible_gp <-
-    summarised_trace[, .(susceptible_gp = mean(susceptible_gp)), by = i_day]
+    summarised_trace[, .(susceptible_gp = sum(susceptible_gp)), by = i_day]
   exposed_gp <-
-    summarised_trace[, .(exposed_gp = mean(exposed_gp)), by = i_day]
+    summarised_trace[, .(exposed_gp = sum(exposed_gp)), by = i_day]
   infectious_gp <-
-    summarised_trace[, .(infectious_gp = mean(infectious_gp)), by = i_day]
+    summarised_trace[, .(infectious_gp = sum(infectious_gp)), by = i_day]
 
   x <- unique(summarised_trace[, c("i_day",
                                    "i_date",
@@ -131,3 +146,38 @@ summarise_trace <- function(trace) {
 
   return(sum(infprod))
 }
+
+#' @rdname summarise_trace
+#' @examplesIf interactive()
+#'
+#' Newmarracarra <-
+#'    read.csv(system.file("extdata",
+#'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
+#' station_data <-
+#'    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
+#'
+#' weather_dat <- format_weather(
+#'    x = Newmarracarra,
+#'    POSIXct_time = "Local.Time",
+#'    temp = "mean_daily_temp",
+#'    ws = "ws",
+#'    wd_sd = "wd_sd",
+#'    rain = "rain_mm",
+#'    wd = "wd",
+#'    station = "Location",
+#'    time_zone = "Australia/Perth",
+#'    lonlat_file = station_data)
+#'
+#' traced <- trace_asco(
+#'   weather = weather_dat,
+#'   paddock_length = 100,
+#'   paddock_width = 100,
+#'   initial_infection = "1998-06-10",
+#'   sowing_date = as.POSIXct("1998-06-09"),
+#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(100),
+#'   time_zone = "Australia/Perth",
+#'   primary_infection_foci = "centre")
+#'
+#' summarised <- summarise_trace(traced)
+#' @export
+summarize_trace <- summarise_trace
