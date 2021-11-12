@@ -547,6 +547,24 @@ format_weather <- function(x,
     x_out[, lon := NULL]
   }
 
+  .check_weather(x_out)
+
   setattr(x_out, "class", union("asco.weather", class(x_out)))
   return(x_out[])
+}
+
+.check_weather <- function(final_w){
+
+  # Check temperatures
+  # For NAs
+  if(nrow(final_w[is.na(temp),]) != 0) stop(call. = FALSE,
+                                            "NA values in temperture; \n",
+                                            final_w[is.na(temp),list(times, temp)],
+                                            "please correct these inputs and run again")
+  # for outside range
+  if(nrow(final_w[temp < -30 |
+                  temp > 60,]) != 0) stop(call. = FALSE,
+                                            "Temperature inputs are outside expected ranges (-30 and +60 degrees C); \n",
+                                            final_w[temp < -30 | temp > 60,list(times, temp)],
+                                            "please correct these inputs and run again")
 }
