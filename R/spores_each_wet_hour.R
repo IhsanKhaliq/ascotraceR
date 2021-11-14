@@ -23,7 +23,7 @@
 #'   dependent on the susceptibility of the host genotype.
 #' @param splash_cauchy_parameter A parameter used in the cauchy distribution and
 #'   describes the median distance spores travel due to rain splashes. default:
-#'   `0.5
+#'   `0.5`
 #' @keywords internal
 #' @noRd
 
