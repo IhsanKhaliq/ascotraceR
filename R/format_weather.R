@@ -561,6 +561,8 @@ format_weather <- function(x,
 }
 
 .check_weather <- function(final_w){
+  # note on cran ovoidance (nocov) from data.table
+  temp <- times <- rain <- ws <- ws <- NULL
 
   # Check temperatures
   # For NAs
