@@ -20,7 +20,8 @@ trace_asco(
   primary_infection_foci = "random",
   primary_inoculum_intensity = 1,
   n_foci = 1,
-  spores_per_gp_per_wet_hour = 0.22
+  spores_per_gp_per_wet_hour = 0.22,
+  splash_cauchy_parameter = 0.5
 )
 }
 \arguments{
@@ -84,6 +85,10 @@ notes the number of \code{primary_infection_foci} at initial infection.}
 \item{spores_per_gp_per_wet_hour}{Number of spores produced per sporulating
 growing point each wet hour. Also known as the \code{spore_rate}. Value is
 dependent on the susceptibility of the host genotype.}
+
+\item{splash_cauchy_parameter}{A parameter used in the cauchy distribution and
+describes the median distance spores travel due to rain splashes. default:
+\code{0.5}}
 }
 \value{
 A nested \code{list} object where each sub-list contains daily data for
