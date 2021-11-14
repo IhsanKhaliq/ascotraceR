@@ -561,13 +561,13 @@ format_weather <- function(x,
 }
 
 .check_weather <- function(final_w){
-  # note on cran ovoidance (nocov) from data.table
-  temp <- times <- rain <- ws <- ws <- NULL
+  # note on cran avoidance (nocov) from data.table
+  temp <- times <- rain <- ws <- wd <- NULL
 
   # Check temperatures
   # For NAs
   if(nrow(final_w[is.na(temp),]) != 0) stop(call. = FALSE,
-                                            "NA values in temperture; \n",
+                                            "NA values in temperature; \n",
                                             paste(as.character(final_w[is.na(temp),times])),
                                             "\nplease correct these inputs and run again")
   # for outside range
