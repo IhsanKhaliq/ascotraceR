@@ -50,7 +50,8 @@ one_day <- function(i_date,
                     max_gp,
                     spore_interception_parameter,
                     spores_per_gp_per_wet_hour,
-                    splash_cauchy_parameter = 0.5) {
+                    splash_cauchy_parameter = 0.5,
+                    wind_cauchy_multiplier = 0.015) {
   times <- temp <- rain <- new_gp <- infectious_gp <-
     cdd_at_infection <- susceptible_gp <- NULL
 
@@ -103,7 +104,8 @@ one_day <- function(i_date,
             max_interception_probability = max_interception_probability,
             spore_interception_parameter = spore_interception_parameter,
             spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
-            splash_cauchy_parameter = splash_cauchy_parameter
+            splash_cauchy_parameter = splash_cauchy_parameter,
+            wind_cauchy_multiplier = wind_cauchy_multiplier,
           )
         )
       exposed_dt[, cdd_at_infection := daily_vals[["cdd"]]]

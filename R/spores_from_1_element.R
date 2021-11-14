@@ -36,6 +36,7 @@ spores_from_1_element <-
            stdev_wind_direction_in_hour,
            spore_aggregation_limit = 1000,
            splash_cauchy_parameter = 0.5,
+           wind_cauchy_multiplier = 0.015,
            paddock) {
     x <- y <- NULL
 
@@ -64,7 +65,7 @@ spores_from_1_element <-
     # this for loop needs improvement so it is not growing a data.table
     target_coordinates <-
       lapply(seq_len(spore_packets), function(x) {
-        wind_d <- wind_distance(average_wind_speed_in_hour)
+        wind_d <- wind_distance(average_wind_speed_in_hour, wind_cauchy_multiplier)
         wind_a <-
           wind_angle(wind_direction_in_hour, stdev_wind_direction_in_hour)
         splash_d <- splash_distance(splash_cauchy_parameter)

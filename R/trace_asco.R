@@ -125,7 +125,8 @@ trace_asco <- function(weather,
                        primary_inoculum_intensity = 1,
                        n_foci = 1,
                        spores_per_gp_per_wet_hour = 0.22,
-                       splash_cauchy_parameter = 0.5){
+                       splash_cauchy_parameter = 0.5,
+                       wind_cauchy_multiplier = 0.015){
 
 
   x <- y <- load <- susceptible_gp <- NULL
@@ -314,7 +315,8 @@ trace_asco <- function(weather,
       max_gp = max_gp,
       spore_interception_parameter = spore_interception_parameter,
       spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
-      splash_cauchy_parameter = splash_cauchy_parameter
+      splash_cauchy_parameter = splash_cauchy_parameter,
+      wind_cauchy_multiplier = wind_cauchy_multiplier,
     )
 
     # When the time of initial infection occurs, infect the paddock coordinates

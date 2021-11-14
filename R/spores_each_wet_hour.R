@@ -34,7 +34,8 @@ spores_each_wet_hour <- function(h,
                                  spore_interception_parameter,
                                  max_interception_probability,
                                  spores_per_gp_per_wet_hour,
-                                 splash_cauchy_parameter = 0.5) {
+                                 splash_cauchy_parameter = 0.5,
+                                 wind_cauchy_multiplier = 0.015) {
   rain <- ws <- wd <- wd_sd <- infectious_gp <- spores_per_packet <- x <- y <-
     NULL
 
@@ -60,6 +61,7 @@ spores_each_wet_hour <- function(h,
       average_wind_speed_in_hour = average_wind_speed_in_hour,
       stdev_wind_direction_in_hour = stdev_wind_direction_in_hour,
       splash_cauchy_parameter = splash_cauchy_parameter,
+      wind_cauchy_multiplier = wind_cauchy_multiplier,
       paddock = paddock
     )
 
