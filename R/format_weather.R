@@ -565,12 +565,12 @@ format_weather <- function(x,
   # For NAs
   if(nrow(final_w[is.na(temp),]) != 0) stop(call. = FALSE,
                                             "NA values in temperture; \n",
-                                            as.character(final_w[is.na(temp),times]),
-                                            "please correct these inputs and run again")
+                                            paste(as.character(final_w[is.na(temp),times])),
+                                            "\nplease correct these inputs and run again")
   # for outside range
   if(nrow(final_w[temp < -30 |
                   temp > 60,]) != 0) stop(call. = FALSE,
                                             "Temperature inputs are outside expected ranges (-30 and +60 degrees C); \n",
-                                            as.character(final_w[temp < -30 | temp > 60,times]),
-                                            "please correct these inputs and run again")
+                                            paste(as.character(final_w[temp < -30 | temp > 60,times])),
+                                            "\nplease correct these inputs and run again")
 }
