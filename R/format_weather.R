@@ -108,6 +108,7 @@
 #' weather <- format_weather(
 #'   x = Newmarracarra,
 #'   POSIXct_time = "Local.Time",
+#'   temp = "mean_daily_temp",
 #'   ws = "ws",
 #'   wd_sd = "wd_sd",
 #'   rain = "rain_mm",
