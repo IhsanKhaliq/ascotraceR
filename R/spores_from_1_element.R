@@ -19,7 +19,7 @@
 #'   n spores are produced as individuals. When greater they are produced in
 #'   sporeAggregationLimit groups of sporeAggregationLimit spores  default:
 #'   `1000`
-#' @param rain_cauchy_parameter A parameter used in the cauchy distribution and
+#' @param splash_cauchy_parameter A parameter used in the cauchy distribution and
 #'   describes the median distance spores travel due to rain splashes. default:
 #'   `0.5`
 #' @param paddock A data.table of x and y coordinates; provides the dimensions of
@@ -35,7 +35,7 @@ spores_from_1_element <-
            average_wind_speed_in_hour,
            stdev_wind_direction_in_hour,
            spore_aggregation_limit = 1000,
-           rain_cauchy_parameter = 0.5,
+           splash_cauchy_parameter = 0.5,
            paddock) {
     x <- y <- NULL
 
@@ -67,10 +67,9 @@ spores_from_1_element <-
         wind_d <- wind_distance(average_wind_speed_in_hour)
         wind_a <-
           wind_angle(wind_direction_in_hour, stdev_wind_direction_in_hour)
-        splash_d <- splash_distance(rain_cauchy_parameter)
+        splash_d <- splash_distance(splash_cauchy_parameter)
         splash_a <- splash_angle()
 
-        # Check this is correct use of cos and sin from blackspot package
         width_distance <-
           wind_d * cos(wind_a * degree) +
           splash_d * cos(splash_a * degree)
@@ -83,8 +82,6 @@ spores_from_1_element <-
           address_from_centre_distance(c(width_distance, length_distance),
                                        paddock_source[c("x", "y")])
         return(target_address)
-
-        #data.table::rbindlist(new_infections, c(target_address, spores_per_packet)) # needs double checking
       })
 
 

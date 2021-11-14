@@ -41,7 +41,7 @@ test1 <- apply(
   average_wind_speed_in_hour = w_dat[1, ws],
   stdev_wind_direction_in_hour = w_dat[1, wd_sd],
   spore_aggregation_limit = 1000,
-  rain_cauchy_parameter = 0.5,
+  splash_cauchy_parameter = 0.5,
   paddock = paddock
 )
 
@@ -63,7 +63,7 @@ test2 <- apply(
   average_wind_speed_in_hour = w_dat[1, ws],
   stdev_wind_direction_in_hour = w_dat[1, wd_sd],
   spore_aggregation_limit = 1000,
-  rain_cauchy_parameter = 0.5,
+  splash_cauchy_parameter = 0.5,
   paddock = paddock
 )
 
@@ -92,7 +92,7 @@ test3 <- apply(
   average_wind_speed_in_hour = w_dat[1, ws],
   stdev_wind_direction_in_hour = w_dat[1, wd_sd],
   spore_aggregation_limit = 1000,
-  rain_cauchy_parameter = 0.5,
+  splash_cauchy_parameter = 0.5,
   paddock = paddock
 )
 
@@ -131,7 +131,7 @@ test4 <- apply(
   average_wind_speed_in_hour = w_dat[1, ws],
   stdev_wind_direction_in_hour = w_dat[1, wd_sd],
   spore_aggregation_limit = 1000,
-  rain_cauchy_parameter = 0.5,
+  splash_cauchy_parameter = 0.5,
   paddock = paddock
 )
 
