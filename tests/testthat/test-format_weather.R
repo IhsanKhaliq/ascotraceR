@@ -179,6 +179,8 @@ test_that("`format_weather()` works when lat lon are in data", {
     )),
     Wind.direction.in.degrees.true =
       runif(n = dat_minutes, min = 0, max = 359),
+    Temperature.in.degrees.celcius =
+      rep(c(11:22,23:12) + rnorm(24,sd = 2), 420),
     Station.Number = "16096",
     lon = 135.7243,
     lat = -33.26625
@@ -192,6 +194,7 @@ test_that("`format_weather()` works when lat lon are in data", {
     hh = "Local.Time.HH24",
     mm = "Local.Time.MI",
     rain = "Precipitation.since.last.observation.in.mm",
+    temp = "Temperature.in.degrees.celcius",
     ws = "Wind.speed.in.km.h",
     wd = "Wind.direction.in.degrees.true",
     station = "Station.Number",
@@ -267,6 +270,8 @@ test_that("`format_weather()` stops if time cols are not provided", {
     )),
     Wind.direction.in.degrees.true =
       runif(n = dat_minutes, min = 0, max = 359),
+    Temperature.in.degrees.celcius =
+      rep(c(11:22,23:12) + rnorm(24,sd = 2), 420),
     Station.Number = "16096",
     lon = 135.7243,
     lat = -33.26625
@@ -280,6 +285,7 @@ test_that("`format_weather()` stops if time cols are not provided", {
     hh = "Local.Time.HH24",
     mm = "Local.Time.MI",
     rain = "Precipitation.since.last.observation.in.mm",
+    temp = "Temperature.in.degrees.celcius",
     ws = "Wind.speed.in.km.h",
     wd = "Wind.direction.in.degrees.true",
     station = "Station.Number",
@@ -425,6 +431,8 @@ test_that("`format_weather() creates a `mm` column if not provided", {
     )),
     Wind.direction.in.degrees.true =
       runif(n = dat_minutes, min = 0, max = 359),
+    Temperature.in.degrees.celcius =
+      rep(c(11:22,23:12) + rnorm(24,sd = 2), 420),
     Station.Number = "16096",
     lon = 135.7243,
     lat = -33.26625
@@ -438,6 +446,7 @@ test_that("`format_weather() creates a `mm` column if not provided", {
       DD = "Local.Time.DD",
       hh = "Local.Time.HH24",
       rain = "Precipitation.since.last.observation.in.mm",
+      temp = "Temperature.in.degrees.celcius",
       ws = "Wind.speed.in.km.h",
       wd = "Wind.direction.in.degrees.true",
       station = "Station.Number",
@@ -477,6 +486,8 @@ test_that("`format_weather() creates a YYYY MM DD... cols", {
     )),
     Wind.direction.in.degrees.true =
       runif(n = dat_minutes, min = 0, max = 359),
+    Temperature.in.degrees.celcius =
+      rep(c(11:22,23:12) + rnorm(24,sd = 2), 420),
     Station.Number = "16096",
     Ptime = seq(ISOdate(2000, 1, 1), by = "1 min", length.out = dat_minutes),
     lon = 135.7243,
@@ -503,6 +514,7 @@ test_that("`format_weather() creates a YYYY MM DD... cols", {
       DD = "Local.Time.DD",
       hh = "Local.Time.HH24",
       rain = "Precipitation.since.last.observation.in.mm",
+      temp = "Temperature.in.degrees.celcius",
       ws = "Wind.speed.in.km.h",
       wd = "Wind.direction.in.degrees.true",
       station = "Station.Number",
