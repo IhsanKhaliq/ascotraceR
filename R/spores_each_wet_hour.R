@@ -59,7 +59,7 @@ spores_each_wet_hour <- function(h,
       wind_direction_in_hour = wind_direction_in_hour,
       average_wind_speed_in_hour = average_wind_speed_in_hour,
       stdev_wind_direction_in_hour = stdev_wind_direction_in_hour,
-      splash_cauchy_parameter = splash_cauchy_parameter
+      splash_cauchy_parameter = splash_cauchy_parameter,
       paddock = paddock
     )
 
