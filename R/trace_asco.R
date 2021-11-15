@@ -183,7 +183,7 @@ trace_asco <- function(weather,
   # check epidemic start is after sowing date
   if (initial_infection <= sowing_date) {
     stop(call. = FALSE,
-      "The `initial_infection` occurs on or before `sowing_date`.",
+      "The `initial_infection` occurs on or before `sowing_date`. ",
       "Please use an `initial_infection` date which occurs after `crop_sowing`."
     )
   }
@@ -220,7 +220,7 @@ trace_asco <- function(weather,
             is.numeric(primary_infection_foci) == FALSE) {
           stop(
             call. = FALSE,
-            "`primary_infection_foci` should be supplied as a numeric vector",
+            "`primary_infection_foci` should be supplied as a numeric vector ",
             "of length two"
           )
         }
@@ -237,7 +237,8 @@ trace_asco <- function(weather,
       setDT(primary_infection_foci)
       if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
         stop(call. = FALSE,
-             "primary_infection_foci data.frame needs colnames 'x' and 'y'")
+             "The `primary_infection_foci` data.frame shoulc contain colnames ",
+             "'x' and 'y'")
       }
     }
   }
@@ -251,7 +252,7 @@ trace_asco <- function(weather,
   } else{
     if (all(colnames(primary_infection_foci) %in% c("x", "y"))) {
       stop(call. = FALSE,
-           "colnames for 'primary_infection_foci' not 'x', 'y' & 'load'.")
+           "Colnames for `primary_infection_foci` are not 'x', 'y' & 'load'.")
     }
   }
 
@@ -359,28 +360,30 @@ trace_asco <- function(weather,
         )
       }
 
+      # update the remaining increments with the primary infected coordinates
+      daily_vals_list[i:length(daily_vals_list)] <-
+        lapply(daily_vals_list[i:length(daily_vals_list)], function(dl) {
+          # Infecting paddock
+          pad1 <- copy(dl[["paddock"]])
 
-    # update the remaining increments with the primary infected coordinates
-    daily_vals_list[i:length(daily_vals_list)] <-
-      lapply(daily_vals_list[i:length(daily_vals_list)], function(dl){
+          pad1[infected_rows,
+               c("susceptible_gp",
+                 "infectious_gp") :=
+                 list(
+                   fifelse(
+                     test = primary_infection_foci[, load] > susceptible_gp,
+                     yes = susceptible_gp,
+                     no = susceptible_gp - primary_infection_foci[, load]
+                   ),
+                   primary_infection_foci[, load]
+                 )]
+          dl[["paddock"]] <- pad1
 
-        # Infecting paddock
-        pad1 <- copy(dl[["paddock"]])
-
-        pad1[infected_rows,
-             c("susceptible_gp",
-               "infectious_gp") :=
-               list(fifelse(test = primary_infection_foci[, load] > susceptible_gp,
-                            yes = susceptible_gp,
-                            no = susceptible_gp - primary_infection_foci[, load]),
-                 primary_infection_foci[, load])]
-        dl[["paddock"]] <- pad1
-
-        # Edit infected_coordinates data.table
-        dl[["infected_coords"]] <- primary_infection_foci[,c("x","y")]
-      return(dl)
-    })
-
+          # Edit infected_coordinates data.table
+          dl[["infected_coords"]] <-
+            primary_infection_foci[, c("x", "y")]
+          return(dl)
+        })
     }
   }
 
