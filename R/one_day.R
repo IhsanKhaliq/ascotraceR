@@ -105,7 +105,7 @@ one_day <- function(i_date,
             spore_interception_parameter = spore_interception_parameter,
             spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
             splash_cauchy_parameter = splash_cauchy_parameter,
-            wind_cauchy_multiplier = wind_cauchy_multiplier,
+            wind_cauchy_multiplier = wind_cauchy_multiplier
           )
         )
       exposed_dt[, cdd_at_infection := daily_vals[["cdd"]]]
