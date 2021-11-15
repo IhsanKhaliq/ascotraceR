@@ -140,7 +140,8 @@ trace_asco <- function(weather,
                        wind_cauchy_multiplier = 0.015,
                        daily_rain_threshold = 2,
                        hourly_rain_threshold = 0.1,
-                       susceptible_days = 5){
+                       susceptible_days = 5,
+                       rainfall_multiplier = FALSE){
 
 
   x <- y <- load <- susceptible_gp <- NULL
@@ -331,9 +332,10 @@ trace_asco <- function(weather,
       spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
       splash_cauchy_parameter = splash_cauchy_parameter,
       wind_cauchy_multiplier = wind_cauchy_multiplier,
-      daily_rain_threshold = 2,
-      hourly_rain_threshold = 0.1,
-      susceptible_days = 5
+      daily_rain_threshold = daily_rain_threshold,
+      hourly_rain_threshold = hourly_rain_threshold,
+      susceptible_days = susceptible_days,
+      rainfall_multiplier = rainfall_multiplier
     )
 
     # When the time of initial infection occurs, infect the paddock coordinates
