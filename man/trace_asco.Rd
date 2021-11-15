@@ -24,7 +24,8 @@ trace_asco(
   splash_cauchy_parameter = 0.5,
   wind_cauchy_multiplier = 0.015,
   daily_rain_threshold = 2,
-  hourly_rain_threshold = 0.1
+  hourly_rain_threshold = 0.1,
+  susceptible_days = 5
 )
 }
 \arguments{
@@ -99,11 +100,14 @@ default: \code{0.015}}
 
 \item{daily_rain_threshold}{Minimum cumulative rainfall required in a day to
 allow hourly spore spread events. See also \code{hourly_rain_threshold}
-Default: 2}
+Default: \code{2}}
 
 \item{hourly_rain_threshold}{Minimum rainfall in an hour to trigger a spore
 spread event in the same hour (Assuming daily_rain_threshold is already met).
-Default: 0.1}
+Default: \code{0.1}}
+
+\item{susceptible_days}{number of days a new growing point remains susceptible
+to infection from ascochyta spores. Default: \code{5}}
 }
 \value{
 A nested \code{list} object where each sub-list contains daily data for
