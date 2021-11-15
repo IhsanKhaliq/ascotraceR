@@ -62,7 +62,8 @@ one_day <- function(i_date,
                     splash_cauchy_parameter = 0.5,
                     wind_cauchy_multiplier = 0.015,
                     daily_rain_threshold = 2,
-                    hourly_rain_threshold = 0.1) {
+                    hourly_rain_threshold = 0.1,
+                    susceptible_days = 5) {
   times <- temp <- rain <- new_gp <- infectious_gp <-
     cdd_at_infection <- susceptible_gp <- NULL
 
@@ -87,7 +88,7 @@ one_day <- function(i_date,
   # max new growing points are multiplied by five as growing points remain
   # susceptible for five days.
   max_interception_probability <-
-    interception_probability(target_density = 5 *
+    interception_probability(target_density = susceptible_days *
                                max(daily_vals[["paddock"]][, new_gp]),
                              k = spore_interception_parameter)
 
