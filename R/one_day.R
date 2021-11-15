@@ -73,7 +73,8 @@ one_day <- function(i_date,
                     susceptible_days = 5,
                     rainfall_multiplier = FALSE) {
   times <- temp <- rain <- new_gp <- infectious_gp <-
-    cdd_at_infection <- susceptible_gp <- NULL
+    cdd_at_infection <- susceptible_gp <- exposed_gp <-
+    spores_per_packet <- NULL
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
