@@ -26,11 +26,12 @@
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
 #' @param primary_infection_foci refers to the inoculated coordinates where the
-#'   epidemic starts. Accepted inputs are: `centre` or `random` (Default) or a
-#'   data.frame with column names 'x', 'y' and 'load'. The `data.frame` inputs
-#'   inform the model of specific grid cell/s coordinates where the epidemic
-#'   should begin. The 'load' column is optional and can specify the
-#'   `primary_inoculum_intensity` for each coordinate.
+#'   epidemic starts. Accepted inputs are: `centre`/`center` or `random`
+#'   (Default) or a `data.frame` with column names \sQuote{x}, \sQuote{y} and
+#'   \sQuote{load}. The `data.frame` inputs inform the model of specific grid
+#'   cell/s coordinates where the epidemic should begin. The \sQuote{load}
+#'   column is optional and can specify the `primary_inoculum_intensity`
+#'   for each coordinate.
 #' @param primary_inoculum_intensity Refers to the amount of primary inoculum
 #'   (number of lesions on infested stubble in the model). The sources of
 #'   primary inoculum can be infected seed, volunteer chickpea plants or
