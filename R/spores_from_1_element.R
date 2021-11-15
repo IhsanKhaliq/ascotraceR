@@ -22,6 +22,9 @@
 #' @param splash_cauchy_parameter A parameter used in the cauchy distribution and
 #'   describes the median distance spores travel due to rain splashes. default:
 #'   `0.5`
+#' @param wind_cauchy_multiplier A scaling parameter to estimate a cauchy distribution
+#'  which resembles the possible distances a conidium travels due to wind dispersal.
+#'  default: `0.015`
 #' @param paddock A data.table of x and y coordinates; provides the dimensions of
 #'   the paddock so function only returns `target_coordinates` in the paddock
 #'   area.

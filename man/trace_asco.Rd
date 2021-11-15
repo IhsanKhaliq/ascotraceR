@@ -21,7 +21,8 @@ trace_asco(
   primary_inoculum_intensity = 1,
   n_foci = 1,
   spores_per_gp_per_wet_hour = 0.22,
-  splash_cauchy_parameter = 0.5
+  splash_cauchy_parameter = 0.5,
+  wind_cauchy_multiplier = 0.015
 )
 }
 \arguments{
@@ -89,6 +90,10 @@ dependent on the susceptibility of the host genotype.}
 \item{splash_cauchy_parameter}{A parameter used in the cauchy distribution and
 describes the median distance spores travel due to rain splashes. default:
 \code{0.5}}
+
+\item{wind_cauchy_multiplier}{A scaling parameter to estimate a cauchy distribution
+which resembles the possible distances a conidium travels due to wind dispersal.
+default: \code{0.015}}
 }
 \value{
 A nested \code{list} object where each sub-list contains daily data for

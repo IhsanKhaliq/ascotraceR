@@ -6,7 +6,9 @@
 #' another subunit within or outside the paddock.
 #'
 #' @param average_wind_speed_in_fifteen_minutes A *numeric* value in m/s
-#' @param wind_cauchy_multiplier A Cauchy scaling parameter
+#' @param wind_cauchy_multiplier A scaling parameter to estimate a cauchy distribution
+#'  which resembles the possible distances a conidium travels due to wind dispersal.
+#'  default: `0.015`
 #' @param PSPH A numeric vector estimated from '.estimate_spore_discharge()'
 #' @return Numerical vector, which returns distance conidia dispersed by wind
 #'   driven rain from the source of infection
