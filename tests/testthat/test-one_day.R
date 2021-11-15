@@ -11,9 +11,7 @@ paddock[, c("new_gp",
             # Change in the number of growing points since last iteration
             "susceptible_gp",
             "exposed_gp",
-            "infectious_gp",
-            # replacing InfectiveElementList
-            "cdd_at_infection") :=
+            "infectious_gp") :=
           list(
             seeding_rate,
             fifelse(
@@ -25,8 +23,7 @@ paddock[, c("new_gp",
             0,
             fifelse(x == primary_infection_foci[, x] &
                       y == primary_infection_foci[, y], 1,
-                    0),
-            0
+                    0)
           )]
 
 max_gp_lim <- 15000
@@ -117,14 +114,12 @@ test_that("one_day single infection foci returns expected output", {
   expect_s3_class(test1[["paddock"]], "data.table")
   expect_equal(
     colnames(test1[["paddock"]]),
-    c(
-      "x",
+    c("x",
       "y",
       "new_gp",
       "susceptible_gp",
-      "infectious_gp",
-      "cdd_at_infection",
-      "exposed_gp"
+      "exposed_gp",
+      "infectious_gp"
     )
   )
   expect_equal(test1[["paddock"]][, unique(new_gp)],
@@ -189,14 +184,12 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
             expect_s3_class(test2[["paddock"]], "data.table")
             expect_equal(
               colnames(test2[["paddock"]]),
-              c(
-                "x",
+              c("x",
                 "y",
                 "new_gp",
                 "susceptible_gp",
-                "infectious_gp",
-                "cdd_at_infection",
-                "exposed_gp"
+                "exposed_gp",
+                "infectious_gp"
               )
             )
             expect_equal(test2[["paddock"]][, unique(new_gp)],

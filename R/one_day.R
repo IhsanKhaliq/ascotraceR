@@ -152,6 +152,14 @@ one_day <- function(i_date,
     )
     # merge creates NA values, update these to zeros
     daily_vals$paddock[is.na(exposed_gp), exposed_gp := 0]
+    setcolorder(daily_vals$paddock,
+                c("x",
+                  "y",
+                  "new_gp",
+                  "susceptible_gp",
+                  "exposed_gp",
+                  "infectious_gp"
+                  ))
 
     # update infected coordinates
     daily_vals$infected_coords <-

@@ -30,13 +30,12 @@ test_that("days have updated after 5 increments", {
   expect_length(test1[[1]], 11)
   expect_equal(
     colnames(test1[[5]][["paddock"]]),
-    c(
-      "x",
+    c("x",
       "y",
       "new_gp",
       "susceptible_gp",
-      "infectious_gp",
-      "exposed_gp"
+      "exposed_gp",
+      "infectious_gp"
     )
   )
   expect_equal(test1[[5]][["day"]], yday(harvest_date) + 1)
