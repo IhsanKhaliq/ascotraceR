@@ -54,7 +54,9 @@ one_day <- function(i_date,
                     spore_interception_parameter,
                     spores_per_gp_per_wet_hour,
                     splash_cauchy_parameter = 0.5,
-                    wind_cauchy_multiplier = 0.015) {
+                    wind_cauchy_multiplier = 0.015,
+                    daily_rain_threshold = 2,
+                    hourly_rain_threshold = 0.1) {
   times <- temp <- rain <- new_gp <- infectious_gp <-
     cdd_at_infection <- susceptible_gp <- NULL
 
@@ -96,13 +98,13 @@ one_day <- function(i_date,
   if (nrow(daily_vals[["infected_coords"]]) > 0) {
     # Spread spores and infect plants
     # Update growing points for paddock coordinates
-    if (i_rainfall > 2) {
+    if (i_rainfall > daily_rain_threshold) {
       exposed_dt <-
         rbindlist(
           lapply(
-            seq_len(nrow(weather_day[rain >= 0.1,])),
+            seq_len(nrow(weather_day[rain >= hourly_rain_threshold,])),
             FUN = spores_each_wet_hour,
-            weather_hourly = weather_day[rain >= 0.1,],
+            weather_hourly = weather_day[rain >= hourly_rain_threshold,],
             paddock = daily_vals$paddock,
             max_interception_probability = max_interception_probability,
             spore_interception_parameter = spore_interception_parameter,
