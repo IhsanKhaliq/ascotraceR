@@ -38,7 +38,8 @@ spores_each_wet_hour <- function(h,
                                  max_interception_probability,
                                  spores_per_gp_per_wet_hour,
                                  splash_cauchy_parameter = 0.5,
-                                 wind_cauchy_multiplier = 0.015) {
+                                 wind_cauchy_multiplier = 0.015,
+                                 rainfall_multiplier = FALSE) {
   rain <- ws <- wd <- wd_sd <- infectious_gp <- spores_per_packet <- x <- y <-
     NULL
 
@@ -48,6 +49,12 @@ spores_each_wet_hour <- function(h,
   average_wind_speed_in_hour <- weather_hourly[h, ws]
   wind_direction_in_hour <-  weather_hourly[h, wd]
   stdev_wind_direction_in_hour <-  weather_hourly[h, wd_sd]
+  spores_per_gp_per_wet_hour <- fifelse(rainfall_multiplier == FALSE |
+                                          rain_in_hour <= 1,
+                                        spores_per_gp_per_wet_hour,
+                                        spores_per_gp_per_wet_hour * (
+                                          as.numeric(rainfall_multiplier) *
+                                            rain_in_hour))
 
   # get data.table of infected coordinates
   paddock_infective <- paddock[infectious_gp > 0, ]

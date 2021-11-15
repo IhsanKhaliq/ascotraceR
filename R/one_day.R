@@ -118,8 +118,8 @@ one_day <- function(i_date,
             paddock = daily_vals$paddock,
             max_interception_probability = max_interception_probability,
             spore_interception_parameter = spore_interception_parameter,
-            spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour * (
-              as.numeric(rainfall_multiplier * round(i_rainfall))),
+            spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
+            rainfall_multiplier = rainfall_multiplier,
             splash_cauchy_parameter = splash_cauchy_parameter,
             wind_cauchy_multiplier = wind_cauchy_multiplier
           )
