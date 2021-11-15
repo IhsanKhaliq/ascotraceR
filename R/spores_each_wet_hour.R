@@ -27,6 +27,11 @@
 #' @param wind_cauchy_multiplier A scaling parameter to estimate a cauchy distribution
 #'  which resembles the possible distances a conidium travels due to wind dispersal.
 #'  default: `0.015`
+#' @param rainfall_multiplier logical values will turn on or off rainfall multiplier
+#'  default method. The default method increases the number of spores spread per
+#'  growing point if the rainfall in the spore spread event hour is greater than
+#'  one. Numeric values will scale the number of spores spread per growing point
+#'  against the volume of rainfall in the hour. Default: `FALSE`
 #' @keywords internal
 #' @noRd
 
