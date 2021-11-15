@@ -35,8 +35,8 @@ test_that("days have updated after 5 increments", {
       "y",
       "new_gp",
       "susceptible_gp",
-      "exposed_gp",
-      "infectious_gp"
+      "infectious_gp",
+      "exposed_gp"
     )
   )
   expect_equal(test1[[5]][["day"]], yday(harvest_date) + 1)
@@ -95,6 +95,7 @@ test_that("intense primary_infection_foci lead to more infections", {
   expect_length(test1.1, 5)
   expect_length(test1.1[[1]], 11)
   expect_equal(test1.1[[5]][["exposed_gps"]][, .N], 2)
+  expect_equal(test1.1[[5]]$paddock[exposed_gp > 0, .N], 2)
   expect_equal(test1.1[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 40)
   expect_length(test1.1[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 1)
   expect_equal(test1.1[[5]][["exposed_gps"]][spores_per_packet  >
@@ -129,6 +130,7 @@ test_that("intense primary_infection_foci lead to more infections", {
   expect_length(test2, 16)
   expect_length(test2[[1]], 11)
   expect_equal(test2[[5]][["exposed_gps"]][, .N], 0)
+  expect_equal(test2[[5]][["paddock"]][exposed_gp > 0, .N], 0)
   expect_equal(test2[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 1)
   expect_length(test2[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 1)
   expect_equal(test2[[5]][["exposed_gps"]][spores_per_packet  >
@@ -176,9 +178,6 @@ test3 <- trace_asco(
   time_zone = "Australia/Perth",
   primary_infection_foci = qry
 )
-
-# test3[[30]] # look at values on the 30th day
-#  tracer_plot(test3,30)
 
 test_that("test3 returns some sporulating gps", {
   expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 31)
