@@ -25,7 +25,8 @@ trace_asco(
   wind_cauchy_multiplier = 0.015,
   daily_rain_threshold = 2,
   hourly_rain_threshold = 0.1,
-  susceptible_days = 5
+  susceptible_days = 5,
+  rainfall_multiplier = FALSE
 )
 }
 \arguments{
@@ -91,24 +92,31 @@ notes the number of \code{primary_infection_foci} at initial infection.}
 growing point each wet hour. Also known as the \code{spore_rate}. Value is
 dependent on the susceptibility of the host genotype.}
 
-\item{splash_cauchy_parameter}{A parameter used in the cauchy distribution and
-describes the median distance spores travel due to rain splashes. default:
-\code{0.5}}
+\item{splash_cauchy_parameter}{A parameter used in the cauchy distribution
+and describes the median distance spores travel due to rain splashes.
+Default: \code{0.5}}
 
-\item{wind_cauchy_multiplier}{A scaling parameter to estimate a cauchy distribution
-which resembles the possible distances a conidium travels due to wind dispersal.
-default: \code{0.015}}
+\item{wind_cauchy_multiplier}{A scaling parameter to estimate a cauchy
+distribution which resembles the possible distances a conidium travels due
+to wind dispersal. Defaults to \code{0.015}.}
 
 \item{daily_rain_threshold}{Minimum cumulative rainfall required in a day to
-allow hourly spore spread events. See also \code{hourly_rain_threshold}
-Default: \code{2}}
+allow hourly spore spread events. See also \code{hourly_rain_threshold}.
+Default to \code{2}.}
 
 \item{hourly_rain_threshold}{Minimum rainfall in an hour to trigger a spore
-spread event in the same hour (Assuming daily_rain_threshold is already met).
-Default: \code{0.1}}
+spread event in the same hour (Assuming daily_rain_threshold is already
+met). Defaults to \code{0.1}.}
 
-\item{susceptible_days}{number of days a new growing point remains susceptible
-to infection from ascochyta spores. Default: \code{5}}
+\item{susceptible_days}{number of days a new growing point remains
+susceptible to infection from ascochyta spores. Default: \code{5}}
+
+\item{rainfall_multiplier}{logical values will turn on or off rainfall
+multiplier default method. The default method increases the number of spores
+spread per growing point if the rainfall in the spore spread event hour is
+greater than one. Numeric values will scale the number of spores spread per
+growing point against the volume of rainfall in the hour. Defaults to
+\code{FALSE}.}
 }
 \value{
 A nested \code{list} object where each sub-list contains daily data for
@@ -126,7 +134,7 @@ hours, * \strong{infectious_gp}, infectious growing points in the last 24 hours,
 \strong{gp_standard}, standard growing points assuming growth is not impeded by
 infection, * \strong{infected_coords}, a \CRANpkg{data.table} of only infectious
 growing point coordinates, * \strong{new_infections}, a \CRANpkg{data.table} of
-newly infected growing points, * \strong{exposed_gp}, a \CRANpkg{data.table} of
+newly infected growing points, * \strong{exposed_gps}, a \CRANpkg{data.table} of
 exposed growing points in the latent period phase of infection.
 }
 }

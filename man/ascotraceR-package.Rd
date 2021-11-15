@@ -6,8 +6,7 @@
 \alias{ascotraceR-package}
 \title{ascotraceR: A Spatiotemporal Model to Simulate the Spread of Ascochyta Blight in Chickpea}
 \description{
-A spatiotemporal model that simulates the spread of Ascochyta
-    blight in chickpea fields based on location-specific weather conditions.
+A spatiotemporal model that simulates the spread of Ascochyta blight in chickpea fields based on location-specific weather conditions.
 }
 \seealso{
 Useful links:
@@ -28,11 +27,9 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Grains Research and Development Corporation (GRDC) Project
-            USQ1903-003RTX [funder, copyright holder]
+  \item Grains Research and Development Corporation (GRDC) Project USQ1903-003RTX [funder, copyright holder]
   \item University of Southern Queensland [copyright holder]
-  \item Western Australia Agriculture Authority (WAAA) (Supported the development of ascotraceR through Adam H.
-          Sparks' time.) [copyright holder]
+  \item Western Australia Agriculture Authority (WAAA) (Supported the development of ascotraceR through Adam H. Sparks' time.) [copyright holder]
 }
 
 }
