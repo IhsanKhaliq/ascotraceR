@@ -569,7 +569,7 @@ format_weather <- function(x,
   if(nrow(final_w[is.na(temp),]) != 0) stop(call. = FALSE,
                                             "NA values in temperature; \n",
                                             paste(as.character(final_w[is.na(temp),times])),
-                                            "\nplease correct these inputs and run again")
+                                            "\nplease use a complete dataset")
   # for outside range
   if(nrow(final_w[temp < -30 |
                   temp > 60,]) != 0) stop(call. = FALSE,
@@ -582,7 +582,7 @@ format_weather <- function(x,
   if(nrow(final_w[is.na(rain),]) != 0) stop(call. = FALSE,
                                             "NA values in rainfall; \n",
                                             paste(as.character(final_w[is.na(rain),times])),
-                                            "\nplease correct these inputs and run again")
+                                            "\nplease use a complete dataset")
   # for outside range
   if(nrow(final_w[rain < 0 |
                   rain > 100,]) != 0) stop(call. = FALSE,
@@ -595,7 +595,7 @@ format_weather <- function(x,
   if(nrow(final_w[is.na(ws),]) != 0) stop(call. = FALSE,
                                           "NA values in wind speed; \n",
                                           paste(as.character(final_w[is.na(ws),times])),
-                                          "\nplease correct these inputs and run again")
+                                          "\nplease use a complete dataset")
   # for outside range
   if(nrow(final_w[ws < 0 |
                   ws > 150,]) != 0) stop(call. = FALSE,
@@ -608,7 +608,7 @@ format_weather <- function(x,
   if(nrow(final_w[is.na(wd),]) != 0) stop(call. = FALSE,
                                             "NA values in wind direction; \n",
                                             paste(as.character(final_w[is.na(wd),times])),
-                                            "\nplease correct these inputs and run again")
+                                            "\nplease use a complete dataset")
   # for outside range
   if(nrow(final_w[wd < 0 |
                   wd > 360,]) != 0) stop(call. = FALSE,
