@@ -71,11 +71,12 @@ lesions on susceptible growing points. Defaults to \code{150}.}
 \item{time_zone}{refers to time in Coordinated Universal Time (UTC).}
 
 \item{primary_infection_foci}{refers to the inoculated coordinates where the
-epidemic starts. Accepted inputs are: \code{centre} or \code{random} (Default) or a
-data.frame with column names 'x', 'y' and 'load'. The \code{data.frame} inputs
-inform the model of specific grid cell/s coordinates where the epidemic
-should begin. The 'load' column is optional and can specify the
-\code{primary_inoculum_intensity} for each coordinate.}
+epidemic starts. Accepted inputs are: \code{centre}/\code{center} or \code{random}
+(Default) or a \code{data.frame} with column names \sQuote{x}, \sQuote{y} and
+\sQuote{load}. The \code{data.frame} inputs inform the model of specific grid
+cell/s coordinates where the epidemic should begin. The \sQuote{load}
+column is optional and can specify the \code{primary_inoculum_intensity}
+for each coordinate.}
 
 \item{primary_inoculum_intensity}{Refers to the amount of primary inoculum
 (number of lesions on infested stubble in the model). The sources of
