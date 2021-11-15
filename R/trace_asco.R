@@ -82,7 +82,7 @@
 #'   **gp_standard**, standard growing points assuming growth is not impeded by
 #'   infection, * **infected_coords**, a \CRANpkg{data.table} of only infectious
 #'   growing point coordinates, * **new_infections**, a \CRANpkg{data.table} of
-#'   newly infected growing points, * **exposed_gp**, a \CRANpkg{data.table} of
+#'   newly infected growing points, * **exposed_gps**, a \CRANpkg{data.table} of
 #'   exposed growing points in the latent period phase of infection.
 #'
 #' @seealso [tidy_trace()], [summarise_trace()]
