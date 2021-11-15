@@ -135,12 +135,22 @@ one_day <- function(i_date,
       daily_vals$exposed_gps <-
         rbind(daily_vals$exposed_gps,
               exposed_dt)
+
     }
 
     # exposed gps which have undergone latent period are moved to sporulating gps
     daily_vals <- make_some_infective(daily_vals = daily_vals,
                                       latent_period = 150)
 
+
+    daily_vals$paddock <- merge(
+      x = daily_vals$paddock[, exposed_gp := NULL],
+      y = daily_vals$exposed_gps[, list(exposed_gp = sum(spores_per_packet)), by = c("x", "y")],
+      by = c("x", "y"),
+      all.x = TRUE
+    )
+    # merge creates NA values, update these to zeros
+    daily_vals$paddock[is.na(exposed_gp), exposed_gp := 0]
 
     # update infected coordinates
     daily_vals$infected_coords <-
