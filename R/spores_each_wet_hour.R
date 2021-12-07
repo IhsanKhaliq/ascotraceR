@@ -107,6 +107,5 @@ spores_each_wet_hour <- function(h,
                         y >= min(paddock[, y]) &
                         y <= max(paddock[, y]) ,]
 
-
   return(exposed_dt)
 }
