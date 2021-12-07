@@ -280,7 +280,7 @@ test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
     sowing_date = as.POSIXct("1998-03-09"),
     harvest_date = as.POSIXct("1998-03-12"),
     time_zone = "Australia/Perth"
-  ),regexp = "The `initial_infection` occurs on or before `sowing_date`.Please use an `initial_infection` date which occurs after `crop_sowing`.")
+  ),regexp = "The `initial_infection` occurs on or before `sowing_date`.*")
 })
 
 
