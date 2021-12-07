@@ -5,8 +5,8 @@ load(test_path("formatted_weather_one_day.rda"))
 # makePaddock equivalent
 # create data and parameters
 seeding_rate <- 40
-paddock <- as.data.table(CJ(x = 1:100,
-                            y = 1:100))
+paddock <- data.table(CJ(x = 1:100,
+                         y = 1:100))
 paddock[, c("new_gp",
             "susceptible_gp",
             "infected_gp",

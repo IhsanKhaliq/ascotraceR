@@ -190,8 +190,8 @@ trace_asco <- function(weather,
   }
 
   # makePaddock equivalent ------
-  paddock <- as.data.table(CJ(x = 1:paddock_width,
-                              y = 1:paddock_length))
+  paddock <- data.table(CJ(x = 1:paddock_width,
+                           y = 1:paddock_length))
 
   # sample a paddock location randomly if a starting foci is not given
   if ("data.frame" %in% class(primary_infection_foci) == FALSE) {
@@ -226,7 +226,7 @@ trace_asco <- function(weather,
           )
         }
         primary_infection_foci <-
-          as.data.table(as.list(primary_infection_foci))
+          data.table(as.list(primary_infection_foci))
         setnames(x = primary_infection_foci,
                  old = c("V1", "V2"),
                  new = c("x", "y"))

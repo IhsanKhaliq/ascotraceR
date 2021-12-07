@@ -160,7 +160,7 @@ test_that("test3 returns some sporulating gps", {
 
 
 # test running for 28 days with multiple (10) random start locations
-pdk <- as.data.table(CJ(
+pdk <- data.table(CJ(
   x = 1:100,
   y = 1:100,
   load = 3
