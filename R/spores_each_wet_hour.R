@@ -21,20 +21,20 @@
 #' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating
 #'   growing point each wet hour. Also known as the `spore_rate`. Value is
 #'   dependent on the susceptibility of the host genotype.
-#' @param splash_cauchy_parameter A parameter used in the cauchy distribution and
-#'   describes the median distance spores travel due to rain splashes. default:
-#'   `0.5`
-#' @param wind_cauchy_multiplier A scaling parameter to estimate a cauchy distribution
-#'  which resembles the possible distances a conidium travels due to wind dispersal.
-#'  default: `0.015`
-#' @param rainfall_multiplier logical values will turn on or off rainfall multiplier
-#'  default method. The default method increases the number of spores spread per
-#'  growing point if the rainfall in the spore spread event hour is greater than
-#'  one. Numeric values will scale the number of spores spread per growing point
-#'  against the volume of rainfall in the hour. Default: `FALSE`
+#' @param splash_cauchy_parameter A parameter used in the Cauchy distribution
+#'  and describes the median distance spores travel due to rain splashes.
+#'  Defaults to `0.5`.
+#' @param wind_cauchy_multiplier A scaling parameter to estimate a Cauchy
+#'  distribution which resembles the possible distances a conidium travels due
+#'  to wind dispersal. Defaults to `0.015`.
+#' @param rainfall_multiplier logical values will turn on or off rainfall
+#'  multiplier default method. The default method increases the number of spores
+#'  spread per growing point if the rainfall in the spore spread event hour is
+#'  greater than one. Numeric values will scale the number of spores spread per
+#'  growing point against the volume of rainfall in the hour. Defaults to
+#'  `FALSE`.
 #' @keywords internal
 #' @noRd
-
 
 spores_each_wet_hour <- function(h,
                                  weather_hourly,
