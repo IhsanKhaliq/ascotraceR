@@ -4,8 +4,8 @@ load(test_path("test-data_successful_infections.rda"))
 seeding_rate <- 40
 
 # makePaddock equivalent
-paddock <- data.table(CJ(x = 1:100,
-                         y = 1:100))
+paddock <- CJ(x = 1:100,
+              y = 1:100)
 
 primary_infection_foci <- c(50, 50)
 

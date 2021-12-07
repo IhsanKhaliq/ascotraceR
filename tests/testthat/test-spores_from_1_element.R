@@ -5,8 +5,8 @@ load(test_path("formatted_weather_one_day.rda"))
 # makePaddock equivalent
 # create data and parameters
 seeding_rate <- 40
-paddock <- data.table(CJ(x = 1:100,
-                         y = 1:100))
+paddock <- CJ(x = 1:100,
+              y = 1:100)
 paddock[, c("new_gp",
             "susceptible_gp",
             "infected_gp",
@@ -25,7 +25,7 @@ paddock[, c("new_gp",
           )]
 
 
-paddock_infected <- paddock[infectious_gp > 0, ]
+paddock_infected <- paddock[infectious_gp > 0,]
 
 set.seed(667)
 
@@ -113,7 +113,7 @@ set.seed(666)
 vec_R1 <- sample(1:nrow(paddock), size = 20, replace = FALSE)
 
 # filter paddock to only the infected coordinates
-paddock_infected <- paddock[vec_R1, ]
+paddock_infected <- paddock[vec_R1,]
 
 # give infected coordinates infectious_gp of between 1:20
 paddock_infected[, infectious_gp := sample(1:20, size = 20, replace = FALSE)]

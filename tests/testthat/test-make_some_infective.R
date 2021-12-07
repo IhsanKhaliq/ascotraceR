@@ -3,8 +3,8 @@ load(test_path("newly_infected_list.rda"))
 
 # create data and parameters
 seeding_rate <- 40
-paddock <- data.table(CJ(x = 1:100,
-                         y = 1:100))
+paddock <- CJ(x = 1:100,
+              y = 1:100)
 paddock[, c("new_gp",
             "susceptible_gp",
             "exposed_gp",

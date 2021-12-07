@@ -7,8 +7,8 @@
 #' @return Vector of row numbers
 #'
 #' @examples
-#' pdk <- data.table(CJ(x = 1:100,
-#'                      y = 1:100))
+#' pdk <- CJ(x = 1:100,
+#'           y = 1:100)
 #' qry <- pdk[sample(1:nrow(pdk), 5), ]
 #' which_paddock_row(paddock = pdk, query = qry)
 #' @keywords internal

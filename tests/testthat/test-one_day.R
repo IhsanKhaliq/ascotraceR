@@ -3,8 +3,8 @@ seeding_rate <- 40
 primary_infection_foci <- data.table(x = 50,
                                      y = 50)
 
-paddock <- data.table(CJ(x = 1:100,
-                         y = 1:100))
+paddock <- CJ(x = 1:100,
+              y = 1:100)
 
 # initialise daily_vals
 paddock[, c("new_gp",
