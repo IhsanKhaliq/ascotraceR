@@ -226,7 +226,7 @@ trace_asco <- function(weather,
           )
         }
         primary_infection_foci <-
-          data.table(as.list(primary_infection_foci))
+          as.data.table(as.list(primary_infection_foci))
 
         setnames(x = primary_infection_foci,
                  old = c("V1", "V2"),
