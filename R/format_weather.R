@@ -256,7 +256,7 @@ format_weather <- function(x,
     mm <- "mm"
   }
   if (missing(wd_sd)) {
-    x$wd_sd <- NA########################
+    x$wd_sd <- NA
     wd_sd <- "wd_sd"
   }
   if (missing(temp)) {
