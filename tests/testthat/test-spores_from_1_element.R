@@ -109,7 +109,7 @@ test_that("test3 is data.table of 1 row", {
 
 set.seed(666)
 
-#seleck 20 coordinates to randomly allocate infectious_gps
+#select 20 coordinates to randomly allocate infectious_gps
 vec_R1 <- sample(1:nrow(paddock), size = 20, replace = FALSE)
 
 # filter paddock to only the infected coordinates
