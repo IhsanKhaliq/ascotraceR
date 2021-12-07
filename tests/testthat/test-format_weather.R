@@ -180,7 +180,7 @@ test_that("`format_weather()` works when lat lon are in data", {
     Wind.direction.in.degrees.true =
       runif(n = dat_minutes, min = 0, max = 359),
     Temperature.in.degrees.celcius =
-      rep(c(11:22,23:12) + rnorm(24,sd = 2), 420),
+      rep(c(11:22, 23:12) + rnorm(24, sd = 2), 420),
     Station.Number = "16096",
     lon = 135.7243,
     lat = -33.26625
@@ -271,7 +271,7 @@ test_that("`format_weather()` stops if time cols are not provided", {
     Wind.direction.in.degrees.true =
       runif(n = dat_minutes, min = 0, max = 359),
     Temperature.in.degrees.celcius =
-      rep(c(11:22,23:12) + rnorm(24,sd = 2), 420),
+      rep(c(11:22, 23:12) + rnorm(24, sd = 2), 420),
     Station.Number = "16096",
     lon = 135.7243,
     lat = -33.26625
@@ -309,7 +309,7 @@ test_that("`format_weather()` stops if time cols are not provided", {
   )
 })
 
-# # stop if lonlat file lacks proper field names ---------------------------------
+# # stop if lonlat file lacks proper field names -------------------------------
 test_that("`format_weather() stops if lonlat input lacks proper names", {
   # create a dummy .csv with misnamed cols
   write.csv(data.frame(
@@ -432,7 +432,7 @@ test_that("`format_weather() creates a `mm` column if not provided", {
     Wind.direction.in.degrees.true =
       runif(n = dat_minutes, min = 0, max = 359),
     Temperature.in.degrees.celcius =
-      rep(c(11:22,23:12) + rnorm(24,sd = 2), 420),
+      rep(c(11:22, 23:12) + rnorm(24, sd = 2), 420),
     Station.Number = "16096",
     lon = 135.7243,
     lat = -33.26625
@@ -487,7 +487,7 @@ test_that("`format_weather() creates a YYYY MM DD... cols", {
     Wind.direction.in.degrees.true =
       runif(n = dat_minutes, min = 0, max = 359),
     Temperature.in.degrees.celcius =
-      rep(c(11:22,23:12) + rnorm(24,sd = 2), 420),
+      rep(c(11:22, 23:12) + rnorm(24, sd = 2), 420),
     Station.Number = "16096",
     Ptime = seq(ISOdate(2000, 1, 1), by = "1 min", length.out = dat_minutes),
     lon = 135.7243,
@@ -577,7 +577,7 @@ test_that("`format_weather() stops if `wd_sd` is not available", {
   )
 })
 
-# stop if no raster, `r` or `time_zone` provided --------------------------------
+# stop if no raster, `r` or `time_zone` provided -------------------------------
 test_that("`format_weather() stops if `time_zone` cannot be determined", {
   weather_station_data <- data.table(
     Precipitation.since.last.observation.in.mm = round(abs(rnorm(
@@ -676,24 +676,57 @@ test_that("Incorrect column names are picked up and error is given", {
 })
 
 test_that("function can reformat weather data previously saved as csv and
-          read back in",{
-            fileName <- paste0(tempfile(),".csv")
+          read back in",
+          {
+            fileName <- paste0(tempfile(), ".csv")
             write.csv(x = dat_no_location,
                       file = fileName,
                       row.names = FALSE)
             w_dat <- read.csv(fileName)
 
             expect_equal(class(w_dat), "data.frame")
-            expect_equal(colnames(w_dat), c("times", "temp", "rain", "ws", "wd",
-                                            "wd_sd", "station", "YYYY", "MM", "DD",
-                                            "hh", "mm", "day", "hours_in_day",
-                                            "wet_hours", "ws_sd"
-                                            ))
+            expect_equal(
+              colnames(w_dat),
+              c(
+                "times",
+                "temp",
+                "rain",
+                "ws",
+                "wd",
+                "wd_sd",
+                "station",
+                "YYYY",
+                "MM",
+                "DD",
+                "hh",
+                "mm",
+                "day",
+                "hours_in_day",
+                "wet_hours",
+                "ws_sd"
+              )
+            )
             w_dat <- format_weather(w_dat, time_zone = "UTC")
-            expect_equal(class(w_dat), c("asco.weather","data.table", "data.frame"))
-            expect_equal(colnames(w_dat), c("times", "temp", "rain", "ws", "wd",
-                                            "wd_sd", "station", "YYYY", "MM", "DD",
-                                            "hh", "mm", "day", "hours_in_day",
-                                            "wet_hours", "ws_sd"))
-
+            expect_equal(class(w_dat), c("asco.weather", "data.table", "data.frame"))
+            expect_equal(
+              colnames(w_dat),
+              c(
+                "times",
+                "temp",
+                "rain",
+                "ws",
+                "wd",
+                "wd_sd",
+                "station",
+                "YYYY",
+                "MM",
+                "DD",
+                "hh",
+                "mm",
+                "day",
+                "hours_in_day",
+                "wet_hours",
+                "ws_sd"
+              )
+            )
           })
