@@ -241,7 +241,7 @@ trace_asco <- function(weather,
       if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
         stop(
           call. = FALSE,
-          "The `primary_infection_foci` data.frame shoulc contain colnames ",
+          "The `primary_infection_foci` data.frame should contain colnames ",
           "'x' and 'y'"
         )
       }
