@@ -10,7 +10,7 @@
 #' @param paddock_width width of a paddock in metres (x).
 #' @param sowing_date a character string of a date value indicating sowing date
 #'   of chickpea seed and the start of the \sQuote{ascotraceR} model. Preferably
-#'   in ISO8601 format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}. Assumes
+#'   in ISO8601 format (YYYY-MM-DD), _e.g._ \dQuote{2020-04-26}. Assumes
 #'   there is sufficient soil moisture to induce germination and start the crop
 #'   growing season.
 #' @param harvest_date a character string of a date value indicating harvest
