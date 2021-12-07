@@ -92,24 +92,24 @@ notes the number of \code{primary_infection_foci} at initial infection.}
 growing point each wet hour. Also known as the \code{spore_rate}. Value is
 dependent on the susceptibility of the host genotype.}
 
-\item{splash_cauchy_parameter}{A parameter used in the cauchy distribution
+\item{splash_cauchy_parameter}{A parameter used in the Cauchy distribution
 and describes the median distance spores travel due to rain splashes.
-Default: \code{0.5}}
+Default to \code{0.5}.}
 
-\item{wind_cauchy_multiplier}{A scaling parameter to estimate a cauchy
+\item{wind_cauchy_multiplier}{A scaling parameter to estimate a Cauchy
 distribution which resembles the possible distances a conidium travels due
 to wind dispersal. Defaults to \code{0.015}.}
 
 \item{daily_rain_threshold}{Minimum cumulative rainfall required in a day to
 allow hourly spore spread events. See also \code{hourly_rain_threshold}.
-Default to \code{2}.}
+Defaults to \code{2}.}
 
 \item{hourly_rain_threshold}{Minimum rainfall in an hour to trigger a spore
 spread event in the same hour (Assuming daily_rain_threshold is already
 met). Defaults to \code{0.1}.}
 
 \item{susceptible_days}{number of days a new growing point remains
-susceptible to infection from ascochyta spores. Default: \code{5}}
+susceptible to infection from \emph{Ascochyta} conidia. Defaults to \code{5}.}
 
 \item{rainfall_multiplier}{logical values will turn on or off rainfall
 multiplier default method. The default method increases the number of spores
