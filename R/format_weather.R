@@ -265,9 +265,8 @@ format_weather <- function(x,
   }
 
   if (all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)) == FALSE) {
-    stop(
-      call. = FALSE,
-      "Supplied column names are not found in column names of `x`.")
+    stop(call. = FALSE,
+         "Supplied column names are not found in column names of `x`.")
   }
 
   # import and assign longitude and latitude from a file if provided
@@ -428,7 +427,7 @@ format_weather <- function(x,
 
     log_freq <-
       lubridate::int_length(lubridate::int_diff(c(x_dt[1, times],
-                                                   x_dt[.N, times]))) /
+                                                  x_dt[.N, times]))) /
       (nrow(x_dt) * 60)
 
     # if the logging frequency is less than 50 minutes aggregate to hourly
@@ -560,61 +559,87 @@ format_weather <- function(x,
   return(x_out[])
 }
 
-.check_weather <- function(final_w){
+.check_weather <- function(final_w) {
   # note on cran avoidance (nocov) from data.table
   temp <- times <- rain <- ws <- wd <- NULL
 
   # Check temperatures
   # For NAs
-  if(nrow(final_w[is.na(temp),]) != 0) stop(call. = FALSE,
-                                            "NA values in temperature; \n",
-                                            paste(as.character(final_w[is.na(temp),times])),
-                                            "\nplease use a complete dataset")
+  if (nrow(final_w[is.na(temp), ]) != 0)
+    stop(
+      call. = FALSE,
+      "NA values in temperature; \n",
+      paste(as.character(final_w[is.na(temp), times])),
+      "\nplease use a complete dataset"
+    )
   # for outside range
-  if(nrow(final_w[temp < -30 |
-                  temp > 60,]) != 0) stop(call. = FALSE,
-                                            "Temperature inputs are outside expected ranges (-30 and +60 degrees C); \n",
-                                            paste(as.character(final_w[temp < -30 | temp > 60,times])),
-                                            "\nplease correct these inputs and run again")
+  if (nrow(final_w[temp < -30 |
+                   temp > 60, ]) != 0)
+    stop(
+      call. = FALSE,
+      "Temperature inputs are outside expected ranges (-30 and +60 degrees C); \n",
+      paste(as.character(final_w[temp < -30 |
+                                   temp > 60, times])),
+      "\nplease correct these inputs and run again"
+    )
 
   # Check rainfall
   # For NAs
-  if(nrow(final_w[is.na(rain),]) != 0) stop(call. = FALSE,
-                                            "NA values in rainfall; \n",
-                                            paste(as.character(final_w[is.na(rain),times])),
-                                            "\nplease use a complete dataset")
+  if (nrow(final_w[is.na(rain), ]) != 0)
+    stop(
+      call. = FALSE,
+      "NA values in rainfall; \n",
+      paste(as.character(final_w[is.na(rain), times])),
+      "\nplease use a complete dataset"
+    )
   # for outside range
-  if(nrow(final_w[rain < 0 |
-                  rain > 100,]) != 0) stop(call. = FALSE,
-                                          "rain inputs are outside expected ranges (0 and 100 mm); \n",
-                                          paste(as.character(final_w[rain < 0 | rain > 100,times])),
-                                          "\nplease correct these inputs and run again")
+  if (nrow(final_w[rain < 0 |
+                   rain > 100, ]) != 0)
+    stop(
+      call. = FALSE,
+      "rain inputs are outside expected ranges (0 and 100 mm); \n",
+      paste(as.character(final_w[rain < 0 |
+                                   rain > 100, times])),
+      "\nplease correct these inputs and run again"
+    )
 
   # Check windspeed
   # For NAs
-  if(nrow(final_w[is.na(ws),]) != 0) stop(call. = FALSE,
-                                          "NA values in wind speed; \n",
-                                          paste(as.character(final_w[is.na(ws),times])),
-                                          "\nplease use a complete dataset")
+  if (nrow(final_w[is.na(ws), ]) != 0)
+    stop(
+      call. = FALSE,
+      "NA values in wind speed; \n",
+      paste(as.character(final_w[is.na(ws), times])),
+      "\nplease use a complete dataset"
+    )
   # for outside range
-  if(nrow(final_w[ws < 0 |
-                  ws > 150,]) != 0) stop(call. = FALSE,
-                                           "wind speed inputs are outside expected ranges (0 and 150 kph); \n",
-                                           paste(as.character(final_w[ws < 0 | ws > 150,times])),
-                                           "\nplease correct these inputs and run again")
+  if (nrow(final_w[ws < 0 |
+                   ws > 150, ]) != 0)
+    stop(
+      call. = FALSE,
+      "wind speed inputs are outside expected ranges (0 and 150 kph); \n",
+      paste(as.character(final_w[ws < 0 |
+                                   ws > 150, times])),
+      "\nplease correct these inputs and run again"
+    )
 
   # Check Wind direction
   # For NAs
-  if(nrow(final_w[is.na(wd),]) != 0) stop(call. = FALSE,
-                                            "NA values in wind direction; \n",
-                                            paste(as.character(final_w[is.na(wd),times])),
-                                            "\nplease use a complete dataset")
+  if (nrow(final_w[is.na(wd), ]) != 0)
+    stop(
+      call. = FALSE,
+      "NA values in wind direction; \n",
+      paste(as.character(final_w[is.na(wd), times])),
+      "\nplease use a complete dataset"
+    )
   # for outside range
-  if(nrow(final_w[wd < 0 |
-                  wd > 360,]) != 0) stop(call. = FALSE,
-                                           "wind direction are outside expected ranges (0 and 360); \n",
-                                           paste(as.character(final_w[wd < 0 | rain > 360,times])),
-                                           "\nplease correct these inputs and run again")
-
-
+  if (nrow(final_w[wd < 0 |
+                   wd > 360, ]) != 0)
+    stop(
+      call. = FALSE,
+      "wind direction are outside expected ranges (0 and 360); \n",
+      paste(as.character(final_w[wd < 0 |
+                                   rain > 360, times])),
+      "\nplease correct these inputs and run again"
+    )
 }
