@@ -5,6 +5,11 @@ README
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
+<!-- badges: start -->
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) 
+[![DOI](https://zenodo.org/badge/311562210.svg)](https://zenodo.org/badge/latestdoi/311562210)
+<!-- badges: end -->
+
 # ascotraceR: A weather driven model to simulate the spread of Ascochyta blight in chickpea over a growing season
 
 The goal of of *ascotraceR* is to develop a weather driven model to
