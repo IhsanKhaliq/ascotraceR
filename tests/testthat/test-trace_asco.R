@@ -160,11 +160,9 @@ test_that("test3 returns some sporulating gps", {
 
 
 # test running for 28 days with multiple (10) random start locations
-pdk <- as.data.table(CJ(
-  x = 1:100,
-  y = 1:100,
-  load = 3
-))
+pdk <- CJ(x = 1:100,
+          y = 1:100,
+          load = 3)
 qry <- pdk[sample(1:nrow(pdk), 10), ]
 
 test3 <- trace_asco(
@@ -280,7 +278,7 @@ test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
     sowing_date = as.POSIXct("1998-03-09"),
     harvest_date = as.POSIXct("1998-03-12"),
     time_zone = "Australia/Perth"
-  ),regexp = "The `initial_infection` occurs on or before `sowing_date`.Please use an `initial_infection` date which occurs after `crop_sowing`.")
+  ),regexp = "The `initial_infection` occurs on or before `sowing_date`.*")
 })
 
 

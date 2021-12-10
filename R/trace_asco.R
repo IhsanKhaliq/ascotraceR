@@ -10,7 +10,7 @@
 #' @param paddock_width width of a paddock in metres (x).
 #' @param sowing_date a character string of a date value indicating sowing date
 #'   of chickpea seed and the start of the \sQuote{ascotraceR} model. Preferably
-#'   in ISO8601 format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}. Assumes
+#'   in ISO8601 format (YYYY-MM-DD), _e.g._ \dQuote{2020-04-26}. Assumes
 #'   there is sufficient soil moisture to induce germination and start the crop
 #'   growing season.
 #' @param harvest_date a character string of a date value indicating harvest
@@ -49,20 +49,20 @@
 #'   dependent on the susceptibility of the host genotype.
 #' @param n_foci only relevant when `primary_infection_foci = "random"` and
 #'   notes the number of `primary_infection_foci` at initial infection.
-#' @param splash_cauchy_parameter A parameter used in the cauchy distribution
+#' @param splash_cauchy_parameter A parameter used in the Cauchy distribution
 #'   and describes the median distance spores travel due to rain splashes.
-#'   Default: `0.5`
-#' @param wind_cauchy_multiplier A scaling parameter to estimate a cauchy
+#'   Default to `0.5`.
+#' @param wind_cauchy_multiplier A scaling parameter to estimate a Cauchy
 #'  distribution which resembles the possible distances a conidium travels due
 #'  to wind dispersal. Defaults to `0.015`.
 #' @param daily_rain_threshold Minimum cumulative rainfall required in a day to
 #'  allow hourly spore spread events. See also `hourly_rain_threshold`.
-#'  Default to `2`.
+#'  Defaults to `2`.
 #' @param hourly_rain_threshold Minimum rainfall in an hour to trigger a spore
 #'  spread event in the same hour (Assuming daily_rain_threshold is already
 #'  met). Defaults to `0.1`.
 #' @param susceptible_days number of days a new growing point remains
-#'  susceptible to infection from ascochyta spores. Default: `5`
+#'  susceptible to infection from _Ascochyta_ conidia. Defaults to `5`.
 #' @param rainfall_multiplier logical values will turn on or off rainfall
 #'  multiplier default method. The default method increases the number of spores
 #'  spread per growing point if the rainfall in the spore spread event hour is
@@ -115,8 +115,8 @@
 #'   paddock_length = 100,
 #'   paddock_width = 100,
 #'   initial_infection = "1998-06-10",
-#'   sowing_date = as.POSIXct("1998-06-09"),
-#'   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70), # run the model for 70 days
+#'   sowing_date = "1998-06-09",
+#'   harvest_date = "1998-08-18",
 #'   time_zone = "Australia/Perth",
 #'   gp_rr = 0.0065,
 #'   primary_inoculum_intensity = 1000,
@@ -163,8 +163,8 @@ trace_asco <- function(weather,
   if (primary_inoculum_intensity <= 0) {
     stop(
       call. = FALSE,
-      "primary_inoculum_intensity has to be greater than 0 for the model to simulate
-  disease spread"
+      "`primary_inoculum_intensity` has to be > 0 for the model to simulate",
+      " disease spread"
     )
   }
 
@@ -190,8 +190,8 @@ trace_asco <- function(weather,
   }
 
   # makePaddock equivalent ------
-  paddock <- as.data.table(CJ(x = 1:paddock_width,
-                              y = 1:paddock_length))
+  paddock <- CJ(x = 1:paddock_width,
+                y = 1:paddock_length)
 
   # sample a paddock location randomly if a starting foci is not given
   if ("data.frame" %in% class(primary_infection_foci) == FALSE) {
@@ -227,9 +227,11 @@ trace_asco <- function(weather,
         }
         primary_infection_foci <-
           as.data.table(as.list(primary_infection_foci))
+
         setnames(x = primary_infection_foci,
                  old = c("V1", "V2"),
-                 new = c("x", "y"))
+                 new = c("x", "y"),
+                 skip_absent = TRUE)
       }
     }
   } else{
@@ -237,9 +239,11 @@ trace_asco <- function(weather,
         is.data.frame(primary_infection_foci)) {
       setDT(primary_infection_foci)
       if (all(c("x", "y") %in% colnames(primary_infection_foci)) == FALSE) {
-        stop(call. = FALSE,
-             "The `primary_infection_foci` data.frame shoulc contain colnames ",
-             "'x' and 'y'")
+        stop(
+          call. = FALSE,
+          "The `primary_infection_foci` data.frame should contain colnames ",
+          "'x' and 'y'"
+        )
       }
     }
   }

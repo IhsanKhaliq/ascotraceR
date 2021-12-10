@@ -17,17 +17,17 @@
 #' @param stdev_wind_direction_in_hour Std wind dir
 #' @param spore_aggregation_limit When spores/summary unit (n) is <= this value
 #'   n spores are produced as individuals. When greater they are produced in
-#'   sporeAggregationLimit groups of sporeAggregationLimit spores  default:
-#'   `1000`
-#' @param splash_cauchy_parameter A parameter used in the cauchy distribution and
-#'   describes the median distance spores travel due to rain splashes. default:
-#'   `0.5`
-#' @param wind_cauchy_multiplier A scaling parameter to estimate a cauchy distribution
-#'  which resembles the possible distances a conidium travels due to wind dispersal.
-#'  default: `0.015`
-#' @param paddock A data.table of x and y coordinates; provides the dimensions of
-#'   the paddock so function only returns `target_coordinates` in the paddock
-#'   area.
+#'   sporeAggregationLimit groups of sporeAggregationLimit spores. Defaults to
+#'   `1000`.
+#' @param splash_cauchy_parameter A parameter used in the Cauchy distribution
+#'  and describes the median distance spores travel due to rain splashes.
+#'  Defaults to `0.5`.
+#' @param wind_cauchy_multiplier A scaling parameter to estimate a Cauchy
+#'  distribution which resembles the possible distances a conidium travels due
+#'  to wind dispersal. Defaults to `0.015`.
+#' @param paddock A data.table of x and y coordinates; provides the dimensions
+#'  of the paddock so function only returns `target_coordinates` in the paddock
+#'  area.
 #' @keywords internal
 #' @noRd
 spores_from_1_element <-
@@ -68,7 +68,8 @@ spores_from_1_element <-
     # this for loop needs improvement so it is not growing a data.table
     target_coordinates <-
       lapply(seq_len(spore_packets), function(x) {
-        wind_d <- wind_distance(average_wind_speed_in_hour, wind_cauchy_multiplier)
+        wind_d <- wind_distance(average_wind_speed_in_hour,
+                                wind_cauchy_multiplier)
         wind_a <-
           wind_angle(wind_direction_in_hour, stdev_wind_direction_in_hour)
         splash_d <- splash_distance(splash_cauchy_parameter)

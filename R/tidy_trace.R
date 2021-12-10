@@ -50,7 +50,7 @@
 tidy_trace <- function(trace) {
 
   i_day <- new_gp <- NULL
-  i_date <- t(as.data.table(lapply(X = trace, `[[`, 2)))
+  i_date <- t(setDT(lapply(X = trace, `[[`, 2)))
   sub_trace <- setDT(purrr::map_df(trace, ~ unlist(.[3:9])))
   sub_trace[, i_date := lubridate::as_date(i_date)]
   sub_trace[, new_gp := NULL] # this is a duplicated value

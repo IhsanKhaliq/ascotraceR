@@ -2,8 +2,7 @@
 % Please edit documentation in R/format_weather.R
 \name{format_weather}
 \alias{format_weather}
-\title{Format weather data into an ascotraceR.weather S3 class object for use in
-spore dispersal models}
+\title{Format weather data into an an object suitable for use in ascotraceR spore dispersal models}
 \usage{
 format_weather(
   x,

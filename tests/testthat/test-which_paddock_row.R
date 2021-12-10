@@ -1,6 +1,6 @@
-pdk <- as.data.table(CJ(x = 1:100,
-                                 y = 1:100))
-qry <- pdk[sample(1:nrow(pdk), 5),]
+pdk <- CJ(x = 1:100,
+          y = 1:100)
+qry <- pdk[sample(1:nrow(pdk), 5), ]
 which_paddock_row(pdk, qry)
 
 test1 <- which_paddock_row(pdk, qry)
