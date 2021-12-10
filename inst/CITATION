@@ -11,4 +11,5 @@ bibentry(bibtype = "Manual",
                     person("Adam H.", "Sparks")),
          year = year,
          note = note,
-         url = "https://github.com/IhsanKhaliq/ascotraceR")
+         url = "https://github.com/IhsanKhaliq/ascotraceR",
+         doi = "10.5281/zenodo.5771290")
