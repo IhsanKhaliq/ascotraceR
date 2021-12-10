@@ -4,7 +4,6 @@ README
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-
 <!-- badges: start -->
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) 
 [![DOI](https://zenodo.org/badge/311562210.svg)](https://zenodo.org/badge/latestdoi/311562210)
