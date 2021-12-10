@@ -1,6 +1,5 @@
 ---
 title: ascotraceR
-author: "Vignette Author" 
 output:
   rmarkdown::html_document:
     theme: journal
