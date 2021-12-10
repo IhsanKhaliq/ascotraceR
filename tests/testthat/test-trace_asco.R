@@ -8,8 +8,8 @@ test1 <- trace_asco(
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-05-10",
-  sowing_date = as.POSIXct("1998-05-09"),
-  harvest_date = as.POSIXct("1998-05-12"),
+  sowing_date = "1998-05-09",
+  harvest_date = "1998-05-12",
   time_zone = "Australia/Perth",
   # weather file is in Perth timezone
   primary_infection_foci = "centre"
@@ -73,8 +73,8 @@ test1.1 <- trace_asco(
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-05-10",
-  sowing_date = as.POSIXct("1998-05-09"),
-  harvest_date = as.POSIXct("1998-05-12"),
+  sowing_date = "1998-05-09",
+  harvest_date = "1998-05-12",
   time_zone = "Australia/Perth",
   # weather file is in Perth timezone
   primary_infection_foci = "centre",
@@ -110,8 +110,8 @@ test2 <- trace_asco(
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-03-10",
-  sowing_date = as.POSIXct("1998-03-09"),
-  harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(14),
+  sowing_date = "1998-03-09",
+  harvest_date = "1998-03-23",
   time_zone = "Australia/Perth",
   primary_infection_foci = "centre"
 )
@@ -145,8 +145,8 @@ test3 <- trace_asco(
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-03-10",
-  sowing_date = as.POSIXct("1998-03-09"),
-  harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(28),
+  sowing_date = "1998-03-09",
+  harvest_date = "1998-04-06",
   time_zone = "Australia/Perth",
   primary_infection_foci = "centre"
 )
@@ -170,8 +170,8 @@ test3 <- trace_asco(
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-03-10",
-  sowing_date = as.POSIXct("1998-03-09"),
-  harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(28),
+  sowing_date = "1998-03-09",
+  harvest_date = "1998-04-06",
   time_zone = "Australia/Perth",
   primary_infection_foci = qry
 )
@@ -224,8 +224,8 @@ test_that("returns an error when primary infection intensity exceeds gp
                 paddock_length = 100,
                 paddock_width = 100,
                 initial_infection = as.POSIXct("1998-03-8"),
-                sowing_date = as.POSIXct("1998-03-09"),
-                harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(28),
+                sowing_date = "1998-03-09",
+                harvest_date = "1998-04-06",
                 time_zone = "Australia/Perth",
                 primary_infection_foci = qry,
                 primary_inoculum_intensity = 50,
@@ -241,8 +241,8 @@ test_that("primary_infection_foci can accept an numeric input of 2", {
       paddock_length = 100,
       paddock_width = 100,
       initial_infection = "1998-03-10",
-      sowing_date = as.POSIXct("1998-03-09"),
-      harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(28),
+      sowing_date = "1998-03-09",
+      harvest_date = "1998-04-06",
       time_zone = "Australia/Perth",
       primary_infection_foci = c(1, 53)
     )
@@ -259,8 +259,8 @@ test_that("primary_infection_foci input is a unrecognicsed character error",
                 paddock_length = 100,
                 paddock_width = 100,
                 initial_infection = as.POSIXct("1998-03-10"),
-                sowing_date = as.POSIXct("1998-03-09"),
-                harvest_date = as.POSIXct("1998-03-09") + lubridate::ddays(28),
+                sowing_date = "1998-03-09",
+                harvest_date = "1998-04-06",
                 time_zone = "Australia/Perth",
                 primary_infection_foci = "qry"
               )
@@ -275,8 +275,8 @@ test_that("trace_asco stops if initial_infection is earlier than sowing_start",{
     paddock_length = 100,
     paddock_width = 100,
     initial_infection = "1998-03-09",
-    sowing_date = as.POSIXct("1998-03-09"),
-    harvest_date = as.POSIXct("1998-03-12"),
+    sowing_date = "1998-03-09",
+    harvest_date = "1998-03-12",
     time_zone = "Australia/Perth"
   ),regexp = "The `initial_infection` occurs on or before `sowing_date`.*")
 })
@@ -292,8 +292,8 @@ test_that("trace_asco stops on error for non formatted weather data",{
       paddock_length = 100,
       paddock_width = 100,
       initial_infection = "1998-03-10",
-      sowing_date = as.POSIXct("1998-03-09"),
-      harvest_date = as.POSIXct("1998-03-12"),
+      sowing_date = "1998-03-09",
+      harvest_date = "1998-03-12",
       time_zone = "Australia/Perth"
     ), regexp = "'weather' must be class \"asco.weather\"")
 })
