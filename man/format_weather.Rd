@@ -163,4 +163,13 @@ weather <- format_weather(
   lonlat_file = station_data
 )
 
+# Saving weather data and reimporting can lose the object class
+# Reimported data can be quickly reformatted, adding the 'asco.weather' class
+#  with this same function
+temp_file_path <- paste0(tempdir(),"weather_file.csv")
+write.csv(weather, file = temp_file_path, row.names = FALSE)
+weather_imported <- read.csv(temp_file_path)
+weather <- format_weather(weather_imported,
+                          time_zone = "Australia/Perth")
+
 }
