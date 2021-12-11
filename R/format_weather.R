@@ -4,10 +4,6 @@
 #' [trace_asco()] function ensuring that the supplied weather data meet the
 #' requirements of the model to run.
 #'
-#' Internal support for multithreaded operations is provided through
-#' \CRANpkg{future}. If more than one station is present, the process can be
-#' made faster by using [future::plan()].
-#'
 #' @param x A [data.frame] object of weather station data for formatting.
 #'   `character`.
 #' @param YYYY Column name or index in `x` that refers to the year when the
@@ -492,7 +488,7 @@ format_weather <- function(x,
     # split data by weather station
     x <- split(x, by = "station")
 
-    x_out <- future.apply::future_lapply(
+    x_out <- lapply(
       X = x,
       FUN = .do_format,
       YYYY = YYYY,
