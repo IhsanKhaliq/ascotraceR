@@ -37,6 +37,9 @@
 #'   primary inoculum can be infected seed, volunteer chickpea plants or
 #'   infested stubble from the previous seasons. Infested stubble serves as the
 #'   source of primary inoculum in the current model. Defaults to `200`.
+#' @stubble_innoculum_intensity
+#' @stubble_inoculum_coords
+#' @stubble_innoculum_decay
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
@@ -140,7 +143,10 @@ trace_asco <- function(weather,
                        latent_period_cdd = 150,
                        time_zone = "UTC",
                        primary_infection_foci = "random",
-                       primary_inoculum_intensity = 1,
+                       primary_infection_intensity = 1,
+                       stubble_innoculum_intensity = NULL,
+                       stubble_inoculum_coords = NULL,
+                       stubble_innoculum_decay = 1,
                        n_foci = 1,
                        spores_per_gp_per_wet_hour = 0.22,
                        splash_cauchy_parameter = 0.5,
