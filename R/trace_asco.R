@@ -26,23 +26,37 @@
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
 #' @param primary_infection_foci refers to the inoculated coordinates where the
-#'   epidemic starts. Accepted inputs are: `centre`/`center` or `random`
-#'   (Default) or a `data.frame` with column names \sQuote{x}, \sQuote{y} and
-#'   \sQuote{load}. The `data.frame` inputs inform the model of specific grid
-#'   cell/s coordinates where the epidemic should begin. The \sQuote{load}
-#'   column is optional and can specify the `primary_infection_intensity`
-#'   for each coordinate.
+#'   epidemic is observed to start on plants. Accepted inputs are: `centre`/
+#'   `center` or `random` (Default) or a `data.frame` with column names
+#'   \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs inform
+#'   the model of the specific grid cell/s coordinates where the epidemic should
+#'   begin. The \sQuote{load} column is optional and can specify the
+#'   `primary_infection_intensity` for each coordinate. If \sQuote{load} is not
+#'   specified `primary_infection_intensity` is substituted for all coordinates.
 #' @param primary_infection_intensity Refers to the amount of primary inoculum
-#'   (number of lesions on infested stubble in the model). The sources of
-#'   primary inoculum can be infected seed, volunteer chickpea plants or
-#'   infested stubble from the previous seasons. Infested stubble serves as the
-#'   source of primary inoculum in the current model. Defaults to `200`.
+#'   as lesions on chickpea plants at the time of `initial_infection`. The
+#'   sources of primary inoculum can be infected seed or volunteer chickpea
+#'   plants or infested stubble from the previous seasons. Defaults to `10`.
 #' @param n_foci only relevant when `primary_infection_foci = "random"` and
 #'   notes the number of `primary_infection_foci` at initial infection.
-#' @param stubble_inoculum_coords
-#' @param stubble_inoculum_intensity
-#' @param n_stubble_coords
-#' @param stubble_inoculum_decay
+#' @param stubble_inoculum_coords refers to the inoculated coordinates where the
+#'   crop stubble/debris from previous seasons are likely to contribute to
+#'   splash dispersal of the pathogen inoculum. Accepted inputs are: `centre`/
+#'   `center`, `uniform`, `random` (Default) or a `data.frame` with column names
+#'   \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs inform
+#'   the model of the specific grid cell/s coordinates where stubble is located
+#'   in the paddock. The \sQuote{load} column is optional and can specify the
+#'   `stubble_inoculum_intensity` for each coordinate. If \sQuote{load} is not
+#'   specified `stubble_inoculum_intensity` is substituted for all coordinates.
+#' @param stubble_inoculum_intensity Refers to the quantity of primary inoculum
+#'   as lesions on crop stubble at the time of `initial_infection`. Defaults to
+#'   `200`.
+#' @param n_stubble_coordsonly relevant when `stubble_inoculum_coords = "random"`
+#'   and denotes the number of `stubble_inoculum_coords` at initial infection.
+#' @param stubble_inoculum_decay rate between `0 - 1` at which inoculum from
+#'   stubble declines over time. Each day with rainfall will reduce the inoculum
+#'   by this factor. A rate of `1` (default) indicates no decay, a rate of `0.9`
+#'   denotes 10% decay each day with rainfall.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
@@ -144,10 +158,10 @@ trace_asco <- function(weather,
                        latent_period_cdd = 150,
                        time_zone = "UTC",
                        primary_infection_foci = "random",
-                       primary_infection_intensity = 1,
+                       primary_infection_intensity = 10,
                        n_foci = 1,
                        stubble_inoculum_coords = "random",
-                       stubble_inoculum_intensity = 0,
+                       stubble_inoculum_intensity = 200,
                        stubble_inoculum_decay = 1,
                        n_stubble_coords = 1,
                        spores_per_gp_per_wet_hour = 0.22,
