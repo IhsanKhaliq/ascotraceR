@@ -109,10 +109,10 @@ test_that("one_day single infection foci returns expected output", {
   expect_equal(test1[["new_gp"]], test1[["gp_standard"]] - seeding_rate)
   expect_equal(test1[["exposed_gps"]],
                data.table(
-                 x = c(50, 54, 50),
-                 y = c(50, 37, 50),
-                 spores_per_packet = c(1, 1, 1),
-                 cdd_at_infection = c(18, 18, 18)
+                 x = c(50, 50),
+                 y = c(50, 51),
+                 spores_per_packet = c(1, 1),
+                 cdd_at_infection = c(18, 18)
                ))
   expect_s3_class(test1[["paddock"]], "data.table")
   expect_equal(
@@ -130,7 +130,7 @@ test_that("one_day single infection foci returns expected output", {
                c(4.667471, 4.551090), tolerance = 0.001)
   expect_equal(test1[["paddock"]][, unique(susceptible_gp)],
                c(44.66747, 43.55109), tolerance = 0.001)
-  expect_equal(test1[["paddock"]][, unique(exposed_gp)], c(0,2,1),
+  expect_equal(test1[["paddock"]][, unique(exposed_gp)], c(0, 1),
                tolerance = 0.001)
   expect_equal(test1[["paddock"]][, unique(infectious_gp)], c(0, 1),
                tolerance = 0.001)
@@ -181,10 +181,10 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
             expect_equal(test2[["new_gp"]], 5.21047, tolerance = 0.001)
             expect_equal(test2[["exposed_gps"]],
                          data.table(
-                           x = c(50, 54, 50),
-                           y = c(50, 37, 50),
-                           spores_per_packet = c(1, 1, 1),
-                           cdd_at_infection = c(18, 18, 18)
+                           x = c(50, 50),
+                           y = c(50, 51),
+                           spores_per_packet = c(1, 1),
+                           cdd_at_infection = c(18, 18)
                          ))
             expect_s3_class(test2[["paddock"]], "data.table")
             expect_equal(
@@ -202,7 +202,7 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
                          c(5.210471, 5.080625), tolerance = 0.001)
             expect_equal(test2[["paddock"]][, unique(susceptible_gp)],
                          c(49.87794, 48.63171), tolerance = 0.001)
-            expect_equal(test2[["paddock"]][, unique(exposed_gp)], c(0,2,1),
+            expect_equal(test2[["paddock"]][, unique(exposed_gp)], c(0,1),
                          tolerance = 0.001)
             expect_equal(test2[["paddock"]][, unique(infectious_gp)],
                          c(0, 1), tolerance = 0.001)
@@ -259,20 +259,22 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
             expect_equal(
               test3[["exposed_gps"]],
               data.table(
-                x = numeric(),
-                y = numeric(),
-                spores_per_packet = numeric(),
-                cdd_at_infection = numeric()
+                data.table(
+                  x = c(50),
+                  y = c(50),
+                  spores_per_packet = c(1),
+                  cdd_at_infection = c(219)
+                )
               )
             )
             expect_s3_class(test3[["paddock"]], "data.table")
 
             expect_equal(test3[["paddock"]][, unique(new_gp)],
-                         c(5.816238, 5.438883, 5.700011), tolerance = 0.001)
+                         c(5.816238, 5.555145, 5.700011), tolerance = 0.001)
             expect_equal(test3[["paddock"]][, unique(susceptible_gp)],
-                         c(55.69418, 52.0706, 54.57795), tolerance = 0.001)
-            expect_equal(test3[["paddock"]][, unique(exposed_gp)], 0,
+                         c(55.69418, 53.18686, 54.57795), tolerance = 0.001)
+            expect_equal(test3[["paddock"]][, unique(exposed_gp)], c(0, 1),
                          tolerance = 0.001)
             expect_equal(test3[["paddock"]][, unique(infectious_gp)],
-                         c(0, 3, 1), tolerance = 0.1)
+                         c(0, 2, 1), tolerance = 0.1)
           })
