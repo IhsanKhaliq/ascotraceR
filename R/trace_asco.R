@@ -430,12 +430,11 @@ trace_asco <- function(weather,
       # if primary_infection_intensity exceeds the number of growing points send
       #  warning
       if (primary_infection_intensity > daily_vals_list[[i]][["gp_standard"]]) {
-        warning(
+        stop(
           call. = FALSE,
           "`primary_infection_intensity` exceeds the number of growing points ",
           "at time of infection `growing_points`: ",
-          daily_vals_list[[i]][["gp_standard"]],
-          "\nThis may cause an overestimation of disease spread"
+          round(daily_vals_list[[i]][["gp_standard"]])
         )
       }
 
