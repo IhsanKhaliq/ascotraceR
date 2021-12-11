@@ -199,7 +199,8 @@ traced <- trace_asco(
   harvest_date = "1998-08-18",
   time_zone = "Australia/Perth",
   gp_rr = 0.0065,
-  primary_infection_intensity = 1000,
+  primary_infection_intensity = 0,
+  stubble_inoculum_intensity = 1000,
   spores_per_gp_per_wet_hour = 0.22,
   primary_infection_foci = "centre")
 

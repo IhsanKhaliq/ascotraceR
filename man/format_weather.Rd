@@ -110,10 +110,6 @@ Formats raw weather data into an object suitable for use in the
 requirements of the model to run.
 }
 \details{
-Internal support for multithreaded operations is provided through
-\CRANpkg{future}. If more than one station is present, the process can be
-made faster by using \code{\link[future:plan]{future::plan()}}.
-
 \code{time_zone} All weather stations must fall within the same time
 zone.  If the required stations are located in differing time zones,
 separate \code{ascotraceR.weather} objects must be created for each time zone.
