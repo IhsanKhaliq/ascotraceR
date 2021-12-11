@@ -46,7 +46,7 @@ spores_each_wet_hour <- function(h,
                                  wind_cauchy_multiplier = 0.015,
                                  rainfall_multiplier = FALSE) {
   rain <- ws <- wd <- wd_sd <- infectious_gp <- spores_per_packet <- x <- y <-
-    NULL
+    stubble_lesions <- NULL
 
   # obtain weather data for hour_i
 
@@ -61,8 +61,9 @@ spores_each_wet_hour <- function(h,
                                           as.numeric(rainfall_multiplier) *
                                             rain_in_hour))
 
-  # get data.table of infected coordinates
-  paddock_infective <- paddock[infectious_gp > 0, ]
+  # get data.table of inoculum coordinates
+  paddock_infective <- paddock[infectious_gp > 0 |
+                                 stubble_lesions > 0, ]
 
   exposed_dt <-
     future.apply::future_apply(

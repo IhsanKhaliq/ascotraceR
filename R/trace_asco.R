@@ -26,17 +26,37 @@
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
 #' @param primary_infection_foci refers to the inoculated coordinates where the
-#'   epidemic starts. Accepted inputs are: `centre`/`center` or `random`
-#'   (Default) or a `data.frame` with column names \sQuote{x}, \sQuote{y} and
-#'   \sQuote{load}. The `data.frame` inputs inform the model of specific grid
-#'   cell/s coordinates where the epidemic should begin. The \sQuote{load}
-#'   column is optional and can specify the `primary_inoculum_intensity`
-#'   for each coordinate.
-#' @param primary_inoculum_intensity Refers to the amount of primary inoculum
-#'   (number of lesions on infested stubble in the model). The sources of
-#'   primary inoculum can be infected seed, volunteer chickpea plants or
-#'   infested stubble from the previous seasons. Infested stubble serves as the
-#'   source of primary inoculum in the current model. Defaults to `200`.
+#'   epidemic is observed to start on plants. Accepted inputs are: `centre`/
+#'   `center` or `random` (Default) or a `data.frame` with column names
+#'   \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs inform
+#'   the model of the specific grid cell/s coordinates where the epidemic should
+#'   begin. The \sQuote{load} column is optional and can specify the
+#'   `primary_infection_intensity` for each coordinate. If \sQuote{load} is not
+#'   specified `primary_infection_intensity` is substituted for all coordinates.
+#' @param primary_infection_intensity Refers to the amount of primary inoculum
+#'   as lesions on chickpea plants at the time of `initial_infection`. The
+#'   sources of primary inoculum can be infected seed or volunteer chickpea
+#'   plants or infested stubble from the previous seasons. Defaults to `10`.
+#' @param n_foci only relevant when `primary_infection_foci = "random"` and
+#'   notes the number of `primary_infection_foci` at initial infection.
+#' @param stubble_inoculum_coords refers to the inoculated coordinates where the
+#'   crop stubble/debris from previous seasons are likely to contribute to
+#'   splash dispersal of the pathogen inoculum. Accepted inputs are: `centre`/
+#'   `center`, `uniform`, `random` (Default) or a `data.frame` with column names
+#'   \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs inform
+#'   the model of the specific grid cell/s coordinates where stubble is located
+#'   in the paddock. The \sQuote{load} column is optional and can specify the
+#'   `stubble_inoculum_intensity` for each coordinate. If \sQuote{load} is not
+#'   specified `stubble_inoculum_intensity` is substituted for all coordinates.
+#' @param stubble_inoculum_intensity Refers to the quantity of primary inoculum
+#'   as lesions on crop stubble at the time of `initial_infection`. Defaults to
+#'   `200`.
+#' @param n_stubble_coords only relevant when `stubble_inoculum_coords = "random"`
+#'   and denotes the number of `stubble_inoculum_coords` at initial infection.
+#' @param stubble_inoculum_decay rate between `0 - 1` at which inoculum from
+#'   stubble declines over time. Each day with rainfall will reduce the inoculum
+#'   by this factor. A rate of `1` (default) indicates no decay, a rate of `0.9`
+#'   denotes 10% decay each day with rainfall.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
@@ -47,8 +67,6 @@
 #' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating
 #'   growing point each wet hour. Also known as the `spore_rate`. Value is
 #'   dependent on the susceptibility of the host genotype.
-#' @param n_foci only relevant when `primary_infection_foci = "random"` and
-#'   notes the number of `primary_infection_foci` at initial infection.
 #' @param splash_cauchy_parameter A parameter used in the Cauchy distribution
 #'   and describes the median distance spores travel due to rain splashes.
 #'   Default to `0.5`.
@@ -119,7 +137,8 @@
 #'   harvest_date = "1998-08-18",
 #'   time_zone = "Australia/Perth",
 #'   gp_rr = 0.0065,
-#'   primary_inoculum_intensity = 1000,
+#'   primary_infection_intensity = 0,
+#'   stubble_inoculum_intensity = 1000,
 #'   spores_per_gp_per_wet_hour = 0.22,
 #'   primary_infection_foci = "centre")
 #'
@@ -140,8 +159,12 @@ trace_asco <- function(weather,
                        latent_period_cdd = 150,
                        time_zone = "UTC",
                        primary_infection_foci = "random",
-                       primary_inoculum_intensity = 1,
+                       primary_infection_intensity = 10,
                        n_foci = 1,
+                       stubble_inoculum_coords = "random",
+                       stubble_inoculum_intensity = 200,
+                       stubble_inoculum_decay = 1,
+                       n_stubble_coords = 1,
                        spores_per_gp_per_wet_hour = 0.22,
                        splash_cauchy_parameter = 0.5,
                        wind_cauchy_multiplier = 0.015,
@@ -160,11 +183,20 @@ trace_asco <- function(weather,
       "Please use `format_weather()` to properly format the weather data.")
   }
 
-  if (primary_inoculum_intensity <= 0) {
+  if (primary_infection_intensity < 0|
+      stubble_inoculum_intensity < 0) {
     stop(
       call. = FALSE,
-      "`primary_inoculum_intensity` has to be > 0 for the model to simulate",
-      " disease spread"
+      "`primary_infection_intensity` or `stubble_inoculum_intensity` has to",
+      " be > 0 for the model to simulate disease spread"
+    )
+  }
+
+  if (stubble_inoculum_decay < 0 |
+      stubble_inoculum_decay > 1){
+    stop(
+      call. = FALSE,
+      "`stubble_inoculum_decay` rate must be between 0 and 1."
     )
   }
 
@@ -248,16 +280,82 @@ trace_asco <- function(weather,
     }
   }
 
+  # Define the location of stubble inoculum from stubble_inoculum_coords
+  if ("data.frame" %in% class(stubble_inoculum_coords) == FALSE) {
+    if (class(stubble_inoculum_coords) == "character") {
+      if (stubble_inoculum_coords == "random") {
+        stubble_inoculum_coords <-
+          paddock[sample(seq_len(nrow(paddock)),
+                         size = n_stubble_coords,
+                         replace = TRUE),
+                  c("x", "y")]
+
+      } else {
+        if (stubble_inoculum_coords == "centre" ||
+            stubble_inoculum_coords == "center") {
+          stubble_inoculum_coords <-
+            paddock[x == as.integer(round(paddock_width / 2)) &
+                      y == as.integer(round(paddock_length / 2)),
+                    c("x", "y")]
+        } else{
+          stop(call. = FALSE,
+               "`stubble_inoculum_coords` input not recognised")
+        }
+      }
+    } else {
+      if (is.vector(stubble_inoculum_coords)) {
+        if (length(stubble_inoculum_coords) != 2 |
+            is.numeric(stubble_inoculum_coords) == FALSE) {
+          stop(
+            call. = FALSE,
+            "`stubble_inoculum_coords` should be supplied as a numeric vector ",
+            "of length two"
+          )
+        }
+        stubble_inoculum_coords <-
+          as.data.table(as.list(stubble_inoculum_coords))
+
+        setnames(x = stubble_inoculum_coords,
+                 old = c("V1", "V2"),
+                 new = c("x", "y"),
+                 skip_absent = TRUE)
+      }
+    }
+  } else{
+    if (is.data.table(stubble_inoculum_coords) == FALSE &
+        is.data.frame(stubble_inoculum_coords)) {
+      setDT(stubble_inoculum_coords)
+      if (all(c("x", "y") %in% colnames(stubble_inoculum_coords)) == FALSE) {
+        stop(
+          call. = FALSE,
+          "The `stubble_inoculum_coords` data.frame should contain colnames ",
+          "'x' and 'y'"
+        )
+      }
+    }
+  }
+
 
   # get rownumbers for paddock data.table that need to be set as infected
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
   if ("load" %in% colnames(primary_infection_foci) == FALSE) {
-    primary_infection_foci[, load := primary_inoculum_intensity]
+    primary_infection_foci[, load := primary_infection_intensity]
   } else{
     if (all(colnames(primary_infection_foci) %in% c("x", "y"))) {
       stop(call. = FALSE,
            "Colnames for `primary_infection_foci` are not 'x', 'y' & 'load'.")
+    }
+  }
+  # get rownumbers for paddock data.table that need to be set as infected
+  stubble_rows <- which_paddock_row(paddock = paddock,
+                                    query = stubble_inoculum_coords)
+  if ("load" %in% colnames(stubble_inoculum_coords) == FALSE) {
+    stubble_inoculum_coords[, load := stubble_inoculum_intensity]
+  } else{
+    if (all(colnames(stubble_inoculum_coords) %in% c("x", "y"))) {
+      stop(call. = FALSE,
+           "Colnames for `stubble_inoculum_coords` are not 'x', 'y' & 'load'.")
     }
   }
 
@@ -268,11 +366,13 @@ trace_asco <- function(weather,
     "new_gp", # Change in the number of growing points since last iteration
     "susceptible_gp",
     "exposed_gp",
-    "infectious_gp" # replacing InfectiveElementList
+    "infectious_gp", # replacing InfectiveElementList
+    "stubble_lesions"
   ) :=
     list(
       seeding_rate,
       seeding_rate,
+      0,
       0,
       0
     )]
@@ -347,21 +447,21 @@ trace_asco <- function(weather,
       daily_rain_threshold = daily_rain_threshold,
       hourly_rain_threshold = hourly_rain_threshold,
       susceptible_days = susceptible_days,
-      rainfall_multiplier = rainfall_multiplier
+      rainfall_multiplier = rainfall_multiplier,
+      stubble_decay = stubble_inoculum_decay
     )
 
     # When the time of initial infection occurs, infect the paddock coordinates
     if (initial_infection == time_increments[i]) {
 
-      # if primary_inoculum_intensity exceeds the number of growing points send
+      # if primary_infection_intensity exceeds the number of growing points send
       #  warning
-      if (primary_inoculum_intensity > daily_vals_list[[i]][["gp_standard"]]) {
-        warning(
+      if (primary_infection_intensity > daily_vals_list[[i]][["gp_standard"]]) {
+        stop(
           call. = FALSE,
-          "`primary_inoculum_intensity` exceeds the number of growing points ",
+          "`primary_infection_intensity` exceeds the number of growing points ",
           "at time of infection `growing_points`: ",
-          daily_vals_list[[i]][["gp_standard"]],
-          "\nThis may cause an overestimation of disease spread"
+          round(daily_vals_list[[i]][["gp_standard"]])
         )
       }
 
@@ -375,13 +475,12 @@ trace_asco <- function(weather,
                c("susceptible_gp",
                  "infectious_gp") :=
                  list(
-                   fifelse(
-                     test = primary_infection_foci[, load] > susceptible_gp,
-                     yes = susceptible_gp,
-                     no = susceptible_gp - primary_infection_foci[, load]
-                   ),
+                   susceptible_gp - primary_infection_foci[, load],
                    primary_infection_foci[, load]
                  )]
+          pad1[stubble_rows,
+               "stubble_lesions" :=
+                 stubble_inoculum_coords[, load]]
           dl[["paddock"]] <- pad1
 
           # Edit infected_coordinates data.table

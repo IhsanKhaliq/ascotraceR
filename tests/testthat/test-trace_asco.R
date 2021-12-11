@@ -35,7 +35,8 @@ test_that("days have updated after 5 increments", {
       "new_gp",
       "susceptible_gp",
       "exposed_gp",
-      "infectious_gp"
+      "infectious_gp",
+      "stubble_lesions"
     )
   )
   expect_equal(test1[[5]][["day"]], yday(harvest_date) + 1)
@@ -78,7 +79,8 @@ test1.1 <- trace_asco(
   time_zone = "Australia/Perth",
   # weather file is in Perth timezone
   primary_infection_foci = "centre",
-  primary_inoculum_intensity = 40
+  primary_infection_intensity = 40,
+  stubble_inoculum_intensity = 0
 )
 
 test_that("intense primary_infection_foci lead to more infections", {
@@ -113,7 +115,8 @@ test2 <- trace_asco(
   sowing_date = "1998-03-09",
   harvest_date = "1998-03-23",
   time_zone = "Australia/Perth",
-  primary_infection_foci = "centre"
+  primary_infection_foci = "centre",
+  stubble_inoculum_intensity = 0
 )
 
 test_that("intense primary_infection_foci lead to more infections", {
@@ -130,7 +133,7 @@ test_that("intense primary_infection_foci lead to more infections", {
   expect_length(test2[[1]], 11)
   expect_equal(test2[[5]][["exposed_gps"]][, .N], 0)
   expect_equal(test2[[5]][["paddock"]][exposed_gp > 0, .N], 0)
-  expect_equal(test2[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 1)
+  expect_equal(test2[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 10)
   expect_length(test2[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 1)
   expect_equal(test2[[5]][["exposed_gps"]][spores_per_packet  >
                                              0, spores_per_packet], numeric())
@@ -153,7 +156,7 @@ test3 <- trace_asco(
 
 
 test_that("test3 returns some sporulating gps", {
-  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 1)
+  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 12)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
 })
@@ -162,7 +165,7 @@ test_that("test3 returns some sporulating gps", {
 # test running for 28 days with multiple (10) random start locations
 pdk <- CJ(x = 1:100,
           y = 1:100,
-          load = 3)
+          load = 30)
 qry <- pdk[sample(1:nrow(pdk), 10), ]
 
 test3 <- trace_asco(
@@ -173,15 +176,40 @@ test3 <- trace_asco(
   sowing_date = "1998-03-09",
   harvest_date = "1998-04-06",
   time_zone = "Australia/Perth",
-  primary_infection_foci = qry
+  primary_infection_foci = qry,
+  stubble_inoculum_intensity = 0,
+  latent_period_cdd = 200
+
 )
 
 test_that("test3 returns some sporulating gps", {
-  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 31)
+  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 311)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
-  expect_true(all(test3[[30]][["exposed_gps"]][, unique(cdd_at_infection)] >
-                    test3[[30]][["cdd"]] - 200))
+  expect_true(all(test3[[11]][["exposed_gps"]][, unique(cdd_at_infection)] >
+                    test3[[11]][["cdd"]] - 200))
+
+})
+
+test4 <- trace_asco(
+  weather = newM_weather,
+  paddock_length = 100,
+  paddock_width = 100,
+  initial_infection = "1998-03-10",
+  sowing_date = "1998-03-09",
+  harvest_date = "1998-04-06",
+  time_zone = "Australia/Perth",
+  primary_infection_intensity = 0,
+  stubble_inoculum_coords = qry,
+  latent_period_cdd = 200
+)
+
+test_that("test3 returns some sporulating gps", {
+  expect_equal(test4[[30]][["paddock"]][, sum(infectious_gp)], 12)
+  expect_length(test4, 30)
+  expect_length(test4[[1]], 11)
+  expect_true(all(test4[[11]][["exposed_gps"]][, unique(cdd_at_infection)] >
+                    test4[[11]][["cdd"]] - 200))
 
 })
 
@@ -228,7 +256,7 @@ test_that("returns an error when primary infection intensity exceeds gp
                 harvest_date = "1998-04-06",
                 time_zone = "Australia/Perth",
                 primary_infection_foci = qry,
-                primary_inoculum_intensity = 50,
+                primary_infection_intensity = 50,
                 seeding_rate = 40
               )
             )

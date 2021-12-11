@@ -18,8 +18,12 @@ trace_asco(
   latent_period_cdd = 150,
   time_zone = "UTC",
   primary_infection_foci = "random",
-  primary_inoculum_intensity = 1,
+  primary_infection_intensity = 10,
   n_foci = 1,
+  stubble_inoculum_coords = "random",
+  stubble_inoculum_intensity = 200,
+  stubble_inoculum_decay = 1,
+  n_stubble_coords = 1,
   spores_per_gp_per_wet_hour = 0.22,
   splash_cauchy_parameter = 0.5,
   wind_cauchy_multiplier = 0.015,
@@ -72,21 +76,43 @@ lesions on susceptible growing points. Defaults to \code{150}.}
 \item{time_zone}{refers to time in Coordinated Universal Time (UTC).}
 
 \item{primary_infection_foci}{refers to the inoculated coordinates where the
-epidemic starts. Accepted inputs are: \code{centre}/\code{center} or \code{random}
-(Default) or a \code{data.frame} with column names \sQuote{x}, \sQuote{y} and
-\sQuote{load}. The \code{data.frame} inputs inform the model of specific grid
-cell/s coordinates where the epidemic should begin. The \sQuote{load}
-column is optional and can specify the \code{primary_inoculum_intensity}
-for each coordinate.}
+epidemic is observed to start on plants. Accepted inputs are: \code{centre}/
+\code{center} or \code{random} (Default) or a \code{data.frame} with column names
+\sQuote{x}, \sQuote{y} and \sQuote{load}. The \code{data.frame} inputs inform
+the model of the specific grid cell/s coordinates where the epidemic should
+begin. The \sQuote{load} column is optional and can specify the
+\code{primary_infection_intensity} for each coordinate. If \sQuote{load} is not
+specified \code{primary_infection_intensity} is substituted for all coordinates.}
 
-\item{primary_inoculum_intensity}{Refers to the amount of primary inoculum
-(number of lesions on infested stubble in the model). The sources of
-primary inoculum can be infected seed, volunteer chickpea plants or
-infested stubble from the previous seasons. Infested stubble serves as the
-source of primary inoculum in the current model. Defaults to \code{200}.}
+\item{primary_infection_intensity}{Refers to the amount of primary inoculum
+as lesions on chickpea plants at the time of \code{initial_infection}. The
+sources of primary inoculum can be infected seed or volunteer chickpea
+plants or infested stubble from the previous seasons. Defaults to \code{10}.}
 
 \item{n_foci}{only relevant when \code{primary_infection_foci = "random"} and
 notes the number of \code{primary_infection_foci} at initial infection.}
+
+\item{stubble_inoculum_coords}{refers to the inoculated coordinates where the
+crop stubble/debris from previous seasons are likely to contribute to
+splash dispersal of the pathogen inoculum. Accepted inputs are: \code{centre}/
+\code{center}, \code{uniform}, \code{random} (Default) or a \code{data.frame} with column names
+\sQuote{x}, \sQuote{y} and \sQuote{load}. The \code{data.frame} inputs inform
+the model of the specific grid cell/s coordinates where stubble is located
+in the paddock. The \sQuote{load} column is optional and can specify the
+\code{stubble_inoculum_intensity} for each coordinate. If \sQuote{load} is not
+specified \code{stubble_inoculum_intensity} is substituted for all coordinates.}
+
+\item{stubble_inoculum_intensity}{Refers to the quantity of primary inoculum
+as lesions on crop stubble at the time of \code{initial_infection}. Defaults to
+\code{200}.}
+
+\item{stubble_inoculum_decay}{rate between \code{0 - 1} at which inoculum from
+stubble declines over time. Each day with rainfall will reduce the inoculum
+by this factor. A rate of \code{1} (default) indicates no decay, a rate of \code{0.9}
+denotes 10\% decay each day with rainfall.}
+
+\item{n_stubble_coords}{only relevant when \code{stubble_inoculum_coords = "random"}
+and denotes the number of \code{stubble_inoculum_coords} at initial infection.}
 
 \item{spores_per_gp_per_wet_hour}{Number of spores produced per sporulating
 growing point each wet hour. Also known as the \code{spore_rate}. Value is
@@ -173,7 +199,7 @@ traced <- trace_asco(
   harvest_date = "1998-08-18",
   time_zone = "Australia/Perth",
   gp_rr = 0.0065,
-  primary_inoculum_intensity = 1000,
+  primary_infection_intensity = 1000,
   spores_per_gp_per_wet_hour = 0.22,
   primary_infection_foci = "centre")
 
