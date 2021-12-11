@@ -111,7 +111,8 @@ one_day <- function(i_date,
   }
 
   # Don't spread spores if there are no infected coordinates
-  if (nrow(daily_vals[["infected_coords"]]) > 0) {
+  if (nrow(daily_vals[["infected_coords"]]) > 0 |
+      "stubble_lesions" %in% colnames(daily_vals$paddock)) {
     # Spread spores and infect plants
     # Update growing points for paddock coordinates
     if (i_rainfall > daily_rain_threshold) {
