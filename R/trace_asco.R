@@ -191,6 +191,14 @@ trace_asco <- function(weather,
     )
   }
 
+  if (stubble_inoculum_decay < 0 |
+      stubble_inoculum_decay > 1){
+    stop(
+      call. = FALSE,
+      "`stubble_inoculum_decay` rate must be between 0 and 1."
+    )
+  }
+
   # convert times to POSIXct -----------------------------------------------
   initial_infection <-
     lubridate::ymd(.vali_date(initial_infection), tz = time_zone) +
