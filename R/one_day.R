@@ -77,7 +77,7 @@ one_day <- function(i_date,
                     stubble_decay) {
   times <- temp <- rain <- new_gp <- infectious_gp <-
     cdd_at_infection <- susceptible_gp <- exposed_gp <-
-    spores_per_packet <- NULL
+    spores_per_packet <- stubble_lesions <- NULL
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)

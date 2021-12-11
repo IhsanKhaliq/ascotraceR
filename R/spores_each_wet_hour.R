@@ -46,7 +46,7 @@ spores_each_wet_hour <- function(h,
                                  wind_cauchy_multiplier = 0.015,
                                  rainfall_multiplier = FALSE) {
   rain <- ws <- wd <- wd_sd <- infectious_gp <- spores_per_packet <- x <- y <-
-    NULL
+    stubble_lesions <- NULL
 
   # obtain weather data for hour_i
 
