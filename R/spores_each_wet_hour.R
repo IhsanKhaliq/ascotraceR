@@ -62,7 +62,7 @@ spores_each_wet_hour <- function(h,
                                             rain_in_hour))
 
   # get data.table of inoculum coordinates
-  paddock_infective <- paddock[infectious_gp > 0 &
+  paddock_infective <- paddock[infectious_gp > 0 |
                                  stubble_lesions > 0, ]
 
   exposed_dt <-
