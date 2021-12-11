@@ -256,6 +256,61 @@ trace_asco <- function(weather,
     }
   }
 
+  # Define the location of stubble inoculum from stubble_inoculum_coords
+  if ("data.frame" %in% class(stubble_inoculum_coords) == FALSE) {
+    if (class(stubble_inoculum_coords) == "character") {
+      if (stubble_inoculum_coords == "random") {
+        stubble_inoculum_coords <-
+          paddock[sample(seq_len(nrow(paddock)),
+                         size = n_stubble_coords,
+                         replace = TRUE),
+                  c("x", "y")]
+
+      } else {
+        if (stubble_inoculum_coords == "centre" ||
+            stubble_inoculum_coords == "center") {
+          stubble_inoculum_coords <-
+            paddock[x == as.integer(round(paddock_width / 2)) &
+                      y == as.integer(round(paddock_length / 2)),
+                    c("x", "y")]
+        } else{
+          stop(call. = FALSE,
+               "`stubble_inoculum_coords` input not recognised")
+        }
+      }
+    } else {
+      if (is.vector(stubble_inoculum_coords)) {
+        if (length(stubble_inoculum_coords) != 2 |
+            is.numeric(stubble_inoculum_coords) == FALSE) {
+          stop(
+            call. = FALSE,
+            "`stubble_inoculum_coords` should be supplied as a numeric vector ",
+            "of length two"
+          )
+        }
+        stubble_inoculum_coords <-
+          as.data.table(as.list(stubble_inoculum_coords))
+
+        setnames(x = stubble_inoculum_coords,
+                 old = c("V1", "V2"),
+                 new = c("x", "y"),
+                 skip_absent = TRUE)
+      }
+    }
+  } else{
+    if (is.data.table(stubble_inoculum_coords) == FALSE &
+        is.data.frame(stubble_inoculum_coords)) {
+      setDT(stubble_inoculum_coords)
+      if (all(c("x", "y") %in% colnames(stubble_inoculum_coords)) == FALSE) {
+        stop(
+          call. = FALSE,
+          "The `stubble_inoculum_coords` data.frame should contain colnames ",
+          "'x' and 'y'"
+        )
+      }
+    }
+  }
+
 
   # get rownumbers for paddock data.table that need to be set as infected
   infected_rows <- which_paddock_row(paddock = paddock,
@@ -266,6 +321,17 @@ trace_asco <- function(weather,
     if (all(colnames(primary_infection_foci) %in% c("x", "y"))) {
       stop(call. = FALSE,
            "Colnames for `primary_infection_foci` are not 'x', 'y' & 'load'.")
+    }
+  }
+  # get rownumbers for paddock data.table that need to be set as infected
+  stubble_rows <- which_paddock_row(paddock = paddock,
+                                    query = stubble_inoculum_coords)
+  if ("load" %in% colnames(stubble_inoculum_coords) == FALSE) {
+    stubble_inoculum_coords[, load := stubble_innoculum_intensity]
+  } else{
+    if (all(colnames(stubble_inoculum_coords) %in% c("x", "y"))) {
+      stop(call. = FALSE,
+           "Colnames for `stubble_inoculum_coords` are not 'x', 'y' & 'load'.")
     }
   }
 
