@@ -421,7 +421,8 @@ trace_asco <- function(weather,
       daily_rain_threshold = daily_rain_threshold,
       hourly_rain_threshold = hourly_rain_threshold,
       susceptible_days = susceptible_days,
-      rainfall_multiplier = rainfall_multiplier
+      rainfall_multiplier = rainfall_multiplier,
+      stubble_decay = stubble_inoculum_decay
     )
 
     # When the time of initial infection occurs, infect the paddock coordinates
