@@ -178,7 +178,7 @@ test3 <- trace_asco(
 )
 
 test_that("test3 returns some sporulating gps", {
-  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 31)
+  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 30)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
   expect_true(all(test3[[30]][["exposed_gps"]][, unique(cdd_at_infection)] >
