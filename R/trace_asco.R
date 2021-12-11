@@ -342,11 +342,13 @@ trace_asco <- function(weather,
     "new_gp", # Change in the number of growing points since last iteration
     "susceptible_gp",
     "exposed_gp",
-    "infectious_gp" # replacing InfectiveElementList
+    "infectious_gp", # replacing InfectiveElementList
+    "stubble_lesions"
   ) :=
     list(
       seeding_rate,
       seeding_rate,
+      0,
       0,
       0
     )]
