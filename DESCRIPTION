@@ -41,8 +41,6 @@ Depends:
 Imports:
   data.table (>= 1.13.0),
   lubridate (>= 1.7.9.2),
-  future (>= 1.21.0),
-  future.apply (>= 1.7.0),
   lutz (>= 0.3.1),
   circular (>= 0.4-93),
   purrr,
