@@ -78,7 +78,7 @@ test1.1 <- trace_asco(
   time_zone = "Australia/Perth",
   # weather file is in Perth timezone
   primary_infection_foci = "centre",
-  primary_inoculum_intensity = 40
+  primary_infection_intensity = 40
 )
 
 test_that("intense primary_infection_foci lead to more infections", {
@@ -228,7 +228,7 @@ test_that("returns an error when primary infection intensity exceeds gp
                 harvest_date = "1998-04-06",
                 time_zone = "Australia/Perth",
                 primary_infection_foci = qry,
-                primary_inoculum_intensity = 50,
+                primary_infection_intensity = 50,
                 seeding_rate = 40
               )
             )
