@@ -37,9 +37,9 @@
 #'   primary inoculum can be infected seed, volunteer chickpea plants or
 #'   infested stubble from the previous seasons. Infested stubble serves as the
 #'   source of primary inoculum in the current model. Defaults to `200`.
-#' @stubble_innoculum_intensity
+#' @stubble_inoculum_intensity
 #' @stubble_inoculum_coords
-#' @stubble_innoculum_decay
+#' @stubble_inoculum_decay
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
@@ -146,8 +146,8 @@ trace_asco <- function(weather,
                        primary_infection_intensity = 1,
                        n_foci = 1,
                        stubble_inoculum_coords = "random",
-                       stubble_innoculum_intensity = 0,
-                       stubble_innoculum_decay = 1,
+                       stubble_inoculum_intensity = 0,
+                       stubble_inoculum_decay = 1,
                        n_stubble_coords = 1,
                        spores_per_gp_per_wet_hour = 0.22,
                        splash_cauchy_parameter = 0.5,
@@ -168,10 +168,10 @@ trace_asco <- function(weather,
   }
 
   if (primary_infection_intensity < 0|
-      stubble_innoculum_intensity < 0) {
+      stubble_inoculum_intensity < 0) {
     stop(
       call. = FALSE,
-      "`primary_infection_intensity` or `stubble_innoculum_intensity` has to",
+      "`primary_infection_intensity` or `stubble_inoculum_intensity` has to",
       " be > 0 for the model to simulate disease spread"
     )
   }
@@ -327,7 +327,7 @@ trace_asco <- function(weather,
   stubble_rows <- which_paddock_row(paddock = paddock,
                                     query = stubble_inoculum_coords)
   if ("load" %in% colnames(stubble_inoculum_coords) == FALSE) {
-    stubble_inoculum_coords[, load := stubble_innoculum_intensity]
+    stubble_inoculum_coords[, load := stubble_inoculum_intensity]
   } else{
     if (all(colnames(stubble_inoculum_coords) %in% c("x", "y"))) {
       stop(call. = FALSE,
