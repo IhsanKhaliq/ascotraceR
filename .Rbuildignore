@@ -5,3 +5,6 @@
 ^codemeta\.json$
 ^README\.Rmd$
 ^cran-comments\.md$
+^\.ccache$
+^\.github$
+^tic\.R$
