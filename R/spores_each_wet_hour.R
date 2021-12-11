@@ -61,8 +61,9 @@ spores_each_wet_hour <- function(h,
                                           as.numeric(rainfall_multiplier) *
                                             rain_in_hour))
 
-  # get data.table of infected coordinates
-  paddock_infective <- paddock[infectious_gp > 0, ]
+  # get data.table of inoculum coordinates
+  paddock_infective <- paddock[infectious_gp > 0 &
+                                 stubble_lesions > 0, ]
 
   exposed_dt <-
     future.apply::future_apply(
