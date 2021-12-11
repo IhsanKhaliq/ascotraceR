@@ -37,9 +37,12 @@
 #'   primary inoculum can be infected seed, volunteer chickpea plants or
 #'   infested stubble from the previous seasons. Infested stubble serves as the
 #'   source of primary inoculum in the current model. Defaults to `200`.
-#' @stubble_inoculum_intensity
-#' @stubble_inoculum_coords
-#' @stubble_inoculum_decay
+#' @param n_foci only relevant when `primary_infection_foci = "random"` and
+#'   notes the number of `primary_infection_foci` at initial infection.
+#' @param stubble_inoculum_coords
+#' @param stubble_inoculum_intensity
+#' @param n_stubble_coords
+#' @param stubble_inoculum_decay
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
@@ -50,8 +53,6 @@
 #' @param spores_per_gp_per_wet_hour Number of spores produced per sporulating
 #'   growing point each wet hour. Also known as the `spore_rate`. Value is
 #'   dependent on the susceptibility of the host genotype.
-#' @param n_foci only relevant when `primary_infection_foci = "random"` and
-#'   notes the number of `primary_infection_foci` at initial infection.
 #' @param splash_cauchy_parameter A parameter used in the Cauchy distribution
 #'   and describes the median distance spores travel due to rain splashes.
 #'   Default to `0.5`.
