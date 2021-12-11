@@ -51,7 +51,7 @@
 #' @param stubble_inoculum_intensity Refers to the quantity of primary inoculum
 #'   as lesions on crop stubble at the time of `initial_infection`. Defaults to
 #'   `200`.
-#' @param n_stubble_coordsonly relevant when `stubble_inoculum_coords = "random"`
+#' @param n_stubble_coords only relevant when `stubble_inoculum_coords = "random"`
 #'   and denotes the number of `stubble_inoculum_coords` at initial infection.
 #' @param stubble_inoculum_decay rate between `0 - 1` at which inoculum from
 #'   stubble declines over time. Each day with rainfall will reduce the inoculum
