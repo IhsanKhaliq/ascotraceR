@@ -79,7 +79,8 @@ test1.1 <- trace_asco(
   time_zone = "Australia/Perth",
   # weather file is in Perth timezone
   primary_infection_foci = "centre",
-  primary_infection_intensity = 40
+  primary_infection_intensity = 40,
+  stubble_inoculum_intensity = 0
 )
 
 test_that("intense primary_infection_foci lead to more infections", {
@@ -114,7 +115,8 @@ test2 <- trace_asco(
   sowing_date = "1998-03-09",
   harvest_date = "1998-03-23",
   time_zone = "Australia/Perth",
-  primary_infection_foci = "centre"
+  primary_infection_foci = "centre",
+  stubble_inoculum_intensity = 0
 )
 
 test_that("intense primary_infection_foci lead to more infections", {
@@ -131,7 +133,7 @@ test_that("intense primary_infection_foci lead to more infections", {
   expect_length(test2[[1]], 11)
   expect_equal(test2[[5]][["exposed_gps"]][, .N], 0)
   expect_equal(test2[[5]][["paddock"]][exposed_gp > 0, .N], 0)
-  expect_equal(test2[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 1)
+  expect_equal(test2[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 10)
   expect_length(test2[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 1)
   expect_equal(test2[[5]][["exposed_gps"]][spores_per_packet  >
                                              0, spores_per_packet], numeric())
@@ -154,7 +156,7 @@ test3 <- trace_asco(
 
 
 test_that("test3 returns some sporulating gps", {
-  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 1)
+  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 12)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
 })
@@ -174,7 +176,8 @@ test3 <- trace_asco(
   sowing_date = "1998-03-09",
   harvest_date = "1998-04-06",
   time_zone = "Australia/Perth",
-  primary_infection_foci = qry
+  primary_infection_foci = qry,
+  stubble_inoculum_intensity = 0
 )
 
 test_that("test3 returns some sporulating gps", {
