@@ -66,10 +66,9 @@ spores_each_wet_hour <- function(h,
                                  stubble_lesions > 0, ]
 
   exposed_dt <-
-    future.apply::future_apply(
+    apply(
       X = paddock_infective,
       MARGIN =  1,
-      future.seed = TRUE,
       FUN =  spores_from_1_element,
       spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
       max_interception_probability = max_interception_probability,
