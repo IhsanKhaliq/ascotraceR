@@ -29,7 +29,8 @@ following columns:
 \strong{cr}: \tab Cumulative rainfall (mm) \cr
 \strong{gp_standard}: \tab standard growing points assuming growth is not
 impeded by infection on \code{i_day} (n) \cr
-\strong{AUDPC}: \tab Area under the disease progress curve (AUDPC) \cr}
+\strong{AUDPC}: \tab Area under the disease progress curve (AUDPC) for the duration
+of the model's run.}
 }
 \description{
 Creates a paddock-level summary \CRANpkg{data.table} from the output of

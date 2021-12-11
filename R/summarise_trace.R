@@ -22,7 +22,8 @@
 #'   **cr**: \tab Cumulative rainfall (mm) \cr
 #'   **gp_standard**: \tab standard growing points assuming growth is not
 #'           impeded by infection on `i_day` (n) \cr
-#'   **AUDPC**: \tab Area under the disease progress curve (AUDPC) \cr}
+#'   **AUDPC**: \tab Area under the disease progress curve (AUDPC) for the duration
+#'   of the model's run.}
 #'
 #' @seealso [trace_asco()], [tidy_trace()]
 #'
