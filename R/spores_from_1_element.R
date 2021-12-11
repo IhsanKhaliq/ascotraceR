@@ -43,13 +43,17 @@ spores_from_1_element <-
            paddock) {
     x <- y <- NULL
 
+    sporulating_lesions <-
+      paddock_source["infectious_gp"] +
+      paddock_source["stubble_lesions"]
+
     # this might be able to be calculated at the spread_spores level, and `If`
     # statement should come first given that it is if == 0
     spore_packets <-
       potentially_effective_spores(
         spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
         max_interception_probability = max_interception_probability,
-        paddock_source["infectious_gp"]
+        paddock_infected_gp = sporulating_lesions
       )
 
     degree <- 0.01745
