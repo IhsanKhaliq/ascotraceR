@@ -451,6 +451,9 @@ trace_asco <- function(weather,
                    susceptible_gp - primary_infection_foci[, load],
                    primary_infection_foci[, load]
                  )]
+          pad1[stubble_rows,
+               "stubble_lesions" :=
+                 stubble_inoculum_coords[, load]]
           dl[["paddock"]] <- pad1
 
           # Edit infected_coordinates data.table
