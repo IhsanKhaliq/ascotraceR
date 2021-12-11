@@ -1,4 +1,4 @@
-#' Describes the Growth of Chickpea
+#' Describes the Growth of Chickpea.
 #'
 #' 'calc_new_gp()' describes the growth of chickpea in terms of development of growing
 #' points. Upon germination, each germinated seed produces one growing point that multiplies at a rate
