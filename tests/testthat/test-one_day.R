@@ -122,7 +122,8 @@ test_that("one_day single infection foci returns expected output", {
       "new_gp",
       "susceptible_gp",
       "exposed_gp",
-      "infectious_gp"
+      "infectious_gp",
+      "stubble_lesions"
     )
   )
   expect_equal(test1[["paddock"]][, unique(new_gp)],
@@ -193,7 +194,8 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
                 "new_gp",
                 "susceptible_gp",
                 "exposed_gp",
-                "infectious_gp"
+                "infectious_gp",
+                "stubble_lesions"
               )
             )
             expect_equal(test2[["paddock"]][, unique(new_gp)],

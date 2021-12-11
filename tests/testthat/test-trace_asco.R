@@ -35,7 +35,8 @@ test_that("days have updated after 5 increments", {
       "new_gp",
       "susceptible_gp",
       "exposed_gp",
-      "infectious_gp"
+      "infectious_gp",
+      "stubble_lesions"
     )
   )
   expect_equal(test1[[5]][["day"]], yday(harvest_date) + 1)
