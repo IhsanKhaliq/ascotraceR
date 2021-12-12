@@ -34,10 +34,11 @@
 #'   column is optional and can specify the `primary_infection_intensity` for
 #'   each coordinate. If \sQuote{load} is not specified
 #'   `primary_infection_intensity` is substituted for all coordinates.
-#' @param primary_infection_intensity Refers to the amount of primary inoculum
-#'   as lesions on chickpea plants at the time of `initial_infection`. The
-#'   sources of primary inoculum can be infected seed or volunteer chickpea
-#'   plants or infested stubble from the previous seasons. Defaults to `10`.
+#' @param primary_infection_intensity Refers to the amount of primary infection
+#'   as lesions on chickpea plants at the time of `initial_infection`. On the date
+#'   of initial infection in the experiment, one infectious growing point was
+#'   added to each of the sub-unit corresponding to the point of initial infection
+#'   in the field. Defaults to `10`.
 #' @param n_foci refers to number of inoculated quadrats (with primary
 #'   inoculum). The value is always `1` if `primary_infection_foci = "centre"`.
 #'   The value can be greater than `1` if `primary_infection_foci = "random"`.
