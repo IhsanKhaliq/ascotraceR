@@ -1,11 +1,11 @@
 #' Simulates the spread of Ascochyta blight in a chickpea field
 #'
 #' Simulate the spatiotemporal development of Ascochyta blight in a chickpea
-#' paddock over a growing season on a one square metre basis.
+#' paddock over a growing season. Both host and pathogen activities are
+#' simulated in one square metre cells.
 #'
-#' @param weather weather data for a representative chickpea paddock that
-#'   contains weather data for a complete chickpea growing season for the
-#'   model's operation.
+#' @param weather weather data for a representative chickpea paddock for a
+#' complete chickpea growing season for the model's operation.
 #' @param paddock_length length of a paddock in metres (y).
 #' @param paddock_width width of a paddock in metres (x).
 #' @param sowing_date a character string of a date value indicating sowing date
@@ -25,11 +25,11 @@
 #'   allowed per square metre. Defaults to `5000`.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
-#' @param primary_infection_foci refers to the inoculated coordinates where the
-#'   epidemic is observed to start on plants. Accepted inputs are: `centre`/
+#' @param primary_infection_foci refers to the inoculated coordinates where primary
+#' inoculum is introduced to initiate infection. Accepted inputs are: `centre`/
 #'   `center` or `random` (Default) or a `data.frame` with column names
 #'   \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs inform
-#'   the model of the specific grid cell/s coordinates where the epidemic should
+#'   the model of the specific grid cell/s coordinates where the primary infection should
 #'   begin. The \sQuote{load} column is optional and can specify the
 #'   `primary_infection_intensity` for each coordinate. If \sQuote{load} is not
 #'   specified `primary_infection_intensity` is substituted for all coordinates.
@@ -38,7 +38,7 @@
 #'   sources of primary inoculum can be infected seed or volunteer chickpea
 #'   plants or infested stubble from the previous seasons. Defaults to `10`.
 #' @param n_foci only relevant when `primary_infection_foci = "random"` and
-#'   notes the number of `primary_infection_foci` at initial infection.
+#'   quantifies the number of `primary_infection_foci` at the time of initial infection.
 #' @param stubble_inoculum_coords refers to the inoculated coordinates where the
 #'   crop stubble/debris from previous seasons are likely to contribute to
 #'   splash dispersal of the pathogen inoculum. Accepted inputs are: `centre`/
