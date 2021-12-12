@@ -25,7 +25,7 @@
 #'   allowed per square metre. Defaults to `5000`.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
-#' @param primary_infection_foci refers to the inoculated coordinates where
+#' @param primary_infection_foci refers to the position of inoculated coordinates where
 #'   primary inoculum is introduced to initiate infection. Accepted inputs are:
 #'   `centre`/ `center` or `random` (Default) or a `data.frame` with column
 #'   names \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs
@@ -38,9 +38,9 @@
 #'   as lesions on chickpea plants at the time of `initial_infection`. The
 #'   sources of primary inoculum can be infected seed or volunteer chickpea
 #'   plants or infested stubble from the previous seasons. Defaults to `10`.
-#' @param n_foci only relevant when `primary_infection_foci = "random"` and
-#'   quantifies the number of `primary_infection_foci` at the time of initial
-#'   infection.
+#' @param n_foci refers to number of inoculated quadrats (with primary inoculum).
+#'   The value is always `1` if `primary_infection_foci = "centre"`. The value
+#'   can be greater than `1` if `primary_infection_foci = "random"`.
 #' @param stubble_inoculum_coords refers to the inoculated coordinates where the
 #'   crop stubble/debris are likely to contribute to splash dispersal of the
 #'   pathogen inoculum. Accepted inputs are: `centre`/ `center`, `uniform`,
