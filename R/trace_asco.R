@@ -5,13 +5,13 @@
 #' simulated in one square metre cells.
 #'
 #' @param weather weather data for a representative chickpea paddock for a
-#' complete chickpea growing season for the model's operation.
+#'   complete chickpea growing season for the model's operation.
 #' @param paddock_length length of a paddock in metres (y).
 #' @param paddock_width width of a paddock in metres (x).
 #' @param sowing_date a character string of a date value indicating sowing date
 #'   of chickpea seed and the start of the \sQuote{ascotraceR} model. Preferably
-#'   in ISO8601 format (YYYY-MM-DD), _e.g._ \dQuote{2020-04-26}. Assumes
-#'   there is sufficient soil moisture to induce germination and start the crop
+#'   in ISO8601 format (YYYY-MM-DD), _e.g._ \dQuote{2020-04-26}. Assumes there
+#'   is sufficient soil moisture to induce germination and start the crop
 #'   growing season.
 #' @param harvest_date a character string of a date value indicating harvest
 #'   date of chickpea crop, which is also the last day to run the
@@ -25,39 +25,42 @@
 #'   allowed per square metre. Defaults to `5000`.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
-#' @param primary_infection_foci refers to the inoculated coordinates where primary
-#' inoculum is introduced to initiate infection. Accepted inputs are: `centre`/
-#'   `center` or `random` (Default) or a `data.frame` with column names
-#'   \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs inform
-#'   the model of the specific grid cell/s coordinates where the primary infection should
-#'   begin. The \sQuote{load} column is optional and can specify the
-#'   `primary_infection_intensity` for each coordinate. If \sQuote{load} is not
-#'   specified `primary_infection_intensity` is substituted for all coordinates.
+#' @param primary_infection_foci refers to the inoculated coordinates where
+#'   primary inoculum is introduced to initiate infection. Accepted inputs are:
+#'   `centre`/ `center` or `random` (Default) or a `data.frame` with column
+#'   names \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs
+#'   inform the model of the specific grid cell/s coordinates where the primary
+#'   infection should begin. The \sQuote{load} column is optional and can
+#'   specify the `primary_infection_intensity` for each coordinate. If
+#'   \sQuote{load} is not specified `primary_infection_intensity` is substituted
+#'   for all coordinates.
 #' @param primary_infection_intensity Refers to the amount of primary inoculum
 #'   as lesions on chickpea plants at the time of `initial_infection`. The
 #'   sources of primary inoculum can be infected seed or volunteer chickpea
 #'   plants or infested stubble from the previous seasons. Defaults to `10`.
 #' @param n_foci only relevant when `primary_infection_foci = "random"` and
-#'   quantifies the number of `primary_infection_foci` at the time of initial infection.
+#'   quantifies the number of `primary_infection_foci` at the time of initial
+#'   infection.
 #' @param stubble_inoculum_coords refers to the inoculated coordinates where the
-#'   crop stubble/debris are likely to contribute to
-#'   splash dispersal of the pathogen inoculum. Accepted inputs are: `centre`/
-#'   `center`, `uniform`, `random` (Default) or a `data.frame` with column names
-#'   \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs inform
-#'   the model of the specific grid cell/s coordinates where stubble is located
-#'   in the paddock. The \sQuote{load} column is optional and can specify the
+#'   crop stubble/debris are likely to contribute to splash dispersal of the
+#'   pathogen inoculum. Accepted inputs are: `centre`/ `center`, `uniform`,
+#'   `random` (Default) or a `data.frame` with column names \sQuote{x},
+#'   \sQuote{y} and \sQuote{load}. The `data.frame` inputs inform the model of
+#'   the specific grid cell/s coordinates where stubble is located in the
+#'   paddock. The \sQuote{load} column is optional and can specify the
 #'   `stubble_inoculum_intensity` for each coordinate. If \sQuote{load} is not
 #'   specified `stubble_inoculum_intensity` is substituted for all coordinates.
 #' @param stubble_inoculum_intensity Refers to the quantity of primary inoculum
 #'   as lesions on crop stubble at the time of `initial_infection`. Defaults to
 #'   `200`.
-#' @param n_stubble_coords only relevant when `stubble_inoculum_coords = "random"`
-#'   and denotes the number of `stubble_inoculum_coords` at initial infection.
+#' @param n_stubble_coords only relevant when `stubble_inoculum_coords =
+#'   "random"` and denotes the number of `stubble_inoculum_coords` at initial
+#'   infection.
 #' @param stubble_inoculum_decay rate between `0 - 1` at which inoculum from
 #'   stubble declines over time. Each day with rainfall will reduce the inoculum
 #'   by this factor. A rate of `1` (default) indicates no decay, a rate of `0.9`
-#'   denotes 10% decay each day with rainfall. The value is currently `1`, as
-#'   it is out of scope of this model to consider this in details.
+#'   denotes 10% decay each day with rainfall. The value is currently `1`, as it
+#'   is out of scope of this model to consider this in details.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
@@ -72,23 +75,23 @@
 #'   and describes the median distance spores travel due to rain splashes.
 #'   Default to `0.5`.
 #' @param wind_cauchy_multiplier A scaling parameter to estimate a Cauchy
-#'  distribution which resembles the possible distances a conidium travels due
-#'  to wind driven rain dispersal. Defaults to `0.015`.
+#'   distribution which resembles the possible distances a conidium travels due
+#'   to wind driven rain dispersal. Defaults to `0.015`.
 #' @param daily_rain_threshold Minimum cumulative rainfall required in a day to
-#'  allow hourly spore spread events. See also `hourly_rain_threshold`.
-#'  Defaults to `2`.
+#'   allow hourly spore spread events. See also `hourly_rain_threshold`.
+#'   Defaults to `2`.
 #' @param hourly_rain_threshold Minimum rainfall in an hour to trigger a spore
-#'  spread event in the same hour (assuming daily_rain_threshold is already
-#'  met). Defaults to `0.1`.
+#'   spread event in the same hour (assuming daily_rain_threshold is already
+#'   met). Defaults to `0.1`.
 #' @param susceptible_days The number of days for which conidia remain viable on
-#' chickpea after dispersal. Defaults to `2`. conidia remain viable on the
-#' plant for at least 48 hours after a spread event
+#'   chickpea after dispersal. Defaults to `2`. Conidia remain viable on the
+#'   plant for at least 48 hours after a spread event
 #' @param rainfall_multiplier logical values will turn on or off rainfall
-#'  multiplier default method. The default method increases the number of spores
-#'  spread per growing point if the rainfall in the spore spread event hour is
-#'  greater than one. Numeric values will scale the number of spores spread per
-#'  growing point against the volume of rainfall in the hour. Defaults to
-#'  `FALSE`.
+#'   multiplier default method. The default method increases the number of
+#'   spores spread per growing point if the rainfall in the spore spread event
+#'   hour is greater than one. Numeric values will scale the number of spores
+#'   spread per growing point against the volume of rainfall in the hour.
+#'   Defaults to `FALSE`.
 #'
 #' @return A nested `list` object where each sub-list contains daily data for
 #'   the day `i_day` (the model's iteration day) generated by the model
