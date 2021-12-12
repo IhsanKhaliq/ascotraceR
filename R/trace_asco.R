@@ -25,22 +25,22 @@
 #'   allowed per square metre. Defaults to `5000`.
 #' @param max_new_gp Maximum number of new chickpea growing points (meristems),
 #'   which develop per day, per square metre. Defaults to `350`.
-#' @param primary_infection_foci refers to the position of inoculated coordinates where
-#'   primary inoculum is introduced to initiate infection. Accepted inputs are:
-#'   `centre`/ `center` or `random` (Default) or a `data.frame` with column
-#'   names \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs
-#'   inform the model of the specific grid cell/s coordinates where the primary
-#'   infection should begin. The \sQuote{load} column is optional and can
-#'   specify the `primary_infection_intensity` for each coordinate. If
-#'   \sQuote{load} is not specified `primary_infection_intensity` is substituted
-#'   for all coordinates.
+#' @param primary_infection_foci refers to the position of inoculated
+#'   coordinates where primary inoculum is introduced to initiate infection.
+#'   Accepted inputs are: `centre`/ `center` or `random` (Default) or a
+#'   `data.frame` with column names \sQuote{x}, \sQuote{y} and \sQuote{load}.
+#'   The `data.frame` inputs inform the model of the specific grid cell/s
+#'   coordinates where the primary infection should begin. The \sQuote{load}
+#'   column is optional and can specify the `primary_infection_intensity` for
+#'   each coordinate. If \sQuote{load} is not specified
+#'   `primary_infection_intensity` is substituted for all coordinates.
 #' @param primary_infection_intensity Refers to the amount of primary inoculum
 #'   as lesions on chickpea plants at the time of `initial_infection`. The
 #'   sources of primary inoculum can be infected seed or volunteer chickpea
 #'   plants or infested stubble from the previous seasons. Defaults to `10`.
-#' @param n_foci refers to number of inoculated quadrats (with primary inoculum).
-#'   The value is always `1` if `primary_infection_foci = "centre"`. The value
-#'   can be greater than `1` if `primary_infection_foci = "random"`.
+#' @param n_foci refers to number of inoculated quadrats (with primary
+#'   inoculum). The value is always `1` if `primary_infection_foci = "centre"`.
+#'   The value can be greater than `1` if `primary_infection_foci = "random"`.
 #' @param stubble_inoculum_coords refers to the inoculated coordinates where the
 #'   crop stubble/debris are likely to contribute to splash dispersal of the
 #'   pathogen inoculum. Accepted inputs are: `centre`/ `center`, `uniform`,
