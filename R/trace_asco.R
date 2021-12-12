@@ -40,7 +40,7 @@
 #' @param n_foci only relevant when `primary_infection_foci = "random"` and
 #'   quantifies the number of `primary_infection_foci` at the time of initial infection.
 #' @param stubble_inoculum_coords refers to the inoculated coordinates where the
-#'   crop stubble/debris from previous seasons are likely to contribute to
+#'   crop stubble/debris are likely to contribute to
 #'   splash dispersal of the pathogen inoculum. Accepted inputs are: `centre`/
 #'   `center`, `uniform`, `random` (Default) or a `data.frame` with column names
 #'   \sQuote{x}, \sQuote{y} and \sQuote{load}. The `data.frame` inputs inform
