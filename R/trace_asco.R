@@ -56,7 +56,8 @@
 #' @param stubble_inoculum_decay rate between `0 - 1` at which inoculum from
 #'   stubble declines over time. Each day with rainfall will reduce the inoculum
 #'   by this factor. A rate of `1` (default) indicates no decay, a rate of `0.9`
-#'   denotes 10% decay each day with rainfall.
+#'   denotes 10% decay each day with rainfall. The value is currently `1`, as
+#'   it is out of scope of this model to consider this in details.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
@@ -72,15 +73,16 @@
 #'   Default to `0.5`.
 #' @param wind_cauchy_multiplier A scaling parameter to estimate a Cauchy
 #'  distribution which resembles the possible distances a conidium travels due
-#'  to wind dispersal. Defaults to `0.015`.
+#'  to wind driven rain dispersal. Defaults to `0.015`.
 #' @param daily_rain_threshold Minimum cumulative rainfall required in a day to
 #'  allow hourly spore spread events. See also `hourly_rain_threshold`.
 #'  Defaults to `2`.
 #' @param hourly_rain_threshold Minimum rainfall in an hour to trigger a spore
-#'  spread event in the same hour (Assuming daily_rain_threshold is already
+#'  spread event in the same hour (assuming daily_rain_threshold is already
 #'  met). Defaults to `0.1`.
-#' @param susceptible_days number of days a new growing point remains
-#'  susceptible to infection from _Ascochyta_ conidia. Defaults to `5`.
+#' @param susceptible_days The number of days for which conidia remain viable on
+#' chickpea after dispersal. Defaults to `2`. conidia remain viable on the
+#' plant for at least 48 hours after a spread event
 #' @param rainfall_multiplier logical values will turn on or off rainfall
 #'  multiplier default method. The default method increases the number of spores
 #'  spread per growing point if the rainfall in the spore spread event hour is
