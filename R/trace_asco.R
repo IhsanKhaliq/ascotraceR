@@ -57,11 +57,11 @@
 #' @param n_stubble_coords only relevant when `stubble_inoculum_coords =
 #'   "random"` and denotes the number of `stubble_inoculum_coords` at initial
 #'   infection.
-#' @param stubble_inoculum_decay rate between `0 - 1` at which inoculum from
-#'   stubble declines over time. Each day with rainfall will reduce the inoculum
-#'   by this factor. A rate of `1` (default) indicates no decay, a rate of `0.9`
-#'   denotes 10% decay each day with rainfall. The value is currently `1`, as it
-#'   is out of scope of this model to consider this in details.
+#' @param stubble_inoculum_decay rate between `0 - 1` at which stubble inoculum
+#'   declines over time. Each day with rainfall will deplete the inoculum. A
+#'   rate of `1` (default) indicates no decay, a rate of `0.9` denotes 10% decay
+#'   each day with rainfall. The value is currently `1`, as it is out of scope
+#'   of this model to consider this in details.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
