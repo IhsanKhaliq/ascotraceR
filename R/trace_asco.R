@@ -53,8 +53,7 @@
 #'   `stubble_inoculum_intensity` for each coordinate. If \sQuote{load} is not
 #'   specified `stubble_inoculum_intensity` is substituted for all coordinates.
 #' @param stubble_inoculum_intensity Refers to the quantity of primary inoculum
-#'   as lesions on crop stubble at the time of `initial_infection`. Defaults to
-#'   `200`.
+#'   as lesions infested chickpea stubble. Defaults to `200`.
 #' @param n_stubble_coords only relevant when `stubble_inoculum_coords =
 #'   "random"` and denotes the number of `stubble_inoculum_coords` at initial
 #'   infection.
