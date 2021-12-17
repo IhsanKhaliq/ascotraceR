@@ -10,8 +10,7 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![tic](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml/badge.svg)](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml)
 <!-- badges: end -->
 
-# ascotraceR: An R package resource to simulate the spatiotemporal spread of
-Ascochyta blight in a chickpea field over a growing season
+# ascotraceR: An R package resource to simulate the spatiotemporal spread of Ascochyta blight in a chickpea field over a growing season
 
 The goal of of *ascotraceR* is to develop a weather driven model to simulate the
 spread of Ascochyta blight disease in a chickpea field over a growing season.
