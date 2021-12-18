@@ -124,7 +124,7 @@
 #'   spores_per_gp_per_wet_hour = 0.22,
 #'   primary_infection_foci = "centre")
 #'
-#' traced[[23]] # extracts the model output for day 70
+#' traced[[23]] # extracts the model output for day 23
 #'
 #' @export
 #'
