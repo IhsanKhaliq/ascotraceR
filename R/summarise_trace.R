@@ -52,7 +52,7 @@
 #'   paddock_width = 100,
 #'   initial_infection = "1998-06-10",
 #'   sowing_date = "1998-06-09",
-#'   harvest_date = "1998-09-17",
+#'   harvest_date = "1998-06-30",
 #'   time_zone = "Australia/Perth",
 #'   primary_infection_foci = "centre")
 #'
