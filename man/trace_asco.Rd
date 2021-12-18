@@ -25,14 +25,13 @@ trace_asco(
   wind_cauchy_multiplier = 0.015,
   daily_rain_threshold = 2,
   hourly_rain_threshold = 0.1,
-  susceptible_days = 5,
+  susceptible_days = 2,
   rainfall_multiplier = FALSE
 )
 }
 \arguments{
-\item{weather}{weather data for a representative chickpea paddock that
-contains weather data for a complete chickpea growing season for the
-model's operation.}
+\item{weather}{weather data for a representative chickpea paddock for a
+complete chickpea growing season for the model's operation.}
 
 \item{paddock_length}{length of a paddock in metres (y).}
 
@@ -40,8 +39,8 @@ model's operation.}
 
 \item{sowing_date}{a character string of a date value indicating sowing date
 of chickpea seed and the start of the \sQuote{ascotraceR} model. Preferably
-in ISO8601 format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}. Assumes
-there is sufficient soil moisture to induce germination and start the crop
+in ISO8601 format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}. Assumes there
+is sufficient soil moisture to induce germination and start the crop
 growing season.}
 
 \item{harvest_date}{a character string of a date value indicating harvest
@@ -98,25 +97,26 @@ Default to \code{0.5}.}
 
 \item{wind_cauchy_multiplier}{A scaling parameter to estimate a Cauchy
 distribution which resembles the possible distances a conidium travels due
-to wind dispersal. Defaults to \code{0.015}.}
+to wind driven rain dispersal. Defaults to \code{0.015}.}
 
 \item{daily_rain_threshold}{Minimum cumulative rainfall required in a day to
 allow hourly spore spread events. See also \code{hourly_rain_threshold}.
 Defaults to \code{2}.}
 
 \item{hourly_rain_threshold}{Minimum rainfall in an hour to trigger a spore
-spread event in the same hour (Assuming daily_rain_threshold is already
+spread event in the same hour (assuming daily_rain_threshold is already
 met). Defaults to \code{0.1}.}
 
-\item{susceptible_days}{number of days a new growing point remains
-susceptible to infection from \emph{Ascochyta} conidia. Defaults to \code{5}.}
+\item{susceptible_days}{The number of days for which conidia remain viable on
+chickpea after dispersal. Defaults to \code{2}. Conidia remain viable on the
+plant for at least 48 hours after a spread event}
 
 \item{rainfall_multiplier}{logical values will turn on or off rainfall
-multiplier default method. The default method increases the number of spores
-spread per growing point if the rainfall in the spore spread event hour is
-greater than one. Numeric values will scale the number of spores spread per
-growing point against the volume of rainfall in the hour. Defaults to
-\code{FALSE}.}
+multiplier default method. The default method increases the number of
+spores spread per growing point if the rainfall in the spore spread event
+hour is greater than one. Numeric values will scale the number of spores
+spread per growing point against the volume of rainfall in the hour.
+Defaults to \code{FALSE}.}
 }
 \value{
 A nested \code{list} object where each sub-list contains daily data for
@@ -140,7 +140,8 @@ exposed growing points in the latent period phase of infection.
 }
 \description{
 Simulate the spatiotemporal development of Ascochyta blight in a chickpea
-paddock over a growing season on a one square metre basis.
+paddock over a growing season. Both host and pathogen activities are
+simulated in one square metre cells.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
