@@ -171,14 +171,14 @@ traced <- trace_asco(
   paddock_width = 100,
   initial_infection = "1998-06-10",
   sowing_date = "1998-06-09",
-  harvest_date = "1998-08-18",
+  harvest_date = "1998-06-30",
   time_zone = "Australia/Perth",
   gp_rr = 0.0065,
-  primary_inoculum_intensity = 1000,
+  primary_inoculum_intensity = 40,
   spores_per_gp_per_wet_hour = 0.22,
   primary_infection_foci = "centre")
 
-traced[[70]] # extracts the model output for day 70
+traced[[23]] # extracts the model output for day 70
 \dontshow{\}) # examplesIf}
 }
 \seealso{

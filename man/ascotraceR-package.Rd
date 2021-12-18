@@ -4,7 +4,7 @@
 \name{ascotraceR-package}
 \alias{ascotraceR}
 \alias{ascotraceR-package}
-\title{ascotraceR: A Spatiotemporal Model to Simulate the Spread of Ascochyta Blight in Chickpea}
+\title{ascotraceR: Simulate the Spread of Ascochyta Blight in Chickpea}
 \description{
 A spatiotemporal model that simulates the spread of Ascochyta
     blight in chickpea fields based on location-specific weather conditions.
