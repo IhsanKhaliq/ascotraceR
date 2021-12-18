@@ -11,8 +11,7 @@ paddock[, c("new_gp",
             # Change in the number of growing points since last iteration
             "susceptible_gp",
             "exposed_gp",
-            "infectious_gp",
-            "stubble_lesions") :=
+            "infectious_gp") :=
           list(
             seeding_rate,
             fifelse(
@@ -24,8 +23,7 @@ paddock[, c("new_gp",
             0,
             fifelse(x == primary_infection_foci[, x] &
                       y == primary_infection_foci[, y], 1,
-                    0),
-            0
+                    0)
           )]
 
 max_gp_lim <- 15000
@@ -73,8 +71,7 @@ test1 <- one_day(
   gp_rr = 0.0065,
   max_gp = max_gp,
   spore_interception_parameter = spore_interception_parameter,
-  spores_per_gp_per_wet_hour = 0.22,
-  stubble_decay = 1
+  spores_per_gp_per_wet_hour = 0.22
 )
 
 
@@ -122,8 +119,7 @@ test_that("one_day single infection foci returns expected output", {
       "new_gp",
       "susceptible_gp",
       "exposed_gp",
-      "infectious_gp",
-      "stubble_lesions"
+      "infectious_gp"
     )
   )
   expect_equal(test1[["paddock"]][, unique(new_gp)],
@@ -144,8 +140,7 @@ test2 <- one_day(
   gp_rr = 0.0065,
   max_gp = max_gp,
   spore_interception_parameter = spore_interception_parameter,
-  spores_per_gp_per_wet_hour = 0.22,
-  stubble_decay = 1
+  spores_per_gp_per_wet_hour = 0.22
 )
 
 test_that("one_day test2 repeat using test1 single infection foci returns expected output",
@@ -194,8 +189,7 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
                 "new_gp",
                 "susceptible_gp",
                 "exposed_gp",
-                "infectious_gp",
-                "stubble_lesions"
+                "infectious_gp"
               )
             )
             expect_equal(test2[["paddock"]][, unique(new_gp)],
@@ -219,8 +213,7 @@ test3 <- one_day(
   gp_rr = 0.0065,
   max_gp = max_gp,
   spore_interception_parameter = spore_interception_parameter,
-  spores_per_gp_per_wet_hour = 0.22,
-  stubble_decay = 1
+  spores_per_gp_per_wet_hour = 0.22
 )
 
 test_that("one_day test3 adds to cumulative degree days and passes latent period",

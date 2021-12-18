@@ -11,7 +11,7 @@ paddock[, c("new_gp",
             "susceptible_gp",
             "infected_gp",
             "infectious_gp",
-            "stubble_lesions") :=
+            "cdd_at_infection") :=
           list(
             seeding_rate,
             fifelse(x == 50 &

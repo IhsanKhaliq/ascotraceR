@@ -14,8 +14,7 @@ paddock[, c(
   "new_gp", # Change in the number of growing points since last iteration
   "susceptible_gp",
   "exposed_gp",
-  "infectious_gp", # replacing InfectiveElementList
-  "stubble_lesions"
+  "infectious_gp" # replacing InfectiveElementList
 ) :=
   list(
     seeding_rate,
@@ -28,8 +27,7 @@ paddock[, c(
     0,
     fifelse(x == primary_infection_foci[1] &
               y == primary_infection_foci[2], 1,
-            0),
-    0
+            0)
   )]
 
 spore_interception_parameter <- 0.00006 * (15000 / 350)
@@ -132,4 +130,3 @@ test_that("test3 with lapply returns expected output", {
   expect_is(test3[, spores_per_packet], "integer")
   expect_false(any(is.na(test3)))
 })
-
