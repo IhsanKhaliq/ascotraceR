@@ -4,40 +4,23 @@ README
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-<!-- badges: start -->
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) 
-[![DOI](https://zenodo.org/badge/311562210.svg)](https://zenodo.org/badge/latestdoi/311562210)
-[![tic](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml/badge.svg)](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml)
-<!-- badges: end -->
 
-# ascotraceR: An R package resource to simulate the spatiotemporal spread of Ascochyta blight in a chickpea field over a growing season
+# ascotraceR: A weather driven model to simulate the spread of Ascochyta blight in chickpea over a growing season
 
-The goal of of *ascotraceR* is to develop a weather driven model to simulate the
-spread of Ascochyta blight disease in a chickpea field over a growing season.
+The goal of of *ascotraceR* is to develop a weather driven model to
+simulate the spread of Ascochyta blight disease in a chickpea field over
+a growing season.
 
 This model is adapted from a model developed by [(Diggle *et al.*
-2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the spread
-of anthracnose in a lupin field. The model is run using local weather data. The
-ascotraceR model simulates the pathogen related processes of conidial
-production, dispersal, successful deposition and infection on chickpea plants.
-Host related processes of growth are simulated in terms of development of
-growing points. The model divides the paddock into 1 square metre cells
-(observation quadrats/units) and simulates chickpea growth and _A. rabiei_
-activities in each cell. Initially, there is one growing point per sown seed
-when seed are sown. Chickpea growth is then described in terms of increase in
-the number of growing points. Conidia are dispersed from infested stubble by
-rain splash or wind driven rain when rainfall threshold is reached. Rainfall
-threshold refers to the minimum amount of rainfall required to disperse conidia
-from pycnidia and to provide sufficient duration of moisture for conidia to
-germinate and penetrate into the host tissues. After penetrating host tissues,
-conidia produce infected growing points. Infected growing points become
-sporulating lesions after completion of a latent period. The length of the
-latent period is a function of temperature, and the number of conidia produced
-per sporulating growing point depends on the level of resistance of the chickpea
-cultivar.
-As the model runs, it keeps a continuous track of non-infected, latent, infected
-and sporulating growing points (lesions). The ascotraceR’s minimum input
-requirements are location specific weather data and a list of input variables.
+2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the
+spread of anthracnose in a lupin field. The model is run using local
+weather data, and simulates both host and pathogen related activities.
+The growth of chickpea is described in terms of development of growing
+points, and disease progress is measured by quantifying the loss of
+healthy growing points. As the model runs, it keeps a continuous track
+of non-infected, latent, infected and sporulating growing points
+(lesions). The ascotraceR’s minimum input requirements are location
+specific weather data and a list of input variables.
 
 ## Quick start
 
@@ -169,23 +152,23 @@ summarise_trace(traced)
     ##   4:     4  1492.26177       19934.89          0             0 2020-06-07 159
     ##   5:     5  1793.24969       21728.14          0             0 2020-06-08 160
     ##  ---                                                                         
-    ## 143:   143    31.09901     1992021.73          2           649 2020-10-24 298
-    ## 144:   144    22.42568     1992044.15          4           649 2020-10-25 299
-    ## 145:   145    20.33599     1992064.49          4           649 2020-10-26 300
-    ## 146:   146    15.53083     1992078.02          2           651 2020-10-27 301
-    ## 147:   147    14.17533     1992092.19          2           651 2020-10-28 302
+    ## 143:   143    31.00028     1992022.25          8           719 2020-10-24 298
+    ## 144:   144    22.35445     1992044.61          9           719 2020-10-25 299
+    ## 145:   145    20.27138     1992064.88          9           719 2020-10-26 300
+    ## 146:   146    16.22720     1992073.11          1           727 2020-10-27 301
+    ## 147:   147    14.81122     1992087.92          1           727 2020-10-28 302
     ##             cdd cwh   cr gp_standard   AUDPC
-    ##   1:    0.00000   0  0.0    40.00000 44321.5
-    ##   2:   10.74583   0  0.0    42.77148 44321.5
-    ##   3:   22.84583   0  0.0    46.10657 44321.5
-    ##   4:   35.41042   0  0.0    49.83722 44321.5
-    ##   5:   49.38958   1  0.6    54.32034 44321.5
+    ##   1:    0.00000   0  0.0    40.00000 48039.5
+    ##   2:   10.74583   0  0.0    42.77148 48039.5
+    ##   3:   22.84583   0  0.0    46.10657 48039.5
+    ##   4:   35.41042   0  0.0    49.83722 48039.5
+    ##   5:   49.38958   1  0.6    54.32034 48039.5
     ##  ---                                        
-    ## 143: 2133.81645  65 76.2  4980.06672 44321.5
-    ## 144: 2154.64770  73 94.4  4980.12110 44321.5
-    ## 145: 2176.49562  73 94.4  4980.17042 44321.5
-    ## 146: 2195.63104  73 94.4  4980.20748 44321.5
-    ## 147: 2215.57687  74 97.0  4980.24131 44321.5
+    ## 143: 2133.81645  65 76.2  4980.06672 48039.5
+    ## 144: 2154.64770  73 94.4  4980.12110 48039.5
+    ## 145: 2176.49562  73 94.4  4980.17042 48039.5
+    ## 146: 2195.63104  73 94.4  4980.20748 48039.5
+    ## 147: 2215.57687  74 97.0  4980.24131 48039.5
 
 ## Reference
 

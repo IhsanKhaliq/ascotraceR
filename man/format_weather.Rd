@@ -167,5 +167,5 @@ write.csv(weather, file = temp_file_path, row.names = FALSE)
 weather_imported <- read.csv(temp_file_path)
 weather <- format_weather(weather_imported,
                           time_zone = "Australia/Perth")
-
+unlink(temp_file_path) # remove temporary weather file
 }
