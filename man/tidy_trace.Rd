@@ -38,8 +38,8 @@ weather_dat <- format_weather(
 
 traced <- trace_asco(
   weather = weather_dat,
-  paddock_length = 100,
-  paddock_width = 100,
+  paddock_length = 20,
+  paddock_width = 20,
   initial_infection = "1998-06-10",
   sowing_date = as.POSIXct("1998-06-09"),
   harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(100),

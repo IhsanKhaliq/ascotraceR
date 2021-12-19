@@ -32,8 +32,9 @@
 #'   cell/s coordinates where the epidemic should begin. The \sQuote{load}
 #'   column is optional and can specify the `primary_inoculum_intensity` for
 #'   each coordinate.
-#' @param primary_inoculum_intensity refers to the amount of primary inoculum
-#'   (number of infectious lesions in the model). The sources of primary
+#' @param primary_inoculum_intensity Refers to the amount of primary infection
+#'   as lesions on chickpea plants at the time of `initial_infection`. On the
+#'   date of initial infection in the experiment. The sources of primary
 #'   inoculum can be infected seed, volunteer chickpea plants or infested
 #'   stubble from the previous seasons. Defaults to `1`.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
@@ -46,7 +47,7 @@
 #' @param spores_per_gp_per_wet_hour number of spores produced per infectious
 #'   growing point during each wet hour. Also known as the `spore_rate`. Value
 #'   is dependent on the susceptibility of the host genotype.
-#' @param n_foci Quantifies the number of primary infectoin foci. The value is
+#' @param n_foci Quantifies the number of primary infection foci. The value is
 #'   `1` when `primary_infection_foci = "centre"` and can be greater than `1` if
 #'   `primary_infection_foci = "random`.
 #' @param splash_cauchy_parameter a parameter used in the Cauchy distribution
