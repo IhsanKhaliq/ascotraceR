@@ -2,8 +2,7 @@
 % Please edit documentation in R/format_weather.R
 \name{format_weather}
 \alias{format_weather}
-\title{Format weather data into a ascotraceR.weather object for use in the spore
-dispersal models}
+\title{Format weather data into an an object suitable for use in ascotraceR spore dispersal models}
 \usage{
 format_weather(
   x,
@@ -27,67 +26,69 @@ format_weather(
 )
 }
 \arguments{
-\item{x}{a \code{\link{data.frame}} object of weather station data for
-formatting.}
+\item{x}{A \link{data.frame} object of weather station data for formatting.
+\code{character}.}
 
-\item{YYYY}{column name or index in \code{x} that refers to the year when the
-weather was logged.}
+\item{YYYY}{Column name or index in \code{x} that refers to the year when the
+weather was logged. \code{character}.}
 
-\item{MM}{column name or index in \code{x} that refers to the month (numerical)
-when the weather was logged.}
+\item{MM}{Column name or index in \code{x} that refers to the month (numerical)
+when the weather was logged. \code{character}.}
 
-\item{DD}{column name or index in \code{x} that refers to the day of month when
-the weather was logged.}
+\item{DD}{Column name or index in \code{x} that refers to the day of month when
+the weather was logged. \code{character}.}
 
-\item{hh}{column name or index in \code{x} that refers to the hour (24 hour)
-when the weather was logged.}
+\item{hh}{Column name or index in \code{x} that refers to the hour (24 hour) when
+the weather was logged. \code{character}.}
 
-\item{mm}{column name or index in \code{x} that refers to the minute when the
-weather was logged.}
+\item{mm}{Column name or index in \code{x} that refers to the minute when the
+weather was logged. \code{character}.}
 
-\item{POSIXct_time}{column name or index in \code{x} which contains a \code{POSIXct}
+\item{POSIXct_time}{Column name or index in \code{x} which contains a \code{POSIXct}
 formatted time. This can be used instead of arguments \code{YYYY}, \code{MM}, \code{DD},
-\code{hh}, \code{mm.}}
+\code{hh}, \code{mm.} \code{character}.}
 
-\item{time_zone}{time zone (Olsen time zone format) where the weather station
-is located. May be in a column or supplied as a character string.
-Optional, see also \code{r}. See details.}
+\item{time_zone}{Time zone (Olsen time zone format) where the weather station
+is located. May be in a column or supplied as a character string. Optional,
+see also \code{r}. \code{character}. See details.}
 
-\item{temp}{column name or index in \code{x} that refers to temperature in degrees
-Celsius}
+\item{temp}{Column name or index in \code{x} that refers to temperature in degrees
+Celsius. \code{character}.}
 
-\item{rain}{column name or index in \code{x} that refers to rainfall in mm.}
+\item{rain}{Column name or index in \code{x} that refers to rainfall in mm.
+\code{character}.}
 
-\item{ws}{column name or index in \code{x} that refers to wind speed in km / h.}
+\item{ws}{Column name or index in \code{x} that refers to wind speed in km / h.
+\code{character}.}
 
-\item{wd}{column name or index in \code{x} that refers to wind direction in degrees.}
+\item{wd}{Column name or index in \code{x} that refers to wind direction in
+degrees. \code{character}.}
 
-\item{wd_sd}{column name or index in \code{x} that refers to wind speed in km / h
-character.  This is only applicable if weather data is already summarised to
-hourly increments. See details.}
+\item{wd_sd}{Column name or index in \code{x} that refers to wind speed columns
+standard deviation .\code{character}.  This is only applicable if weather data
+is already summarised to hourly increments. See details.}
 
-\item{station}{column name or index in \code{x} that refers to the weather station
-name or identifier. See details.}
+\item{station}{Column name or index in \code{x} that refers to the weather station
+name or identifier. \code{character}. See details.}
 
-\item{lon}{column name or index in \code{x} that refers to weather station's
-longitude.  See details.}
+\item{lon}{Column name or index in \code{x} that refers to weather station's
+longitude. \code{character}. See details.}
 
-\item{lat}{column name or index in \code{x} that refers to weather station's
-latitude.  See details.}
+\item{lat}{Column name or index in \code{x} that refers to weather station's
+latitude. \code{character}. See details.}
 
 \item{r}{Spatial raster which is intended to be used with this weather data
-for use in the blackspot model. Used to fetch time_zone if it is not
-supplied in data. Optional, see also \code{time_zone}.}
+for use in the blackspot model. Used to set \code{time_zone} if it is not
+supplied in data. \code{character}. Optional, see also \code{time_zone}.}
 
-\item{lonlat_file}{a file path to a csv which included station name/id and
-longitude and latitude coordinates if they are not supplied in data.
-Optional, see also \code{lon} and \code{lat}.}
+\item{lonlat_file}{A file path to a \acronym{CSV} which included station
+name/id and longitude and latitude coordinates if they are not supplied in
+the data. \code{character}. Optional, see also \code{lon} and \code{lat}.}
 }
 \value{
-A \code{ascotraceR.weather} object (an extension of
-\CRANpkg{data.table}) containing the supplied weather aggregated to each
-hour in a suitable format for use with \code{\link{trace_asco}}
-containing the following columns:
+A \code{ascotraceR.weather} object (an extension of \CRANpkg{data.table})
+containing the supplied weather aggregated to each hour in a suitable
+format for use with \code{\link[=trace_asco]{trace_asco()}} containing the following columns:
 \tabular{rl}{
 \strong{times}: \tab Time in POSIXct format \cr
 \strong{rain}: \tab Rainfall in mm \cr
@@ -101,61 +102,70 @@ containing the following columns:
 \strong{MM}: \tab Month \cr
 \strong{DD}: \tab Day \cr
 \strong{hh}: \tab Hour \cr
-\strong{mm}: \tab Minute \cr
-}
+\strong{mm}: \tab Minute \cr}
 }
 \description{
-Formats raw weather data into an object suitable for use in
-\code{\link{trace_asco}} function ensuring that the supplied weather data meet
-the requirements of the model to run.
-Internal support for multithreaded operations is provided through
-\CRANpkg{future}.  If more than one station is present, the process
-can be made faster by using \code{\link[future]{plan}}.
+Formats raw weather data into an object suitable for use in the
+\code{\link[=trace_asco]{trace_asco()}} function ensuring that the supplied weather data meet the
+requirements of the model to run.
 }
 \details{
-\code{time_zone}
-All weather stations must fall within the same time zone.  If the required
-stations are located in differing time zones, separate \code{ascotraceR.weather}
-objects must be created for each time zone.  If a raster object of
-previous crops is provided that spans time zones, an error will be emitted.
+\code{time_zone} All weather stations must fall within the same time
+zone.  If the required stations are located in differing time zones,
+separate \code{ascotraceR.weather} objects must be created for each time zone.
+If a raster object, \code{r}, of previous crops is provided that spans time
+zones, an error will be emitted.
 
-\code{wd_sd}
-If weather data is provided in hourly increments, a column with the standard
-deviation of the wind direction over the hour is required to be provided.
-If the weather data are sub-hourly, these data will be calculated and
-returned automatically.
+\code{wd_sd} If weather data is provided in hourly increments, a column
+with the standard deviation of the wind direction over the hour is required
+to be provided. If the weather data are sub-hourly, the standard deviation
+will be calculated and returned automatically.
 
-\code{lon}, \code{lat} and \code{lonlat_file}
-If \code{x} provides longitude and latitude values for station locations, these
-may be specified in the \code{lon} and \code{lat} columns.  If gps coordinates are
-not relevant to the study location \code{NA} can be specified and the function
-will drop these column variables.  If these data are not included, (\code{NULL})
-a separate file may be provided that contains the longitude, latitude and
-matching station name to provide station locations in the final
-\code{ascotraceR.weather} object that is created by specifying the file path to
-a \acronym{CSV file} using \code{lonlat_file}.
+\code{lon}, \code{lat} and \code{lonlat_file} If \code{x} provides longitude and
+latitude values for station locations, these may be specified in the \code{lon}
+and \code{lat} columns.  If the coordinates are not relevant to the study
+location \code{NA} can be specified and the function will drop these column
+variables.  If these data are not included, (\code{NULL}) a separate file may be
+provided that contains the longitude, latitude and matching station name to
+provide station locations in the final \code{ascotraceR.weather} object that is
+created by specifying the file path to a \acronym{CSV} file using
+\code{lonlat_file}.
 }
 \examples{
-# Fake weather data files for testing and examples have been included in
-# \pkg{ascotraceR}.  The weather data files both are of the same format, so
-# they will be combined for formatting here.
+# Weather data files for Newmarracara for testing and examples have been
+# included in ascotraceR. The weather data files both are of the same format,
+# so they will be combined for formatting here.
 
-Newmarracarra <-
-   read.csv(system.file("extdata",
-            "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
-station_data <-
-   system.file("extdata", "stat_dat.csv", package = "ascotraceR")
-
-weather <- format_weather(
-   x = Newmarracarra,
-   POSIXct_time = "Local.Time",
-   ws = "ws",
-   wd_sd = "wd_sd",
-   rain = "rain_mm",
-   wd = "wd",
-   station = "Location",
-   time_zone = "Australia/Perth",
-   lonlat_file = station_data
+Newmarracarra <- read.csv(
+ system.file("extdata",
+             "1998_Newmarracarra_weather_table.csv",
+             package = "ascotraceR")
 )
 
+station_data <- system.file("extdata",
+                            "stat_dat.csv",
+                            package = "ascotraceR")
+
+weather <- format_weather(
+  x = Newmarracarra,
+  POSIXct_time = "Local.Time",
+  temp = "mean_daily_temp",
+  rain = "rain_mm",
+  ws = "ws",
+  wd = "wd",
+  wd_sd = "wd_sd",
+  station = "Location",
+  time_zone = "Australia/Perth",
+  lonlat_file = station_data
+)
+
+# Saving weather data and reimporting can lose the object class
+# Reimported data can be quickly reformatted, adding the 'asco.weather' class
+#  with this same function
+temp_file_path <- paste0(tempdir(),"weather_file.csv")
+write.csv(weather, file = temp_file_path, row.names = FALSE)
+weather_imported <- read.csv(temp_file_path)
+weather <- format_weather(weather_imported,
+                          time_zone = "Australia/Perth")
+unlink(temp_file_path) # remove temporary weather file
 }

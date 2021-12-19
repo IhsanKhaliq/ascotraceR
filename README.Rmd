@@ -1,0 +1,121 @@
+---
+title: "README"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+# ascotraceR: A weather driven model to simulate the spread of Ascochyta blight in chickpea over a growing season 
+
+The goal of of _ascotraceR_ is to develop a weather driven model to simulate the spread of Ascochyta blight disease in a chickpea field over a growing season.
+
+This model is adapted from a model developed by [(Diggle _et al._ 2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the spread of anthracnose in a lupin field.
+The model is run using local weather data, and simulates both host and pathogen related activities.
+The growth of chickpea is described in terms of development of growing points, and disease progress is measured by quantifying the loss of healthy growing points.
+As the model runs, it keeps a continuous track of non-infected, latent, infected and sporulating growing points (lesions).
+The ascotraceR's minimum input requirements are location specific weather data and a list of input variables.
+
+## Quick start
+
+_ascotraceR_ is not yet on CRAN.
+You may install it from GitHub this way.
+
+```r
+if (!require("remotes"))
+  install.packages("remotes")
+remotes::install_github("IhsanKhaliq/ascotraceR",
+                        build_vignettes = TRUE
+)
+```
+
+Once installed you can simulate disease spread in a chickpea paddock.
+
+Load the library.
+
+```{r, load-libs, message=FALSE}
+library("ascotraceR")
+library("data.table")
+library("lubridate")
+```
+
+Import the weather data
+
+```{r load-weather}
+# weather data
+Billa_Billa <- fread(
+  system.file(
+    "extdata",
+    "2020_Billa_Billa_weather_data_ozforecast.csv",
+    package = "ascotraceR"
+  )
+)
+
+# format time column
+Billa_Billa[, local_time := dmy_hm(local_time)]
+
+# specify the station coordinates of the Billa Billa weather station
+Billa_Billa[, c("lat", "lon") := .(-28.1011505, 150.3307084)]
+
+head(Billa_Billa)
+```
+
+### Wrangle weather data 
+
+A function, `format_weather()`, is provided to convert raw weather data into the format appropriate for the model.
+It is mandatory to use this function to ensure weather data is properly formatted before running the model.
+
+```{r format-weather}
+Billa_Billa <- format_weather(
+  x = Billa_Billa,
+  POSIXct_time = "local_time",
+  temp = "mean_daily_temp",
+  ws = "ws",
+  wd_sd = "wd_sd",
+  rain = "rain_mm",
+  wd = "wd",
+  station = "location",
+  time_zone = "Australia/Brisbane",
+  lon = "lon",
+  lat = "lat"
+)
+```
+
+### Simulate Ascochyta blight spread
+
+A function, `trace_asco()`, is provided to simulate the spread of Ascochyta blight in a chickpea field over a growing season.
+
+```{r trace-asco}
+# Predict Ascochyta blight spread for the year 2020 at Billa Billa
+traced <- trace_asco(
+  weather = Billa_Billa,
+  paddock_length = 20,
+  paddock_width = 20,
+  initial_infection = "2020-07-17",
+  sowing_date = "2020-06-04",
+  harvest_date = "2020-10-27",
+  time_zone = "Australia/Brisbane",
+  seeding_rate = 40,
+  gp_rr = 0.0065,
+  spores_per_gp_per_wet_hour = 0.6,
+  latent_period_cdd = 150,
+  primary_inoculum_intensity = 100,
+  primary_infection_foci = "centre"
+)
+```
+
+### Summarise the output
+
+You can easily get summary statistics for the whole paddock over the simulated season and area under the disease progress curve, AUDPC, using `summarise_trace()`.
+
+```{r summarise}
+summarise_trace(traced)
+```
+
+## Reference
+
+> Diggle AJ, Salam MU, Thomas GJ, Yang H, O'connell M, Sweetingham M, 2002. AnthracnoseTracer: a spatiotemporal model for simulating the spread of anthracnose in a lupin field. Phytopathology 92, 1110-21.

@@ -2,3 +2,9 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^\.travis\.yml$
+^codemeta\.json$
+^README\.Rmd$
+^cran-comments\.md$
+^\.ccache$
+^\.github$
+^tic\.R$

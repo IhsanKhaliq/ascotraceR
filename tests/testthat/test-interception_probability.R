@@ -1,4 +1,3 @@
-context("Function is use to calculate the max_interception_probability")
 
 # Define parameters after model defaults
 plant_density <-

@@ -13,81 +13,141 @@ trace_asco(
   initial_infection,
   seeding_rate = 40,
   gp_rr = 0.0065,
-  max_gp_lim = 15000,
+  max_gp_lim = 5000,
   max_new_gp = 350,
-  latent_period_cdd = 200,
+  latent_period_cdd = 150,
   time_zone = "UTC",
   primary_infection_foci = "random",
-  primary_infection_intensity = 1,
+  primary_inoculum_intensity = 1,
   n_foci = 1,
-  spores_per_gp_per_wet_hour = 0.22
+  spores_per_gp_per_wet_hour = 0.22,
+  splash_cauchy_parameter = 0.5,
+  wind_cauchy_multiplier = 0.015,
+  daily_rain_threshold = 2,
+  hourly_rain_threshold = 0.1,
+  susceptible_days = 2,
+  rainfall_multiplier = FALSE
 )
 }
 \arguments{
-\item{weather}{weather data, recorded by a local weather station, over a chickpea
-growing season for the model operation}
+\item{weather}{weather data for a representative chickpea paddock for a
+complete chickpea growing season for the model's operation.}
 
-\item{paddock_length}{length of a paddock in metres (y)}
+\item{paddock_length}{length of a paddock in metres (y).}
 
-\item{paddock_width}{width of a paddock in metres (x)}
+\item{paddock_width}{width of a paddock in metres (x).}
 
-\item{sowing_date}{a character string of a date value indicating sowing
-date of chickpea seed and the start of the ascotraceR model. Preferably
-in \acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.
-Assumes there is sufficient soil moisture to induce germination and start the
-crop growing season.}
+\item{sowing_date}{a character string of a date value indicating sowing date
+of chickpea seed and the start of the \sQuote{ascotraceR} model. Preferably
+in ISO8601 format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}. Assumes there
+is sufficient soil moisture to induce germination and start the crop
+growing season.}
 
-\item{harvest_date}{a character string of a date value indicating harvest date of
-chickpea crop, which is also the last day to run the ascotraceR model. Preferably in
-\acronym{ISO8601} format (YYYY-MM-DD), \emph{e.g.} \dQuote{2020-04-26}.}
+\item{harvest_date}{a character string of a date value indicating harvest
+date of chickpea crop, which is also the last day to run the
+\sQuote{ascotraceR} model. Preferably in ISO8601 format (YYYY-MM-DD),
+\emph{e.g.}, \dQuote{2020-04-26}.}
 
-\item{initial_infection}{refers to initial or primary infection on seedlings,
-resulting in the production of infected growing points.}
+\item{initial_infection}{a character string of a date value referring to the
+initial or primary infection on seedlings, resulting in the production of
+infected growing points.}
 
 \item{seeding_rate}{indicate the rate at which chickpea seed is sown per
-square metre. Defaults to \code{40}}
+square metre. Defaults to \code{40}.}
 
-\item{gp_rr}{refers to rate of increase in chickpea growing points
-per degree Celsius per day. Defaults to \code{0.0065}}
+\item{gp_rr}{refers to rate of increase in chickpea growing points per degree
+Celsius per day. Defaults to \code{0.0065}.}
 
-\item{max_gp_lim}{Maximum number of chickpea growing points (meristems) allowed
-per square meter. Defaults to \code{15000}.}
+\item{max_gp_lim}{Maximum number of chickpea growing points (meristems)
+allowed per square metre. Defaults to \code{5000}.}
 
-\item{max_new_gp}{Maximum number of new chickpea growing points (meristems)
-which develop per day, per square meter. Defaults to \code{350}.}
+\item{max_new_gp}{Maximum number of new chickpea growing points (meristems),
+which develop per day, per square metre. Defaults to \code{350}.}
 
 \item{latent_period_cdd}{latent period in cumulative degree days (sum of
 daily temperature means) is the period between infection and production of
-lesions on susceptible growing points. Defaults to \code{200}}
+lesions on susceptible growing points. Defaults to \code{150}.}
 
-\item{time_zone}{refers to time in Coordinated Universal Time (UTC)}
+\item{time_zone}{refers to time in Coordinated Universal Time (UTC).}
 
 \item{primary_infection_foci}{refers to the inoculated coordinates where the
-epidemic starts. Accepted inputs are: \code{"centre"} (Default), \code{random}
-a randomly selected coordinate in the paddock, a two column data.table of
-coordinates with colnames c("x","y"), a three column data.table where the third}
+epidemic starts. Accepted inputs are: \code{centre}/\code{center} or \code{random}
+(Default) or a \code{data.frame} with column names \sQuote{x}, \sQuote{y} and
+\sQuote{load}. The \code{data.frame} inputs inform the model of specific grid
+cell/s coordinates where the epidemic should begin. The \sQuote{load}
+column is optional and can specify the \code{primary_inoculum_intensity}
+for each coordinate.}
 
-\item{primary_infection_intensity}{The intensity of the starting epidemic as
-described by the number of number of sporulating growing points.}
+\item{primary_inoculum_intensity}{Refers to the amount of primary inoculum
+(number of lesions on infested stubble in the model). The sources of
+primary inoculum can be infected seed, volunteer chickpea plants or
+infested stubble from the previous seasons. Infested stubble serves as the
+source of primary inoculum in the current model. Defaults to \code{200}.}
 
-\item{n_foci}{only relevant when primary_infection_foci = "random" and notes the number
-of primary_infection_foci at initial infection.}
+\item{n_foci}{only relevant when \code{primary_infection_foci = "random"} and
+notes the number of \code{primary_infection_foci} at initial infection.}
 
-\item{spores_per_gp_per_wet_hour}{Number of spores produced per sporulating growing point each wet hour.
-Also known as the 'spore_rate'. Value is dependent on the susceptibility of the host genotype.}
+\item{spores_per_gp_per_wet_hour}{Number of spores produced per sporulating
+growing point each wet hour. Also known as the \code{spore_rate}. Value is
+dependent on the susceptibility of the host genotype.}
+
+\item{splash_cauchy_parameter}{A parameter used in the Cauchy distribution
+and describes the median distance spores travel due to rain splashes.
+Default to \code{0.5}.}
+
+\item{wind_cauchy_multiplier}{A scaling parameter to estimate a Cauchy
+distribution which resembles the possible distances a conidium travels due
+to wind driven rain dispersal. Defaults to \code{0.015}.}
+
+\item{daily_rain_threshold}{Minimum cumulative rainfall required in a day to
+allow hourly spore spread events. See also \code{hourly_rain_threshold}.
+Defaults to \code{2}.}
+
+\item{hourly_rain_threshold}{Minimum rainfall in an hour to trigger a spore
+spread event in the same hour (assuming daily_rain_threshold is already
+met). Defaults to \code{0.1}.}
+
+\item{susceptible_days}{The number of days for which conidia remain viable on
+chickpea after dispersal. Defaults to \code{2}. Conidia remain viable on the
+plant for at least 48 hours after a spread event}
+
+\item{rainfall_multiplier}{logical values will turn on or off rainfall
+multiplier default method. The default method increases the number of
+spores spread per growing point if the rainfall in the spore spread event
+hour is greater than one. Numeric values will scale the number of spores
+spread per growing point against the volume of rainfall in the hour.
+Defaults to \code{FALSE}.}
 }
 \value{
-a x y \code{data.frame} simulating the spread of Ascochyta blight in a
-chickpea paddock
+A nested \code{list} object where each sub-list contains daily data for
+the day \code{i_day} (the model's iteration day) generated by the model
+including: * \strong{paddock}, an 'x' 'y' \CRANpkg{data.table} containing: *
+\strong{x}, location of quadrat on x-axis in paddock, * \strong{y}, location of
+quadrat on y-axis in paddock, * \strong{new_gp}, new growing points produced in
+the last 24 hours, * \strong{susceptible_gp}, susceptible growing points in the
+last 24 hours, * \strong{exposed_gp}, exposed growing points in the last 24
+hours, * \strong{infectious_gp}, infectious growing points in the last 24 hours,
+\itemize{
+\item \strong{i_day}, model iteration day, * \strong{cumulative daily weather data}, a
+\CRANpkg{data.table} containing: * \strong{cdd}, cumulative degree days, *
+\strong{cwh}, cumulative wet hours, * \strong{cr}, cumulative rainfall in mm, *
+\strong{gp_standard}, standard growing points assuming growth is not impeded by
+infection, * \strong{infected_coords}, a \CRANpkg{data.table} of only infectious
+growing point coordinates, * \strong{new_infections}, a \CRANpkg{data.table} of
+newly infected growing points, * \strong{exposed_gps}, a \CRANpkg{data.table} of
+exposed growing points in the latent period phase of infection.
+}
 }
 \description{
-\code{trace_asco} simulates the spatiotemporal development of Ascochyta blight in a chickpea field
-over a growing season
+Simulate the spatiotemporal development of Ascochyta blight in a chickpea
+paddock over a growing season. Both host and pathogen activities are
+simulated in one square metre cells.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # First weather data needs to be imported and formatted with `format_weather`
 Newmarracarra <-
-   data.table::fread(system.file("extdata",
+   read.csv(system.file("extdata",
             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
 station_data <-
    system.file("extdata", "stat_dat.csv", package = "ascotraceR")
@@ -104,20 +164,23 @@ weather_dat <- format_weather(
    time_zone = "Australia/Perth",
    lonlat_file = station_data)
 
-
+# Now the `trace_asco` function can be run to simulate disease spread
 traced <- trace_asco(
   weather = weather_dat,
   paddock_length = 100,
   paddock_width = 100,
   initial_infection = "1998-06-10",
-  sowing_date = as.POSIXct("1998-06-09"),
-  harvest_date = as.POSIXct("1998-06-09") + lubridate::ddays(70),
+  sowing_date = "1998-06-09",
+  harvest_date = "1998-06-30",
   time_zone = "Australia/Perth",
   gp_rr = 0.0065,
-  primary_infection_intensity = 1000,
+  primary_inoculum_intensity = 40,
   spores_per_gp_per_wet_hour = 0.22,
   primary_infection_foci = "centre")
-  traced[[70]]
 
-write.csv(traced[[70]]$paddock, "testrun2.csv", row.names = FALSE)
+traced[[23]] # extracts the model output for day 70
+\dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[=tidy_trace]{tidy_trace()}}, \code{\link[=summarise_trace]{summarise_trace()}}
 }
