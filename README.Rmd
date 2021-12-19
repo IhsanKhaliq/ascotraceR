@@ -7,9 +7,11 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
+  <!-- badges: start -->
+  [![tic](https://github.com/IhsanKhaliq/ascotraceR/workflows/tic/badge.svg?branch=master)](https://github.com/IhsanKhaliq/ascotraceR/actions)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![tic](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml/badge.svg)](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml)
+[![DOI](https://zenodo.org/badge/311562210.svg)](https://zenodo.org/badge/latestdoi/311562210)
+<!-- badges: end -->
 
 # ascotraceR: An R package resource to simulate the spatiotemporal spread of Ascochyta blight in a chickpea field over a growing season 
 
@@ -32,6 +34,7 @@ cultivar.
 As the model runs, it keeps a continuous track of non-infected, latent, infected
 and sporulating growing points (lesions). The ascotraceR’s minimum input
 requirements are location specific weather data and a list of input variables.
+
 
 ## Quick start
 
