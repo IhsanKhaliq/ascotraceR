@@ -1,11 +1,11 @@
 README
 ================
 
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+<!-- badges: start --> [![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![tic](https://github.com/IhsanKhaliq/ascotraceR/workflows/tic/badge.svg?branch=master)](https://github.com/IhsanKhaliq/ascotraceR/actions)
 [![DOI](https://zenodo.org/badge/311562210.svg)](https://zenodo.org/badge/latestdoi/311562210)
-[![tic](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml/badge.svg)](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml)
+<!-- badges: end -->
 
 # ascotraceR: An R package resource to simulate the spatiotemporal spread of Ascochyta blight in a chickpea field over a growing season
 
@@ -169,23 +169,23 @@ summarise_trace(traced)
     ##   4:     4  1492.26177       19934.89          0             0 2020-06-07 159
     ##   5:     5  1793.24969       21728.14          0             0 2020-06-08 160
     ##  ---                                                                         
-    ## 143:   143    31.05448     1992021.96          5           723 2020-10-24 298
-    ## 144:   144    22.39360     1992044.36         15           723 2020-10-25 299
-    ## 145:   145    20.30692     1992064.66         15           723 2020-10-26 300
-    ## 146:   146    15.75760     1992076.42         11           727 2020-10-27 301
-    ## 147:   147    14.38234     1992090.80         11           727 2020-10-28 302
-    ##             cdd cwh   cr gp_standard   AUDPC
-    ##   1:    0.00000   0  0.0    40.00000 48821.5
-    ##   2:   10.74583   0  0.0    42.77148 48821.5
-    ##   3:   22.84583   0  0.0    46.10657 48821.5
-    ##   4:   35.41042   0  0.0    49.83722 48821.5
-    ##   5:   49.38958   1  0.6    54.32034 48821.5
-    ##  ---                                        
-    ## 143: 2133.81645  65 76.2  4980.06672 48821.5
-    ## 144: 2154.64770  73 94.4  4980.12110 48821.5
-    ## 145: 2176.49562  73 94.4  4980.17042 48821.5
-    ## 146: 2195.63104  73 94.4  4980.20748 48821.5
-    ## 147: 2215.57687  74 97.0  4980.24131 48821.5
+    ## 143:   143    30.51451     1992024.84          3           733 2020-10-24 298
+    ## 144:   144    22.00412     1992046.85          4           733 2020-10-25 299
+    ## 145:   145    19.95367     1992066.80          4           733 2020-10-26 300
+    ## 146:   146    15.36776     1992079.17          1           736 2020-10-27 301
+    ## 147:   147    14.02648     1992093.19          1           736 2020-10-28 302
+    ##             cdd cwh   cr gp_standard AUDPC
+    ##   1:    0.00000   0  0.0    40.00000 50173
+    ##   2:   10.74583   0  0.0    42.77148 50173
+    ##   3:   22.84583   0  0.0    46.10657 50173
+    ##   4:   35.41042   0  0.0    49.83722 50173
+    ##   5:   49.38958   1  0.6    54.32034 50173
+    ##  ---                                      
+    ## 143: 2133.81645  65 76.2  4980.06672 50173
+    ## 144: 2154.64770  73 94.4  4980.12110 50173
+    ## 145: 2176.49562  73 94.4  4980.17042 50173
+    ## 146: 2195.63104  73 94.4  4980.20748 50173
+    ## 147: 2215.57687  74 97.0  4980.24131 50173
 
 ## Reference
 
