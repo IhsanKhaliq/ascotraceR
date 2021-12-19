@@ -46,7 +46,7 @@
 #' @param spores_per_gp_per_wet_hour number of spores produced per infectious
 #'   growing point during each wet hour. Also known as the `spore_rate`. Value
 #'   is dependent on the susceptibility of the host genotype.
-#' @param n_foci Quantifies the number of primary infectoin foci. The value is
+#' @param n_foci Quantifies the number of primary infection foci. The value is
 #'   `1` when `primary_infection_foci = "centre"` and can be greater than `1` if
 #'   `primary_infection_foci = "random`.
 #' @param splash_cauchy_parameter a parameter used in the Cauchy distribution
