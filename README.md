@@ -4,6 +4,7 @@ README
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![tic](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml/badge.svg)](https://github.com/IhsanKhaliq/ascotraceR/actions/workflows/tic.yml)
 
 # ascotraceR: A weather driven model to simulate the spread of Ascochyta blight in chickpea over a growing season
 
