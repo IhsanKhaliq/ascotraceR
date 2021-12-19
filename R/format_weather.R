@@ -121,7 +121,7 @@
 #' weather_imported <- read.csv(temp_file_path)
 #' weather <- format_weather(weather_imported,
 #'                           time_zone = "Australia/Perth")
-#'
+#' unlink(temp_file_path)
 #' @export
 format_weather <- function(x,
                            YYYY = NULL,
