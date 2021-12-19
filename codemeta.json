@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/IhsanKhaliq/ascotraceR",
   "issueTracker": "https://github.com/IhsanKhaliq/ascotraceR/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.0.9000",
+  "version": "0.0.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -244,7 +244,7 @@
   ],
   "applicationCategory": "Tools",
   "keywords": ["chickpea", "botanical-epidemiology", "plant-disease-model", "agricultural-modelling", "agricultural-modeling", "crop-protection", "agricultural-research", "model", "modelling", "modeling", "Ascochyta-rabiei"],
-  "fileSize": "1641.78KB",
+  "fileSize": "1643.984KB",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
     {
@@ -269,11 +269,11 @@
       "name": "{ascotraceR}: A Spatiotemporal Model to Simulate the Spread of Ascochyta Blight in Chickpea",
       "identifier": "10.5281/zenodo.5771290",
       "url": "https://github.com/IhsanKhaliq/ascotraceR",
-      "description": "R package version 0.0.0.9000",
+      "description": "R package version 0.0.1",
       "@id": "https://doi.org/10.5281/zenodo.5771290",
       "sameAs": "https://doi.org/10.5281/zenodo.5771290"
     }
   ],
   "releaseNotes": "https://github.com/IhsanKhaliq/ascotraceR/blob/master/NEWS.md",
-  "readme": "https://github.com/IhsanKhaliq/ascotraceR/blob/master/README.md"
+  "readme": "https://github.com/IhsanKhaliq/ascotraceR/blob/main/README.md"
 }
