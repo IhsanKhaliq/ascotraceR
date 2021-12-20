@@ -27,8 +27,8 @@ Authors@R:
 Description: A spatiotemporal model that simulates the spread of Ascochyta
     blight in chickpea fields based on location-specific weather conditions.
     This model is adapted from a model developed by Diggle et al. (2002)
-   <doi:10.1094/PHYTO.2002.92.10.1110> for simulating the spread of anthracnose
-   in a lupin field.
+    <doi:10.1094/PHYTO.2002.92.10.1110> for simulating the spread of anthracnose
+    in a lupin field.
 URL: https://github.com/IhsanKhaliq/ascotraceR
 BugReports: https://github.com/IhsanKhaliq/ascotraceR/issues
 License: MIT + file LICENSE
@@ -42,7 +42,6 @@ Imports:
   lubridate (>= 1.7.9.2),
   lutz (>= 0.3.1),
   circular (>= 0.4-93),
-  purrr,
   stats,
   sf,
   terra

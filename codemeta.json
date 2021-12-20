@@ -202,18 +202,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "purrr",
-      "name": "purrr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=purrr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
@@ -244,7 +232,7 @@
   ],
   "applicationCategory": "Tools",
   "keywords": ["chickpea", "botanical-epidemiology", "plant-disease-model", "agricultural-modelling", "agricultural-modeling", "crop-protection", "agricultural-research", "model", "modelling", "modeling", "Ascochyta-rabiei"],
-  "fileSize": "1643.984KB",
+  "fileSize": "1633.365KB",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
     {
@@ -275,5 +263,6 @@
     }
   ],
   "releaseNotes": "https://github.com/IhsanKhaliq/ascotraceR/blob/master/NEWS.md",
-  "readme": "https://github.com/IhsanKhaliq/ascotraceR/blob/main/README.md"
+  "readme": "https://github.com/IhsanKhaliq/ascotraceR/blob/main/README.md",
+  "contIntegration": "https://github.com/IhsanKhaliq/ascotraceR/actions"
 }

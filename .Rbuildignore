@@ -9,3 +9,4 @@
 ^\.github$
 ^tic\.R$
 ^CRAN-SUBMISSION$
+^CODE_OF_CONDUCT\.md$
