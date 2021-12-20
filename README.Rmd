@@ -7,15 +7,15 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-  <!-- badges: start -->
-  [![tic](https://github.com/IhsanKhaliq/ascotraceR/workflows/tic/badge.svg?branch=master)](https://github.com/IhsanKhaliq/ascotraceR/actions)
+<!-- badges: start -->
+[![tic](https://github.com/IhsanKhaliq/ascotraceR/workflows/tic/badge.svg?branch=master)](https://github.com/IhsanKhaliq/ascotraceR/actions)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/311562210.svg)](https://zenodo.org/badge/latestdoi/311562210)
 <!-- badges: end -->
 
 # ascotraceR: An R package resource to simulate the spatiotemporal spread of Ascochyta blight in a chickpea field over a growing season 
 
-The goal of of *ascotraceR* is to develop a weather driven model to simulate the spread of Ascochyta blight disease in a chickpea field over a growing season.
+The goal of of _ascotraceR_ is to develop a weather driven model to simulate the spread of Ascochyta blight disease in a chickpea field over a growing season.
 
 This model is adapted from a model developed by [(Diggle *et al.* 2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the spread of anthracnose in a lupin field. The model is run using local weather data.
 The ascotraceR model simulates the pathogen related processes of conidial production, dispersal, successful deposition and infection on chickpea plants.

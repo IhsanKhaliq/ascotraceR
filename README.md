@@ -2,6 +2,7 @@ README
 ================
 
 <!-- badges: start -->
+
 [![tic](https://github.com/IhsanKhaliq/ascotraceR/workflows/tic/badge.svg?branch=master)](https://github.com/IhsanKhaliq/ascotraceR/actions)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
