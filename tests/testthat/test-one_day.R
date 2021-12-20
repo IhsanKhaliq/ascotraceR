@@ -1,5 +1,5 @@
 # import and define data
-seeding_rate <- 40
+seeding_rate <- as.integer(40)
 primary_infection_foci <- data.table(x = 50,
                                      y = 50)
 
@@ -102,7 +102,7 @@ test_that("one_day single infection foci returns expected output", {
   expect_equal(test1[["cdd"]], 18)
   expect_equal(test1[["cwh"]], 15)
   expect_equal(test1[["cr"]], 78.85)
-  expect_equal(test1[["gp_standard"]], 44.66747, tolerance = 0.001)
+  expect_equal(test1[["gp_standard"]], 45)
   expect_equal(test1[["new_gp"]], test1[["gp_standard"]] - seeding_rate)
   expect_equal(test1[["exposed_gps"]],
                data.table(
@@ -123,9 +123,9 @@ test_that("one_day single infection foci returns expected output", {
     )
   )
   expect_equal(test1[["paddock"]][, unique(new_gp)],
-               c(4.667471, 4.551090), tolerance = 0.001)
+               c(5, 4))
   expect_equal(test1[["paddock"]][, unique(susceptible_gp)],
-               c(44.66747, 43.55109), tolerance = 0.001)
+               c(45, 43))
   expect_equal(test1[["paddock"]][, unique(exposed_gp)], c(0, 1),
                tolerance = 0.001)
   expect_equal(test1[["paddock"]][, unique(infectious_gp)], c(0, 1),
@@ -171,9 +171,9 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
             expect_equal(test2[["cdd"]], sum(18, 18))
             expect_equal(test2[["cwh"]], sum(15, 15))
             expect_equal(test2[["cr"]], sum(78.85, 78.85))
-            expect_equal(test2[["gp_standard"]], sum(44.66747, 5.21047),
+            expect_equal(test2[["gp_standard"]], sum(45, 5),
                          tolerance = 0.001)
-            expect_equal(test2[["new_gp"]], 5.21047, tolerance = 0.001)
+            expect_equal(test2[["new_gp"]], 5)
             expect_equal(test2[["exposed_gps"]],
                          data.table(
                            x = c(50, 50),
@@ -193,9 +193,9 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
               )
             )
             expect_equal(test2[["paddock"]][, unique(new_gp)],
-                         c(5.210471, 5.080625), tolerance = 0.001)
+                         5)
             expect_equal(test2[["paddock"]][, unique(susceptible_gp)],
-                         c(49.87794, 48.63171), tolerance = 0.001)
+                         c(50, 48))
             expect_equal(test2[["paddock"]][, unique(exposed_gp)], c(0,1),
                          tolerance = 0.001)
             expect_equal(test2[["paddock"]][, unique(infectious_gp)],
@@ -244,11 +244,10 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
             expect_equal(test3[["cdd"]], 219)
             expect_equal(test3[["cwh"]], 15 + 15 + 15)
             expect_equal(test3[["cr"]], 78.85 + 78.85 + 78.85)
-            expect_equal(test3[["gp_standard"]], sum(44.66747,
-                                                     5.21047,
-                                                     5.81624),
-                         tolerance = 0.001)
-            expect_equal(test3[["new_gp"]], 5.81624, tolerance = 0.0001)
+            expect_equal(test3[["gp_standard"]], sum(45,
+                                                     5,
+                                                     5))
+            expect_equal(test3[["new_gp"]], 5)
             expect_equal(
               test3[["exposed_gps"]],
               data.table(
@@ -263,11 +262,12 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
             expect_s3_class(test3[["paddock"]], "data.table")
 
             expect_equal(test3[["paddock"]][, unique(new_gp)],
-                         c(5.816238, 5.555145, 5.700011), tolerance = 0.001)
+                         c(5,6))
             expect_equal(test3[["paddock"]][, unique(susceptible_gp)],
-                         c(55.69418, 53.18686, 54.57795), tolerance = 0.001)
+                         c(55, 52))
             expect_equal(test3[["paddock"]][, unique(exposed_gp)], c(0, 1),
                          tolerance = 0.001)
             expect_equal(test3[["paddock"]][, unique(infectious_gp)],
                          c(0, 2, 1), tolerance = 0.1)
           })
+

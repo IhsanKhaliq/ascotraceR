@@ -1,3 +1,5 @@
+set.seed(123)
+
 # Test function if current growing points is zero
 test1 <- calc_new_gp(
   current_growing_points = rep(0, 10000),
@@ -28,5 +30,5 @@ test3 <- calc_new_gp(
 
 test_that("calc_new_gp returns a number", {
   expect_equal(unique(test1), 0)
-  expect_equal(round(test3, 6), 6.22336)
+  expect_equal(round(test3, 6), 6)
 })
