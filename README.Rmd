@@ -33,7 +33,8 @@ The ascotraceR’s minimum input requirements are location specific weather data
 
 ## Quick start
 
-_ascotraceR_ is available on CRAN. To install the latest release, just run
+_ascotraceR_ is available on CRAN.
+To install the latest release, just run
 
 ```r
 install.packages("ascotraceR")
