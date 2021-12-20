@@ -44,7 +44,16 @@ of input variables.
 
 ## Quick start
 
-*ascotraceR* is not yet on CRAN. You may install it from GitHub this
+*ascotraceR* is available on CRAN. To install the latest release, just
+run
+
+``` r
+install.packages("ascotraceR", repos="http://cran.us.r-project.org")
+```
+
+    ## installing the source package 'ascotraceR'
+
+Alternatively, you may install the development version from GitHub this
 way.
 
 ``` r
