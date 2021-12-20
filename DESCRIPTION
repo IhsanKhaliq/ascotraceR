@@ -42,7 +42,6 @@ Imports:
   lubridate (>= 1.7.9.2),
   lutz (>= 0.3.1),
   circular (>= 0.4-93),
-  purrr,
   stats,
   sf,
   terra
