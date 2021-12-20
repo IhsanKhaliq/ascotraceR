@@ -51,8 +51,6 @@ run
 install.packages("ascotraceR", repos="http://cran.us.r-project.org")
 ```
 
-    ## installing the source package 'ascotraceR'
-
 Alternatively, you may install the development version from GitHub this
 way.
 
