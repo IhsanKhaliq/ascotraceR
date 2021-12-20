@@ -184,7 +184,7 @@ one_day <- function(i_date,
   # this might be quicker if there was no fifelse statement
   daily_vals$paddock[, new_gp := fcase(
     susceptible_gp == 0,
-    0,
+    as.integer(0),
     susceptible_gp == daily_vals$gp_standard,
     daily_vals$new_gp,
     susceptible_gp < daily_vals$gp_standard,

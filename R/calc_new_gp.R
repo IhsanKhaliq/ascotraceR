@@ -32,8 +32,12 @@ calc_new_gp <-
     })
 
     # calculate number of new growing points in 24 hours
-    current_growing_points *
+    cgps <-
+      current_growing_points *
       gp_rr *
       mean_air_temp *
       (1 - current_growing_points / max_gp)
+
+    return(random_integer_from_real(cgps))
+
   }
