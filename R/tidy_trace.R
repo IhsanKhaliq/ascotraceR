@@ -48,18 +48,16 @@
 #' @export
 #'
 tidy_trace <- function(trace) {
-
   i_day <- new_gp <- NULL
   i_date <- t(setDT(lapply(X = trace, `[[`, 2)))
-  sub_trace <- rbindlist(lapply(trace,function(x) {
-    data.table(
-      matrix(unlist(x[3:9]),
-             nrow = 1,
-             dimnames = list(NULL,
-                             names(x[3:9]))
-             )
-      )
-    }))
+  sub_trace <- rbindlist(lapply(trace, function(x) {
+    data.table(matrix(
+      unlist(x[3:9]),
+      nrow = 1,
+      dimnames = list(NULL,
+                      names(x[3:9]))
+    ))
+  }))
   sub_trace[, i_date := lubridate::as_date(i_date)]
   sub_trace[, new_gp := NULL] # this is a duplicated value
   setkey(sub_trace, i_day)
