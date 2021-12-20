@@ -33,8 +33,13 @@ The ascotraceR’s minimum input requirements are location specific weather data
 
 ## Quick start
 
-_ascotraceR_ is not yet on CRAN.
-You may install it from GitHub this way.
+_ascotraceR_ is available on CRAN. To install the latest release, just run
+
+```{r CRAN-isntallation}
+install.packages("ascotraceR")
+```
+
+Alternatively, you may install the development version from GitHub this way.
 
 ```r
 if (!require("remotes"))
