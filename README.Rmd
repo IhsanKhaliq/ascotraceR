@@ -52,9 +52,11 @@ Load the library.
 library("ascotraceR")
 library("data.table")
 library("lubridate")
+
+set.seed(3)
 ```
 
-Import the weather data
+Import the weather data.
 
 ```{r load-weather}
 # weather data
