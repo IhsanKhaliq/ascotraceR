@@ -90,9 +90,8 @@
 <p><em>ascotraceR</em> is available on CRAN. To install the latest release, just run</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ascotraceR"</span>, repos<span class="op">=</span><span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">## installing the source package 'ascotraceR'</span></span></code></pre></div>
 <p>Alternatively, you may install the development version from GitHub this way.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">"remotes"</a></span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"IhsanKhaliq/ascotraceR"</span>,
@@ -100,14 +99,14 @@
 <span class="op">)</span></code></pre></div>
 <p>Once installed you can simulate disease spread in a chickpea paddock.</p>
 <p>Load the library.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/IhsanKhaliq/ascotraceR" class="external-link">"ascotraceR"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org" class="external-link">"lubridate"</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <p>Import the weather data.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># weather data</span>
 <span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
@@ -124,32 +123,32 @@
 <span class="va">Billa_Billa</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lat"</span>, <span class="st">"lon"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="op">-</span><span class="fl">28.1011505</span>, <span class="fl">150.3307084</span><span class="op">)</span><span class="op">]</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Billa_Billa</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">##    day          local_time assessment_number mean_daily_temp wind_ km_h   ws</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## 1:   1 2020-06-04 00:00:00                NA             4.1        0.9 0.25</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">## 2:   1 2020-06-04 00:15:00                NA             3.9        0.6 0.17</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">## 3:   1 2020-06-04 00:30:00                NA             3.9        2.0 0.56</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">## 4:   1 2020-06-04 00:45:00                NA             4.3        1.2 0.33</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">## 5:   1 2020-06-04 01:00:00                NA             3.7        2.4 0.67</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">## 6:   1 2020-06-04 01:15:00                NA             3.5        1.3 0.36</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">##    ws_sd  wd wd_sd cummulative_rain_since_9am rain_mm wet_hours    location</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">## 1:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">## 2:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">## 3:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">## 4:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">## 5:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">## 6:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">##          lat      lon</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">## 1: -28.10115 150.3307</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">## 2: -28.10115 150.3307</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a><span class="co">## 3: -28.10115 150.3307</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="co">## 4: -28.10115 150.3307</span></span>
-<span id="cb6-20"><a href="#cb6-20"></a><span class="co">## 5: -28.10115 150.3307</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a><span class="co">## 6: -28.10115 150.3307</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">##    day          local_time assessment_number mean_daily_temp wind_ km_h   ws</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">## 1:   1 2020-06-04 00:00:00                NA             4.1        0.9 0.25</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">## 2:   1 2020-06-04 00:15:00                NA             3.9        0.6 0.17</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">## 3:   1 2020-06-04 00:30:00                NA             3.9        2.0 0.56</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">## 4:   1 2020-06-04 00:45:00                NA             4.3        1.2 0.33</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">## 5:   1 2020-06-04 01:00:00                NA             3.7        2.4 0.67</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">## 6:   1 2020-06-04 01:15:00                NA             3.5        1.3 0.36</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">##    ws_sd  wd wd_sd cummulative_rain_since_9am rain_mm wet_hours    location</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">## 1:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">## 2:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">## 3:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">## 4:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">## 5:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">## 6:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">##          lat      lon</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">## 1: -28.10115 150.3307</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">## 2: -28.10115 150.3307</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">## 3: -28.10115 150.3307</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">## 4: -28.10115 150.3307</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">## 5: -28.10115 150.3307</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">## 6: -28.10115 150.3307</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="wrangle-weather-data">Wrangle weather data<a class="anchor" aria-label="anchor" href="#wrangle-weather-data"></a>
 </h3>
 <p>A function, <code><a href="reference/format_weather.html">format_weather()</a></code>, is provided to convert raw weather data into the format appropriate for the model. It is mandatory to use this function to ensure weather data is properly formatted before running the model.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/format_weather.html">format_weather</a></span><span class="op">(</span>
   x <span class="op">=</span> <span class="va">Billa_Billa</span>,
   POSIXct_time <span class="op">=</span> <span class="st">"local_time"</span>,
@@ -168,7 +167,7 @@
 <h3 id="simulate-ascochyta-blight-spread">Simulate Ascochyta blight spread<a class="anchor" aria-label="anchor" href="#simulate-ascochyta-blight-spread"></a>
 </h3>
 <p>A function, <code><a href="reference/trace_asco.html">trace_asco()</a></code>, is provided to simulate the spread of Ascochyta blight in a chickpea field over a growing season.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Predict Ascochyta blight spread for the year 2020 at Billa Billa</span>
 <span class="va">traced</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/trace_asco.html">trace_asco</a></span><span class="op">(</span>
   weather <span class="op">=</span> <span class="va">Billa_Billa</span>,
@@ -190,32 +189,32 @@
 <h3 id="summarise-the-output">Summarise the output<a class="anchor" aria-label="anchor" href="#summarise-the-output"></a>
 </h3>
 <p>You can easily get summary statistics for the whole paddock over the simulated season and area under the disease progress curve, AUDPC, using <code><a href="reference/summarise_trace.html">summarise_trace()</a></code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/summarise_trace.html">summarise_trace</a></span><span class="op">(</span><span class="va">traced</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">##      i_day      new_gp susceptible_gp exposed_gp infectious_gp     i_date day</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="co">##   1:     1 16000.00000       16000.00          0             0 2020-06-04 156</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co">##   2:     2  1108.59107       17108.59          0             0 2020-06-05 157</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="co">##   3:     3  1334.03497       18442.63          0             0 2020-06-06 158</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">##   4:     4  1492.26177       19934.89          0             0 2020-06-07 159</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="co">##   5:     5  1793.24969       21728.14          0             0 2020-06-08 160</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="co">##  ---                                                                         </span></span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="co">## 143:   143    30.69713     1992023.87          4           669 2020-10-24 298</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="co">## 144:   144    22.13582     1992046.01          5           669 2020-10-25 299</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co">## 145:   145    20.07310     1992066.08          5           669 2020-10-26 300</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="co">## 146:   146    15.58156     1992077.66          1           673 2020-10-27 301</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="co">## 147:   147    14.22171     1992091.88          4           673 2020-10-28 302</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="co">##             cdd cwh   cr gp_standard   AUDPC</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a><span class="co">##   1:    0.00000   0  0.0    40.00000 45870.5</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="co">##   2:   10.74583   0  0.0    42.77148 45870.5</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="co">##   3:   22.84583   0  0.0    46.10657 45870.5</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="co">##   4:   35.41042   0  0.0    49.83722 45870.5</span></span>
-<span id="cb10-18"><a href="#cb10-18"></a><span class="co">##   5:   49.38958   1  0.6    54.32034 45870.5</span></span>
-<span id="cb10-19"><a href="#cb10-19"></a><span class="co">##  ---                                        </span></span>
-<span id="cb10-20"><a href="#cb10-20"></a><span class="co">## 143: 2133.81645  65 76.2  4980.06672 45870.5</span></span>
-<span id="cb10-21"><a href="#cb10-21"></a><span class="co">## 144: 2154.64770  73 94.4  4980.12110 45870.5</span></span>
-<span id="cb10-22"><a href="#cb10-22"></a><span class="co">## 145: 2176.49562  73 94.4  4980.17042 45870.5</span></span>
-<span id="cb10-23"><a href="#cb10-23"></a><span class="co">## 146: 2195.63104  73 94.4  4980.20748 45870.5</span></span>
-<span id="cb10-24"><a href="#cb10-24"></a><span class="co">## 147: 2215.57687  74 97.0  4980.24131 45870.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">##      i_day      new_gp susceptible_gp exposed_gp infectious_gp     i_date day</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">##   1:     1 16000.00000       16000.00          0             0 2020-06-04 156</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">##   2:     2  1108.59107       17108.59          0             0 2020-06-05 157</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">##   3:     3  1334.03497       18442.63          0             0 2020-06-06 158</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">##   4:     4  1492.26177       19934.89          0             0 2020-06-07 159</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">##   5:     5  1793.24969       21728.14          0             0 2020-06-08 160</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">##  ---                                                                         </span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">## 143:   143    30.69713     1992023.87          4           669 2020-10-24 298</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">## 144:   144    22.13582     1992046.01          5           669 2020-10-25 299</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">## 145:   145    20.07310     1992066.08          5           669 2020-10-26 300</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">## 146:   146    15.58156     1992077.66          1           673 2020-10-27 301</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">## 147:   147    14.22171     1992091.88          4           673 2020-10-28 302</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">##             cdd cwh   cr gp_standard   AUDPC</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">##   1:    0.00000   0  0.0    40.00000 45870.5</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co">##   2:   10.74583   0  0.0    42.77148 45870.5</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co">##   3:   22.84583   0  0.0    46.10657 45870.5</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="co">##   4:   35.41042   0  0.0    49.83722 45870.5</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co">##   5:   49.38958   1  0.6    54.32034 45870.5</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="co">##  ---                                        </span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co">## 143: 2133.81645  65 76.2  4980.06672 45870.5</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="co">## 144: 2154.64770  73 94.4  4980.12110 45870.5</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="co">## 145: 2176.49562  73 94.4  4980.17042 45870.5</span></span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="co">## 146: 2195.63104  73 94.4  4980.20748 45870.5</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a><span class="co">## 147: 2215.57687  74 97.0  4980.24131 45870.5</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
