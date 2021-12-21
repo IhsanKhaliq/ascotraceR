@@ -33,7 +33,7 @@
 #'   column is optional and can specify the `primary_inoculum_intensity` for
 #'   each coordinate.
 #' @param primary_inoculum_intensity Refers to the amount of primary inoculum
-#'   as lesions on chickpea plants at the time of `initial_infection`. On the
+#'   as lesions on infested chickpea stubble at the time of `initial_infection`. On the
 #'   date of initial infection in the experiment. The sources of primary
 #'   inoculum can be infected seed, volunteer chickpea plants or infested
 #'   stubble from the previous seasons. Defaults to `1`.
