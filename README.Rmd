@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 The goal of of _ascotraceR_ is to develop a weather driven model to simulate the spread of Ascochyta blight disease in a chickpea field over a growing season.
 
 This model is adapted from a model developed by [(Diggle *et al.* 2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the spread of anthracnose in a lupin field. The model is run using local weather data.
-The ascotraceR model simulates the pathogen related processes of conidial production, dispersal, successful deposition and infection on chickpea plants.
+The _ascotraceR_ model simulates the pathogen related processes of conidial production, dispersal, successful deposition and infection on chickpea plants.
 Host related processes of growth are simulated in terms of development of growing points.
 The model divides the paddock into 1 square metre cells (observation quadrats/units) and simulates chickpea growth and _A. rabiei_ activities in each cell.
 Initially, there is one growing point per sown seed when seed are sown.
@@ -29,7 +29,7 @@ After penetrating host tissues, conidia produce infected growing points.
 Infected growing points become sporulating lesions after completion of a latent period.
 The length of the latent period is a function of temperature, and the number of conidia produced per sporulating growing point depends on the level of resistance of the chickpea cultivar.
 As the model runs, it keeps a continuous track of non-infected, latent, infected and sporulating growing points (lesions).
-The ascotraceR’s minimum input requirements are location specific weather data and a list of input variables.
+The _ascotraceR_’s minimum input requirements are location specific weather data and a list of input variables.
 
 ## Quick start
 

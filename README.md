@@ -19,7 +19,7 @@ a growing season.
 This model is adapted from a model developed by [(Diggle *et al.*
 2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the
 spread of anthracnose in a lupin field. The model is run using local
-weather data. The ascotraceR model simulates the pathogen related
+weather data. The *ascotraceR* model simulates the pathogen related
 processes of conidial production, dispersal, successful deposition and
 infection on chickpea plants. Host related processes of growth are
 simulated in terms of development of growing points. The model divides
@@ -38,7 +38,7 @@ latent period. The length of the latent period is a function of
 temperature, and the number of conidia produced per sporulating growing
 point depends on the level of resistance of the chickpea cultivar. As
 the model runs, it keeps a continuous track of non-infected, latent,
-infected and sporulating growing points (lesions). The ascotraceR’s
+infected and sporulating growing points (lesions). The *ascotraceR*’s
 minimum input requirements are location specific weather data and a list
 of input variables.
 
