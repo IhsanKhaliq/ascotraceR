@@ -1,5 +1,7 @@
 # ascotraceR 0.0.1.9000
 
+* Clarification on input arguments in `format_weather`
+
 # ascotraceR 0.0.1
 
 * Initial CRAN release.
