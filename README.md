@@ -19,7 +19,7 @@ a growing season.
 This model is adapted from a model developed by [(Diggle *et al.*
 2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the
 spread of anthracnose in a lupin field. The model is run using local
-weather data. The ascotraceR model simulates the pathogen related
+weather data. The *ascotraceR* model simulates the pathogen related
 processes of conidial production, dispersal, successful deposition and
 infection on chickpea plants. Host related processes of growth are
 simulated in terms of development of growing points. The model divides
@@ -38,13 +38,20 @@ latent period. The length of the latent period is a function of
 temperature, and the number of conidia produced per sporulating growing
 point depends on the level of resistance of the chickpea cultivar. As
 the model runs, it keeps a continuous track of non-infected, latent,
-infected and sporulating growing points (lesions). The ascotraceR’s
+infected and sporulating growing points (lesions). The *ascotraceR*’s
 minimum input requirements are location specific weather data and a list
 of input variables.
 
 ## Quick start
 
-*ascotraceR* is not yet on CRAN. You may install it from GitHub this
+*ascotraceR* is available on CRAN. To install the latest release, just
+run
+
+``` r
+install.packages("ascotraceR")
+```
+
+Alternatively, you may install the development version from GitHub this
 way.
 
 ``` r
@@ -167,30 +174,30 @@ simulated season and area under the disease progress curve, AUDPC, using
 summarise_trace(traced)
 ```
 
-    ##      i_day      new_gp susceptible_gp exposed_gp infectious_gp     i_date day
-    ##   1:     1 16000.00000       16000.00          0             0 2020-06-04 156
-    ##   2:     2  1108.59107       17108.59          0             0 2020-06-05 157
-    ##   3:     3  1334.03497       18442.63          0             0 2020-06-06 158
-    ##   4:     4  1492.26177       19934.89          0             0 2020-06-07 159
-    ##   5:     5  1793.24969       21728.14          0             0 2020-06-08 160
-    ##  ---                                                                         
-    ## 143:   143    30.69713     1992023.87          4           669 2020-10-24 298
-    ## 144:   144    22.13582     1992046.01          5           669 2020-10-25 299
-    ## 145:   145    20.07310     1992066.08          5           669 2020-10-26 300
-    ## 146:   146    15.58156     1992077.66          1           673 2020-10-27 301
-    ## 147:   147    14.22171     1992091.88          4           673 2020-10-28 302
-    ##             cdd cwh   cr gp_standard   AUDPC
-    ##   1:    0.00000   0  0.0    40.00000 45870.5
-    ##   2:   10.74583   0  0.0    42.77148 45870.5
-    ##   3:   22.84583   0  0.0    46.10657 45870.5
-    ##   4:   35.41042   0  0.0    49.83722 45870.5
-    ##   5:   49.38958   1  0.6    54.32034 45870.5
-    ##  ---                                        
-    ## 143: 2133.81645  65 76.2  4980.06672 45870.5
-    ## 144: 2154.64770  73 94.4  4980.12110 45870.5
-    ## 145: 2176.49562  73 94.4  4980.17042 45870.5
-    ## 146: 2195.63104  73 94.4  4980.20748 45870.5
-    ## 147: 2215.57687  74 97.0  4980.24131 45870.5
+    ##      i_day new_gp susceptible_gp exposed_gp infectious_gp     i_date day
+    ##   1:     1  16000          16000          0             0 2020-06-04 156
+    ##   2:     2   1200          17200          0             0 2020-06-05 157
+    ##   3:     3   1200          18400          0             0 2020-06-06 158
+    ##   4:     4   1600          20000          0             0 2020-06-07 159
+    ##   5:     5   2000          22000          0             0 2020-06-08 160
+    ##  ---                                                                    
+    ## 143:   143    400        1991999          0           734 2020-10-24 298
+    ## 144:   144      0        1991999         28           734 2020-10-25 299
+    ## 145:   145      0        1991999         28           734 2020-10-26 300
+    ## 146:   146      1        1992000         28           734 2020-10-27 301
+    ## 147:   147      0        1992000         28           734 2020-10-28 302
+    ##             cdd cwh   cr gp_standard AUDPC
+    ##   1:    0.00000   0  0.0          40 49393
+    ##   2:   10.74583   0  0.0          43 49393
+    ##   3:   22.84583   0  0.0          46 49393
+    ##   4:   35.41042   0  0.0          50 49393
+    ##   5:   49.38958   1  0.6          55 49393
+    ##  ---                                      
+    ## 143: 2133.81645  65 76.2        4980 49393
+    ## 144: 2154.64770  73 94.4        4980 49393
+    ## 145: 2176.49562  73 94.4        4980 49393
+    ## 146: 2195.63104  73 94.4        4980 49393
+    ## 147: 2215.57687  74 97.0        4980 49393
 
 ## Code of Conduct
 

@@ -32,11 +32,10 @@
 #'   cell/s coordinates where the epidemic should begin. The \sQuote{load}
 #'   column is optional and can specify the `primary_inoculum_intensity` for
 #'   each coordinate.
-#' @param primary_inoculum_intensity Refers to the amount of primary infection
-#'   as lesions on chickpea plants at the time of `initial_infection`. On the
-#'   date of initial infection in the experiment. The sources of primary
-#'   inoculum can be infected seed, volunteer chickpea plants or infested
-#'   stubble from the previous seasons. Defaults to `1`.
+#' @param primary_inoculum_intensity Refers to the amount of primary inoculum as
+#'   lesions on infested chickpea stubble for initiating disease. The sources of
+#'   primary inoculum can be infected seed, volunteer chickpea plants or
+#'   infested stubble from the previous seasons. Defaults to `200`.
 #' @param latent_period_cdd latent period in cumulative degree days (sum of
 #'   daily temperature means) is the period between infection and production of
 #'   lesions on susceptible growing points. Defaults to `150`.
@@ -142,7 +141,7 @@ trace_asco <- function(weather,
                        latent_period_cdd = 150,
                        time_zone = "UTC",
                        primary_infection_foci = "random",
-                       primary_inoculum_intensity = 1,
+                       primary_inoculum_intensity = 200,
                        n_foci = 1,
                        spores_per_gp_per_wet_hour = 0.22,
                        splash_cauchy_parameter = 0.5,
