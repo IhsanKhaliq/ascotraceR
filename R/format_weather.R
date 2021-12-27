@@ -40,22 +40,19 @@
 #'   latitude. `character`. See details.
 #' @param r Spatial raster which is intended to be used with this weather data
 #'   for use in the blackspot model. Used to set `time_zone` if it is not
-#'   supplied in data. `character`. Optional, see also `time_zone`.
+#'   supplied in data. Optional, see also `time_zone`.
 #' @param lonlat_file A file path to a \acronym{CSV} which included station
 #'   name/id and longitude and latitude coordinates if they are not supplied in
 #'   the data. `character`. Optional, see also `lon` and `lat`.
-#'
 #' @details `time_zone` All weather stations must fall within the same time
 #'   zone.  If the required stations are located in differing time zones,
 #'   separate `ascotraceR.weather` objects must be created for each time zone.
 #'   If a raster object, `r`, of previous crops is provided that spans time
 #'   zones, an error will be emitted.
-#'
 #' @details `wd_sd` If weather data is provided in hourly increments, a column
 #'   with the standard deviation of the wind direction over the hour is required
 #'   to be provided. If the weather data are sub-hourly, the standard deviation
 #'   will be calculated and returned automatically.
-#'
 #' @details `lon`, `lat` and `lonlat_file` If `x` provides longitude and
 #'   latitude values for station locations, these may be specified in the `lon`
 #'   and `lat` columns.  If the coordinates are not relevant to the study
@@ -65,7 +62,6 @@
 #'   provide station locations in the final `ascotraceR.weather` object that is
 #'   created by specifying the file path to a \acronym{CSV} file using
 #'   `lonlat_file`.
-#'
 #' @return A `ascotraceR.weather` object (an extension of \CRANpkg{data.table})
 #'   containing the supplied weather aggregated to each hour in a suitable
 #'   format for use with [trace_asco()] containing the following columns:
