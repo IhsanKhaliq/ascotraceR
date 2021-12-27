@@ -5,7 +5,6 @@
 #' requirements of the model to run.
 #'
 #' @param x A [data.frame] object of weather station data for formatting.
-#'   `character`.
 #' @param YYYY Column name or index in `x` that refers to the year when the
 #'   weather was logged. `character`.
 #' @param MM Column name or index in `x` that refers to the month (numerical)
