@@ -46,7 +46,7 @@
 #'   the data. `character`. Optional, see also `lon` and `lat`.
 #' @details `time_zone` All weather stations must fall within the same time
 #'   zone.  If the required stations are located in differing time zones,
-#'   separate `ascotraceR.weather` objects must be created for each time zone.
+#'   separate `asco.weather` objects must be created for each time zone.
 #'   If a raster object, `r`, of previous crops is provided that spans time
 #'   zones, an error will be emitted.
 #' @details `wd_sd` If weather data is provided in hourly increments, a column
@@ -59,10 +59,10 @@
 #'   location `NA` can be specified and the function will drop these column
 #'   variables.  If these data are not included, (`NULL`) a separate file may be
 #'   provided that contains the longitude, latitude and matching station name to
-#'   provide station locations in the final `ascotraceR.weather` object that is
+#'   provide station locations in the final `asco.weather` object that is
 #'   created by specifying the file path to a \acronym{CSV} file using
 #'   `lonlat_file`.
-#' @return A `ascotraceR.weather` object (an extension of \CRANpkg{data.table})
+#' @return A `asco.weather` object (an extension of \CRANpkg{data.table})
 #'   containing the supplied weather aggregated to each hour in a suitable
 #'   format for use with [trace_asco()] containing the following columns:
 #'   \tabular{rl}{
