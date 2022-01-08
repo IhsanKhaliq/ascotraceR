@@ -140,12 +140,9 @@ summarise_trace <- function(trace) {
   for (i in seq_len(n)) {
     j <- sum(i, 1)
     meanvec[i] <- mean(c(x$infectious_gp[i], x$infectious_gp[j]))
-    intvec[i] <- sum(x$i_day[j], -x$i_day[i])
   }
 
-  infprod <- meanvec * intvec
-
-  return(sum(infprod))
+  return(sum(meanvec))
 }
 
 #' @rdname summarise_trace
