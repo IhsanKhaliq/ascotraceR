@@ -26,8 +26,7 @@ format_weather(
 )
 }
 \arguments{
-\item{x}{A \link{data.frame} object of weather station data for formatting.
-\code{character}.}
+\item{x}{A \link{data.frame} object of weather station data for formatting.}
 
 \item{YYYY}{Column name or index in \code{x} that refers to the year when the
 weather was logged. \code{character}.}
@@ -46,7 +45,7 @@ weather was logged. \code{character}.}
 
 \item{POSIXct_time}{Column name or index in \code{x} which contains a \code{POSIXct}
 formatted time. This can be used instead of arguments \code{YYYY}, \code{MM}, \code{DD},
-\code{hh}, \code{mm.} \code{character}.}
+\code{hh}, \code{mm}. \code{character}.}
 
 \item{time_zone}{Time zone (Olsen time zone format) where the weather station
 is located. May be in a column or supplied as a character string. Optional,
@@ -65,7 +64,7 @@ Celsius. \code{character}.}
 degrees. \code{character}.}
 
 \item{wd_sd}{Column name or index in \code{x} that refers to wind speed columns
-standard deviation .\code{character}.  This is only applicable if weather data
+standard deviation. \code{character}.  This is only applicable if weather data
 is already summarised to hourly increments. See details.}
 
 \item{station}{Column name or index in \code{x} that refers to the weather station
@@ -79,7 +78,7 @@ latitude. \code{character}. See details.}
 
 \item{r}{Spatial raster which is intended to be used with this weather data
 for use in the blackspot model. Used to set \code{time_zone} if it is not
-supplied in data. \code{character}. Optional, see also \code{time_zone}.}
+supplied in data. Optional, see also \code{time_zone}.}
 
 \item{lonlat_file}{A file path to a \acronym{CSV} which included station
 name/id and longitude and latitude coordinates if they are not supplied in
