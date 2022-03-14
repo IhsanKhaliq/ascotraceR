@@ -135,6 +135,23 @@ You can easily get summary statistics for the whole paddock over the simulated s
 summarise_trace(traced)
 ```
 
+## A note on possible _Rcpp_ errors
+
+If you receive the following error message,
+
+```r
+Error in C_force_tz(time, tz = tzone, roll) :
+ function 'Rcpp_precious_remove' not provided by package 'Rcpp'
+```
+
+Please update your _Rcpp_ installation by using:
+
+```r
+install.packages("Rcpp")
+```
+
+Then restart your R session and resume issuing the commands from _ascotraceR_.
+
 ## Code of Conduct
 
 Please note that the ascotraceR project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
