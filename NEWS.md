@@ -1,5 +1,4 @@
-# ascotraceR 0.0.1.9000
-
+# ascotraceR 0.0.2
 ## Minor changes
 
 * Clarification on input arguments in `format_weather()`
