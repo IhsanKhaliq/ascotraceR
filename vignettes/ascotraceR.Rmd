@@ -31,7 +31,7 @@ library("ggplot2")
 library("data.table")
 ```
 
-Import the weather data
+Import the weather data using data that is included in the *ascotraceR* package.
 
 ```{r load-weather}
 # weather data
