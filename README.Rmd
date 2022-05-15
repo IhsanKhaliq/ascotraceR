@@ -8,21 +8,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <!-- badges: start -->
-[![tic](https://github.com/IhsanKhaliq/ascotraceR/workflows/tic/badge.svg?branch=master)](https://github.com/IhsanKhaliq/ascotraceR/actions)
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![DOI](https://zenodo.org/badge/311562210.svg)](https://zenodo.org/badge/latestdoi/311562210)
-[![CRAN status](https://www.r-pkg.org/badges/version/ascotraceR)](https://CRAN.R-project.org/package=ascotraceR)
+
+[![tic](https://github.com/IhsanKhaliq/ascotraceR/workflows/tic/badge.svg?branch=master)](https://github.com/IhsanKhaliq/ascotraceR/actions) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![DOI](https://zenodo.org/badge/311562210.svg)](https://zenodo.org/badge/latestdoi/311562210) [![CRAN status](https://www.r-pkg.org/badges/version/ascotraceR)](https://CRAN.R-project.org/package=ascotraceR)
+
 <!-- badges: end -->
 
-# ascotraceR: An R package resource to simulate the spatiotemporal spread of Ascochyta blight in a chickpea field over a growing season 
+# ascotraceR: An R package resource to simulate the spatiotemporal spread of Ascochyta blight in a chickpea field over a growing season
 
-The goal of of _ascotraceR_ is to develop a weather driven model to simulate the spread of Ascochyta blight disease in a chickpea field over a growing season.
+The goal of of *ascotraceR* is to develop a weather driven model to simulate the spread of Ascochyta blight disease in a chickpea field over a growing season.
 
 This model is adapted from a model developed by [(Diggle *et al.* 2002)](https://doi.org/10.1094/PHYTO.2002.92.10.1110) for simulating the spread of anthracnose in a lupin field.
 The model is run using local weather data.
-The _ascotraceR_ model simulates the pathogen related processes of conidial production, dispersal, successful deposition and infection on chickpea plants.
+The *ascotraceR* model simulates the pathogen related processes of conidial production, dispersal, successful deposition and infection on chickpea plants.
 Host related processes of growth are simulated in terms of development of growing points.
-The model divides the paddock into 1 square metre cells (observation quadrats/units) and simulates chickpea growth and _A. rabiei_ activities in each cell.
+The model divides the paddock into 1 square metre cells (observation quadrats/units) and simulates chickpea growth and *A. rabiei* activities in each cell.
 Initially, there is one growing point per sown seed when seed are sown.
 Chickpea growth is then described in terms of increase in the number of growing points.
 Conidia are dispersed from infested stubble by rain splash or wind driven rain when rainfall threshold is reached.
@@ -31,20 +30,20 @@ After penetrating host tissues, conidia produce infected growing points.
 Infected growing points become sporulating lesions after completion of a latent period.
 The length of the latent period is a function of temperature, and the number of conidia produced per sporulating growing point depends on the level of resistance of the chickpea cultivar.
 As the model runs, it keeps a continuous track of non-infected, latent, infected and sporulating growing points (lesions).
-The _ascotraceR_’s minimum input requirements are location specific weather data and a list of input variables.
+The *ascotraceR*’s minimum input requirements are location specific weather data and a list of input variables.
 
 ## Quick start
 
-_ascotraceR_ is available on CRAN.
+*ascotraceR* is available on CRAN.
 To install the latest release, just run
 
-```r
+``` r
 install.packages("ascotraceR")
 ```
 
 Alternatively, you may install the development version from GitHub this way.
 
-```r
+``` r
 if (!require("remotes"))
   install.packages("remotes")
 remotes::install_github("IhsanKhaliq/ascotraceR",
@@ -85,7 +84,7 @@ Billa_Billa[, c("lat", "lon") := .(-28.1011505, 150.3307084)]
 head(Billa_Billa)
 ```
 
-### Wrangle weather data 
+### Wrangle weather data
 
 A function, `format_weather()`, is provided to convert raw weather data into the format appropriate for the model.
 It is mandatory to use this function to ensure weather data is properly formatted before running the model.
@@ -137,22 +136,22 @@ You can easily get summary statistics for the whole paddock over the simulated s
 summarise_trace(traced)
 ```
 
-## A note on possible _Rcpp_ errors
+## A note on possible *Rcpp* errors
 
 If you receive the following error message,
 
-```r
+``` r
 Error in C_force_tz(time, tz = tzone, roll) :
  function 'Rcpp_precious_remove' not provided by package 'Rcpp'
 ```
 
-Please update your _Rcpp_ installation by using:
+Please update your *Rcpp* installation by using:
 
-```r
+``` r
 install.packages("Rcpp")
 ```
 
-Then restart your R session and resume issuing the commands from _ascotraceR_.
+Then restart your R session and resume issuing the commands from *ascotraceR*.
 
 ## Code of Conduct
 
@@ -161,4 +160,6 @@ By contributing to this project, you agree to abide by its terms.
 
 ## Reference
 
-> Diggle AJ, Salam MU, Thomas GJ, Yang H, O'connell M, Sweetingham M, 2002. AnthracnoseTracer: a spatiotemporal model for simulating the spread of anthracnose in a lupin field. Phytopathology 92, 1110-21.
+> Diggle AJ, Salam MU, Thomas GJ, Yang H, O'connell M, Sweetingham M, 2002.
+> AnthracnoseTracer: a spatiotemporal model for simulating the spread of anthracnose in a lupin field.
+> Phytopathology 92, 1110-21.

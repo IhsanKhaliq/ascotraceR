@@ -10,6 +10,7 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![DOI](https://zenodo.org/badge/311562210.svg)](https://zenodo.org/badge/latestdoi/311562210)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/ascotraceR)](https://CRAN.R-project.org/package=ascotraceR)
+
 <!-- badges: end -->
 
 # ascotraceR: An R package resource to simulate the spatiotemporal spread of Ascochyta blight in a chickpea field over a growing season
