@@ -52,12 +52,12 @@ Billa_Billa[, c("lat", "lon") := .(-28.1011505, 150.3307084)]
 head(Billa_Billa)
 ```
 
-### Wrangle weather data 
+### Wrangle weather data
 
 A function, `format_weather()`, is provided to convert raw weather data into the format appropriate for the model.
 It is mandatory to format weather data before running the model.
 Time zone can also be set manually using `time_zone` argument.
-If latitude and longitude are not supplied in the raw weather data, a a separate CSV file listing latitude and longitude can be supplied to meet this requirement (see `?format_weather` for more details).
+If latitude and longitude are not supplied in the raw weather data, a separate CSV file listing latitude and longitude can be supplied to meet this requirement (see `?format_weather()` for more details).
 
 ```{r format-weather}
 Billa_Billa <- format_weather(
@@ -105,13 +105,12 @@ traced <- trace_asco(
 
 Functions `tidy_trace()` and `summarise_trace()` have been provided to tidy up and summarise the model output
 
-## Tidy up the model output 
+## Tidy up the model output
 
 ```{r tidy}
 tidied <- tidy_trace(traced)
 tidied
 ```
-
 
 ### Summarise the model output
 
@@ -120,7 +119,7 @@ summarised <- summarise_trace(traced)
 summarised
 ```
 
-## Plot using _ggplot2_
+## Plot using *ggplot2*
 
 Plot the number of infectious growing points on day 132.
 
@@ -129,4 +128,3 @@ ggplot(data = subset(tidied, i_day == 132),
        aes(x = x, y = y, fill = infectious_gp)) +
   geom_tile()
 ```
-
