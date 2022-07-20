@@ -63,7 +63,7 @@
 #'   met). Defaults to `0.1`.
 #' @param susceptible_days the number of days for which conidia remain viable on
 #'   chickpea after dispersal. Defaults to `2`. Conidia remain viable on the
-#'   plant for at least 48 hours after a spread event
+#'   plant for at least 48 hours after a spread event.
 #' @param rainfall_multiplier logical values will turn on or off rainfall
 #'   multiplier default method. The default method increases the number of
 #'   spores spread per growing point if the rainfall in the spore spread event
