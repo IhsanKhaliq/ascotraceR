@@ -17,7 +17,7 @@
 #'   weather was logged. `character`.
 #' @param POSIXct_time Column name or index in `x` which contains a `POSIXct`
 #'   formatted time. This can be used instead of arguments `YYYY`, `MM`, `DD`,
-#'   `hh`, `mm.` `character`.
+#'   `hh`, `mm`. `character`.
 #' @param time_zone Time zone (Olsen time zone format) where the weather station
 #'   is located. May be in a column or supplied as a character string. Optional,
 #'   see also `r`. `character`. See details.
@@ -30,7 +30,7 @@
 #' @param wd Column name or index in `x` that refers to wind direction in
 #'   degrees. `character`.
 #' @param wd_sd Column name or index in `x` that refers to wind speed columns
-#'   standard deviation .`character`.  This is only applicable if weather data
+#'   standard deviation. `character`.  This is only applicable if weather data
 #'   is already summarised to hourly increments. See details.
 #' @param station Column name or index in `x` that refers to the weather station
 #'   name or identifier. `character`. See details.

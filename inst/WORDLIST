@@ -7,7 +7,6 @@ DOI
 Diggle
 GJ
 GRDC
-Lifecycle
 O'connell
 ORCID
 O’connell
@@ -16,6 +15,7 @@ POSIXct
 Phytopathology
 README
 RTX
+Rcpp
 Salam
 Summarise
 Sweetingham
@@ -25,7 +25,6 @@ YYYY
 al
 anthracnose
 asco
-ascotraceR’s
 blackspot
 cdd
 centre
@@ -62,3 +61,4 @@ summarised
 summarising
 wd
 ws
+’s
