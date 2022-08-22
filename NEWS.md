@@ -1,9 +1,10 @@
-# ascotraceR 0.0.2
+# ascotraceR 0.0.1.9000
+
 ## Minor changes
 
-* Clarification on input arguments in `format_weather()`
+* Clarification on input arguments in `format_weather()`.
 
-* Typo fixes in documentation.
+* Typo fixes and other enhancements in documentation.
 
 * Add note in README pertaining to _Rcpp_ errors that may occur if an older version of _Rcpp_ is locally installed.
 
