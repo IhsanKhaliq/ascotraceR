@@ -109,7 +109,7 @@ met). Defaults to \code{0.1}.}
 
 \item{susceptible_days}{the number of days for which conidia remain viable on
 chickpea after dispersal. Defaults to \code{2}. Conidia remain viable on the
-plant for at least 48 hours after a spread event}
+plant for at least 48 hours after a spread event.}
 
 \item{rainfall_multiplier}{logical values will turn on or off rainfall
 multiplier default method. The default method increases the number of

@@ -85,7 +85,7 @@ name/id and longitude and latitude coordinates if they are not supplied in
 the data. \code{character}. Optional, see also \code{lon} and \code{lat}.}
 }
 \value{
-A \code{ascotraceR.weather} object (an extension of \CRANpkg{data.table})
+A \code{asco.weather} object (an extension of \CRANpkg{data.table})
 containing the supplied weather aggregated to each hour in a suitable
 format for use with \code{\link[=trace_asco]{trace_asco()}} containing the following columns:
 \tabular{rl}{
@@ -111,7 +111,7 @@ requirements of the model to run.
 \details{
 \code{time_zone} All weather stations must fall within the same time
 zone.  If the required stations are located in differing time zones,
-separate \code{ascotraceR.weather} objects must be created for each time zone.
+separate \code{asco.weather} objects must be created for each time zone.
 If a raster object, \code{r}, of previous crops is provided that spans time
 zones, an error will be emitted.
 
@@ -126,7 +126,7 @@ and \code{lat} columns.  If the coordinates are not relevant to the study
 location \code{NA} can be specified and the function will drop these column
 variables.  If these data are not included, (\code{NULL}) a separate file may be
 provided that contains the longitude, latitude and matching station name to
-provide station locations in the final \code{ascotraceR.weather} object that is
+provide station locations in the final \code{asco.weather} object that is
 created by specifying the file path to a \acronym{CSV} file using
 \code{lonlat_file}.
 }
