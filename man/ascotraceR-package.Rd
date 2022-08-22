@@ -6,7 +6,7 @@
 \alias{ascotraceR-package}
 \title{ascotraceR: Simulate the Spread of Ascochyta Blight in Chickpea}
 \description{
-A spatiotemporal model that simulates the spread of Ascochyta blight in chickpea fields based on location-specific weather conditions. This model is adapted from a model developed by Diggle et al. (2002) <doi:10.1094/PHYTO.2002.92.10.1110> for simulating the spread of anthracnose in a lupin field.
+A spatiotemporal model that simulates the spread of Ascochyta blight in chickpea fields based on location-specific weather conditions. This model is adapted from a model developed by Diggle et al. (2002) \doi{10.1094/PHYTO.2002.92.10.1110} for simulating the spread of anthracnose in a lupin field.
 }
 \seealso{
 Useful links:
