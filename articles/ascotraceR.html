@@ -88,90 +88,90 @@
 </h3>
 <p>Load the libraries.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/IhsanKhaliq/ascotraceR" class="external-link">"ascotraceR"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org" class="external-link">"lubridate"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/IhsanKhaliq/ascotraceR" class="external-link">"ascotraceR"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org" class="external-link">"lubridate"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></span></code></pre></div>
 <p>Import the weather data using data that is included in the <em>ascotraceR</em> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># weather data</span>
-<span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
-    <span class="st">"extdata"</span>,
-    <span class="st">"2020_Billa_Billa_weather_data_ozforecast.csv"</span>,
-    package <span class="op">=</span> <span class="st">"ascotraceR"</span>
-  <span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># format time column</span>
-<span class="va">Billa_Billa</span><span class="op">[</span>, <span class="va">local_time</span> <span class="op">:=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">dmy_hm</a></span><span class="op">(</span><span class="va">local_time</span><span class="op">)</span><span class="op">]</span>
-
-<span class="co"># specify the station coordinates of the Billa Billa weather station</span>
-<span class="va">Billa_Billa</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lat"</span>, <span class="st">"lon"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="op">-</span><span class="fl">28.1011505</span>, <span class="fl">150.3307084</span><span class="op">)</span><span class="op">]</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Billa_Billa</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##    day          local_time assessment_number mean_daily_temp wind_ km_h   ws</span>
-<span class="co">## 1:   1 2020-06-04 00:00:00                NA             4.1        0.9 0.25</span>
-<span class="co">## 2:   1 2020-06-04 00:15:00                NA             3.9        0.6 0.17</span>
-<span class="co">## 3:   1 2020-06-04 00:30:00                NA             3.9        2.0 0.56</span>
-<span class="co">## 4:   1 2020-06-04 00:45:00                NA             4.3        1.2 0.33</span>
-<span class="co">## 5:   1 2020-06-04 01:00:00                NA             3.7        2.4 0.67</span>
-<span class="co">## 6:   1 2020-06-04 01:15:00                NA             3.5        1.3 0.36</span>
-<span class="co">##    ws_sd  wd wd_sd cummulative_rain_since_9am rain_mm wet_hours    location</span>
-<span class="co">## 1:    NA 215    NA                          0       0        NA Billa_Billa</span>
-<span class="co">## 2:    NA 215    NA                          0       0        NA Billa_Billa</span>
-<span class="co">## 3:    NA 215    NA                          0       0        NA Billa_Billa</span>
-<span class="co">## 4:    NA 215    NA                          0       0        NA Billa_Billa</span>
-<span class="co">## 5:    NA 215    NA                          0       0        NA Billa_Billa</span>
-<span class="co">## 6:    NA 215    NA                          0       0        NA Billa_Billa</span>
-<span class="co">##          lat      lon</span>
-<span class="co">## 1: -28.10115 150.3307</span>
-<span class="co">## 2: -28.10115 150.3307</span>
-<span class="co">## 3: -28.10115 150.3307</span>
-<span class="co">## 4: -28.10115 150.3307</span>
-<span class="co">## 5: -28.10115 150.3307</span>
-<span class="co">## 6: -28.10115 150.3307</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># weather data</span></span>
+<span><span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>    <span class="st">"extdata"</span>,</span>
+<span>    <span class="st">"2020_Billa_Billa_weather_data_ozforecast.csv"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"ascotraceR"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># format time column</span></span>
+<span><span class="va">Billa_Billa</span><span class="op">[</span>, <span class="va">local_time</span> <span class="op">:=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">dmy_hm</a></span><span class="op">(</span><span class="va">local_time</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># specify the station coordinates of the Billa Billa weather station</span></span>
+<span><span class="va">Billa_Billa</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lat"</span>, <span class="st">"lon"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="op">-</span><span class="fl">28.1011505</span>, <span class="fl">150.3307084</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Billa_Billa</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    day          local_time assessment_number mean_daily_temp wind_ km_h   ws</span></span>
+<span><span class="co">## 1:   1 2020-06-04 00:00:00                NA             4.1        0.9 0.25</span></span>
+<span><span class="co">## 2:   1 2020-06-04 00:15:00                NA             3.9        0.6 0.17</span></span>
+<span><span class="co">## 3:   1 2020-06-04 00:30:00                NA             3.9        2.0 0.56</span></span>
+<span><span class="co">## 4:   1 2020-06-04 00:45:00                NA             4.3        1.2 0.33</span></span>
+<span><span class="co">## 5:   1 2020-06-04 01:00:00                NA             3.7        2.4 0.67</span></span>
+<span><span class="co">## 6:   1 2020-06-04 01:15:00                NA             3.5        1.3 0.36</span></span>
+<span><span class="co">##    ws_sd  wd wd_sd cummulative_rain_since_9am rain_mm wet_hours    location</span></span>
+<span><span class="co">## 1:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span><span class="co">## 2:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span><span class="co">## 3:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span><span class="co">## 4:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span><span class="co">## 5:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span><span class="co">## 6:    NA 215    NA                          0       0        NA Billa_Billa</span></span>
+<span><span class="co">##          lat      lon</span></span>
+<span><span class="co">## 1: -28.10115 150.3307</span></span>
+<span><span class="co">## 2: -28.10115 150.3307</span></span>
+<span><span class="co">## 3: -28.10115 150.3307</span></span>
+<span><span class="co">## 4: -28.10115 150.3307</span></span>
+<span><span class="co">## 5: -28.10115 150.3307</span></span>
+<span><span class="co">## 6: -28.10115 150.3307</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="wrangle-weather-data">Wrangle weather data<a class="anchor" aria-label="anchor" href="#wrangle-weather-data"></a>
 </h3>
 <p>A function, <code><a href="../reference/format_weather.html">format_weather()</a></code>, is provided to convert raw weather data into the format appropriate for the model. It is mandatory to format weather data before running the model. Time zone can also be set manually using <code>time_zone</code> argument. If latitude and longitude are not supplied in the raw weather data, a separate CSV file listing latitude and longitude can be supplied to meet this requirement (see <code>?format_weather()</code> for more details).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_weather.html">format_weather</a></span><span class="op">(</span>
-  x <span class="op">=</span> <span class="va">Billa_Billa</span>,
-  POSIXct_time <span class="op">=</span> <span class="st">"local_time"</span>,
-  temp <span class="op">=</span> <span class="st">"mean_daily_temp"</span>,
-  ws <span class="op">=</span> <span class="st">"ws"</span>,
-  wd_sd <span class="op">=</span> <span class="st">"wd_sd"</span>,
-  rain <span class="op">=</span> <span class="st">"rain_mm"</span>,
-  wd <span class="op">=</span> <span class="st">"wd"</span>,
-  station <span class="op">=</span> <span class="st">"location"</span>,
-  time_zone <span class="op">=</span> <span class="st">"Australia/Brisbane"</span>,
-  lon <span class="op">=</span> <span class="st">"lon"</span>,
-  lat <span class="op">=</span> <span class="st">"lat"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_weather.html">format_weather</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">Billa_Billa</span>,</span>
+<span>  POSIXct_time <span class="op">=</span> <span class="st">"local_time"</span>,</span>
+<span>  temp <span class="op">=</span> <span class="st">"mean_daily_temp"</span>,</span>
+<span>  ws <span class="op">=</span> <span class="st">"ws"</span>,</span>
+<span>  wd_sd <span class="op">=</span> <span class="st">"wd_sd"</span>,</span>
+<span>  rain <span class="op">=</span> <span class="st">"rain_mm"</span>,</span>
+<span>  wd <span class="op">=</span> <span class="st">"wd"</span>,</span>
+<span>  station <span class="op">=</span> <span class="st">"location"</span>,</span>
+<span>  time_zone <span class="op">=</span> <span class="st">"Australia/Brisbane"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"lon"</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"lat"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="simulate-ascochyta-blight-spread">Simulate Ascochyta blight spread<a class="anchor" aria-label="anchor" href="#simulate-ascochyta-blight-spread"></a>
 </h3>
 <p>A function, <code><a href="../reference/trace_asco.html">trace_asco()</a></code>, is provided to simulate the spread of Ascochyta blight in a chickpea field over a growing season. The inputs needed to run the function include weather data, paddock length and width, sowing and harvest dates, chickpea growing points replication rate, primary infection intensity, latent period, number of conidia produced per lesion and the location of primary infection foci (centre or random). The model output is a nested list with items for each day of the model run. See the help file for <code><a href="../reference/trace_asco.html">trace_asco()</a></code> for more information.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Predict Ascochyta blight spread for the year 2020 at Billa Billa</span>
-<span class="va">traced</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trace_asco.html">trace_asco</a></span><span class="op">(</span>
-  weather <span class="op">=</span> <span class="va">Billa_Billa</span>,
-  paddock_length <span class="op">=</span> <span class="fl">20</span>,
-  paddock_width <span class="op">=</span> <span class="fl">20</span>,
-  initial_infection <span class="op">=</span> <span class="st">"2020-07-17"</span>,
-  sowing_date <span class="op">=</span> <span class="st">"2020-06-04"</span>,
-  harvest_date <span class="op">=</span> <span class="st">"2020-10-27"</span>,
-  time_zone <span class="op">=</span> <span class="st">"Australia/Brisbane"</span>,
-  seeding_rate <span class="op">=</span> <span class="fl">40</span>,
-  gp_rr <span class="op">=</span> <span class="fl">0.0065</span>,
-  spores_per_gp_per_wet_hour <span class="op">=</span> <span class="fl">0.6</span>,
-  latent_period_cdd <span class="op">=</span> <span class="fl">150</span>,
-  primary_inoculum_intensity <span class="op">=</span> <span class="fl">100</span>,
-  primary_infection_foci <span class="op">=</span> <span class="st">"centre"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Predict Ascochyta blight spread for the year 2020 at Billa Billa</span></span>
+<span><span class="va">traced</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trace_asco.html">trace_asco</a></span><span class="op">(</span></span>
+<span>  weather <span class="op">=</span> <span class="va">Billa_Billa</span>,</span>
+<span>  paddock_length <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  paddock_width <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  initial_infection <span class="op">=</span> <span class="st">"2020-07-17"</span>,</span>
+<span>  sowing_date <span class="op">=</span> <span class="st">"2020-06-04"</span>,</span>
+<span>  harvest_date <span class="op">=</span> <span class="st">"2020-10-27"</span>,</span>
+<span>  time_zone <span class="op">=</span> <span class="st">"Australia/Brisbane"</span>,</span>
+<span>  seeding_rate <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>  gp_rr <span class="op">=</span> <span class="fl">0.0065</span>,</span>
+<span>  spores_per_gp_per_wet_hour <span class="op">=</span> <span class="fl">0.6</span>,</span>
+<span>  latent_period_cdd <span class="op">=</span> <span class="fl">150</span>,</span>
+<span>  primary_inoculum_intensity <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  primary_infection_foci <span class="op">=</span> <span class="st">"centre"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="tidy-up-or-summarise-the-model-output">Tidy up or summarise the model output<a class="anchor" aria-label="anchor" href="#tidy-up-or-summarise-the-model-output"></a>
@@ -183,62 +183,62 @@
 <h2 id="tidy-up-the-model-output">Tidy up the model output<a class="anchor" aria-label="anchor" href="#tidy-up-the-model-output"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tidied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tidy_trace.html">tidy_trace</a></span><span class="op">(</span><span class="va">traced</span><span class="op">)</span>
-<span class="va">tidied</span></code></pre></div>
-<pre><code><span class="co">##        i_day     i_date day  x  y new_gp susceptible_gp exposed_gp</span>
-<span class="co">##     1:     1 2020-06-04 156  1  1     40             40          0</span>
-<span class="co">##     2:     1 2020-06-04 156  1  2     40             40          0</span>
-<span class="co">##     3:     1 2020-06-04 156  1  3     40             40          0</span>
-<span class="co">##     4:     1 2020-06-04 156  1  4     40             40          0</span>
-<span class="co">##     5:     1 2020-06-04 156  1  5     40             40          0</span>
-<span class="co">##    ---                                                            </span>
-<span class="co">## 58796:   147 2020-10-28 302 20 16      0           4980          0</span>
-<span class="co">## 58797:   147 2020-10-28 302 20 17      0           4980          0</span>
-<span class="co">## 58798:   147 2020-10-28 302 20 18      0           4980          0</span>
-<span class="co">## 58799:   147 2020-10-28 302 20 19      0           4980          0</span>
-<span class="co">## 58800:   147 2020-10-28 302 20 20      0           4980          0</span>
-<span class="co">##        infectious_gp      cdd cwh cr gp_standard</span>
-<span class="co">##     1:             0    0.000   0  0          40</span>
-<span class="co">##     2:             0    0.000   0  0          40</span>
-<span class="co">##     3:             0    0.000   0  0          40</span>
-<span class="co">##     4:             0    0.000   0  0          40</span>
-<span class="co">##     5:             0    0.000   0  0          40</span>
-<span class="co">##    ---                                          </span>
-<span class="co">## 58796:             0 2215.577  74 97        4980</span>
-<span class="co">## 58797:             0 2215.577  74 97        4980</span>
-<span class="co">## 58798:             0 2215.577  74 97        4980</span>
-<span class="co">## 58799:             0 2215.577  74 97        4980</span>
-<span class="co">## 58800:             0 2215.577  74 97        4980</span></code></pre>
+<code class="sourceCode R"><span><span class="va">tidied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tidy_trace.html">tidy_trace</a></span><span class="op">(</span><span class="va">traced</span><span class="op">)</span></span>
+<span><span class="va">tidied</span></span></code></pre></div>
+<pre><code><span><span class="co">##        i_day     i_date day  x  y new_gp susceptible_gp exposed_gp</span></span>
+<span><span class="co">##     1:     1 2020-06-04 156  1  1     40             40          0</span></span>
+<span><span class="co">##     2:     1 2020-06-04 156  1  2     40             40          0</span></span>
+<span><span class="co">##     3:     1 2020-06-04 156  1  3     40             40          0</span></span>
+<span><span class="co">##     4:     1 2020-06-04 156  1  4     40             40          0</span></span>
+<span><span class="co">##     5:     1 2020-06-04 156  1  5     40             40          0</span></span>
+<span><span class="co">##    ---                                                            </span></span>
+<span><span class="co">## 58796:   147 2020-10-28 302 20 16      0           4980          0</span></span>
+<span><span class="co">## 58797:   147 2020-10-28 302 20 17      0           4980          0</span></span>
+<span><span class="co">## 58798:   147 2020-10-28 302 20 18      0           4980          0</span></span>
+<span><span class="co">## 58799:   147 2020-10-28 302 20 19      0           4980          0</span></span>
+<span><span class="co">## 58800:   147 2020-10-28 302 20 20      0           4980          0</span></span>
+<span><span class="co">##        infectious_gp      cdd cwh cr gp_standard</span></span>
+<span><span class="co">##     1:             0    0.000   0  0          40</span></span>
+<span><span class="co">##     2:             0    0.000   0  0          40</span></span>
+<span><span class="co">##     3:             0    0.000   0  0          40</span></span>
+<span><span class="co">##     4:             0    0.000   0  0          40</span></span>
+<span><span class="co">##     5:             0    0.000   0  0          40</span></span>
+<span><span class="co">##    ---                                          </span></span>
+<span><span class="co">## 58796:             0 2215.577  74 97        4980</span></span>
+<span><span class="co">## 58797:             0 2215.577  74 97        4980</span></span>
+<span><span class="co">## 58798:             0 2215.577  74 97        4980</span></span>
+<span><span class="co">## 58799:             0 2215.577  74 97        4980</span></span>
+<span><span class="co">## 58800:             0 2215.577  74 97        4980</span></span></code></pre>
 <div class="section level3">
 <h3 id="summarise-the-model-output">Summarise the model output<a class="anchor" aria-label="anchor" href="#summarise-the-model-output"></a>
 </h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">summarised</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_trace.html">summarise_trace</a></span><span class="op">(</span><span class="va">traced</span><span class="op">)</span>
-<span class="va">summarised</span></code></pre></div>
-<pre><code><span class="co">##      i_day new_gp susceptible_gp exposed_gp infectious_gp     i_date day</span>
-<span class="co">##   1:     1  16000          16000          0             0 2020-06-04 156</span>
-<span class="co">##   2:     2   1200          17200          0             0 2020-06-05 157</span>
-<span class="co">##   3:     3   1200          18400          0             0 2020-06-06 158</span>
-<span class="co">##   4:     4   1600          20000          0             0 2020-06-07 159</span>
-<span class="co">##   5:     5   2000          22000          0             0 2020-06-08 160</span>
-<span class="co">##  ---                                                                    </span>
-<span class="co">## 143:   143      0        1991993          3           694 2020-10-24 298</span>
-<span class="co">## 144:   144      3        1991996          3           694 2020-10-25 299</span>
-<span class="co">## 145:   145      3        1991999          3           694 2020-10-26 300</span>
-<span class="co">## 146:   146      1        1991997          0           697 2020-10-27 301</span>
-<span class="co">## 147:   147      1        1991998          0           697 2020-10-28 302</span>
-<span class="co">##             cdd cwh   cr gp_standard   AUDPC</span>
-<span class="co">##   1:    0.00000   0  0.0          40 47036.5</span>
-<span class="co">##   2:   10.74583   0  0.0          43 47036.5</span>
-<span class="co">##   3:   22.84583   0  0.0          46 47036.5</span>
-<span class="co">##   4:   35.41042   0  0.0          50 47036.5</span>
-<span class="co">##   5:   49.38958   1  0.6          55 47036.5</span>
-<span class="co">##  ---                                        </span>
-<span class="co">## 143: 2133.81645  65 76.2        4980 47036.5</span>
-<span class="co">## 144: 2154.64770  73 94.4        4980 47036.5</span>
-<span class="co">## 145: 2176.49562  73 94.4        4980 47036.5</span>
-<span class="co">## 146: 2195.63104  73 94.4        4980 47036.5</span>
-<span class="co">## 147: 2215.57687  74 97.0        4980 47036.5</span></code></pre>
+<code class="sourceCode R"><span><span class="va">summarised</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_trace.html">summarise_trace</a></span><span class="op">(</span><span class="va">traced</span><span class="op">)</span></span>
+<span><span class="va">summarised</span></span></code></pre></div>
+<pre><code><span><span class="co">##      i_day new_gp susceptible_gp exposed_gp infectious_gp     i_date day</span></span>
+<span><span class="co">##   1:     1  16000          16000          0             0 2020-06-04 156</span></span>
+<span><span class="co">##   2:     2   1200          17200          0             0 2020-06-05 157</span></span>
+<span><span class="co">##   3:     3   1200          18400          0             0 2020-06-06 158</span></span>
+<span><span class="co">##   4:     4   1600          20000          0             0 2020-06-07 159</span></span>
+<span><span class="co">##   5:     5   1600          21600          0             0 2020-06-08 160</span></span>
+<span><span class="co">##  ---                                                                    </span></span>
+<span><span class="co">## 143:   143      2        1991998          3           629 2020-10-24 298</span></span>
+<span><span class="co">## 144:   144      0        1991998          3           629 2020-10-25 299</span></span>
+<span><span class="co">## 145:   145      1        1991999          3           629 2020-10-26 300</span></span>
+<span><span class="co">## 146:   146      2        1991998          0           632 2020-10-27 301</span></span>
+<span><span class="co">## 147:   147      0        1991998          0           632 2020-10-28 302</span></span>
+<span><span class="co">##             cdd cwh   cr gp_standard AUDPC</span></span>
+<span><span class="co">##   1:    0.00000   0  0.0          40 43209</span></span>
+<span><span class="co">##   2:   10.74583   0  0.0          43 43209</span></span>
+<span><span class="co">##   3:   22.84583   0  0.0          46 43209</span></span>
+<span><span class="co">##   4:   35.41042   0  0.0          50 43209</span></span>
+<span><span class="co">##   5:   49.38958   1  0.6          54 43209</span></span>
+<span><span class="co">##  ---                                      </span></span>
+<span><span class="co">## 143: 2133.81645  65 76.2        4980 43209</span></span>
+<span><span class="co">## 144: 2154.64770  73 94.4        4980 43209</span></span>
+<span><span class="co">## 145: 2176.49562  73 94.4        4980 43209</span></span>
+<span><span class="co">## 146: 2195.63104  73 94.4        4980 43209</span></span>
+<span><span class="co">## 147: 2215.57687  74 97.0        4980 43209</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -246,9 +246,9 @@
 </h2>
 <p>Plot the number of infectious growing points on day 132.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/subset.data.table.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">tidied</span>, <span class="va">i_day</span> <span class="op">==</span> <span class="fl">132</span><span class="op">)</span>,
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, fill <span class="op">=</span> <span class="va">infectious_gp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">tidied</span>, <span class="va">i_day</span> <span class="op">==</span> <span class="fl">132</span><span class="op">)</span>,</span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, fill <span class="op">=</span> <span class="va">infectious_gp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ascotraceR_files/figure-html/plot-1.png" width="672"></p>
 </div>
   </div>
@@ -270,7 +270,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

@@ -88,40 +88,40 @@
 </h2>
 <p><em>ascotraceR</em> is available on CRAN. To install the latest release, just run</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ascotraceR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ascotraceR"</span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively, you may install the development version from GitHub this way.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">"remotes"</a></span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"IhsanKhaliq/ascotraceR"</span>,
-                        build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">"remotes"</a></span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"IhsanKhaliq/ascotraceR"</span>,</span>
+<span>                        build_vignettes <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Once installed you can simulate disease spread in a chickpea paddock.</p>
 <p>Load the library.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/IhsanKhaliq/ascotraceR" class="external-link">"ascotraceR"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org" class="external-link">"lubridate"</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/IhsanKhaliq/ascotraceR" class="external-link">"ascotraceR"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://lubridate.tidyverse.org" class="external-link">"lubridate"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p>Import the weather data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># weather data</span>
-<span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>
-    <span class="st">"extdata"</span>,
-    <span class="st">"2020_Billa_Billa_weather_data_ozforecast.csv"</span>,
-    package <span class="op">=</span> <span class="st">"ascotraceR"</span>
-  <span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># format time column</span>
-<span class="va">Billa_Billa</span><span class="op">[</span>, <span class="va">local_time</span> <span class="op">:=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">dmy_hm</a></span><span class="op">(</span><span class="va">local_time</span><span class="op">)</span><span class="op">]</span>
-
-<span class="co"># specify the station coordinates of the Billa Billa weather station</span>
-<span class="va">Billa_Billa</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lat"</span>, <span class="st">"lon"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="op">-</span><span class="fl">28.1011505</span>, <span class="fl">150.3307084</span><span class="op">)</span><span class="op">]</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Billa_Billa</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># weather data</span></span>
+<span><span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>    <span class="st">"extdata"</span>,</span>
+<span>    <span class="st">"2020_Billa_Billa_weather_data_ozforecast.csv"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"ascotraceR"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># format time column</span></span>
+<span><span class="va">Billa_Billa</span><span class="op">[</span>, <span class="va">local_time</span> <span class="op">:=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">dmy_hm</a></span><span class="op">(</span><span class="va">local_time</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># specify the station coordinates of the Billa Billa weather station</span></span>
+<span><span class="va">Billa_Billa</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lat"</span>, <span class="st">"lon"</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="op">-</span><span class="fl">28.1011505</span>, <span class="fl">150.3307084</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Billa_Billa</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">##    day          local_time assessment_number mean_daily_temp wind_ km_h   ws</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="co">## 1:   1 2020-06-04 00:00:00                NA             4.1        0.9 0.25</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co">## 2:   1 2020-06-04 00:15:00                NA             3.9        0.6 0.17</span></span>
@@ -148,48 +148,48 @@
 </h3>
 <p>A function, <code><a href="reference/format_weather.html">format_weather()</a></code>, is provided to convert raw weather data into the format appropriate for the model. It is mandatory to use this function to ensure weather data is properly formatted before running the model.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/format_weather.html">format_weather</a></span><span class="op">(</span>
-  x <span class="op">=</span> <span class="va">Billa_Billa</span>,
-  POSIXct_time <span class="op">=</span> <span class="st">"local_time"</span>,
-  temp <span class="op">=</span> <span class="st">"mean_daily_temp"</span>,
-  ws <span class="op">=</span> <span class="st">"ws"</span>,
-  wd_sd <span class="op">=</span> <span class="st">"wd_sd"</span>,
-  rain <span class="op">=</span> <span class="st">"rain_mm"</span>,
-  wd <span class="op">=</span> <span class="st">"wd"</span>,
-  station <span class="op">=</span> <span class="st">"location"</span>,
-  time_zone <span class="op">=</span> <span class="st">"Australia/Brisbane"</span>,
-  lon <span class="op">=</span> <span class="st">"lon"</span>,
-  lat <span class="op">=</span> <span class="st">"lat"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">Billa_Billa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/format_weather.html">format_weather</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">Billa_Billa</span>,</span>
+<span>  POSIXct_time <span class="op">=</span> <span class="st">"local_time"</span>,</span>
+<span>  temp <span class="op">=</span> <span class="st">"mean_daily_temp"</span>,</span>
+<span>  ws <span class="op">=</span> <span class="st">"ws"</span>,</span>
+<span>  wd_sd <span class="op">=</span> <span class="st">"wd_sd"</span>,</span>
+<span>  rain <span class="op">=</span> <span class="st">"rain_mm"</span>,</span>
+<span>  wd <span class="op">=</span> <span class="st">"wd"</span>,</span>
+<span>  station <span class="op">=</span> <span class="st">"location"</span>,</span>
+<span>  time_zone <span class="op">=</span> <span class="st">"Australia/Brisbane"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"lon"</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"lat"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="simulate-ascochyta-blight-spread">Simulate Ascochyta blight spread<a class="anchor" aria-label="anchor" href="#simulate-ascochyta-blight-spread"></a>
 </h3>
 <p>A function, <code><a href="reference/trace_asco.html">trace_asco()</a></code>, is provided to simulate the spread of Ascochyta blight in a chickpea field over a growing season.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Predict Ascochyta blight spread for the year 2020 at Billa Billa</span>
-<span class="va">traced</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/trace_asco.html">trace_asco</a></span><span class="op">(</span>
-  weather <span class="op">=</span> <span class="va">Billa_Billa</span>,
-  paddock_length <span class="op">=</span> <span class="fl">20</span>,
-  paddock_width <span class="op">=</span> <span class="fl">20</span>,
-  initial_infection <span class="op">=</span> <span class="st">"2020-07-17"</span>,
-  sowing_date <span class="op">=</span> <span class="st">"2020-06-04"</span>,
-  harvest_date <span class="op">=</span> <span class="st">"2020-10-27"</span>,
-  time_zone <span class="op">=</span> <span class="st">"Australia/Brisbane"</span>,
-  seeding_rate <span class="op">=</span> <span class="fl">40</span>,
-  gp_rr <span class="op">=</span> <span class="fl">0.0065</span>,
-  spores_per_gp_per_wet_hour <span class="op">=</span> <span class="fl">0.6</span>,
-  latent_period_cdd <span class="op">=</span> <span class="fl">150</span>,
-  primary_inoculum_intensity <span class="op">=</span> <span class="fl">100</span>,
-  primary_infection_foci <span class="op">=</span> <span class="st">"centre"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Predict Ascochyta blight spread for the year 2020 at Billa Billa</span></span>
+<span><span class="va">traced</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/trace_asco.html">trace_asco</a></span><span class="op">(</span></span>
+<span>  weather <span class="op">=</span> <span class="va">Billa_Billa</span>,</span>
+<span>  paddock_length <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  paddock_width <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  initial_infection <span class="op">=</span> <span class="st">"2020-07-17"</span>,</span>
+<span>  sowing_date <span class="op">=</span> <span class="st">"2020-06-04"</span>,</span>
+<span>  harvest_date <span class="op">=</span> <span class="st">"2020-10-27"</span>,</span>
+<span>  time_zone <span class="op">=</span> <span class="st">"Australia/Brisbane"</span>,</span>
+<span>  seeding_rate <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>  gp_rr <span class="op">=</span> <span class="fl">0.0065</span>,</span>
+<span>  spores_per_gp_per_wet_hour <span class="op">=</span> <span class="fl">0.6</span>,</span>
+<span>  latent_period_cdd <span class="op">=</span> <span class="fl">150</span>,</span>
+<span>  primary_inoculum_intensity <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  primary_infection_foci <span class="op">=</span> <span class="st">"centre"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="summarise-the-output">Summarise the output<a class="anchor" aria-label="anchor" href="#summarise-the-output"></a>
 </h3>
 <p>You can easily get summary statistics for the whole paddock over the simulated season and area under the disease progress curve, AUDPC, using <code><a href="reference/summarise_trace.html">summarise_trace()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/summarise_trace.html">summarise_trace</a></span><span class="op">(</span><span class="va">traced</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/summarise_trace.html">summarise_trace</a></span><span class="op">(</span><span class="va">traced</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">##      i_day new_gp susceptible_gp exposed_gp infectious_gp     i_date day</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="co">##   1:     1  16000          16000          0             0 2020-06-04 156</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a><span class="co">##   2:     2   1200          17200          0             0 2020-06-05 157</span></span>
@@ -294,7 +294,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

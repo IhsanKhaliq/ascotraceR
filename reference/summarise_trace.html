@@ -60,19 +60,22 @@ the entire paddock.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">summarise_trace</span><span class="op">(</span><span class="va">trace</span><span class="op">)</span>
-
-<span class="fu">summarize_trace</span><span class="op">(</span><span class="va">trace</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summarise_trace</span><span class="op">(</span><span class="va">trace</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">summarize_trace</span><span class="op">(</span><span class="va">trace</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>trace</dt>
 <dd><p>a nested list output from <code><a href="trace_asco.html">trace_asco()</a></code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <a href="https://CRAN.R-project.org/package=data.table" class="external-link"><span class="pkg">data.table</span></a> summarising the model's output for a paddock
+    
+
+<p>A <a href="https://CRAN.R-project.org/package=data.table" class="external-link"><span class="pkg">data.table</span></a> summarising the model's output for a paddock
 on a daily time-step with the area under the disease progress curve
 (<acronym>AUDPC</acronym>) at the paddock level for the simulation's run with the
 following columns:</p><table class="table table"><tr><td><strong>i_day</strong>:</td><td>Model iteration day (day)</td></tr><tr><td><strong>new_gp</strong>:</td><td>New growing points on <code>i_day</code> (n)</td></tr><tr><td><strong>susceptible_gp</strong>:</td><td>Susceptible growing points on <code>i_day</code> (n)</td></tr><tr><td><strong>exposed_gp</strong>:</td><td>Exposed growing points on <code>i_day</code> (n)</td></tr><tr><td><strong>i_date</strong>:</td><td>Calendar date corresponding to model's <code>i_day</code></td></tr><tr><td><strong>day</strong>:</td><td>Julian day or numeric day of year (day)</td></tr><tr><td><strong>cdd</strong>:</td><td>Cumulative degree days (day)</td></tr><tr><td><strong>cwh</strong>:</td><td>Cumulative wet hours (h)</td></tr><tr><td><strong>cr</strong>:</td><td>Cumulative rainfall (mm)</td></tr><tr><td><strong>gp_standard</strong>:</td><td>standard growing points assuming growth is not
@@ -85,69 +88,69 @@ duration of the model's run.</td></tr></table></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span>
-<span class="r-in"><span class="va">Newmarracarra</span> <span class="op">&lt;-</span></span>
-<span class="r-in">   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
-<span class="r-in">            <span class="st">"1998_Newmarracarra_weather_table.csv"</span>, package <span class="op">=</span> <span class="st">"ascotraceR"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">station_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">   <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"stat_dat.csv"</span>, package <span class="op">=</span> <span class="st">"ascotraceR"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">weather_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="format_weather.html">format_weather</a></span><span class="op">(</span></span>
-<span class="r-in">   x <span class="op">=</span> <span class="va">Newmarracarra</span>,</span>
-<span class="r-in">   POSIXct_time <span class="op">=</span> <span class="st">"Local.Time"</span>,</span>
-<span class="r-in">   temp <span class="op">=</span> <span class="st">"mean_daily_temp"</span>,</span>
-<span class="r-in">   ws <span class="op">=</span> <span class="st">"ws"</span>,</span>
-<span class="r-in">   wd_sd <span class="op">=</span> <span class="st">"wd_sd"</span>,</span>
-<span class="r-in">   rain <span class="op">=</span> <span class="st">"rain_mm"</span>,</span>
-<span class="r-in">   wd <span class="op">=</span> <span class="st">"wd"</span>,</span>
-<span class="r-in">   station <span class="op">=</span> <span class="st">"Location"</span>,</span>
-<span class="r-in">   time_zone <span class="op">=</span> <span class="st">"Australia/Perth"</span>,</span>
-<span class="r-in">   lonlat_file <span class="op">=</span> <span class="va">station_data</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">traced</span> <span class="op">&lt;-</span> <span class="fu"><a href="trace_asco.html">trace_asco</a></span><span class="op">(</span></span>
-<span class="r-in">  weather <span class="op">=</span> <span class="va">weather_dat</span>,</span>
-<span class="r-in">  paddock_length <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">  paddock_width <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">  initial_infection <span class="op">=</span> <span class="st">"1998-06-10"</span>,</span>
-<span class="r-in">  sowing_date <span class="op">=</span> <span class="st">"1998-06-09"</span>,</span>
-<span class="r-in">  harvest_date <span class="op">=</span> <span class="st">"1998-06-30"</span>,</span>
-<span class="r-in">  time_zone <span class="op">=</span> <span class="st">"Australia/Perth"</span>,</span>
-<span class="r-in">  primary_infection_foci <span class="op">=</span> <span class="st">"centre"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">summarised</span> <span class="op">&lt;-</span> <span class="fu">summarise_trace</span><span class="op">(</span><span class="va">traced</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">Newmarracarra</span> <span class="op">&lt;-</span></span>
-<span class="r-in">   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
-<span class="r-in">            <span class="st">"1998_Newmarracarra_weather_table.csv"</span>, package <span class="op">=</span> <span class="st">"ascotraceR"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">station_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">   <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"stat_dat.csv"</span>, package <span class="op">=</span> <span class="st">"ascotraceR"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">weather_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="format_weather.html">format_weather</a></span><span class="op">(</span></span>
-<span class="r-in">   x <span class="op">=</span> <span class="va">Newmarracarra</span>,</span>
-<span class="r-in">   POSIXct_time <span class="op">=</span> <span class="st">"Local.Time"</span>,</span>
-<span class="r-in">   temp <span class="op">=</span> <span class="st">"mean_daily_temp"</span>,</span>
-<span class="r-in">   ws <span class="op">=</span> <span class="st">"ws"</span>,</span>
-<span class="r-in">   wd_sd <span class="op">=</span> <span class="st">"wd_sd"</span>,</span>
-<span class="r-in">   rain <span class="op">=</span> <span class="st">"rain_mm"</span>,</span>
-<span class="r-in">   wd <span class="op">=</span> <span class="st">"wd"</span>,</span>
-<span class="r-in">   station <span class="op">=</span> <span class="st">"Location"</span>,</span>
-<span class="r-in">   time_zone <span class="op">=</span> <span class="st">"Australia/Perth"</span>,</span>
-<span class="r-in">   lonlat_file <span class="op">=</span> <span class="va">station_data</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">traced</span> <span class="op">&lt;-</span> <span class="fu"><a href="trace_asco.html">trace_asco</a></span><span class="op">(</span></span>
-<span class="r-in">  weather <span class="op">=</span> <span class="va">weather_dat</span>,</span>
-<span class="r-in">  paddock_length <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">  paddock_width <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">  initial_infection <span class="op">=</span> <span class="st">"1998-06-10"</span>,</span>
-<span class="r-in">  sowing_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"1998-06-09"</span><span class="op">)</span>,</span>
-<span class="r-in">  harvest_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"1998-06-09"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/duration.html" class="external-link">ddays</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">  time_zone <span class="op">=</span> <span class="st">"Australia/Perth"</span>,</span>
-<span class="r-in">  primary_infection_foci <span class="op">=</span> <span class="st">"centre"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">summarised</span> <span class="op">&lt;-</span> <span class="fu">summarise_trace</span><span class="op">(</span><span class="va">traced</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
+<span class="r-in"><span><span class="va">Newmarracarra</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span></span>
+<span class="r-in"><span>            <span class="st">"1998_Newmarracarra_weather_table.csv"</span>, package <span class="op">=</span> <span class="st">"ascotraceR"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">station_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"stat_dat.csv"</span>, package <span class="op">=</span> <span class="st">"ascotraceR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">weather_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="format_weather.html">format_weather</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>   x <span class="op">=</span> <span class="va">Newmarracarra</span>,</span></span>
+<span class="r-in"><span>   POSIXct_time <span class="op">=</span> <span class="st">"Local.Time"</span>,</span></span>
+<span class="r-in"><span>   temp <span class="op">=</span> <span class="st">"mean_daily_temp"</span>,</span></span>
+<span class="r-in"><span>   ws <span class="op">=</span> <span class="st">"ws"</span>,</span></span>
+<span class="r-in"><span>   wd_sd <span class="op">=</span> <span class="st">"wd_sd"</span>,</span></span>
+<span class="r-in"><span>   rain <span class="op">=</span> <span class="st">"rain_mm"</span>,</span></span>
+<span class="r-in"><span>   wd <span class="op">=</span> <span class="st">"wd"</span>,</span></span>
+<span class="r-in"><span>   station <span class="op">=</span> <span class="st">"Location"</span>,</span></span>
+<span class="r-in"><span>   time_zone <span class="op">=</span> <span class="st">"Australia/Perth"</span>,</span></span>
+<span class="r-in"><span>   lonlat_file <span class="op">=</span> <span class="va">station_data</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">traced</span> <span class="op">&lt;-</span> <span class="fu"><a href="trace_asco.html">trace_asco</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  weather <span class="op">=</span> <span class="va">weather_dat</span>,</span></span>
+<span class="r-in"><span>  paddock_length <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>  paddock_width <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>  initial_infection <span class="op">=</span> <span class="st">"1998-06-10"</span>,</span></span>
+<span class="r-in"><span>  sowing_date <span class="op">=</span> <span class="st">"1998-06-09"</span>,</span></span>
+<span class="r-in"><span>  harvest_date <span class="op">=</span> <span class="st">"1998-06-30"</span>,</span></span>
+<span class="r-in"><span>  time_zone <span class="op">=</span> <span class="st">"Australia/Perth"</span>,</span></span>
+<span class="r-in"><span>  primary_infection_foci <span class="op">=</span> <span class="st">"centre"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">summarised</span> <span class="op">&lt;-</span> <span class="fu">summarise_trace</span><span class="op">(</span><span class="va">traced</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">Newmarracarra</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span></span>
+<span class="r-in"><span>            <span class="st">"1998_Newmarracarra_weather_table.csv"</span>, package <span class="op">=</span> <span class="st">"ascotraceR"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">station_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"stat_dat.csv"</span>, package <span class="op">=</span> <span class="st">"ascotraceR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">weather_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="format_weather.html">format_weather</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>   x <span class="op">=</span> <span class="va">Newmarracarra</span>,</span></span>
+<span class="r-in"><span>   POSIXct_time <span class="op">=</span> <span class="st">"Local.Time"</span>,</span></span>
+<span class="r-in"><span>   temp <span class="op">=</span> <span class="st">"mean_daily_temp"</span>,</span></span>
+<span class="r-in"><span>   ws <span class="op">=</span> <span class="st">"ws"</span>,</span></span>
+<span class="r-in"><span>   wd_sd <span class="op">=</span> <span class="st">"wd_sd"</span>,</span></span>
+<span class="r-in"><span>   rain <span class="op">=</span> <span class="st">"rain_mm"</span>,</span></span>
+<span class="r-in"><span>   wd <span class="op">=</span> <span class="st">"wd"</span>,</span></span>
+<span class="r-in"><span>   station <span class="op">=</span> <span class="st">"Location"</span>,</span></span>
+<span class="r-in"><span>   time_zone <span class="op">=</span> <span class="st">"Australia/Perth"</span>,</span></span>
+<span class="r-in"><span>   lonlat_file <span class="op">=</span> <span class="va">station_data</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">traced</span> <span class="op">&lt;-</span> <span class="fu"><a href="trace_asco.html">trace_asco</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  weather <span class="op">=</span> <span class="va">weather_dat</span>,</span></span>
+<span class="r-in"><span>  paddock_length <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>  paddock_width <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>  initial_infection <span class="op">=</span> <span class="st">"1998-06-10"</span>,</span></span>
+<span class="r-in"><span>  sowing_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"1998-06-09"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  harvest_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"1998-06-09"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/duration.html" class="external-link">ddays</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  time_zone <span class="op">=</span> <span class="st">"Australia/Perth"</span>,</span></span>
+<span class="r-in"><span>  primary_infection_foci <span class="op">=</span> <span class="st">"centre"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">summarised</span> <span class="op">&lt;-</span> <span class="fu">summarise_trace</span><span class="op">(</span><span class="va">traced</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -162,7 +165,7 @@ duration of the model's run.</td></tr></table></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
