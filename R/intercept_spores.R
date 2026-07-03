@@ -12,6 +12,9 @@
 #' @param max_new_growing_points_limit A *numeric* number indicating number of
 #'   new growing points developed per square metre in an iteration period of one
 #'   day.  Defaults to \code{350}
+#' @examples
+#' intercept_spores(max_growing_points_limit = 15000,
+#'                  max_new_growing_points_limit = 350)
 #' @keywords internal
 #' @noRd
 intercept_spores <- function(

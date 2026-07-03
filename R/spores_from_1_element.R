@@ -28,6 +28,21 @@
 #' @param paddock A data.table of x and y coordinates; provides the dimensions
 #'  of the paddock so function only returns `target_coordinates` in the paddock
 #'  area.
+#' @examples
+#' paddock <- data.table::CJ(x = 1:100, y = 1:100)
+#' paddock[, infectious_gp := data.table::fifelse(x == 50 & y == 50, 5, 0)]
+#' paddock_source <- unlist(paddock[x == 50 & y == 50, ])
+#'
+#' set.seed(42)
+#' spores_from_1_element(
+#'   paddock_source = paddock_source,
+#'   spores_per_gp_per_wet_hour = 0.15,
+#'   max_interception_probability = 1,
+#'   wind_direction_in_hour = 180,
+#'   average_wind_speed_in_hour = 10,
+#'   stdev_wind_direction_in_hour = 15,
+#'   paddock = paddock
+#' )
 #' @keywords internal
 #' @noRd
 spores_from_1_element <-

@@ -4,6 +4,9 @@
 #' random number with uniform probability from 1-360 degree
 #' @param min is the lowest angle of dispersion
 #' @param max is the highest angle of dispersion
+#' @examples
+#' set.seed(42)
+#' splash_angle()
 #' @keywords internal
 #' @noRd
 

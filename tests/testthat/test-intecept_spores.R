@@ -15,5 +15,6 @@ test_that("default values return the correct number", {
 
   expect_equal(round(test_defaults, 6), 0.002561)
   expect_length(test_defaults, 1)
-  expect_is(test_defaults, "numeric")
+  expect_type(test_defaults, "double")
+
 })

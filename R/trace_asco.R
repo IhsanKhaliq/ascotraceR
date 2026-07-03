@@ -203,7 +203,7 @@ trace_asco <- function(
   paddock <- CJ(x = 1:paddock_width, y = 1:paddock_length)
 
   # sample a paddock location randomly if a starting foci is not given
-  if (!"data.frame" %in% class(primary_infection_foci)) {
+  if (isFALSE(inherits(primary_infection_foci,"data.frame"))) {
     if (inherits(primary_infection_foci, "character")) {
       if (primary_infection_foci == "random") {
         primary_infection_foci <-
@@ -228,10 +228,8 @@ trace_asco <- function(
       }
     } else {
       if (is.vector(primary_infection_foci)) {
-        if (
-          length(primary_infection_foci) != 2 |
-            !is.numeric(primary_infection_foci)
-        ) {
+        if (length(primary_infection_foci) != 2 |
+            isFALSE(all(is.numeric(primary_infection_foci)))) {
           stop(
             call. = FALSE,
             "`primary_infection_foci` should be supplied as a numeric vector ",
@@ -249,13 +247,11 @@ trace_asco <- function(
         )
       }
     }
-  } else {
-    if (
-      !is.data.table(primary_infection_foci) &
-        is.data.frame(primary_infection_foci)
-    ) {
+  } else{
+    if (isFALSE(is.data.table(primary_infection_foci)) &
+        is.data.frame(primary_infection_foci)) {
       setDT(primary_infection_foci)
-      if (!all(c("x", "y") %in% colnames(primary_infection_foci))) {
+      if (isFALSE(all(c("x", "y") %in% colnames(primary_infection_foci)))) {
         stop(
           call. = FALSE,
           "The `primary_infection_foci` data.frame should contain colnames ",
@@ -266,11 +262,9 @@ trace_asco <- function(
   }
 
   # get rownumbers for paddock data.table that need to be set as infected
-  infected_rows <- which_paddock_row(
-    paddock = paddock,
-    query = primary_infection_foci
-  )
-  if (!"load" %in% colnames(primary_infection_foci)) {
+  infected_rows <- which_paddock_row(paddock = paddock,
+                                     query = primary_infection_foci)
+  if (isFALSE("load" %in% colnames(primary_infection_foci))) {
     primary_infection_foci[, load := primary_inoculum_intensity]
   } else {
     if (all(colnames(primary_infection_foci) %in% c("x", "y"))) {
@@ -423,9 +417,11 @@ trace_asco <- function(
 #' @param x an object for checking
 #'
 #' @return a POSIXct date-time object
+#' @examples
+#' ascotraceR:::.vali_date("26 April 2020")
+#' ascotraceR:::.vali_date("2020-04-26")
 #' @keywords internal
 #' @noRd
-#'
 .vali_date <- function(x) {
   tryCatch(
     # try to parse the date format using lubridate

@@ -33,6 +33,24 @@
 #'  greater than one. Numeric values will scale the number of spores spread per
 #'  growing point against the volume of rainfall in the hour. Defaults to
 #'  `FALSE`.
+#' @examples
+#' weather_hourly <- data.table::data.table(rain = 2.5,
+#'                                          ws = 10,
+#'                                          wd = 180,
+#'                                          wd_sd = 15)
+#' paddock <- data.table::CJ(x = 1:100, y = 1:100)
+#' paddock[, new_gp := 40]
+#' paddock[, infectious_gp := data.table::fifelse(x == 50 & y == 50, 40, 0)]
+#'
+#' set.seed(42)
+#' spores_each_wet_hour(
+#'   h = 1,
+#'   weather_hourly = weather_hourly,
+#'   paddock = paddock,
+#'   spore_interception_parameter = 0.00006 * (15000 / 350),
+#'   max_interception_probability = 1,
+#'   spores_per_gp_per_wet_hour = 0.22
+#' )
 #' @keywords internal
 #' @noRd
 
@@ -54,16 +72,14 @@ spores_each_wet_hour <- function(
 
   rain_in_hour <- weather_hourly[h, rain]
   average_wind_speed_in_hour <- weather_hourly[h, ws]
-  wind_direction_in_hour <- weather_hourly[h, wd]
-  stdev_wind_direction_in_hour <- weather_hourly[h, wd_sd]
-  spores_per_gp_per_wet_hour <- fifelse(
-    !rainfall_multiplier |
-      rain_in_hour <= 1,
-    spores_per_gp_per_wet_hour,
-    spores_per_gp_per_wet_hour *
-      (as.numeric(rainfall_multiplier) *
-        rain_in_hour)
-  )
+  wind_direction_in_hour <-  weather_hourly[h, wd]
+  stdev_wind_direction_in_hour <-  weather_hourly[h, wd_sd]
+  spores_per_gp_per_wet_hour <- fifelse(isFALSE(rainfall_multiplier) |
+                                          rain_in_hour <= 1,
+                                        spores_per_gp_per_wet_hour,
+                                        spores_per_gp_per_wet_hour * (
+                                          as.numeric(rainfall_multiplier) *
+                                            rain_in_hour))
 
   # get data.table of infected coordinates
   paddock_infective <- paddock[infectious_gp > 0, ]

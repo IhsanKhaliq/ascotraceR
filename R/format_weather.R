@@ -277,11 +277,9 @@ format_weather <- function(
     temp <- "temp"
   }
 
-  if (!all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x))) {
-    stop(
-      call. = FALSE,
-      "Supplied column names are not found in column names of `x`."
-    )
+  if (isFALSE(all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)))) {
+    stop(call. = FALSE,
+         "Supplied column names are not found in column names of `x`.")
   }
 
   # import and assign longitude and latitude from a file if provided

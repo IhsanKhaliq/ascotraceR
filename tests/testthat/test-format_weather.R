@@ -107,8 +107,53 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
   expect_equal(max(weather_dt$hh), 24)
   expect_equal(mean(weather_dt$mm), 0)
 
-  unlink(file.path(tempdir(), "stat_coord.csv"))
-})
+            expect_s3_class(weather_dt, "asco.weather")
+            expect_equal(
+              names(weather_dt),
+              c(
+                "times",
+                "temp",
+                "rain",
+                "ws",
+                "wd",
+                "wd_sd",
+                "lon",
+                "lat",
+                "station",
+                "YYYY",
+                "MM",
+                "DD",
+                "hh",
+                "mm"
+              )
+            )
+            expect_equal(dim(weather_dt), c(dat_minutes / 60, 14))
+            expect_true(isFALSE(anyNA(weather_dt$lon)))
+            expect_true(isFALSE(anyNA(weather_dt$lat)))
+            expect_true(weather_dt[, unique(lon)] == 114.8627)
+            expect_equal(unique(weather_dt$lat), -28.5990)
+            expect_s3_class(weather_dt$times, "POSIXct")
+            expect_equal(as.character(min(weather_dt$times)),
+                         "2020-06-10 01:00:00")
+            expect_equal(as.character(max(weather_dt$times)), "2020-06-17")
+            expect_equal(round(min(weather_dt$rain), 0), 7)
+            expect_equal(round(max(weather_dt$rain), 1), 12.4)
+            expect_equal(round(min(weather_dt$ws), 1), 6.5)
+            expect_equal(round(max(weather_dt$ws), 2), 10.99)
+            expect_equal(round(min(weather_dt$wd), 0), 1)
+            expect_equal(round(max(weather_dt$wd), 1), 358.3)
+            expect_equal(round(min(weather_dt$wd_sd), 0), 82)
+            expect_equal(round(max(weather_dt$wd_sd), 0), 195)
+            expect_equal(mean(weather_dt$YYYY), 2020)
+            expect_equal(mean(weather_dt$MM), 6)
+            expect_equal(min(weather_dt$DD), 10)
+            expect_equal(max(weather_dt$DD), 16)
+            expect_equal(min(weather_dt$hh), 1)
+            expect_equal(max(weather_dt$hh), 24)
+            expect_equal(mean(weather_dt$mm), 0)
+
+            unlink(file.path(tempdir(), "stat_coord.csv"))
+          })
 
 # Test that it is able to import supplied data suitable for `ascotraceR` model
 
@@ -249,8 +294,8 @@ test_that("`format_weather()` works when lat lon are in data", {
     )
   )
   expect_equal(dim(weather_dt), c(168, 14))
-  expect_is(weather_dt$times, "POSIXct")
-  expect_true(!anyNA(weather_dt$times))
+  expect_s3_class(weather_dt$times, "POSIXct")
+  expect_true(isFALSE(anyNA(weather_dt$times)))
   expect_true(max(weather_dt$wd, na.rm = TRUE) < 360)
   expect_true(min(weather_dt$wd, na.rm = TRUE) > 0)
   expect_true(lubridate::tz(weather_dt$times) == "UTC")

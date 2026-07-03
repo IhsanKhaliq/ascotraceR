@@ -6,6 +6,9 @@
 #' @param start_address Starting address of spores dispersal
 #' @param offset_distance The offset distance of the actual distance spores
 #'   travel
+#' @examples
+#' address_from_centre_distance(offset_distance = c(3, 6),
+#'                              start_address = c(50, 50))
 #' @keywords internal
 #' @noRd
 

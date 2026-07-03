@@ -2,6 +2,12 @@ sowing_date <- as.POSIXct("1998-05-09", tz = "Australia/Perth")
 harvest_date <- as.POSIXct("1998-05-12", tz = "Australia/Perth")
 
 # Test running for 3 days
+# NOTE: seeded here (rather than relying on whatever RNG state happened to
+# leak in from whichever test file alphabetically ran before this one) so
+# that this test is reproducible and independent of test execution order.
+# If you change this seed, the hardcoded expected values below (e.g.
+# `Ninf_coord`, `Ninf_pad`) will need to be regenerated to match.
+set.seed(1998)
 test1 <- trace_asco(
   weather = newM_weather,
   paddock_length = 100,
@@ -118,6 +124,7 @@ test_that("intense primary_infection_foci lead to more infections", {
 # test running for 14 days
 # this will test that the infection intensifies with more days and
 #  that newly infected gp are moved to sporilating gp after the latent period
+set.seed(1998)
 test2 <- trace_asco(
   weather = newM_weather,
   paddock_length = 100,
@@ -144,18 +151,18 @@ test_that("intense primary_infection_foci lead to more infections", {
   )
   expect_length(test2, 16)
   expect_length(test2[[1]], 11)
-  expect_equal(test2[[5]][["exposed_gps"]][, .N], 2)
-  expect_equal(test2[[5]][["paddock"]][exposed_gp > 0, .N], 2)
+  expect_equal(test2[[5]][["exposed_gps"]][, .N], 1)
+  expect_equal(test2[[5]][["paddock"]][exposed_gp > 0, .N], 1)
   expect_equal(test2[[5]][["paddock"]][infectious_gp > 0, infectious_gp], 40)
-  expect_equal(
-    test2[[5]][["exposed_gps"]][spores_per_packet > 0, spores_per_packet],
-    c(3, 2)
-  )
+  expect_equal(test2[[5]][["exposed_gps"]][spores_per_packet  >
+                                             0, spores_per_packet], 1)
+
 })
 
 # test running for 28 days
 # this will test that the infection intensifies with more days and
 #  that newly infected gp are moved to sporilating gp after the latent period
+set.seed(1998)
 test3 <- trace_asco(
   weather = newM_weather,
   paddock_length = 100,
@@ -169,15 +176,18 @@ test3 <- trace_asco(
 
 
 test_that("test3 returns some sporulating gps", {
-  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 40)
+  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 41)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
 })
 
 
 # test running for 28 days with multiple (10) random start locations
-pdk <- CJ(x = 1:100, y = 1:100, load = 3)
-qry <- pdk[sample(seq_len(nrow(pdk)), 10), ]
+set.seed(1998)
+pdk <- CJ(x = 1:100,
+          y = 1:100,
+          load = 3)
+qry <- pdk[sample(1:nrow(pdk), 10), ]
 
 test3 <- trace_asco(
   weather = newM_weather,
@@ -191,7 +201,7 @@ test3 <- trace_asco(
 )
 
 test_that("test3 returns some sporulating gps", {
-  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 32)
+  expect_equal(test3[[30]][["paddock"]][, sum(infectious_gp)], 30)
   expect_length(test3, 30)
   expect_length(test3[[1]], 11)
   expect_true(all(

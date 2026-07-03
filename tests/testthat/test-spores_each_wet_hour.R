@@ -73,9 +73,9 @@ test_that("test1 returns expected output", {
   expect_equal(test1[1, x], 50)
   expect_equal(test1[1, y], 49)
   expect_equal(test1[1, spores_per_packet], 1)
-  expect_is(test1[, x], "integer")
-  expect_is(test1[, y], "integer")
-  expect_is(test1[, spores_per_packet], "integer")
+  expect_type(test1[,x], "integer")
+  expect_type(test1[,y], "integer")
+  expect_type(test1[,spores_per_packet], "integer")
 })
 
 
@@ -108,9 +108,9 @@ test_that("test2 returns expected output", {
   expect_equal(test2[1, x], 54)
   expect_equal(test2[1, y], 54)
   expect_equal(test2[1, spores_per_packet], 1)
-  expect_is(test2[, x], "integer")
-  expect_is(test2[, y], "integer")
-  expect_is(test2[, spores_per_packet], "integer")
+  expect_type(test2[, x], "integer")
+  expect_type(test2[, y], "integer")
+  expect_type(test2[, spores_per_packet], "integer")
 })
 
 test3 <- lapply(
@@ -125,7 +125,7 @@ test3 <- lapply(
 
 
 test_that("test3 with lapply returns expected output", {
-  expect_is(test3, "list")
+  expect_type(test3, "list")
   expect_length(test3, 7)
   expect_silent(test3 <- rbindlist(test3))
   expect_s3_class(test3, "data.table")
@@ -134,8 +134,8 @@ test_that("test3 with lapply returns expected output", {
   expect_equal(test3[1, x], 50)
   expect_equal(test3[1, y], 54)
   expect_equal(max(test3[, spores_per_packet]), 1)
-  expect_is(test3[, x], "integer")
-  expect_is(test3[, y], "integer")
-  expect_is(test3[, spores_per_packet], "integer")
-  expect_false(anyNA(test3))
+  expect_type(test3[, x], "integer")
+  expect_type(test3[, y], "integer")
+  expect_type(test3[, spores_per_packet], "integer")
+  expect_false(any(is.na(test3)))
 })

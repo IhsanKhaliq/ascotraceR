@@ -62,7 +62,7 @@ daily_values <- list(
 test1 <- make_some_infective(daily_vals = daily_values, latent_period = 200)
 
 test_that("test1 returns daily_values list with no changes", {
-  expect_is(test1, "list")
+  expect_type(test1, "list")
   expect_length(test1, 8)
   expect_s3_class(test1[["paddock"]], "data.table")
   expect_s3_class(test1[["exposed_gps"]], "data.table")
@@ -102,7 +102,7 @@ expect_equal(
 ) # input
 
 test_that("test2 returns changes now latent_period has elapsed", {
-  expect_is(test2, "list")
+  expect_type(test2, "list")
   expect_length(test2, 8)
   expect_s3_class(test2[["paddock"]], "data.table")
   expect_equal(
