@@ -4,6 +4,7 @@ summarised_test <- summarise_trace(
     paddock_length = 100,
     paddock_width = 100,
     initial_infection = "1998-05-10",
+    primary_inoculum_intensity = 45,
     sowing_date = as.POSIXct("1998-05-09"),
     harvest_date = as.POSIXct("1998-05-12"),
     time_zone = "Australia/Perth",
