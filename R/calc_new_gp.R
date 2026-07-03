@@ -25,22 +25,18 @@
 #' @keywords internal
 #' @noRd
 calc_new_gp <-
-  function(current_growing_points,
-           gp_rr,
-           max_gp,
-           mean_air_temp) {
+  function(current_growing_points, gp_rr, max_gp, mean_air_temp) {
     # Check values are not lower than 0
-    sapply(current_growing_points, function(cgp) {
-      if (cgp < 0) {
-        stop(
-          call. = FALSE,
-          "'current_growing_points' (value = ",
-          cgp,
-          ") can't be < 0",
-          sep = ""
-        )
-      }
-    })
+    if (any(current_growing_points < 0)) {
+      bad <- current_growing_points[current_growing_points < 0][1]
+      stop(
+        call. = FALSE,
+        "'current_growing_points' (value = ",
+        bad,
+        ") can't be < 0",
+        sep = ""
+      )
+    }
 
     # calculate number of new growing points in 24 hours
     cgps <-
@@ -50,5 +46,4 @@ calc_new_gp <-
       (1 - current_growing_points / max_gp)
 
     return(random_integer_from_real(cgps))
-
   }
