@@ -273,7 +273,6 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
                          tolerance = 0.001)
             expect_equal(test3[["paddock"]][, unique(infectious_gp)],
                          c(0, 2, 1), tolerance = 0.1)
-          })
 
   expect_equal(test3[["paddock"]][, unique(new_gp)], c(5, 6))
   expect_equal(test3[["paddock"]][, unique(susceptible_gp)], c(55, 52))

@@ -30,7 +30,7 @@ Other contributors:
 \itemize{
   \item Grains Research and Development Corporation (GRDC) (\href{https://ror.org/02xwr1996}{ROR}) (Project USQ1903-003RTX) [funder, copyright holder]
   \item University of Southern Queensland [copyright holder]
-  \item Western Australia Agriculture Authority (WAAA) (Supported the development of ascotraceR through Adam H. Sparks' time.) [copyright holder]
+  \item Western Australia Agriculture Authority (WAAA) (Supported the development of ascotraceR through 'Adam H. Sparks' time.) [copyright holder]
 }
 
 }
