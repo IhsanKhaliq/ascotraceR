@@ -1,4 +1,9 @@
-# ascotraceR 0.0.2
+# ascotraceR 0.0.2  
+
+* Documentation fixes  
+* update email addresses  
+* bugfix date conversions in format_weather. Dates with no hours are now treated
+as midnight hour for that date. lubridate(x, truncated = 3)
 
 # ascotraceR 0.0.1.9000
 

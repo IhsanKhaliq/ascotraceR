@@ -203,7 +203,7 @@ trace_asco <- function(weather,
 
   # sample a paddock location randomly if a starting foci is not given
   if ("data.frame" %in% class(primary_infection_foci) == FALSE) {
-    if (class(primary_infection_foci) == "character") {
+    if (inherits(primary_infection_foci, "character")) {
       if (primary_infection_foci == "random") {
         primary_infection_foci <-
           paddock[sample(seq_len(nrow(paddock)),
