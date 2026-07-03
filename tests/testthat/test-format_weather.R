@@ -228,7 +228,7 @@ test_that("`format_weather()` works when lat lon are in data", {
   )
   expect_equal(dim(weather_dt), c(168, 14))
   expect_s3_class(weather_dt$times, "POSIXct")
-  expect_true(isFALSE(anyNA(weather_dt$times) == FALSE))
+  expect_true(isFALSE(anyNA(weather_dt$times)))
   expect_true(max(weather_dt$wd, na.rm = TRUE) < 360)
   expect_true(min(weather_dt$wd, na.rm = TRUE) > 0)
   expect_true(lubridate::tz(weather_dt$times) == "UTC")

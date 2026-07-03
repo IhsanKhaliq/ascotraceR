@@ -16,13 +16,16 @@
 which_paddock_row <- function(paddock, query){
   x <- y <- NULL
 
-  rows1 <- apply(query, 1, function(qu){
-      y_max <- paddock[, max(y)]
-      x_max <- paddock[, max(x)]
-      x_rows <- qu["x"]
-      y_rows <- (qu["y"] * x_max) - x_max
-      return(x_rows + y_rows)
-    })
+  # Use a data.table join to find matching row numbers rather than deriving
+  # them from a hand-rolled x/y formula. The previous formula assumed `x`
+  # cycled fastest through `paddock`'s rows, but data.table::CJ() (which is
+  # how `paddock` is built elsewhere in this package) actually cycles `y`
+  # fastest -- so the formula silently returned the wrong row whenever a
+  # query's x and y differed. A join is correct regardless of how `paddock`
+  # happens to be ordered.
+  query <- data.table::as.data.table(query)
 
-  return(unlist(rows1))
+  rows1 <- paddock[query, on = c("x", "y"), which = TRUE]
+
+  return(rows1)
 }

@@ -24,8 +24,7 @@ successful_infections <- function(spore_targets,
     new_gp <-
     summary_unit_width <- summary_unit_length <- new_gp <- NULL
 
-  if (isFALSE(is.data.table(spore_targets)) |
-      isFALSE(inherits(spore_targets,"data.frame"))) {
+  if (isFALSE(inherits(spore_targets,"data.frame"))) {
     stop("argument 'spore_targets' should be a data.table input not ",
          class(spore_targets))
   }
