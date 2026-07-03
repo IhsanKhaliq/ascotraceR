@@ -172,7 +172,7 @@ format_weather <- function(x,
               was pre-formatted, use 'UTC'"
       )
     } else{
-      x[, times := lubridate::ymd_hms(times, tz = time_zone)]
+      x[, times := lubridate::ymd_hms(times, tz = time_zone, truncated = 3)]
     }
 
     .check_weather(x)
