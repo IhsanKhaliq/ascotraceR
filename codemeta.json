@@ -236,7 +236,7 @@
   },
   "applicationCategory": "Tools",
   "keywords": ["chickpea", "botanical-epidemiology", "plant-disease-model", "agricultural-modelling", "agricultural-modeling", "crop-protection", "agricultural-research", "model", "modelling", "modeling", "Ascochyta-rabiei", "r", "mechanistic-models", "simulation-model", "weather-driven-model", "ascochyta-blight", "ascochyta-rabiei", "spread-model", "quantitative-epidemiology", "splash-dispersal", "in-paddock-spread"],
-  "fileSize": "1633.671KB",
+  "fileSize": "1625.29KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
