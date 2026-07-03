@@ -58,7 +58,6 @@
 #'
 #' summarised <- summarise_trace(traced)
 #' @export
-
 summarise_trace <- function(trace) {
 
   i_day <- new_gp <- AUDPC <- `.` <- NULL
@@ -123,7 +122,7 @@ summarise_trace <- function(trace) {
 #' Sparks, A.H., P.D. Esker, M. Bates, W. Dall' Acqua, Z. Guo, V. Segovia, S.D.
 #' Silwal, S. Tolos, and K.A. Garrett, 2008. Ecology and Epidemiology in R:
 #' Disease Progress over Time. *The Plant Health Instructor*.
-#' DOI:[10.1094/PHI-A-2008-0129-02]https://doi.org/10.1094/PHI-A-2008-0129-02).
+#' DOI:[10.1094/PHI-A-2008-0129-02](https://doi.org/10.1094/PHI-A-2008-0129-02).
 #'
 #' Madden, L. V., G. Hughes, and F. van den Bosch. 2007. The Study of Plant
 #' Disease Epidemics. American Phytopathological Society, St. Paul, MN.
@@ -131,7 +130,6 @@ summarise_trace <- function(trace) {
 #'
 #' @keywords internal
 #' @noRd
-
 .calculate_audpc <- function(x) {
   n <- sum(NROW(x), -1)
 
@@ -147,7 +145,6 @@ summarise_trace <- function(trace) {
 
 #' @rdname summarise_trace
 #' @examplesIf interactive()
-#'
 #' Newmarracarra <-
 #'    read.csv(system.file("extdata",
 #'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))

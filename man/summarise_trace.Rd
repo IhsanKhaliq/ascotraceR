@@ -70,7 +70,6 @@ traced <- trace_asco(
 summarised <- summarise_trace(traced)
 \dontshow{\}) # examplesIf}
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-
 Newmarracarra <-
    read.csv(system.file("extdata",
             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
