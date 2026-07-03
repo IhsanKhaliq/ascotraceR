@@ -1,4 +1,3 @@
-
 test1 <-
   potentially_effective_spores(
     spores_per_gp_per_wet_hour = 0.22,
@@ -46,7 +45,6 @@ test_that("test3 returns in range of 100000 iterations", {
 })
 
 
-
 test4 <- sapply(rep(40, 1e5), function(x) {
   potentially_effective_spores(
     spores_per_gp_per_wet_hour = 0.22,
@@ -60,7 +58,6 @@ test_that("test3 returns in range of 100000 iterations", {
   expect_true(all(unique(test3) %in% 0:18))
   expect_gt(mean(test4), 8.5)
   expect_lt(mean(test4), 9)
-
 })
 
 test_that("test5 returns an error", {
@@ -71,5 +68,4 @@ test_that("test5 returns an error", {
       paddock_infected_gp = 1
     )
   )
-
 })

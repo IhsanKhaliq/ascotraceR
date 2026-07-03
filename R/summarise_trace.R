@@ -58,9 +58,7 @@
 #'
 #' summarised <- summarise_trace(traced)
 #' @export
-
 summarise_trace <- function(trace) {
-
   i_day <- new_gp <- AUDPC <- `.` <- NULL
 
   summarised_trace <- tidy_trace(trace)
@@ -73,13 +71,15 @@ summarise_trace <- function(trace) {
   infectious_gp <-
     summarised_trace[, .(infectious_gp = sum(infectious_gp)), by = i_day]
 
-  x <- unique(summarised_trace[, c("i_day",
-                                   "i_date",
-                                   "day",
-                                   "cdd",
-                                   "cwh",
-                                   "cr",
-                                   "gp_standard")])
+  x <- unique(summarised_trace[, c(
+    "i_day",
+    "i_date",
+    "day",
+    "cdd",
+    "cwh",
+    "cr",
+    "gp_standard"
+  )])
 
   y <- list(new_gp, susceptible_gp, exposed_gp, infectious_gp, x)
   lapply(y, function(i) setkey(i, i_day))
@@ -123,7 +123,7 @@ summarise_trace <- function(trace) {
 #' Sparks, A.H., P.D. Esker, M. Bates, W. Dall' Acqua, Z. Guo, V. Segovia, S.D.
 #' Silwal, S. Tolos, and K.A. Garrett, 2008. Ecology and Epidemiology in R:
 #' Disease Progress over Time. *The Plant Health Instructor*.
-#' DOI:[10.1094/PHI-A-2008-0129-02]https://doi.org/10.1094/PHI-A-2008-0129-02).
+#' DOI:[10.1094/PHI-A-2008-0129-02](https://doi.org/10.1094/PHI-A-2008-0129-02).
 #'
 #' Madden, L. V., G. Hughes, and F. van den Bosch. 2007. The Study of Plant
 #' Disease Epidemics. American Phytopathological Society, St. Paul, MN.
@@ -131,7 +131,6 @@ summarise_trace <- function(trace) {
 #'
 #' @keywords internal
 #' @noRd
-
 .calculate_audpc <- function(x) {
   n <- sum(NROW(x), -1)
 
@@ -140,17 +139,13 @@ summarise_trace <- function(trace) {
   for (i in seq_len(n)) {
     j <- sum(i, 1)
     meanvec[i] <- mean(c(x$infectious_gp[i], x$infectious_gp[j]))
-    intvec[i] <- sum(x$i_day[j], -x$i_day[i])
   }
 
-  infprod <- meanvec * intvec
-
-  return(sum(infprod))
+  return(sum(meanvec))
 }
 
 #' @rdname summarise_trace
 #' @examplesIf interactive()
-#'
 #' Newmarracarra <-
 #'    read.csv(system.file("extdata",
 #'             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))

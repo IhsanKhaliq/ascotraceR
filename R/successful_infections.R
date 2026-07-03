@@ -1,6 +1,6 @@
 #' Indicates successful infections leading to disease or lesions development
 #'
-#' [successful_infections()] Determines successful infections. That is,
+#' `successful_infections()` Determines successful infections. That is,
 #' infections that have developed into visible lesions
 #'
 #' @param spore_targets A data.table with variables x, y and spores_per_packet
@@ -11,35 +11,43 @@
 #'   limit (usually 15000 for lupin) and the maximum new growing points limit
 #'   i.e. - 0.00006 * (max_gp_lim/max_new_gp)
 #' @param max_interception_probability Probability of interception of conidia
-#' @return a vector of spores_per_packet each referring to a row in
+#' @return A vector of spores_per_packet each referring to a row in
 #'   spore_targets
 #' @keywords internal
 #' @noRd
-successful_infections <- function(spore_targets,
-                                  paddock,
-                                  spore_interception_parameter,
-                                  max_interception_probability) {
+successful_infections <- function(
+  spore_targets,
+  paddock,
+  spore_interception_parameter,
+  max_interception_probability
+) {
   x <-
     y <-
-    new_gp <-
-    summary_unit_width <- summary_unit_length <- new_gp <- NULL
+      new_gp <-
+        summary_unit_width <- summary_unit_length <- new_gp <- NULL
 
-  if ((is.data.table(spore_targets) |
-       is.data.frame(spore_targets)) == FALSE) {
-    stop("argument 'spore_targets' should be a data.table input not ",
-         class(spore_targets))
+  if (
+    !(is.data.table(spore_targets) |
+      is.data.frame(spore_targets))
+  ) {
+    stop(
+      "argument 'spore_targets' should be a data.table input not ",
+      class(spore_targets)
+    )
   }
 
   suc_inf <-
     apply(spore_targets, 1, function(sp_tar) {
-      address <- c(sp_tar["x"],
-                   sp_tar["y"])
+      address <- c(sp_tar["x"], sp_tar["y"])
 
-      spores_in_packet <-  sp_tar["spores_per_packet"]
+      spores_in_packet <- sp_tar["spores_per_packet"]
 
       susceptible_growing_points <-
-        paddock[x == sp_tar["x"] &
-                  y == sp_tar["y"], new_gp]
+        paddock[
+          x == sp_tar["x"] &
+            y == sp_tar["y"],
+          new_gp
+        ]
 
       spores_in_packet <-
         random_integer_from_real(
@@ -54,5 +62,4 @@ successful_infections <- function(spore_targets,
     })
 
   return(unlist(suc_inf))
-
 }

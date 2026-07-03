@@ -3,11 +3,9 @@ AUDPC
 AnthracnoseTracer
 Ascochyta
 Conidia
-DOI
 Diggle
 GJ
 GRDC
-Lifecycle
 O'connell
 ORCID
 O’connell
@@ -15,7 +13,9 @@ PHYTO
 POSIXct
 Phytopathology
 README
+ROR
 RTX
+Rcpp
 Salam
 Summarise
 Sweetingham
@@ -25,8 +25,8 @@ YYYY
 al
 anthracnose
 asco
-ascotraceR’s
 blackspot
+bugfix
 cdd
 centre
 conceptor
@@ -46,6 +46,7 @@ gps
 hh
 inoculum
 lon
+lubridate
 lupin
 meristems
 metre
@@ -62,3 +63,4 @@ summarised
 summarising
 wd
 ws
+’s

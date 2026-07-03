@@ -13,16 +13,16 @@
 #' which_paddock_row(paddock = pdk, query = qry)
 #' @keywords internal
 #' @noRd
-which_paddock_row <- function(paddock, query){
+which_paddock_row <- function(paddock, query) {
   x <- y <- NULL
 
-  rows1 <- apply(query, 1, function(qu){
-      y_max <- paddock[, max(y)]
-      x_max <- paddock[, max(x)]
-      x_rows <- qu["x"]
-      y_rows <- (qu["y"] * x_max) - x_max
-      return(x_rows + y_rows)
-    })
+  rows1 <- apply(query, 1, function(qu) {
+    y_max <- paddock[, max(y)]
+    x_max <- paddock[, max(x)]
+    x_rows <- qu["x"]
+    y_rows <- (qu["y"] * x_max) - x_max
+    return(x_rows + y_rows)
+  })
 
   return(unlist(rows1))
 }

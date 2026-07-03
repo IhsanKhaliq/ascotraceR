@@ -1,9 +1,9 @@
 #' Describes the Growth of Chickpea.
 #'
-#' `calc_new_gp()` Describes the growth of chickpea in terms of development of
-#' growing points. Upon germination, each germinated seed produces one growing
-#' point that multiplies at a rate that is a function of temperature and is
-#' limited by proximity to a maximum growing point density.
+#' Describes the growth of chickpea in terms of development of growing points.
+#' Upon germination, each germinated seed produces one growing point that
+#' multiplies at a rate that is a function of temperature and is limited by
+#' proximity to a maximum growing point density.
 #'
 #' @param current_growing_points Are the current number of growing points at an
 #'   iteration period
@@ -14,22 +14,29 @@
 #' @return Integer giving the number of new growing points formed in an
 #'   iteration period of one day
 #'
+#' @examples
+#' calc_new_gp(
+#'   current_growing_points = 40,
+#'   gp_rr = 0.0065,
+#'   max_gp = 15000,
+#'   mean_air_temp = 24
+#' )
+#'
 #' @keywords internal
 #' @noRd
 calc_new_gp <-
-  function(current_growing_points,
-           gp_rr,
-           max_gp,
-           mean_air_temp) {
-
+  function(current_growing_points, gp_rr, max_gp, mean_air_temp) {
     # Check values are not lower than 0
-    sapply(current_growing_points, function(cgp){
-      if(cgp < 0){
-        stop(call. = FALSE,
-             "'current_growing_points' (value = ",cgp,") can't be < 0",
-             sep = "")
-      }
-    })
+    if (any(current_growing_points < 0)) {
+      bad <- current_growing_points[current_growing_points < 0][1]
+      stop(
+        call. = FALSE,
+        "'current_growing_points' (value = ",
+        bad,
+        ") can't be < 0",
+        sep = ""
+      )
+    }
 
     # calculate number of new growing points in 24 hours
     cgps <-
@@ -39,5 +46,4 @@ calc_new_gp <-
       (1 - current_growing_points / max_gp)
 
     return(random_integer_from_real(cgps))
-
   }

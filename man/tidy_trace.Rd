@@ -16,7 +16,7 @@ A tidy \CRANpkg{data.table} of \code{\link[=trace_asco]{trace_asco()}} output.
 Creates a tidy \CRANpkg{data.table} from the output of \code{\link[=trace_asco]{trace_asco()}}.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 
 Newmarracarra <-
    read.csv(system.file("extdata",

@@ -1,60 +1,52 @@
 Package: ascotraceR
 Title: Simulate the Spread of Ascochyta Blight in Chickpea
-Version: 0.0.1.9000
-DOI: 10.5281/zenodo.5771290
-Authors@R: 
-    c(person(given = "Ihsanul",
-          family = "Khaliq",
-          role = c("aut"),
-          email = "ihsan.khaliq@usq.edu.au",
-          comment = c(ORCID = "0000-0003-4171-0917")),
-      person(given = "Paul",
-          family = "Melloy",
-          role = c("aut", "trl", "cre"),
-          email = "p.melloy@uq.edu.au",
-          comment = c(ORCID = "0000-0003-4253-7167")),
-      person(given = "Adam H.",
-          family = "Sparks",
-          role = c("aut", "ccp"),
-          email = "adamhsparks@gmail.com",
-          comment = c(ORCID = "0000-0002-0061-8359")),
-    person("Grains Research and Development Corporation (GRDC) Project
-            USQ1903-003RTX", role = c("fnd", "cph")),
+Version: 0.0.2
+Authors@R: c(
+    person("Ihsanul", "Khaliq", , "ihsan.khaliq@usq.edu.au", role = "aut",
+           comment = c(ORCID = "0000-0003-4171-0917")),
+    person("Paul", "Melloy", , "paul.melloy@csiro.au", role = c("aut", "trl", "cre"),
+           comment = c(ORCID = "0000-0003-4253-7167")),
+    person("Adam H.", "Sparks", , "adamhsparks@gmail.com", role = c("aut", "ccp"),
+           comment = c(ORCID = "0000-0002-0061-8359")),
+    person("Grains Research and Development Corporation (GRDC)", role = c("fnd", "cph"),
+           comment = c("Project USQ1903-003RTX", ROR = "02xwr1996")),
     person("University of Southern Queensland", role = "cph"),
-    person(given = "Western Australia Agriculture Authority (WAAA)",
-          role = "cph",
-          comment = c("Supported the development of ascotraceR through Adam H.
-          Sparks' time.")))
+    person("Western Australia Agriculture Authority (WAAA)", role = "cph",
+           comment = "Supported the development of ascotraceR through Adam H.\n          Sparks' time.")
+  )
 Description: A spatiotemporal model that simulates the spread of Ascochyta
-    blight in chickpea fields based on location-specific weather conditions.
-    This model is adapted from a model developed by Diggle et al. (2002)
-    <doi:10.1094/PHYTO.2002.92.10.1110> for simulating the spread of anthracnose
-    in a lupin field.
+    blight in chickpea fields based on location-specific weather
+    conditions.  This model is adapted from a model developed by Diggle et
+    al. (2002) <doi:10.1094/PHYTO.2002.92.10.1110> for simulating the
+    spread of anthracnose in a lupin field.
+License: MIT + file LICENSE
 URL: https://github.com/IhsanKhaliq/ascotraceR
 BugReports: https://github.com/IhsanKhaliq/ascotraceR/issues
-License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
 Depends: 
     R (>= 3.5.0)
 Imports:
-  data.table (>= 1.13.0),
-  lubridate (>= 1.7.9.2),
-  lutz (>= 0.3.1),
-  circular (>= 0.4-93),
-  stats,
-  sf,
-  terra
+    circular (>= 0.4-93),
+    data.table (>= 1.13.0),
+    lubridate (>= 1.7.9.2),
+    lutz (>= 0.3.1),
+    sf,
+    stats,
+    terra
 Suggests:
-  ggplot2,
-  knitr,
-  rmarkdown,
-  spelling,
-  testthat (>= 3.0.1)
-VignetteBuilder: knitr
+    ggplot2,
+    knitr,
+    rmarkdown,
+    spelling,
+    testthat (>= 3.0.1)
+VignetteBuilder: 
+    knitr
+Config/roxygen2/version: 8.0.0
+DOI: 10.5281/zenodo.5771290
+Encoding: UTF-8
 Language: en-US
+Roxygen: list(markdown = TRUE)
 X-schema.org-applicationCategory: Tools
-X-schema.org-keywords: chickpea, botanical-epidemiology, plant-disease-model,
-  agricultural-modelling, agricultural-modeling, crop-protection,
-  agricultural-research, model, modelling, modeling, Ascochyta-rabiei
+X-schema.org-keywords: chickpea, botanical-epidemiology,
+    plant-disease-model, agricultural-modelling, agricultural-modeling,
+    crop-protection, agricultural-research, model, modelling, modeling,
+    Ascochyta-rabiei

@@ -16,12 +16,14 @@
 #' potentially_effective_spores(spores_per_gp_per_wet_hour = 0.22,
 #'   max_interception_probability = 1,
 #'   paddock_infected_gp = 100) # No. of infected growing points at coordinates
-potentially_effective_spores <- function(spores_per_gp_per_wet_hour,
-                                         max_interception_probability,
-                                         paddock_infected_gp) {
+potentially_effective_spores <- function(
+  spores_per_gp_per_wet_hour,
+  max_interception_probability,
+  paddock_infected_gp
+) {
   if (paddock_infected_gp <= 0) {
     return(0)
-  } else{
+  } else {
     expected_effective_spores <-
       spores_per_gp_per_wet_hour *
       max_interception_probability *
@@ -34,7 +36,7 @@ potentially_effective_spores <- function(spores_per_gp_per_wet_hour,
         "Check parameters `spores_per_gp_per_wet_hour` and",
         "`max_interception_probability`."
       )
-    } else{
+    } else {
       p_e_s <-
         stats::rpois(1, expected_effective_spores)
 

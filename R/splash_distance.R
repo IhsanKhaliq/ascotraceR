@@ -14,16 +14,14 @@
 #' @keywords internal
 #' @noRd
 
-
 splash_distance <-
-   function(splash_cauchy_parameter = 0.015,
-            PSPH = 1) {
-      s_d <- lapply(PSPH, function(peakSPH) {
-         abs(stats::rcauchy(
-            n = peakSPH,
-            location = 0,
-            scale = splash_cauchy_parameter
-         ))
-      })
-      return(unlist(s_d))
-   }
+  function(splash_cauchy_parameter = 0.015, PSPH = 1) {
+    s_d <- lapply(PSPH, function(peakSPH) {
+      abs(stats::rcauchy(
+        n = peakSPH,
+        location = 0,
+        scale = splash_cauchy_parameter
+      ))
+    })
+    return(unlist(s_d))
+  }
