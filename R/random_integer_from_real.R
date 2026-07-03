@@ -3,7 +3,7 @@
 #' @keywords internal
 #' @noRd
 
-random_integer_from_real <- function (r) {
+random_integer_from_real <- function(r) {
   fraction <- r %% 1
   r_stand <- stats::runif(1)
   fcase(

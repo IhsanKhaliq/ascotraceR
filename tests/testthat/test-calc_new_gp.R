@@ -9,14 +9,16 @@ test1 <- calc_new_gp(
 )
 
 # Test function if current growing points is a negative
-test_that("calc_new_gp errors with inputs lower than 0",{
+test_that("calc_new_gp errors with inputs lower than 0", {
   expect_error(
     calc_new_gp(
       current_growing_points = -1,
       gp_rr = 0.0065,
       max_gp = 15000,
-      mean_air_temp = 24),
-    label = "'current_growing_points' (value = -1) can't be < 0")
+      mean_air_temp = 24
+    ),
+    label = "'current_growing_points' (value = -1) can't be < 0"
+  )
 })
 
 

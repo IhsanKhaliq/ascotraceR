@@ -11,15 +11,21 @@
 
 address_from_centre_distance <-
   function(offset_distance, start_address) {
-    destination <- as.integer(c(sum(start_address[1],
-                                    floor(
-                                      sum(0.5, offset_distance[1])
-                                    )),
-                                sum(start_address[2],
-                                    floor(
-                                      sum(0.5, offset_distance[2])
-                                    ))))
-    if (any(is.na(destination))) {
+    destination <- as.integer(c(
+      sum(
+        start_address[1],
+        floor(
+          sum(0.5, offset_distance[1])
+        )
+      ),
+      sum(
+        start_address[2],
+        floor(
+          sum(0.5, offset_distance[2])
+        )
+      )
+    ))
+    if (anyNA(destination)) {
       stop(
         call. = FALSE,
         "`address_from_centre_distance()` is returning `NA`; ",
@@ -36,7 +42,6 @@ address_from_centre_distance <-
     }
 
     # make destination a data.table
-    destination <- data.table(x = destination[1],
-                              y = destination[2])
+    destination <- data.table(x = destination[1], y = destination[2])
     return(destination)
   }

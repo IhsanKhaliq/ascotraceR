@@ -118,51 +118,58 @@
 #'                           time_zone = "Australia/Perth")
 #' unlink(temp_file_path) # remove temporary weather file
 #' @export
-format_weather <- function(x,
-                           YYYY = NULL,
-                           MM = NULL,
-                           DD = NULL,
-                           hh = NULL,
-                           mm = NULL,
-                           POSIXct_time = NULL,
-                           time_zone = NULL,
-                           temp,
-                           rain,
-                           ws,
-                           wd,
-                           wd_sd,
-                           station,
-                           lon = NULL,
-                           lat = NULL,
-                           r = NULL,
-                           lonlat_file = NULL) {
+format_weather <- function(
+  x,
+  YYYY = NULL,
+  MM = NULL,
+  DD = NULL,
+  hh = NULL,
+  mm = NULL,
+  POSIXct_time = NULL,
+  time_zone = NULL,
+  temp,
+  rain,
+  ws,
+  wd,
+  wd_sd,
+  station,
+  lon = NULL,
+  lat = NULL,
+  r = NULL,
+  lonlat_file = NULL
+) {
   # CRAN Note avoidance
   times <- NULL #nocov
 
   # Check x class
   if (!is.data.frame(x)) {
-    stop(call. = FALSE,
-         "`x` must be provided as a `data.frame` object for formatting.")
+    stop(
+      call. = FALSE,
+      "`x` must be provided as a `data.frame` object for formatting."
+    )
   }
 
   # is this a pre-formatted data.frame that needs to be reformatted?
-  if (all(
-    c(
-      "times",
-      "temp",
-      "rain",
-      "ws",
-      "wd",
-      "wd_sd",
-      "wet_hours",
-      "station",
-      "YYYY",
-      "MM",
-      "DD",
-      "hh",
-      "mm"
-    ) %in% colnames(x)
-  )) {
+  if (
+    all(
+      c(
+        "times",
+        "temp",
+        "rain",
+        "ws",
+        "wd",
+        "wd_sd",
+        "wet_hours",
+        "station",
+        "YYYY",
+        "MM",
+        "DD",
+        "hh",
+        "mm"
+      ) %in%
+        colnames(x)
+    )
+  ) {
     # set as data.table
     x <- data.table(x)
 
@@ -171,7 +178,7 @@ format_weather <- function(x,
         "Please provide the timezone of the source weather stations. If this
               was pre-formatted, use 'UTC'"
       )
-    } else{
+    } else {
       x[, times := lubridate::ymd_hms(times, tz = time_zone, truncated = 3)]
     }
 
@@ -182,8 +189,13 @@ format_weather <- function(x,
   }
 
   # Check for missing inputs before proceeding
-  if (is.null(POSIXct_time) &&
-      is.null(YYYY) && is.null(MM) && is.null(DD) && is.null(hh)) {
+  if (
+    is.null(POSIXct_time) &&
+      is.null(YYYY) &&
+      is.null(MM) &&
+      is.null(DD) &&
+      is.null(hh)
+  ) {
     stop(
       call. = FALSE,
       "You must provide time values either as a `POSIXct_time` column or ",
@@ -227,7 +239,6 @@ format_weather <- function(x,
     )
   }
 
-
   # Assign a `time_zone` based on the raster centroid and check to ensure only
   # one time zone is provided
   if (is.null(time_zone)) {
@@ -241,9 +252,11 @@ format_weather <- function(x,
       )
   }
   if (length(time_zone) > 1) {
-    stop(call. = FALSE,
-         "Separate weather inputs for the model are required for",
-         "each time zone.")
+    stop(
+      call. = FALSE,
+      "Separate weather inputs for the model are required for",
+      "each time zone."
+    )
   }
 
   # convert to data.table and start renaming and reformatting -----------------
@@ -264,9 +277,11 @@ format_weather <- function(x,
     temp <- "temp"
   }
 
-  if (all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)) == FALSE) {
-    stop(call. = FALSE,
-         "Supplied column names are not found in column names of `x`.")
+  if (!all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x))) {
+    stop(
+      call. = FALSE,
+      "Supplied column names are not found in column names of `x`."
+    )
   }
 
   # import and assign longitude and latitude from a file if provided
@@ -281,8 +296,12 @@ format_weather <- function(x,
       )
     }
 
-    if (any(as.character(unique(x[, get(station)])) %notin%
-            as.character(ll_file[, station]))) {
+    if (
+      any(
+        as.character(unique(x[, get(station)])) %notin%
+          as.character(ll_file[, station])
+      )
+    ) {
       stop(
         call. = FALSE,
         "The CSV file of weather station coordinates should contain ",
@@ -291,8 +310,10 @@ format_weather <- function(x,
     }
 
     r_num <-
-      which(as.character(ll_file[, station]) ==
-              as.character(unique(x[, get(station)])))
+      which(
+        as.character(ll_file[, station]) ==
+          as.character(unique(x[, get(station)]))
+      )
 
     x[, lat := rep(ll_file[r_num, lat], .N)]
     x[, lon := rep(ll_file[r_num, lon], .N)]
@@ -318,85 +339,53 @@ format_weather <- function(x,
     )
   }
 
+  setnames(x, old = temp, new = "temp", skip_absent = TRUE)
 
-  setnames(x,
-           old = temp,
-           new = "temp",
-           skip_absent = TRUE)
+  setnames(x, old = rain, new = "rain", skip_absent = TRUE)
 
-  setnames(x,
-           old = rain,
-           new = "rain",
-           skip_absent = TRUE)
+  setnames(x, old = ws, new = "ws", skip_absent = TRUE)
 
-  setnames(x,
-           old = ws,
-           new = "ws",
-           skip_absent = TRUE)
+  setnames(x, old = wd, new = "wd", skip_absent = TRUE)
 
-  setnames(x,
-           old = wd,
-           new = "wd",
-           skip_absent = TRUE)
+  setnames(x, old = wd_sd, new = "wd_sd", skip_absent = TRUE)
 
-  setnames(x,
-           old = wd_sd,
-           new = "wd_sd",
-           skip_absent = TRUE)
-
-  setnames(x,
-           old = station,
-           new = "station",
-           skip_absent = TRUE)
+  setnames(x, old = station, new = "station", skip_absent = TRUE)
 
   if (!is.null(lat)) {
-    setnames(x,
-             old = lat,
-             new = "lat",
-             skip_absent = TRUE)
+    setnames(x, old = lat, new = "lat", skip_absent = TRUE)
   }
 
   if (!is.null(lon)) {
-    setnames(x,
-             old = lon,
-             new = "lon",
-             skip_absent = TRUE)
+    setnames(x, old = lon, new = "lon", skip_absent = TRUE)
   }
 
   if (!is.null(POSIXct_time)) {
-    setnames(x,
-             old = POSIXct_time,
-             new = "times",
-             skip_absent = TRUE)
+    setnames(x, old = POSIXct_time, new = "times", skip_absent = TRUE)
     x[, times := as.POSIXct(times)]
     x[, YYYY := lubridate::year(x[, times])]
     x[, MM := lubridate::month(x[, times])]
     x[, DD := lubridate::day(x[, times])]
-    x[, hh :=  lubridate::hour(x[, times])]
+    x[, hh := lubridate::hour(x[, times])]
     x[, mm := lubridate::minute(x[, times])]
 
     # Add time_zone if there is no timezone for the station and coerce to
     # POSIXct class
-    if (lubridate::tz(x[, times]) == "" ||
-        lubridate::tz(x[, times]) == "UTC") {
-      x[, times := lubridate::force_tz(x[, times],
-                                       tzone = time_zone)]
+    if (
+      lubridate::tz(x[, times]) == "" ||
+        lubridate::tz(x[, times]) == "UTC"
+    ) {
+      x[, times := lubridate::force_tz(x[, times], tzone = time_zone)]
     }
   } else {
     # if POSIX formatted times were not supplied, create a POSIXct
     # formatted column named 'times'
 
-    x[, times := paste(YYYY, "-",
-                       MM, "-",
-                       DD, " ",
-                       hh, ":",
-                       mm, sep = "")][, times :=
-                                        lubridate::ymd_hm(times,
-                                                          tz = time_zone)]
-
+    x[, times := paste(YYYY, "-", MM, "-", DD, " ", hh, ":", mm, sep = "")][,
+      times := lubridate::ymd_hm(times, tz = time_zone)
+    ]
   }
 
-  if (any(is.na(x[, times]))) {
+  if (anyNA(x[, times])) {
     stop(
       call. = FALSE,
       times,
@@ -406,68 +395,69 @@ format_weather <- function(x,
   }
 
   # workhorse of this function that does the reformatting
-  .do_format <- function(x_dt,
-                         YYYY = YYYY,
-                         MM = MM,
-                         DD = DD,
-                         hh = hh,
-                         mm = mm,
-                         temp = temp,
-                         rain = rain,
-                         ws = ws,
-                         wd = wd,
-                         wd_sd = wd_sd,
-                         station = station,
-                         lon = lon,
-                         lat = lat,
-                         lonlat_file = lonlat_file,
-                         times = times,
-                         time_zone = time_zone) {
+  .do_format <- function(
+    x_dt,
+    YYYY = YYYY,
+    MM = MM,
+    DD = DD,
+    hh = hh,
+    mm = mm,
+    temp = temp,
+    rain = rain,
+    ws = ws,
+    wd = wd,
+    wd_sd = wd_sd,
+    station = station,
+    lon = lon,
+    lat = lat,
+    lonlat_file = lonlat_file,
+    times = times,
+    time_zone = time_zone
+  ) {
     # calculate the approximate logging frequency of the weather data
 
     log_freq <-
-      lubridate::int_length(lubridate::int_diff(c(x_dt[1, times],
-                                                  x_dt[.N, times]))) /
+      lubridate::int_length(lubridate::int_diff(c(
+        x_dt[1, times],
+        x_dt[.N, times]
+      ))) /
       (nrow(x_dt) * 60)
 
     # if the logging frequency is less than 50 minutes aggregate to hourly
     if (log_freq < 50) {
-      w_dt_agg <- x_dt[, list(
-        times = unique(lubridate::floor_date(times,
-                                             unit = "hours")),
-        temp = mean(temp, na.rm = TRUE),
-        rain = sum(as.numeric(rain), na.rm = TRUE),
-        ws = mean(ws, na.rm = TRUE),
-        wd = as.numeric(
-          circular::mean.circular(
-            circular::circular(wd,
-                               units = "degrees",
-                               modulo = "2pi"),
-            na.rm = TRUE
-          ) # ** see line 310 below
+      w_dt_agg <- x_dt[,
+        list(
+          times = unique(lubridate::floor_date(times, unit = "hours")),
+          temp = mean(temp, na.rm = TRUE),
+          rain = sum(as.numeric(rain), na.rm = TRUE),
+          ws = mean(ws, na.rm = TRUE),
+          wd = as.numeric(
+            circular::mean.circular(
+              circular::circular(wd, units = "degrees", modulo = "2pi"),
+              na.rm = TRUE
+            ) # ** see line 310 below
+          ),
+          wd_sd = as.numeric(
+            circular::sd.circular(
+              circular::circular(wd, units = "degrees", modulo = "2pi"),
+              na.rm = TRUE
+            )
+          ) *
+            57.29578,
+          # this is equal to (180 / pi)
+          # why multiply by (180 / pi) here but not on mean.circular above **
+          lon = unique(lon),
+          lat = unique(lat)
         ),
-        wd_sd = as.numeric(
-          circular::sd.circular(
-            circular::circular(wd,
-                               units = "degrees",
-                               modulo = "2pi"),
-            na.rm = TRUE
-          )
-        ) * 57.29578,
-        # this is equal to (180 / pi)
-        # why multiply by (180 / pi) here but not on mean.circular above **
-        lon = unique(lon),
-        lat = unique(lat)
-      ),
-      by = list(YYYY, MM, DD, hh, station)]
+        by = list(YYYY, MM, DD, hh, station)
+      ]
 
       # insert a minute col that was removed during this aggregation
       w_dt_agg[, mm := rep(0, .N)]
       mm <- "mm"
 
       return(w_dt_agg)
-
-    } else{
+    } else {
       if (all(is.na(x_dt[, wd_sd]))) {
         stop(
           call. = FALSE,
@@ -573,13 +563,21 @@ format_weather <- function(x,
       "\nplease use a complete dataset"
     )
   # for outside range
-  if (nrow(final_w[temp < -30 |
-                   temp > 60, ]) != 0)
+  if (
+    nrow(final_w[
+      temp < -30 |
+        temp > 60,
+    ]) !=
+      0
+  )
     stop(
       call. = FALSE,
       "Temperature inputs are outside expected ranges (-30 and +60 degrees C); \n",
-      paste(as.character(final_w[temp < -30 |
-                                   temp > 60, times])),
+      paste(as.character(final_w[
+        temp < -30 |
+          temp > 60,
+        times
+      ])),
       "\nplease correct these inputs and run again"
     )
 
@@ -593,13 +591,21 @@ format_weather <- function(x,
       "\nplease use a complete dataset"
     )
   # for outside range
-  if (nrow(final_w[rain < 0 |
-                   rain > 100, ]) != 0)
+  if (
+    nrow(final_w[
+      rain < 0 |
+        rain > 100,
+    ]) !=
+      0
+  )
     stop(
       call. = FALSE,
       "rain inputs are outside expected ranges (0 and 100 mm); \n",
-      paste(as.character(final_w[rain < 0 |
-                                   rain > 100, times])),
+      paste(as.character(final_w[
+        rain < 0 |
+          rain > 100,
+        times
+      ])),
       "\nplease correct these inputs and run again"
     )
 
@@ -613,13 +619,21 @@ format_weather <- function(x,
       "\nplease use a complete dataset"
     )
   # for outside range
-  if (nrow(final_w[ws < 0 |
-                   ws > 150, ]) != 0)
+  if (
+    nrow(final_w[
+      ws < 0 |
+        ws > 150,
+    ]) !=
+      0
+  )
     stop(
       call. = FALSE,
       "wind speed inputs are outside expected ranges (0 and 150 kph); \n",
-      paste(as.character(final_w[ws < 0 |
-                                   ws > 150, times])),
+      paste(as.character(final_w[
+        ws < 0 |
+          ws > 150,
+        times
+      ])),
       "\nplease correct these inputs and run again"
     )
 
@@ -633,13 +647,21 @@ format_weather <- function(x,
       "\nplease use a complete dataset"
     )
   # for outside range
-  if (nrow(final_w[wd < 0 |
-                   wd > 360, ]) != 0)
+  if (
+    nrow(final_w[
+      wd < 0 |
+        wd > 360,
+    ]) !=
+      0
+  )
     stop(
       call. = FALSE,
       "wind direction are outside expected ranges (0 and 360); \n",
-      paste(as.character(final_w[wd < 0 |
-                                   rain > 360, times])),
+      paste(as.character(final_w[
+        wd < 0 |
+          rain > 360,
+        times
+      ])),
       "\nplease correct these inputs and run again"
     )
 }

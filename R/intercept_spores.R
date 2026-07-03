@@ -14,9 +14,12 @@
 #'   day.  Defaults to \code{350}
 #' @keywords internal
 #' @noRd
-intercept_spores <- function(spore_interception_parameter = 0.00006,
-                             max_growing_points_limit,
-                             max_new_growing_points_limit) {
-  spore_interception_parameter * max_growing_points_limit /
+intercept_spores <- function(
+  spore_interception_parameter = 0.00006,
+  max_growing_points_limit,
+  max_new_growing_points_limit
+) {
+  spore_interception_parameter *
+    max_growing_points_limit /
     max_new_growing_points_limit
 }

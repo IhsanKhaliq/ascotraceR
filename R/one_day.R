@@ -59,22 +59,24 @@
 #'
 #' @keywords internal
 #' @noRd
-one_day <- function(i_date,
-                    daily_vals,
-                    weather_dat,
-                    gp_rr,
-                    max_gp,
-                    spore_interception_parameter,
-                    spores_per_gp_per_wet_hour,
-                    splash_cauchy_parameter = 0.5,
-                    wind_cauchy_multiplier = 0.015,
-                    daily_rain_threshold = 2,
-                    hourly_rain_threshold = 0.1,
-                    susceptible_days = 5,
-                    rainfall_multiplier = FALSE) {
+one_day <- function(
+  i_date,
+  daily_vals,
+  weather_dat,
+  gp_rr,
+  max_gp,
+  spore_interception_parameter,
+  spores_per_gp_per_wet_hour,
+  splash_cauchy_parameter = 0.5,
+  wind_cauchy_multiplier = 0.015,
+  daily_rain_threshold = 2,
+  hourly_rain_threshold = 0.1,
+  susceptible_days = 5,
+  rainfall_multiplier = FALSE
+) {
   times <- temp <- rain <- new_gp <- infectious_gp <-
     cdd_at_infection <- susceptible_gp <- exposed_gp <-
-    spores_per_packet <- NULL
+      spores_per_packet <- NULL
 
   # expand time to be hourly
   i_time <- rep(i_date, 24) + lubridate::dhours(0:23)
@@ -85,7 +87,7 @@ one_day <- function(i_date,
 
   # obtain summary weather for i_day
   i_mean_air_temp <- mean(weather_day$temp)
-  i_wet_hours <- weather_day[, sum(rain > 0,na.rm = TRUE)]
+  i_wet_hours <- weather_day[, sum(rain > 0, na.rm = TRUE)]
   i_rainfall <- sum(weather_day[, rain], na.rm = TRUE)
 
   # Start building a list of values for 'i'
@@ -97,17 +99,20 @@ one_day <- function(i_date,
   # max new growing points are multiplied by five as growing points remain
   # susceptible for five days.
   max_interception_probability <-
-    interception_probability(target_density = susceptible_days *
-                               max(daily_vals[["paddock"]][, new_gp]),
-                             k = spore_interception_parameter)
+    interception_probability(
+      target_density = susceptible_days *
+        max(daily_vals[["paddock"]][, new_gp]),
+      k = spore_interception_parameter
+    )
 
   # need to make a copy of the data.table otherwise it will modify all
   # data.tables in the following functions
   daily_vals$paddock <- copy(daily_vals$paddock)
-  if (any(is.na(daily_vals[["paddock"]][, infectious_gp]))) {
+  if (anyNA(daily_vals[["paddock"]][, infectious_gp])) {
     stop(
       call. = FALSE,
-      "`NA` values in daily_vals[['paddock']][,infectious_gp]")
+      "`NA` values in daily_vals[['paddock']][,infectious_gp]"
+    )
   }
 
   # Don't spread spores if there are no infected coordinates
@@ -118,9 +123,9 @@ one_day <- function(i_date,
       exposed_dt <-
         rbindlist(
           lapply(
-            seq_len(nrow(weather_day[rain >= hourly_rain_threshold,])),
+            seq_len(nrow(weather_day[rain >= hourly_rain_threshold, ])),
             FUN = spores_each_wet_hour,
-            weather_hourly = weather_day[rain >= hourly_rain_threshold,],
+            weather_hourly = weather_day[rain >= hourly_rain_threshold, ],
             paddock = daily_vals$paddock,
             max_interception_probability = max_interception_probability,
             spore_interception_parameter = spore_interception_parameter,
@@ -132,40 +137,35 @@ one_day <- function(i_date,
         )
       exposed_dt[, cdd_at_infection := daily_vals[["cdd"]]]
 
-
       daily_vals$exposed_gps <-
-        rbind(daily_vals$exposed_gps,
-              exposed_dt)
-
+        rbind(daily_vals$exposed_gps, exposed_dt)
     }
 
     # exposed gps which have undergone latent period are moved to sporulating gps
-    daily_vals <- make_some_infective(daily_vals = daily_vals,
-                                      latent_period = 150)
-
+    daily_vals <- make_some_infective(
+      daily_vals = daily_vals,
+      latent_period = 150
+    )
 
     daily_vals$paddock <- merge(
       x = daily_vals$paddock[, exposed_gp := NULL],
-      y = daily_vals$exposed_gps[, list(exposed_gp = sum(spores_per_packet)), by = c("x", "y")],
+      y = daily_vals$exposed_gps[,
+        list(exposed_gp = sum(spores_per_packet)),
+        by = c("x", "y")
+      ],
       by = c("x", "y"),
       all.x = TRUE
     )
     # merge creates NA values, update these to zeros
     daily_vals$paddock[is.na(exposed_gp), exposed_gp := 0]
-    setcolorder(daily_vals$paddock,
-                c("x",
-                  "y",
-                  "new_gp",
-                  "susceptible_gp",
-                  "exposed_gp",
-                  "infectious_gp"
-                  ))
+    setcolorder(
+      daily_vals$paddock,
+      c("x", "y", "new_gp", "susceptible_gp", "exposed_gp", "infectious_gp")
+    )
 
     # update infected coordinates
     daily_vals$infected_coords <-
-      daily_vals$paddock[infectious_gp > 0,
-                              c("x", "y")]
-
+      daily_vals$paddock[infectious_gp > 0, c("x", "y")]
   }
 
   # Grow Plants
@@ -182,19 +182,21 @@ one_day <- function(i_date,
     )
 
   # this might be quicker if there was no fifelse statement
-  daily_vals$paddock[, new_gp := fcase(
-    susceptible_gp == 0,
-    as.integer(0),
-    susceptible_gp == daily_vals$gp_standard,
-    daily_vals$new_gp,
-    susceptible_gp < daily_vals$gp_standard,
-    calc_new_gp(
-      current_growing_points = susceptible_gp,
-      gp_rr = gp_rr,
-      max_gp = max_gp,
-      mean_air_temp = i_mean_air_temp
+  daily_vals$paddock[,
+    new_gp := fcase(
+      susceptible_gp == 0,
+      as.integer(0),
+      susceptible_gp == daily_vals$gp_standard,
+      daily_vals$new_gp,
+      susceptible_gp < daily_vals$gp_standard,
+      calc_new_gp(
+        current_growing_points = susceptible_gp,
+        gp_rr = gp_rr,
+        max_gp = max_gp,
+        mean_air_temp = i_mean_air_temp
+      )
     )
-  )]
+  ]
 
   daily_vals$gp_standard <- sum(daily_vals$gp_standard, daily_vals$new_gp)
 
