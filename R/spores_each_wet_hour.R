@@ -54,7 +54,7 @@ spores_each_wet_hour <- function(h,
   average_wind_speed_in_hour <- weather_hourly[h, ws]
   wind_direction_in_hour <-  weather_hourly[h, wd]
   stdev_wind_direction_in_hour <-  weather_hourly[h, wd_sd]
-  spores_per_gp_per_wet_hour <- fifelse(rainfall_multiplier == FALSE |
+  spores_per_gp_per_wet_hour <- fifelse(isFALSE(rainfall_multiplier) |
                                           rain_in_hour <= 1,
                                         spores_per_gp_per_wet_hour,
                                         spores_per_gp_per_wet_hour * (

@@ -264,7 +264,7 @@ format_weather <- function(x,
     temp <- "temp"
   }
 
-  if (all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)) == FALSE) {
+  if (isFALSE(all(c(temp, rain, ws, wd, wd_sd, station) %in% colnames(x)))) {
     stop(call. = FALSE,
          "Supplied column names are not found in column names of `x`.")
   }
