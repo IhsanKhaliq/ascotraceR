@@ -76,7 +76,7 @@ test_that("`format_weather()` is able to identify the correct lat and lon values
             expect_true(anyNA(weather_dt$lat) == FALSE)
             expect_true(weather_dt[, unique(lon)] == 114.8627)
             expect_equal(unique(weather_dt$lat), -28.5990)
-            expect_is(weather_dt$times, "POSIXct")
+            expect_s3_class(weather_dt$times, "POSIXct")
             expect_equal(as.character(min(weather_dt$times)),
                          "2020-06-10 01:00:00")
             expect_equal(as.character(max(weather_dt$times)), "2020-06-17")
@@ -227,7 +227,7 @@ test_that("`format_weather()` works when lat lon are in data", {
     )
   )
   expect_equal(dim(weather_dt), c(168, 14))
-  expect_is(weather_dt$times, "POSIXct")
+  expect_s3_class(weather_dt$times, "POSIXct")
   expect_true(anyNA(weather_dt$times) == FALSE)
   expect_true(max(weather_dt$wd, na.rm = TRUE) < 360)
   expect_true(min(weather_dt$wd, na.rm = TRUE) > 0)

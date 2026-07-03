@@ -1,3 +1,5 @@
+set.seed(2026)
+
 summarised_test <- summarise_trace(
   trace_asco(
     weather = newM_weather,

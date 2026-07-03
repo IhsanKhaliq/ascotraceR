@@ -53,7 +53,7 @@ test1 <- successful_infections(
 )
 
 test_that("test1 provides correct output", {
-  expect_is(test1, "integer")
+  expect_type(test1, "integer")
   expect_true(is.vector(test1))
   expect_length(test1, 1)
   expect_equal(sum(test1), 0)
@@ -71,7 +71,7 @@ test2 <- successful_infections(
 )
 
 test_that("test2 provides correct output", {
-  expect_is(test2, "integer")
+  expect_type(test2, "integer")
   expect_true(is.vector(test2))
   expect_length(test2, nrow(spore_dat))
   expect_equal(sum(test2), 12)

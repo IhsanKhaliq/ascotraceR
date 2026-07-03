@@ -3,6 +3,12 @@ sowing_date <- as.POSIXct("1998-05-09", tz = "Australia/Perth")
 harvest_date <- as.POSIXct("1998-05-12", tz = "Australia/Perth")
 
 # Test running for 3 days
+# NOTE: seeded here (rather than relying on whatever RNG state happened to
+# leak in from whichever test file alphabetically ran before this one) so
+# that this test is reproducible and independent of test execution order.
+# If you change this seed, the hardcoded expected values below (e.g.
+# `Ninf_coord`, `Ninf_pad`) will need to be regenerated to match.
+set.seed(1998)
 test1 <- trace_asco(
   weather = newM_weather,
   paddock_length = 100,
@@ -105,6 +111,7 @@ test_that("intense primary_infection_foci lead to more infections", {
 # test running for 14 days
 # this will test that the infection intensifies with more days and
 #  that newly infected gp are moved to sporilating gp after the latent period
+set.seed(1998)
 test2 <- trace_asco(
   weather = newM_weather,
   paddock_length = 100,
@@ -139,6 +146,7 @@ test_that("intense primary_infection_foci lead to more infections", {
 # test running for 28 days
 # this will test that the infection intensifies with more days and
 #  that newly infected gp are moved to sporilating gp after the latent period
+set.seed(1998)
 test3 <- trace_asco(
   weather = newM_weather,
   paddock_length = 100,
@@ -159,6 +167,7 @@ test_that("test3 returns some sporulating gps", {
 
 
 # test running for 28 days with multiple (10) random start locations
+set.seed(1998)
 pdk <- CJ(x = 1:100,
           y = 1:100,
           load = 3)

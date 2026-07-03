@@ -78,7 +78,7 @@ test1 <- one_day(
 test_that("one_day single infection foci returns expected output", {
   expect_silent(test1[["paddock"]]) # This line is here due to https://github.com/Rdatatable/data.table/issues/869
   test1[["paddock"]]
-  expect_is(test1, "list")
+  expect_type(test1, "list")
   expect_length(test1, 11)
   expect_equal(
     names(test1),
@@ -147,7 +147,7 @@ test_that("one_day test2 repeat using test1 single infection foci returns expect
           {
             expect_silent(test2[["paddock"]]) # This line is here due to https://github.com/Rdatatable/data.table/issues/869
             test2[["paddock"]]
-            expect_is(test2, "list")
+            expect_type(test2, "list")
             expect_length(test2, 11)
             expect_equal(
               names(test2),
@@ -220,7 +220,7 @@ test_that("one_day test3 adds to cumulative degree days and passes latent period
           {
             expect_silent(test3[["paddock"]])
             test3[["paddock"]]
-            expect_is(test3, "list")
+            expect_type(test3, "list")
             expect_length(test3, 11)
             expect_equal(
               names(test3),

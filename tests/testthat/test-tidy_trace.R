@@ -1,3 +1,5 @@
+set.seed(2026)
+
 tidy_test <- tidy_trace(
   trace_asco(
     weather = newM_weather,
