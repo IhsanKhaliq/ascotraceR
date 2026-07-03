@@ -14,6 +14,28 @@
 #' @param paddock A `data.table` detailing the growing points and infections.
 #'
 #' @return updated `daily_vals` list object
+#' @examples
+#' seeding_rate <- 40
+#' paddock <- data.table::CJ(x = 1:100, y = 1:100)
+#' paddock[, c("new_gp", "susceptible_gp", "exposed_gp", "infectious_gp") :=
+#'   list(seeding_rate, seeding_rate, 0, 0)]
+#'
+#' daily_vals <- list(
+#'   paddock = paddock,
+#'   i_day = 1,
+#'   cdd = 250, # past the example's 200 cdd latent period, so it will sporulate
+#'   cwh = 0,
+#'   cr = 0,
+#'   gp_standard = seeding_rate,
+#'   new_gp = seeding_rate,
+#'   exposed_gps = data.table::data.table(x = 50,
+#'                                        y = 50,
+#'                                        spores_per_packet = 3,
+#'                                        cdd_at_infection = 20)
+#' )
+#'
+#' updated <- make_some_infective(daily_vals = daily_vals, latent_period = 200)
+#' updated$paddock[x == 50 & y == 50, ]
 #' @keywords internal
 #' @noRd
 

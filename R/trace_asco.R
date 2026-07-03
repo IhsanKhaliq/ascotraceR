@@ -417,9 +417,11 @@ trace_asco <- function(
 #' @param x an object for checking
 #'
 #' @return a POSIXct date-time object
+#' @examples
+#' ascotraceR:::.vali_date("26 April 2020")
+#' ascotraceR:::.vali_date("2020-04-26")
 #' @keywords internal
 #' @noRd
-#'
 .vali_date <- function(x) {
   tryCatch(
     # try to parse the date format using lubridate

@@ -13,6 +13,20 @@
 #' @param max_interception_probability Probability of interception of conidia
 #' @return A vector of spores_per_packet each referring to a row in
 #'   spore_targets
+#' @examples
+#' seeding_rate <- 40
+#' paddock <- data.table::CJ(x = 1:100, y = 1:100)
+#' paddock[, new_gp := seeding_rate]
+#'
+#' set.seed(666)
+#' successful_infections(
+#'   spore_targets = data.table::data.table(x = 50,
+#'                                          y = 50,
+#'                                          spores_per_packet = 5),
+#'   paddock = paddock,
+#'   spore_interception_parameter = 0.00006 * (15000 / 350),
+#'   max_interception_probability = 1
+#' )
 #' @keywords internal
 #' @noRd
 successful_infections <- function(

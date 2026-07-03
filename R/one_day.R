@@ -57,6 +57,52 @@
 #'   * `exposed_gp` - a `data.table` of exposed growing points in the latent
 #'     period phase of infection
 #'
+#' @examples
+#' i_date <- as.POSIXct("1998-05-12", tz = "Australia/Perth")
+#'
+#' # a minimal, self-contained day of weather with a few wet hours
+#' weather_dat <- data.table::data.table(
+#'   times = i_date + lubridate::dhours(0:23),
+#'   temp = 18,
+#'   rain = c(rep(0, 20), 3, 2, 1, 0),
+#'   ws = 10,
+#'   wd = 180,
+#'   wd_sd = 15
+#' )
+#'
+#' seeding_rate <- 40
+#' paddock <- data.table::CJ(x = 1:100, y = 1:100)
+#' paddock[, c("new_gp", "susceptible_gp", "exposed_gp", "infectious_gp") :=
+#'   list(seeding_rate,
+#'        data.table::fifelse(x == 50 & y == 50, seeding_rate - 1, seeding_rate),
+#'        0,
+#'        data.table::fifelse(x == 50 & y == 50, 1, 0))]
+#'
+#' daily_vals <- list(
+#'   paddock = paddock,
+#'   i_date = i_date,
+#'   i_day = 1,
+#'   day = lubridate::yday(i_date),
+#'   cdd = 0,
+#'   cwh = 0,
+#'   cr = 0,
+#'   gp_standard = seeding_rate,
+#'   new_gp = seeding_rate,
+#'   infected_coords = data.table::data.table(x = 50, y = 50),
+#'   exposed_gps = data.table::data.table()
+#' )
+#'
+#' set.seed(666)
+#' result <- one_day(
+#'   i_date = i_date,
+#'   daily_vals = daily_vals,
+#'   weather_dat = weather_dat,
+#'   gp_rr = 0.0065,
+#'   max_gp = 15000 * (1 - exp(-0.138629 * seeding_rate)),
+#'   spore_interception_parameter = 0.00006 * (15000 / 350),
+#'   spores_per_gp_per_wet_hour = 0.22
+#' )
+#' result$paddock[x == 50 & y == 50, ]
 #' @keywords internal
 #' @noRd
 one_day <- function(
