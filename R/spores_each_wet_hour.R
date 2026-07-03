@@ -36,15 +36,17 @@
 #' @keywords internal
 #' @noRd
 
-spores_each_wet_hour <- function(h,
-                                 weather_hourly,
-                                 paddock,
-                                 spore_interception_parameter,
-                                 max_interception_probability,
-                                 spores_per_gp_per_wet_hour,
-                                 splash_cauchy_parameter = 0.5,
-                                 wind_cauchy_multiplier = 0.015,
-                                 rainfall_multiplier = FALSE) {
+spores_each_wet_hour <- function(
+  h,
+  weather_hourly,
+  paddock,
+  spore_interception_parameter,
+  max_interception_probability,
+  spores_per_gp_per_wet_hour,
+  splash_cauchy_parameter = 0.5,
+  wind_cauchy_multiplier = 0.015,
+  rainfall_multiplier = FALSE
+) {
   rain <- ws <- wd <- wd_sd <- infectious_gp <- spores_per_packet <- x <- y <-
     NULL
 
@@ -67,8 +69,8 @@ spores_each_wet_hour <- function(h,
   exposed_dt <-
     apply(
       X = paddock_infective,
-      MARGIN =  1,
-      FUN =  spores_from_1_element,
+      MARGIN = 1,
+      FUN = spores_from_1_element,
       spores_per_gp_per_wet_hour = spores_per_gp_per_wet_hour,
       max_interception_probability = max_interception_probability,
       wind_direction_in_hour = wind_direction_in_hour,
@@ -85,10 +87,9 @@ spores_each_wet_hour <- function(h,
       y = numeric(),
       spores_per_packet = numeric()
     ))
-  } else{
+  } else {
     exposed_dt <- rbindlist(exposed_dt)
   }
-
 
   exposed_dt$spores_per_packet <-
     successful_infections(
@@ -100,11 +101,13 @@ spores_each_wet_hour <- function(h,
 
   # filter only successful interceptions inside the paddock
   exposed_dt <-
-    exposed_dt[spores_per_packet > 0 &
-                        x >= min(paddock[, x]) &
-                        x <= max(paddock[, x]) &
-                        y >= min(paddock[, y]) &
-                        y <= max(paddock[, y]) ,]
+    exposed_dt[
+      spores_per_packet > 0 &
+        x >= min(paddock[, x]) &
+        x <= max(paddock[, x]) &
+        y >= min(paddock[, y]) &
+        y <= max(paddock[, y]),
+    ]
 
   return(exposed_dt)
 }

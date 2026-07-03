@@ -135,37 +135,38 @@
 #'
 #' @export
 #'
-trace_asco <- function(weather,
-                       paddock_length,
-                       paddock_width,
-                       sowing_date,
-                       harvest_date,
-                       initial_infection,
-                       seeding_rate = 40,
-                       gp_rr = 0.0065,
-                       max_gp_lim = 5000,
-                       max_new_gp = 350,
-                       latent_period_cdd = 150,
-                       time_zone = "UTC",
-                       primary_infection_foci = "random",
-                       primary_inoculum_intensity = 40,
-                       n_foci = 1,
-                       spores_per_gp_per_wet_hour = 0.22,
-                       splash_cauchy_parameter = 0.5,
-                       wind_cauchy_multiplier = 0.015,
-                       daily_rain_threshold = 2,
-                       hourly_rain_threshold = 0.1,
-                       susceptible_days = 2,
-                       rainfall_multiplier = FALSE){
-
-
+trace_asco <- function(
+  weather,
+  paddock_length,
+  paddock_width,
+  sowing_date,
+  harvest_date,
+  initial_infection,
+  seeding_rate = 40,
+  gp_rr = 0.0065,
+  max_gp_lim = 5000,
+  max_new_gp = 350,
+  latent_period_cdd = 150,
+  time_zone = "UTC",
+  primary_infection_foci = "random",
+  primary_inoculum_intensity = 40,
+  n_foci = 1,
+  spores_per_gp_per_wet_hour = 0.22,
+  splash_cauchy_parameter = 0.5,
+  wind_cauchy_multiplier = 0.015,
+  daily_rain_threshold = 2,
+  hourly_rain_threshold = 0.1,
+  susceptible_days = 2,
+  rainfall_multiplier = FALSE
+) {
   x <- y <- load <- susceptible_gp <- NULL
 
   if (!"asco.weather" %in% class(weather)) {
     stop(
       call. = FALSE,
       "'weather' must be class \"asco.weather\"",
-      "Please use `format_weather()` to properly format the weather data.")
+      "Please use `format_weather()` to properly format the weather data."
+    )
   }
 
   if (primary_inoculum_intensity <= 0) {
@@ -191,36 +192,38 @@ trace_asco <- function(weather,
 
   # check epidemic start is after sowing date
   if (initial_infection <= sowing_date) {
-    stop(call. = FALSE,
+    stop(
+      call. = FALSE,
       "The `initial_infection` occurs on or before `sowing_date`. ",
       "Please use an `initial_infection` date which occurs after `crop_sowing`."
     )
   }
 
   # makePaddock equivalent ------
-  paddock <- CJ(x = 1:paddock_width,
-                y = 1:paddock_length)
+  paddock <- CJ(x = 1:paddock_width, y = 1:paddock_length)
 
   # sample a paddock location randomly if a starting foci is not given
-  if (isFALSE("data.frame" %in% class(primary_infection_foci))) {
+  if (isFALSE(inherits(primary_infection_foci,"data.frame"))) {
     if (inherits(primary_infection_foci, "character")) {
       if (primary_infection_foci == "random") {
         primary_infection_foci <-
-          paddock[sample(seq_len(nrow(paddock)),
-                         size = n_foci,
-                         replace = TRUE),
-                  c("x", "y")]
-
+          paddock[
+            sample(seq_len(nrow(paddock)), size = n_foci, replace = TRUE),
+            c("x", "y")
+          ]
       } else {
-        if (primary_infection_foci == "centre" ||
-            primary_infection_foci == "center") {
+        if (
+          primary_infection_foci == "centre" ||
+            primary_infection_foci == "center"
+        ) {
           primary_infection_foci <-
-            paddock[x == as.integer(round(paddock_width / 2)) &
-                      y == as.integer(round(paddock_length / 2)),
-                    c("x", "y")]
-        } else{
-          stop(call. = FALSE,
-               "`primary_infection_foci` input not recognised")
+            paddock[
+              x == as.integer(round(paddock_width / 2)) &
+                y == as.integer(round(paddock_length / 2)),
+              c("x", "y")
+            ]
+        } else {
+          stop(call. = FALSE, "`primary_infection_foci` input not recognised")
         }
       }
     } else {
@@ -236,10 +239,12 @@ trace_asco <- function(weather,
         primary_infection_foci <-
           as.data.table(as.list(primary_infection_foci))
 
-        setnames(x = primary_infection_foci,
-                 old = c("V1", "V2"),
-                 new = c("x", "y"),
-                 skip_absent = TRUE)
+        setnames(
+          x = primary_infection_foci,
+          old = c("V1", "V2"),
+          new = c("x", "y"),
+          skip_absent = TRUE
+        )
       }
     }
   } else{
@@ -256,34 +261,35 @@ trace_asco <- function(weather,
     }
   }
 
-
   # get rownumbers for paddock data.table that need to be set as infected
   infected_rows <- which_paddock_row(paddock = paddock,
                                      query = primary_infection_foci)
   if (isFALSE("load" %in% colnames(primary_infection_foci))) {
     primary_infection_foci[, load := primary_inoculum_intensity]
-  } else{
+  } else {
     if (all(colnames(primary_infection_foci) %in% c("x", "y"))) {
-      stop(call. = FALSE,
-           "Colnames for `primary_infection_foci` are not 'x', 'y' & 'load'.")
+      stop(
+        call. = FALSE,
+        "Colnames for `primary_infection_foci` are not 'x', 'y' & 'load'."
+      )
     }
   }
 
-
   # define paddock variables at time 1
   # need to update so can assign a data.table of things primary infection foci!!
-  paddock[, c(
-    "new_gp", # Change in the number of growing points since last iteration
-    "susceptible_gp",
-    "exposed_gp",
-    "infectious_gp" # replacing InfectiveElementList
-  ) :=
-    list(
+  paddock[,
+    c(
+      "new_gp", # Change in the number of growing points since last iteration
+      "susceptible_gp",
+      "exposed_gp",
+      "infectious_gp" # replacing InfectiveElementList
+    ) := list(
       seeding_rate,
       seeding_rate,
       0,
       0
-    )]
+    )
+  ]
 
   # calculate additional parameters
   # Paul's interpretation of this calculation
@@ -294,11 +300,10 @@ trace_asco <- function(weather,
   # always changing, we need to calculate the actual probability of interception
   # depending on the density of the crop canopy for that given time. See the
   # function `interception_probability()`
-  spore_interception_parameter <- 0.00006 * (max_gp_lim/max_new_gp)
+  spore_interception_parameter <- 0.00006 * (max_gp_lim / max_new_gp)
 
   # define max_gp
   max_gp <- max_gp_lim * (1 - exp(-0.138629 * seeding_rate))
-
 
   # Notes: as area is 1m x 1m many computation in the mathematica
   #  code are redundant because they are being multiplied by 1.
@@ -311,29 +316,27 @@ trace_asco <- function(weather,
   daily_vals_list <- list(
     list(
       paddock = paddock, # data.table each row is a 1 x 1m coordinate
-      i_date = sowing_date,  # day of the simulation (iterator)
+      i_date = sowing_date, # day of the simulation (iterator)
       i_day = 1,
-      day = yday(sowing_date),    # day of the year
-      cdd = 0,    # cumulative degree days
-      cwh = 0,    # cumulative wet hours
-      cr = 0,     # cumulative rainfall
-      gp_standard = seeding_rate,     # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
-      new_gp = seeding_rate,    # new number of growing points for current iteration (refNewGrowingPoints)
-      infected_coords = data.table(x = numeric(),
-                                   y = numeric()),  # data.table
-      exposed_gps =  data.table(x = numeric(),
-                                   y = numeric(),
-                                   spores_per_packet = numeric(),
-                                   cdd_at_infection = numeric()) # data.table of infected growing points still in latent period and not sporulating (exposed_gp)
+      day = yday(sowing_date), # day of the year
+      cdd = 0, # cumulative degree days
+      cwh = 0, # cumulative wet hours
+      cr = 0, # cumulative rainfall
+      gp_standard = seeding_rate, # standard number of growing points for 1m^2 if not inhibited by infection (refUninfectiveGrowingPoints)
+      new_gp = seeding_rate, # new number of growing points for current iteration (refNewGrowingPoints)
+      infected_coords = data.table(x = numeric(), y = numeric()), # data.table
+      exposed_gps = data.table(
+        x = numeric(),
+        y = numeric(),
+        spores_per_packet = numeric(),
+        cdd_at_infection = numeric()
+      ) # data.table of infected growing points still in latent period and not sporulating (exposed_gp)
     )
   )
 
-  time_increments <- seq(sowing_date,
-                         harvest_date,
-                         by = "days")
+  time_increments <- seq(sowing_date, harvest_date, by = "days")
 
-  daily_vals_list <- rep(daily_vals_list,
-                         length(time_increments) + 1)
+  daily_vals_list <- rep(daily_vals_list, length(time_increments) + 1)
 
   for (i in seq_len(length(time_increments))) {
     # update time values for iteration of loop
@@ -360,7 +363,6 @@ trace_asco <- function(weather,
 
     # When the time of initial infection occurs, infect the paddock coordinates
     if (initial_infection == time_increments[i]) {
-
       # if primary_inoculum_intensity exceeds the number of growing points send
       #  warning
       if (primary_inoculum_intensity > daily_vals_list[[i]][["gp_standard"]]) {
@@ -379,17 +381,17 @@ trace_asco <- function(weather,
           # Infecting paddock
           pad1 <- copy(dl[["paddock"]])
 
-          pad1[infected_rows,
-               c("susceptible_gp",
-                 "infectious_gp") :=
-                 list(
-                   fifelse(
-                     test = primary_infection_foci[, load] > susceptible_gp,
-                     yes = susceptible_gp,
-                     no = susceptible_gp - primary_infection_foci[, load]
-                   ),
-                   primary_infection_foci[, load]
-                 )]
+          pad1[
+            infected_rows,
+            c("susceptible_gp", "infectious_gp") := list(
+              fifelse(
+                test = primary_infection_foci[, load] > susceptible_gp,
+                yes = susceptible_gp,
+                no = susceptible_gp - primary_infection_foci[, load]
+              ),
+              primary_infection_foci[, load]
+            )
+          ]
           dl[["paddock"]] <- pad1
 
           # Edit infected_coordinates data.table
@@ -421,22 +423,26 @@ trace_asco <- function(weather,
 .vali_date <- function(x) {
   tryCatch(
     # try to parse the date format using lubridate
-    x <- lubridate::parse_date_time(x,
-                                    c(
-                                      "Ymd",
-                                      "dmY",
-                                      "mdY",
-                                      "BdY",
-                                      "Bdy",
-                                      "bdY",
-                                      "bdy"
-                                    )),
+    x <- lubridate::parse_date_time(
+      x,
+      c(
+        "Ymd",
+        "dmY",
+        "mdY",
+        "BdY",
+        "Bdy",
+        "bdY",
+        "bdy"
+      )
+    ),
     warning = function(w) {
-      stop(call. = FALSE,
-           "`",
-           x,
-           "` is not a valid entry for date.\n",
-           "Please enter as `YYYY-MM-DD`.\n")
+      stop(
+        call. = FALSE,
+        "`",
+        x,
+        "` is not a valid entry for date.\n",
+        "Please enter as `YYYY-MM-DD`.\n"
+      )
     }
   )
   return(x)

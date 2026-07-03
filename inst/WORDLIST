@@ -3,7 +3,6 @@ AUDPC
 AnthracnoseTracer
 Ascochyta
 Conidia
-DOI
 Diggle
 GJ
 GRDC
@@ -14,6 +13,7 @@ PHYTO
 POSIXct
 Phytopathology
 README
+ROR
 RTX
 Rcpp
 Salam
@@ -26,6 +26,7 @@ al
 anthracnose
 asco
 blackspot
+bugfix
 cdd
 centre
 conceptor
@@ -45,6 +46,7 @@ gps
 hh
 inoculum
 lon
+lubridate
 lupin
 meristems
 metre

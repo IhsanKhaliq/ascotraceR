@@ -54,16 +54,14 @@ tidy_trace <- function(trace) {
     data.table(matrix(
       unlist(x[3:9]),
       nrow = 1,
-      dimnames = list(NULL,
-                      names(x[3:9]))
+      dimnames = list(NULL, names(x[3:9]))
     ))
   }))
   sub_trace[, i_date := lubridate::as_date(i_date)]
   sub_trace[, new_gp := NULL] # this is a duplicated value
   setkey(sub_trace, i_day)
 
-  paddock <- rbindlist(lapply(trace, `[[`, 1),
-                       idcol = "i_day")
+  paddock <- rbindlist(lapply(trace, `[[`, 1), idcol = "i_day")
   setkey(paddock, i_day)
 
   tidy_trace_dt <- merge(x = paddock, y = sub_trace, all.x = TRUE)

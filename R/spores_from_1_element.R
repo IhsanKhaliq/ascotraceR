@@ -31,16 +31,18 @@
 #' @keywords internal
 #' @noRd
 spores_from_1_element <-
-  function(paddock_source,
-           spores_per_gp_per_wet_hour = 0.15,
-           max_interception_probability,
-           wind_direction_in_hour,
-           average_wind_speed_in_hour,
-           stdev_wind_direction_in_hour,
-           spore_aggregation_limit = 1000,
-           splash_cauchy_parameter = 0.5,
-           wind_cauchy_multiplier = 0.015,
-           paddock) {
+  function(
+    paddock_source,
+    spores_per_gp_per_wet_hour = 0.15,
+    max_interception_probability,
+    wind_direction_in_hour,
+    average_wind_speed_in_hour,
+    stdev_wind_direction_in_hour,
+    spore_aggregation_limit = 1000,
+    splash_cauchy_parameter = 0.5,
+    wind_cauchy_multiplier = 0.015,
+    paddock
+  ) {
     x <- y <- NULL
 
     # this might be able to be calculated at the spread_spores level, and `If`
@@ -57,7 +59,7 @@ spores_from_1_element <-
     if (spore_packets > spore_aggregation_limit) {
       spores_per_packet <- spore_packets / spore_aggregation_limit
       spore_packets <- spore_aggregation_limit
-    } else{
+    } else {
       spores_per_packet <- 1
     }
 
@@ -68,35 +70,38 @@ spores_from_1_element <-
     # this for loop needs improvement so it is not growing a data.table
     target_coordinates <-
       lapply(seq_len(spore_packets), function(x) {
-        wind_d <- wind_distance(average_wind_speed_in_hour,
-                                wind_cauchy_multiplier)
+        wind_d <- wind_distance(
+          average_wind_speed_in_hour,
+          wind_cauchy_multiplier
+        )
         wind_a <-
           wind_angle(wind_direction_in_hour, stdev_wind_direction_in_hour)
         splash_d <- splash_distance(splash_cauchy_parameter)
         splash_a <- splash_angle()
 
         width_distance <-
-          wind_d * cos(wind_a * degree) +
-          splash_d * cos(splash_a * degree)
+          wind_d * cos(wind_a * degree) + splash_d * cos(splash_a * degree)
 
         length_distance <-
-          wind_d * sin(wind_a * degree) +
-          splash_d * sin(splash_a * degree)
+          wind_d * sin(wind_a * degree) + splash_d * sin(splash_a * degree)
 
         target_address <-
-          address_from_centre_distance(c(width_distance, length_distance),
-                                       paddock_source[c("x", "y")])
+          address_from_centre_distance(
+            c(width_distance, length_distance),
+            paddock_source[c("x", "y")]
+          )
         return(target_address)
       })
-
 
     new_infections <- data.table::rbindlist(target_coordinates)
     new_infections$spores_per_packet <- spores_per_packet
 
-    new_infections <- new_infections[x >= min(paddock[, x]) &
-                                       x <= max(paddock[, x]) &
-                                       y >= min(paddock[, y]) &
-                                       y <= max(paddock[, y]) ,]
+    new_infections <- new_infections[
+      x >= min(paddock[, x]) &
+        x <= max(paddock[, x]) &
+        y >= min(paddock[, y]) &
+        y <= max(paddock[, y]),
+    ]
 
     return(new_infections)
   }

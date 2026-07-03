@@ -21,15 +21,18 @@
 #' @noRd
 #'
 wind_angle <-
-  function(average_wind_direction_in_fifteen_minutes,
-           stdev_wind_direction_fifteen_minutes,
-           PSPH = 1) {
-
+  function(
+    average_wind_direction_in_fifteen_minutes,
+    stdev_wind_direction_fifteen_minutes,
+    PSPH = 1
+  ) {
     w_angle <-
-      lapply(X = PSPH,
-             FUN = stats::rnorm,
-             mean = average_wind_direction_in_fifteen_minutes,
-             sd = stdev_wind_direction_fifteen_minutes)
+      lapply(
+        X = PSPH,
+        FUN = stats::rnorm,
+        mean = average_wind_direction_in_fifteen_minutes,
+        sd = stdev_wind_direction_fifteen_minutes
+      )
 
     w_angle <- unlist(w_angle)
 

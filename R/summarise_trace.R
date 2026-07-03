@@ -59,7 +59,6 @@
 #' summarised <- summarise_trace(traced)
 #' @export
 summarise_trace <- function(trace) {
-
   i_day <- new_gp <- AUDPC <- `.` <- NULL
 
   summarised_trace <- tidy_trace(trace)
@@ -72,13 +71,15 @@ summarise_trace <- function(trace) {
   infectious_gp <-
     summarised_trace[, .(infectious_gp = sum(infectious_gp)), by = i_day]
 
-  x <- unique(summarised_trace[, c("i_day",
-                                   "i_date",
-                                   "day",
-                                   "cdd",
-                                   "cwh",
-                                   "cr",
-                                   "gp_standard")])
+  x <- unique(summarised_trace[, c(
+    "i_day",
+    "i_date",
+    "day",
+    "cdd",
+    "cwh",
+    "cr",
+    "gp_standard"
+  )])
 
   y <- list(new_gp, susceptible_gp, exposed_gp, infectious_gp, x)
   lapply(y, function(i) setkey(i, i_day))

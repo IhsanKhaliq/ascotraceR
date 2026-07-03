@@ -15,14 +15,16 @@
 #'   spore_targets
 #' @keywords internal
 #' @noRd
-successful_infections <- function(spore_targets,
-                                  paddock,
-                                  spore_interception_parameter,
-                                  max_interception_probability) {
+successful_infections <- function(
+  spore_targets,
+  paddock,
+  spore_interception_parameter,
+  max_interception_probability
+) {
   x <-
     y <-
-    new_gp <-
-    summary_unit_width <- summary_unit_length <- new_gp <- NULL
+      new_gp <-
+        summary_unit_width <- summary_unit_length <- new_gp <- NULL
 
   if (isFALSE(inherits(spore_targets,"data.frame"))) {
     stop("argument 'spore_targets' should be a data.table input not ",
@@ -31,14 +33,16 @@ successful_infections <- function(spore_targets,
 
   suc_inf <-
     apply(spore_targets, 1, function(sp_tar) {
-      address <- c(sp_tar["x"],
-                   sp_tar["y"])
+      address <- c(sp_tar["x"], sp_tar["y"])
 
-      spores_in_packet <-  sp_tar["spores_per_packet"]
+      spores_in_packet <- sp_tar["spores_per_packet"]
 
       susceptible_growing_points <-
-        paddock[x == sp_tar["x"] &
-                  y == sp_tar["y"], new_gp]
+        paddock[
+          x == sp_tar["x"] &
+            y == sp_tar["y"],
+          new_gp
+        ]
 
       spores_in_packet <-
         random_integer_from_real(
@@ -53,5 +57,4 @@ successful_infections <- function(spore_targets,
     })
 
   return(unlist(suc_inf))
-
 }

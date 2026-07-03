@@ -1,44 +1,46 @@
-
 # for manual automatic check() testing
 load(test_path("test-data_successful_infections.rda"))
 seeding_rate <- 40
 
 # makePaddock equivalent
-paddock <- CJ(x = 1:100,
-              y = 1:100)
+paddock <- CJ(x = 1:100, y = 1:100)
 
 primary_infection_foci <- c(50, 50)
 
 # define paddock variables at time 1
-paddock[, c("new_gp",
-            # Change in the number of growing points since last iteration
-            "susceptible_gp",
-            "exposed_gp",
-            "infectious_gp",
-            # replacing InfectiveElementList
-            "cdd_at_infection") :=
-          list(
-            seeding_rate,
-            fifelse(
-              x == primary_infection_foci[1] &
-                y == primary_infection_foci[2],
-              seeding_rate - 1,
-              seeding_rate
-            ),
-            0,
-            fifelse(x == primary_infection_foci[1] &
-                      y == primary_infection_foci[2], 1,
-                    0),
-            0
-          )]
-
+paddock[,
+  c(
+    "new_gp",
+    # Change in the number of growing points since last iteration
+    "susceptible_gp",
+    "exposed_gp",
+    "infectious_gp",
+    # replacing InfectiveElementList
+    "cdd_at_infection"
+  ) := list(
+    seeding_rate,
+    fifelse(
+      x == primary_infection_foci[1] &
+        y == primary_infection_foci[2],
+      seeding_rate - 1,
+      seeding_rate
+    ),
+    0,
+    fifelse(
+      x == primary_infection_foci[1] &
+        y == primary_infection_foci[2],
+      1,
+      0
+    ),
+    0
+  )
+]
 
 
 spore_interception_parameter <-
   0.00006 * (15000 / 350)
 
 set.seed(666)
-
 
 
 test1 <- successful_infections(
@@ -59,7 +61,7 @@ test_that("test1 provides correct output", {
   expect_equal(sum(test1), 0)
   expect_equal(max(test1), 0)
   expect_equal(min(test1), 0)
-  expect_false(any(is.na(test1)))
+  expect_false(anyNA(test1))
 })
 
 
@@ -77,7 +79,7 @@ test_that("test2 provides correct output", {
   expect_equal(sum(test2), 12)
   expect_equal(max(test2), 1)
   expect_equal(min(test2), 0)
-  expect_false(any(is.na(test2)))
+  expect_false(anyNA(test2))
 })
 
 test_that("successful_infections returns an error with incorrect input", {
@@ -89,5 +91,4 @@ test_that("successful_infections returns an error with incorrect input", {
       max_interception_probability = 1
     )
   )
-
 })

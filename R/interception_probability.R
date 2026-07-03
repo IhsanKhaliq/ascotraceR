@@ -11,8 +11,6 @@
 #' @keywords internal
 #' @noRd
 
-
-
 interception_probability <- function(target_density, k) {
   1 - exp(-k * target_density)
 }

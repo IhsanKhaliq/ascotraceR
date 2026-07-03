@@ -13,7 +13,7 @@
 #' which_paddock_row(paddock = pdk, query = qry)
 #' @keywords internal
 #' @noRd
-which_paddock_row <- function(paddock, query){
+which_paddock_row <- function(paddock, query) {
   x <- y <- NULL
 
   # Use a data.table join to find matching row numbers rather than deriving

@@ -3,28 +3,36 @@ load(test_path("newly_infected_list.rda"))
 
 # create data and parameters
 seeding_rate <- 40
-paddock <- CJ(x = 1:100,
-              y = 1:100)
-paddock[, c("new_gp",
-            "susceptible_gp",
-            "exposed_gp",
-            "infectious_gp",
-            "cdd_at_infection") :=
-          list(
-            seeding_rate,
-            fifelse(x >= 53 &
-                      x <= 57 &
-                      y >= 53 &
-                      y <= 57, seeding_rate - 5,
-                    seeding_rate),
-            0,
-            fifelse(x >= 53 &
-                      x <= 57 &
-                      y >= 53 &
-                      y <= 57, 5,
-                    0),
-            0
-          )]
+paddock <- CJ(x = 1:100, y = 1:100)
+paddock[,
+  c(
+    "new_gp",
+    "susceptible_gp",
+    "exposed_gp",
+    "infectious_gp",
+    "cdd_at_infection"
+  ) := list(
+    seeding_rate,
+    fifelse(
+      x >= 53 &
+        x <= 57 &
+        y >= 53 &
+        y <= 57,
+      seeding_rate - 5,
+      seeding_rate
+    ),
+    0,
+    fifelse(
+      x >= 53 &
+        x <= 57 &
+        y >= 53 &
+        y <= 57,
+      5,
+      0
+    ),
+    0
+  )
+]
 
 set.seed(666)
 
@@ -51,9 +59,7 @@ daily_values <- list(
 )
 
 
-
-test1 <- make_some_infective(daily_vals = daily_values,
-                             latent_period = 200)
+test1 <- make_some_infective(daily_vals = daily_values, latent_period = 200)
 
 test_that("test1 returns daily_values list with no changes", {
   expect_type(test1, "list")
@@ -74,21 +80,26 @@ test_that("test1 returns daily_values list with no changes", {
     )
   )
 
-  expect_equal(test1[["paddock"]][, susceptible_gp],
-               daily_values[["paddock"]][, susceptible_gp])
-  expect_equal(test1[["paddock"]][, infectious_gp],
-               daily_values[["paddock"]][, infectious_gp])
+  expect_equal(
+    test1[["paddock"]][, susceptible_gp],
+    daily_values[["paddock"]][, susceptible_gp]
+  )
+  expect_equal(
+    test1[["paddock"]][, infectious_gp],
+    daily_values[["paddock"]][, infectious_gp]
+  )
   expect_equal(test1[["exposed_gps"]], daily_values[["exposed_gps"]])
-  expect_false(any(is.na(test1[["paddock"]])))
+  expect_false(anyNA(test1[["paddock"]]))
 })
 
 daily_values[["cdd"]] <- 250
 
-test2 <- make_some_infective(daily_vals = daily_values,
-                             latent_period = 200)
+test2 <- make_some_infective(daily_vals = daily_values, latent_period = 200)
 
-expect_equal(test2[["paddock"]][, sum(infectious_gp)], # output
-             daily_values[["paddock"]][, sum(infectious_gp)]) # input
+expect_equal(
+  test2[["paddock"]][, sum(infectious_gp)], # output
+  daily_values[["paddock"]][, sum(infectious_gp)]
+) # input
 
 test_that("test2 returns changes now latent_period has elapsed", {
   expect_type(test2, "list")
@@ -107,15 +118,20 @@ test_that("test2 returns changes now latent_period has elapsed", {
       "exposed_gps"
     )
   )
-  expect_equal(test2[["paddock"]][, sum(infectious_gp)], # output
-               daily_values[["paddock"]][, sum(infectious_gp)]) # input
-  expect_equal(nrow(daily_values[["exposed_gps"]]) -
-                 nrow(test2[["exposed_gps"]]),
-               nrow(daily_values[["exposed_gps"]]))
-  expect_silent(test3 <-
-                  make_some_infective(daily_vals = daily_values))
-  expect_false(any(is.na(test2[["paddock"]])))
+  expect_equal(
+    test2[["paddock"]][, sum(infectious_gp)], # output
+    daily_values[["paddock"]][, sum(infectious_gp)]
+  ) # input
+  expect_equal(
+    nrow(daily_values[["exposed_gps"]]) -
+      nrow(test2[["exposed_gps"]]),
+    nrow(daily_values[["exposed_gps"]])
+  )
+  expect_silent(
+    test3 <-
+      make_some_infective(daily_vals = daily_values)
+  )
+  expect_false(anyNA(test2[["paddock"]]))
 
   expect_equal(test2[["paddock"]][, sum(susceptible_gp)], 399845)
-
 })
