@@ -38,7 +38,7 @@ Creates a paddock-level summary \CRANpkg{data.table} from the output of
 the entire paddock.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 Newmarracarra <-
    read.csv(system.file("extdata",
             "1998_Newmarracarra_weather_table.csv", package = "ascotraceR"))
@@ -69,7 +69,7 @@ traced <- trace_asco(
 
 summarised <- summarise_trace(traced)
 \dontshow{\}) # examplesIf}
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 
 Newmarracarra <-
    read.csv(system.file("extdata",

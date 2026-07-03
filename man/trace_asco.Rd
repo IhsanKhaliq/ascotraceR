@@ -155,7 +155,7 @@ paddock over a growing season. Both host and pathogen activities are
 simulated in one square metre cells.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # First weather data needs to be imported and formatted with `format_weather`
 Newmarracarra <-
    read.csv(system.file("extdata",

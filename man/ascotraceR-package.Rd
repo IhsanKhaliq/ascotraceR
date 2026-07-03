@@ -17,10 +17,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Paul Melloy \email{p.melloy@uq.edu.au} (\href{https://orcid.org/0000-0003-4253-7167}{ORCID}) [translator]
+\strong{Maintainer}: Paul Melloy \email{paul.melloy@csiro.au} (\href{https://orcid.org/0000-0003-4253-7167}{ORCID}) [translator]
 
 Authors:
 \itemize{
+  \item Paul Melloy \email{paul.melloy@csiro.au} (\href{https://orcid.org/0000-0003-4253-7167}{ORCID}) [translator]
   \item Ihsanul Khaliq \email{ihsan.khaliq@usq.edu.au} (\href{https://orcid.org/0000-0003-4171-0917}{ORCID})
   \item Adam H. Sparks \email{adamhsparks@gmail.com} (\href{https://orcid.org/0000-0002-0061-8359}{ORCID}) [conceptor]
 }
