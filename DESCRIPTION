@@ -1,7 +1,7 @@
 Package: ascotraceR
 Title: Simulate the Spread of Ascochyta Blight in Chickpea
 Version: 0.1.0
-DOI: 10.5281/zenodo.5771290
+DOI: 10.1094/PHYTO-01-22-0016-A
 Authors@R: 
     c(person(given = "Ihsanul",
           family = "Khaliq",
@@ -51,7 +51,6 @@ Suggests:
 VignetteBuilder: 
     knitr
 Config/roxygen2/version: 8.0.0
-DOI: 10.5281/zenodo.5771290
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
